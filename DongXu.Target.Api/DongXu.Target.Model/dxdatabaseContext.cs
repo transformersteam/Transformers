@@ -15,10 +15,29 @@ namespace DongXu.Target.Model
         {
         }
 
+        /// <summary>
+        /// 审批活动表
+        /// </summary>
         public virtual DbSet<Appractivity> Appractivity { get; set; }
+
+        /// <summary>
+        /// 审批配置表
+        /// </summary>
         public virtual DbSet<Apprconfiguration> Apprconfiguration { get; set; }
+
+        /// <summary>
+        /// 审批历史表
+        /// </summary>
         public virtual DbSet<Apprhistory> Apprhistory { get; set; }
+
+        /// <summary>
+        /// 关注表
+        /// </summary>
         public virtual DbSet<Attention> Attention { get; set; }
+
+        /// <summary>
+        /// 反馈表
+        /// </summary>
         public virtual DbSet<Feedback> Feedback { get; set; }
         public virtual DbSet<Feedbackloop> Feedbackloop { get; set; }
         public virtual DbSet<Files> Files { get; set; }
