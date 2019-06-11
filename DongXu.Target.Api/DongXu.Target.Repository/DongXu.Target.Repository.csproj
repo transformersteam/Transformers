@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Organization\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DongXu.Target.IRepository\DongXu.Target.IRepository.csproj" />
     <ProjectReference Include="..\DongXu.Target.Model\DongXu.Target.Model.csproj" />
   </ItemGroup>

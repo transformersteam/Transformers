@@ -1,8 +1,9 @@
 ﻿using System;
 using DongXu.Target.Model;
-using DongXu.Target.IRepository.Organization;
+using DongXu.Target.IRepository;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace DongXu.Target.Repository
 {
