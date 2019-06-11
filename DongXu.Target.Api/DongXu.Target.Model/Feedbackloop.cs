@@ -8,10 +8,11 @@ namespace DongXu.Target.Model
     /// </summary>
     public partial class Feedbackloop
     {
+        //
         /// <summary>
         /// 主键id
         /// </summary>
-        public int FeedbackLoopId { get; set; }
+        public int FeedbackLoopId { get; set; }    
 
         /// <summary>
         /// 时间
