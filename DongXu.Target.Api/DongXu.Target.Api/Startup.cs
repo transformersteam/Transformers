@@ -14,6 +14,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using DongXu.Target.IRepository;
 using DongXu.Target.Repository;
+using DongXu.Target.IRepository.IOrganization;
+using DongXu.Target.IRepository.IWaitRead;
+using DongXu.Target.Repository.WaitReadRepository;
 
 namespace DongXu.Target.Api
 {
@@ -36,6 +39,7 @@ namespace DongXu.Target.Api
 
             // 注册接口和实现类的映射关系 
             services.AddScoped<IOrganization, Organization>();
+            services.AddScoped<IWaitReadRepository, WaitReadRepository>();
 
             //注册跨域服务，允许所有来源
             services.AddCors(options =>
