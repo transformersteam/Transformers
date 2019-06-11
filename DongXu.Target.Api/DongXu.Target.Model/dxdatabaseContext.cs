@@ -39,19 +39,75 @@ namespace DongXu.Target.Model
         /// 反馈表
         /// </summary>
         public virtual DbSet<Feedback> Feedback { get; set; }
+
+        /// <summary>
+        /// 反馈周期表
+        /// </summary>
         public virtual DbSet<Feedbackloop> Feedbackloop { get; set; }
+
+        /// <summary>
+        /// 文件表
+        /// </summary>
         public virtual DbSet<Files> Files { get; set; }
+
+        /// <summary>
+        /// 反馈频次表
+        /// </summary>
         public virtual DbSet<Frequency> Frequency { get; set; }
+
+        /// <summary>
+        /// 目标表
+        /// </summary>
         public virtual DbSet<Goal> Goal { get; set; }
+
+        /// <summary>
+        /// 目标状态表
+        /// </summary>
         public virtual DbSet<Goalstate> Goalstate { get; set; }
+
+        /// <summary>
+        /// 目标类型
+        /// </summary>
         public virtual DbSet<Goaltype> Goaltype { get; set; }
+
+        /// <summary>
+        /// 指标等级表
+        /// </summary>
         public virtual DbSet<Indexlevel> Indexlevel { get; set; }
+
+        /// <summary>
+        /// 指标吧
+        /// </summary>
         public virtual DbSet<Indexs> Indexs { get; set; }
+
+        /// <summary>
+        /// 积分表
+        /// </summary>
         public virtual DbSet<Integral> Integral { get; set; }
+
+        /// <summary>
+        /// 权限表
+        /// </summary>
         public virtual DbSet<Power> Power { get; set; }
+
+        /// <summary>
+        /// 角色表
+        /// </summary>
         public virtual DbSet<Role> Role { get; set; }
+
+        /// <summary>
+        /// 角色权限表
+        /// </summary>
         public virtual DbSet<Rolepower> Rolepower { get; set; }
+
+        /// <summary>
+        /// 用户表
+        /// </summary>
         public virtual DbSet<User> User { get; set; }
+
+        /// <summary>
+        /// 用户角色表
+        /// </summary>
         public virtual DbSet<Userrole> Userrole { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
