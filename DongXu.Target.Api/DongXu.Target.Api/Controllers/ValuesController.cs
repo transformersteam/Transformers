@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
+using DongXu.Target.Model;
+
 namespace DongXu.Target.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -16,6 +18,19 @@ namespace DongXu.Target.Api.Controllers
         {
             return new string[] { "value1", "value2" };
         }
+
+        /// <summary>
+        /// 测试自定义方法名
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("yahaha")]
+        public string yahaha() 
+        {
+            return "hjasgdhjasgdhjs";
+        }
+
+
+
 
         // GET api/values/5
         [HttpGet("{id}")]

@@ -31,6 +31,8 @@ namespace DongXu.Target.Api
             //ef mysql 配置
             services.AddDbContext<dxdatabaseContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
