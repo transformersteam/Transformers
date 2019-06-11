@@ -18,6 +18,7 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public List<Attention> GetWaitReadList(int id)
         {
             using (dxdatabaseContext context = new dxdatabaseContext())
