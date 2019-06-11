@@ -54,6 +54,6 @@ namespace DongXu.Target.Model
         public DateTime? RoleModifyTime { get; set; }
         
         //标识列
-        public int Role_Identify { get; set; }
+        public int RoleIdentify { get; set; }
     }
 }

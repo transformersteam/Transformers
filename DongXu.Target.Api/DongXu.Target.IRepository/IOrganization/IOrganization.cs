@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DongXu.Target.Model;
-namespace DongXu.Target.IRepository.Organization
+namespace DongXu.Target.IRepository
 {
     public interface IOrganization
     {
