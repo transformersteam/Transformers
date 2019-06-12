@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DongXu.Target.IRepository;
 using DongXu.Target.Model;
+using DongXu.Target.IRepository.IOrganization;
+
 namespace DongXu.Target.Api.Controllers.OrganizationController
 {
     [Route("api/[controller]")]
