@@ -7,7 +7,7 @@ using DongXu.Target.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DongXu.Target.Api.Controllers.ExcuteController
+namespace DongXu.Target.Api.Controllers.ExecuteController 
 {
     [Route("api/[controller]")]
     [ApiController]

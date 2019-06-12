@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DongXu.Target.Model
+namespace DongXu.Target.Web.Models
 {
-    /// <summary>
-    /// 目标表
-    /// </summary>
-    public partial class Goal
+    public class Goal
     {
         /// <summary>
         /// 主键id
@@ -112,7 +111,5 @@ namespace DongXu.Target.Model
         /// 进度百分比
         /// </summary>
         public int FeedbackId { get; set; }
-
-        
     }
 }
