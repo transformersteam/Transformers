@@ -1,4 +1,5 @@
 ﻿using DongXu.Target.Model;
+using DongXu.Target.Model.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace DongXu.Target.IRepository.IExecute
         /// 待办事项集合
         /// </summary>
         /// <returns></returns>
-        List<Goal> GetGoalInfo();
+        List<BackLog> GetGoalInfo();
 
         /// <summary>
         /// 待办事项显示
