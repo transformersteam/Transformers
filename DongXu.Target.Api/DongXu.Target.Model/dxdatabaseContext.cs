@@ -438,6 +438,10 @@ namespace DongXu.Target.Model
                 entity.Property(e => e.RoleId)
                     .HasColumnName("Role_Id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.BusinessState)
+                    .HasColumnName("Business_State")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Goalstate>(entity =>
