@@ -16,22 +16,23 @@
 <div>
     <table class="table table-bordered">
         <thead>
-        <tr style="background-color: #ccc;">
-            <td>业务名称</td>
-            <td>频次</td>
-            <td>类型</td>
-            <td>级别</td>
-            <td>责任人</td>
-            <td>完成时间</td>
-            <td>状态</td>
-        </tr>
+            <tr style="background-color: #ccc;">
+                <td>业务名称</td>
+                <td>频次</td>
+                <td>类型</td>
+                <td>级别</td>
+                <td>责任人</td>
+                <td>完成时间</td>
+                <td>完成状态</td>
+                <td>状态</td>
+            </tr>
         </thead>
         <tbody id="tb"></tbody>
     </table>
-    <input id="Button1" type="button" href="javascript:void(0)" onclick="first()" value="首页" class="btn btn-sm" />
-    <input id="Button2" type="button" href="javascript:void(0)" onclick="prve()" value="上一页" class="btn btn-sm" />
-    <input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" />
-    <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" />
+    <input id="Button1" type="button" href="javascript:void(0)" onclick="first()" value="首页" class="btn btn-sm" style="margin-right: 10px"/>
+    <input id="Button2" type="button" href="javascript:void(0)" onclick="prve()" value="上一页" class="btn btn-sm" style="margin-right: 10px"/>
+    <input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" style="margin-right: 10px"/>
+    <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style=""/>
 </div>
 </body>
 </html>
@@ -54,16 +55,18 @@
             data: { pageIndex: index, pageSize: pageSize },
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 $("#tb").empty();
-                $("#tb").each(function() {
+                $(data).each(function (index) {
                     var tr = "<tr>" +
-                        "<td>" + this.GoalName+"</td>" +
-                        "<td>" + this.FrequencyId+"</td>" +
-                        "<td>" + this.GoalTypeId+"</td>" +
-                        "<td>" + this.IndexLevelId+"</td>" +
-                        "<td>" + this.GoalChargePeople+"</td>" +
-                        "<td>" + this.GoalEndTime+"</td>" +
-                        "<td>" + this.GoalStateId+"</td>"
+                        "<td>" + this.goalList[index].goalName+"</td>" +
+                        "<td>" + this.goalList[index].frequencyId+"</td>" +
+                        "<td>" + this.goalList[index].goalTypeId+"</td>" +
+                        "<td>" + this.goalList[index].indexLevelId+"</td>" +
+                        "<td>" + this.goalList[index].goalChargePeople+"</td>" +
+                        "<td>" + this.goalList[index].goalEndTime + "</td>" +
+                        "<td>" + this.goalList[index].feedbackId+"</td>" +
+                        "<td>" + this.goalList[index].goalStateId+"</td>"
                         + "</tr>";
                     $("#tb").append(tr);
                 })

@@ -23,5 +23,14 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
         {
             return View();
         }
+
+        /// <summary>
+        /// 待办事项显示 方法
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult List() 
+        {
+            return View();
+        }
     }
 }

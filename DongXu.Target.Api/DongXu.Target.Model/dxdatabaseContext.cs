@@ -1,4 +1,5 @@
 ﻿using System;
+using DongXu.Target.Model.Dto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -109,6 +110,8 @@ namespace DongXu.Target.Model
         /// 用户角色表
         /// </summary>
         public virtual DbSet<Userrole> Userrole { get; set; }
+
+        public virtual DbSet<WaitRead> WaitRead { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -467,7 +470,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.GoalStateIsUse)
                     .HasColumnName("GoalState_IsUse")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.GoalStateName)
                     .HasColumnName("GoalState_Name")

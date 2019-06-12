@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using DongXu.Target.Model;
+using Microsoft.AspNetCore.Cors;
 
 namespace DongXu.Target.Api.Controllers
 {
@@ -27,6 +28,18 @@ namespace DongXu.Target.Api.Controllers
         public string yahaha() 
         {
             return "hjasgdhjasgdhjs";
+        }
+
+        [HttpPost("test")]
+        public int test(Userrole userrole)
+        {
+            return 1;
+        }
+
+        [HttpPost("po")]
+        public int po()
+        {
+            return 1;
         }
 
 

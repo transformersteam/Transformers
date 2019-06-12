@@ -15,6 +15,7 @@
     <Folder Include="wwwroot\HH\error\" />
     <Folder Include="wwwroot\HH\js\plugins\echarts\" />
     <Folder Include="wwwroot\HH\js\plugins\jquery-ui\" />
+    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>
