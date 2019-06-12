@@ -11,13 +11,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DongXu.Target.Cache\DongXu.Target.Cache.csproj" />
-    <ProjectReference Include="..\DongXu.Target.Common\DongXu.Target.Common.csproj" />
     <ProjectReference Include="..\DongXu.Target.IRepository\DongXu.Target.IRepository.csproj" />
     <ProjectReference Include="..\DongXu.Target.Model\DongXu.Target.Model.csproj" />
     <ProjectReference Include="..\DongXu.Target.Repository\DongXu.Target.Repository.csproj" />
