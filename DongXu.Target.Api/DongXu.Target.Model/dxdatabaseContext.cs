@@ -441,6 +441,10 @@ namespace DongXu.Target.Model
                 entity.Property(e => e.RoleId)
                     .HasColumnName("Role_Id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.BusinessState)
+                    .HasColumnName("Business_State")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Goalstate>(entity =>
@@ -668,6 +672,10 @@ namespace DongXu.Target.Model
                 entity.Property(e => e.RolePid)
                     .HasColumnName("Role_Pid")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.RoleIdentify)
+                     .HasColumnName("Role_Identify")
+                     .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Rolepower>(entity =>

@@ -103,6 +103,9 @@ namespace DongXu.Target.Model
         /// </summary>
         public DateTime? GoalCreateTime { get; set; }
 
-        public virtual Goalstate Goalstate { get; set; }
+        /// <summary>
+        /// 待办状态 待办已办
+        /// </summary>
+        public int BusinessState { get; set; }
     }
 }

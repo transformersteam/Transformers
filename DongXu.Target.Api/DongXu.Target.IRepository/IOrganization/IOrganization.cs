@@ -6,7 +6,7 @@ namespace DongXu.Target.IRepository.IOrganization
 {
     public interface IOrganization
     {
-        List<Role> GetRolesOList(int Identify);
+        List<Role> GetRolesOList();
         int AddRolesO(Role model);
         int DeleteRolesO(int id);
         Role GetRolesById(int id);
