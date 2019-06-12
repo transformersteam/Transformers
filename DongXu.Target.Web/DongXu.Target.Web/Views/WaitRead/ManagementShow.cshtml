@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>管理层首页</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script src="~/js/axios.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div style="padding:20px;" id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">我的待阅<span>({{sum}})</span></div>
+            <table class="table table-bordered table-striped text-center">
+                <thead>
+                    <tr>
+                        <td>业务名称</td>
+                        <td>完成情况</td>
+                        <td>级别</td>
+                        <td>责任人</td>
+                        <td>完成时间</td>
+                        <td>当期进度</td>
+                        <td>状态</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="data in waitread" class="data-row">
+                        <td>{{data.goalName}}</td>
+                        <td>{{data.goalStateName}}</td>
+                        <td>{{data.indexLevelGrade}}</td>
+                        <td>{{data.goalChargePeople}}</td>
+                        <td>{{data.goalEndTime}}</td>
+                        <td>{{data.feedbackNowEvolve}}</td>
+                        <td>{{data.feedbackId}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">积分排名</div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="module">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            waitread: [],
+            sum:0,
+        },
+        mounted() {
+            this.getWaitRead();
+        },
+        methods: {
+            getWaitRead: function () {
+                axios.get('@Url.Action("GetWaitReadList","WaitRead")', { params:{id:@ViewBag.id}}).then(
+                    (response) => {
+                        this.waitread = response.data;
+                    }
+                )
+            }
+        }
+    })
+</script>
