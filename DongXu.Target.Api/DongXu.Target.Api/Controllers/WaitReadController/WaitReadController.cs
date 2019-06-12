@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using DongXu.Target.IRepository.IWaitRead;
+using DongXu.Target.Model.Dto;
 
 namespace DongXu.Target.Api.Controllers.WaitReadController
 {
@@ -34,8 +35,8 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
-        public List<Attention> GetWaitReadList(int id)
+        [HttpGet("GetWaitReadList")]
+        public List<WaitRead> GetWaitReadList(int id)
         {
             var list = _iWaitReadRepository.GetWaitReadList(id);
             return list;

@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace DongXu.Target.Model
+namespace DongXu.Target.Model.Dto
 {
     /// <summary>
-    /// 目标表
+    /// 待阅
     /// </summary>
-    public partial class Goal
+    public class WaitRead
     {
         /// <summary>
         /// 主键id
         /// </summary>
+        [Key]
         public int GoalId { get; set; }
 
         /// <summary>
@@ -103,6 +106,29 @@ namespace DongXu.Target.Model
         /// </summary>
         public DateTime? GoalCreateTime { get; set; }
 
-        public virtual Goalstate Goalstate { get; set; }
+        /// <summary>
+        /// 状态名称
+        /// </summary>
+        public string GoalStateName { get; set; }
+
+        /// <summary>
+        /// 指标等级
+        /// </summary>
+        public string IndexLevelGrade { get; set; }
+
+        /// <summary>
+        /// 当前进展
+        /// </summary>
+        public int? FeedbackNowEvolve { get; set; }
+
+        /// <summary>
+        /// 主键id
+        /// </summary>
+        public int FeedbackId { get; set; }
+
+        /// <summary>
+        /// 用户id
+        /// </summary>
+        public int UserId { get; set; }
     }
 }

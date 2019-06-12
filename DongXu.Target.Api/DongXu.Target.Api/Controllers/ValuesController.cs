@@ -29,6 +29,11 @@ namespace DongXu.Target.Api.Controllers
             return "hjasgdhjasgdhjs";
         }
 
+        [HttpPost("po")]
+        public int po()
+        {
+            return 1;
+        }
 
 
 

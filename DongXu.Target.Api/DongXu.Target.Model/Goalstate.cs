@@ -26,7 +26,7 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 是否启用
         /// </summary>
-        public sbyte? GoalStateIsUse { get; set; }
+        public bool GoalStateIsUse { get; set; }
 
         /// <summary>
         /// 创建时间
