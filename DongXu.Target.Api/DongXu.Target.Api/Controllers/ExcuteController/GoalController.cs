@@ -30,9 +30,10 @@ namespace DongXu.Target.Api.Controllers.ExcuteController
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetGoalList")]
-        public List<Goal> GetGoalList()
+        public GoalPageination GetGoalList(int pageindex = 1, int pagesize = 3)
         {
-            return GoalRepository.GetGoalList();
+            var list = GoalRepository.GetGoalList(pageindex, pagesize);
+            return list;
         }
     }
 }
