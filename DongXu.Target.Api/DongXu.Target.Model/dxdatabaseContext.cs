@@ -655,7 +655,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.RoleIsEnable)
                     .HasColumnName("Role_IsEnable")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.RoleModifyPeople)
                     .HasColumnName("Role_ModifyPeople")

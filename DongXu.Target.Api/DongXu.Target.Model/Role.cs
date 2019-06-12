@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DongXu.Target.Model
 {
@@ -21,7 +22,7 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 父级id
         /// </summary>
-        public int? RolePid { get; set; }
+        public int RolePid { get; set; }
 
         /// <summary>
         /// 内容
@@ -31,7 +32,9 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 是否启用
         /// </summary>
-        public sbyte? RoleIsEnable { get; set; }
+        /// 
+        [NotMapped]
+        public int RoleIsEnable { get; set; }
 
         /// <summary>
         /// 创建时间

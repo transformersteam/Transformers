@@ -9,13 +9,92 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    <script src="~/js/jquery-3.3.1.js"></script>
     <link href="~/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/zTree_v3/js/jquery.ztree.all.min.js"></script>
+    <script src="~/js/vue.js"></script>
+    <style>
+        #max {
+            width: 1500px;
+            height: 600px;
+            margin-left: 30px;
+        }
+
+        #title {
+            width: 100%;
+            height: 60px;
+        }
+
+            #title p {
+                margin-left: 15px;
+                margin-top: 15px;
+            }
+
+        #tree {
+            width: 30%;
+            height: 100%;
+            float: left;
+            border: 1px solid #000
+        }
+
+        #message {
+            height: 70%;
+            height: 100%;
+            float: left;
+            border: 1px solid #000
+        }
+
+            #message table {
+                width: 600px;
+                margin-left: 100px;
+                margin-top: 50px;
+                border-collapse: separate;
+                border-spacing: 0px 10px;
+            }
+    </style>
 </head>
+
 <body>
-    <div>
-        <ul id="regionZTree" class="ztree"></ul>
+    <div id="max">
+        <div id="title"><p>组织管理</p></div>
+        <div id="tree">
+            <ul id="regionZTree" class="ztree"></ul>
+        </div>
+        <div id="message">
+            <table>
+                <tr>
+                    <td>组织名称:</td>
+                    <td><input id="txtName" type="text" /></td>
+                    <td>组织层级</td>
+                    <td>
+                        <select id="selIdentify">
+                            <option :value="hierarchy.id" v-for="hierarchy in hierarchyList">{{hierarchy.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>组织状态:</td>
+                    <td>
+                        <input id="Radio1" type="radio" name="rdState" checked /> 启用
+                        <input id="Radio1" type="radio" name="rdState" /> 禁用
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>创建人:</td>
+                    <td><span id="createPeople"></span></td>
+                    <td>创建时间:</td>
+                    <td><span id="createTime"></span></td>
+                </tr>
+                <tr>
+                    <td>修改人:</td>
+                    <td><span id="updatePeople"></span></td>
+                    <td>修改时间:</td>
+                    <td><span id="updateTime"></span></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </body>
 </html>
@@ -193,4 +272,19 @@ function removeZTreeNodebPi(obj) {
     function removeHoverDom(treeId, treeNode) {
         $("#addBtn_" + treeNode.tId).unbind().remove();
     };
+    var vm = new Vue({
+        el: "#max",
+        data: {
+            hierarchyList: [
+                { id: '0', name:'集团总部'},
+                { id: '1', name: '集团公司'},
+                { id: '2', name: '集团部门'}
+                ],
+        },
+        created() {
+        },
+        methods: {
+
+        }
+    })
 </script>
