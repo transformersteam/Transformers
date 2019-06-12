@@ -36,6 +36,15 @@ namespace DongXu.Target.Api.Controllers
             return 1;
         }
 
+        [HttpPost("po")]
+        public int po()
+        {
+            return 1;
+        }
+
+
+
+
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)

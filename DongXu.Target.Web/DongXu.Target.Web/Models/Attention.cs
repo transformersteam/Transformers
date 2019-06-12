@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DongXu.Target.Model
+namespace DongXu.Target.Web
 {
     /// <summary>
-    /// 目标状态表
+    /// 关注表
     /// </summary>
-    public partial class Goalstate
+    public partial class Attention
     {
         /// <summary>
         /// 主键id
         /// </summary>
-        public int GoalStateId { get; set; }
+        public int AttentionId { get; set; }
 
         /// <summary>
-        /// 状态名称
+        /// 目标id
         /// </summary>
-        public string GoalStateName { get; set; }
+        public int? GoalId { get; set; }
 
         /// <summary>
-        /// 说明
+        /// 用户id
         /// </summary>
-        public string GoalStateExplain { get; set; }
+        public int? UserId { get; set; }
 
         /// <summary>
         /// 是否启用
         /// </summary>
-        public bool GoalStateIsUse { get; set; }
+        public sbyte? AttentionIsUse { get; set; }
 
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime? GoalStateCreateTime { get; set; }
+        public DateTime? AttentionCreateTime { get; set; }
     }
 }
