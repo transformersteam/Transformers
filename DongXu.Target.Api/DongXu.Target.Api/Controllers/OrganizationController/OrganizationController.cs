@@ -26,10 +26,10 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             _organization = organization;
         }
-        [HttpGet]
-        public List<Role> GetRolesOList(int Identify)
+        [HttpGet("GetRolesOList")]
+        public List<Role> GetRolesOList()
         {
-            return _organization.GetRolesOList(Identify);
+            return _organization.GetRolesOList();
         }
     }
 }

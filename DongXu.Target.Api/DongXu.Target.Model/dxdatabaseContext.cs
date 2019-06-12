@@ -669,6 +669,10 @@ namespace DongXu.Target.Model
                 entity.Property(e => e.RolePid)
                     .HasColumnName("Role_Pid")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.RoleIdentify)
+                     .HasColumnName("Role_Identify")
+                     .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Rolepower>(entity =>

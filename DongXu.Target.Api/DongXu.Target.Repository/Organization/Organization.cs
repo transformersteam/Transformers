@@ -28,9 +28,10 @@ namespace DongXu.Target.Repository
             return db.Role.Where(m => m.RoleId == id).FirstOrDefault();
         }
 
-        public List<Role> GetRolesOList(int Identify)
+        public List<Role> GetRolesOList()
         {
-            return db.Role.Where(m => m.RoleIdentify == Identify).ToList();
+            List<Role> list= db.Role.Where(m => m.RoleIdentify != 3).ToList();
+            return list;
         }
 
         public int UpdateRolesO(Role model)
