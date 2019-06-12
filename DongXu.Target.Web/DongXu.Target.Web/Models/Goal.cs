@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DongXu.Target.Web
+namespace DongXu.Target.Web.Models
 {
-    /// <summary>
-    /// 目标表
-    /// </summary>
-    public partial class Goal
+    public class Goal
     {
         /// <summary>
         /// 主键id
@@ -107,5 +106,10 @@ namespace DongXu.Target.Web
         /// 待办状态 待办已办
         /// </summary>
         public int BusinessState { get; set; }
+
+        /// <summary>
+        /// 进度百分比
+        /// </summary>
+        public int FeedbackId { get; set; }
     }
 }

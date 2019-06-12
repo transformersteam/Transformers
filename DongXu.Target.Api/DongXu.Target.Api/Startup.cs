@@ -20,7 +20,7 @@ using DongXu.Target.Repository;
 using DongXu.Target.IRepository.IOrganization;
 using DongXu.Target.IRepository.IWaitRead;
 using DongXu.Target.Repository.WaitReadRepository;
-using DongXu.Target.Repository.Excute;
+using DongXu.Target.Repository.Execute;
 
 namespace DongXu.Target.Api
 {

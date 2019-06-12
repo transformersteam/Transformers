@@ -107,5 +107,12 @@ namespace DongXu.Target.Model
         /// 待办状态 待办已办
         /// </summary>
         public int BusinessState { get; set; }
+
+        /// <summary>
+        /// 进度百分比
+        /// </summary>
+        public int FeedbackId { get; set; }
+
+        
     }
 }
