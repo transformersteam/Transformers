@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using DongXu.Target.IRepository;
 using DongXu.Target.IRepository.IExecute;
+
 using DongXu.Target.Repository;
 using DongXu.Target.IRepository.IOrganization;
 using DongXu.Target.IRepository.IWaitRead;
