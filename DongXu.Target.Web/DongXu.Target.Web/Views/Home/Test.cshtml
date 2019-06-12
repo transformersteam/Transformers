@@ -1,0 +1,106 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+</head>
+<body>
+
+    <div>
+        <button onclick="testpost()">post</button>
+        <button onclick="testget()">get</button>
+    </div>
+</body>
+</html>
+<script>
+
+    $(function () {
+        //$.ajax({
+        //    url: 'https://localhost:44355/api/values/Acc',
+        //    type:'post',
+        //    accepts: "application/x-www-form-urlencoded",
+        //    contentType: "application/x-www-form-urlencoded",
+        //    data: {
+        //        'UserId': '1',
+        //        'RoleId': '1'
+        //    },
+        //    success: function (data) {
+        //        if (data > 0) {
+
+        //            alert(data);
+        //        }
+
+        //    }
+
+
+
+        //})
+
+
+
+
+
+
+
+    })
+
+    function testget() {
+        $.ajax({
+            url: 'https://localhost:44355/api/values',
+            success: function (data) {
+
+                alert(data);
+            }
+
+        })
+
+
+
+    }
+
+    function testpost() {
+
+        var model = { UserId: 1, RoleId: 1 };
+        var val = JSON.stringify(model);
+        alert(val)
+        $.ajax({
+            url: "https://localhost:44355/api/values/test",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: val,
+            crossDomain:true,
+            dataType: 'json',
+            success: function (data) {
+                alert(JSON.stringify(data));
+            }
+
+        });
+
+
+        //$.ajax({
+        //    url: "http://localhost:5000/api/Users",
+        //    type: "POST",
+        //    contentType: "application/json; charset=utf-8",
+        //    data: '{ "UserID": 1, "UserName": "test", "UserEmail": "test@cnblogs.com" }',
+        //    dataType: 'json',
+        //    success: function (data) {
+        //        alert(JSON.stringify(data));
+        //    }
+
+        //});
+
+
+    }
+
+
+
+
+</script>
