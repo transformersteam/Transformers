@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DongXu.Target.Model
+namespace DongXu.Target.Web
 {
     /// <summary>
     /// 审批历史表
