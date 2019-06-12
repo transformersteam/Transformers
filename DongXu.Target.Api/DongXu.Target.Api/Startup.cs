@@ -20,7 +20,7 @@ using DongXu.Target.Repository;
 using DongXu.Target.IRepository.IOrganization;
 using DongXu.Target.IRepository.IWaitRead;
 using DongXu.Target.Repository.WaitReadRepository;
-using DongXu.Target.Repository.Excute;
+using DongXu.Target.Repository.Execute;
 
 namespace DongXu.Target.Api
 {
@@ -46,10 +46,10 @@ namespace DongXu.Target.Api
             services.AddScoped<IWaitReadRepository, WaitReadRepository>();
             services.AddScoped<IGoalRepository, GoalRepository>();
 
-            //注册跨域服务，允许所有来源
+             //注册跨域服务，允许所有来源
             services.AddCors(options =>
                 options.AddPolicy("AllowAnyCors",
-                p => p.AllowAnyOrigin())
+                p => p.WithOrigins().AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials())
             );
         }
 
