@@ -603,6 +603,10 @@ namespace DongXu.Target.Model
                 entity.Property(e => e.UserId)
                     .HasColumnName("User_Id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.Goad_Id)
+                    .HasColumnName("Goad_Id")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Power>(entity =>
