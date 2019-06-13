@@ -15,5 +15,7 @@ namespace DongXu.Target.IRepository.IWaitRead
         /// <param name="id"></param>
         /// <returns></returns>
         List<WaitRead> GetWaitReadList(int id);
+
+        List<Role> GetUserRole(int id);
     }
 }

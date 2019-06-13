@@ -31,5 +31,15 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             return _organization.GetRolesOList();
         }
+        [HttpGet("GetRolesOListById")]
+        public Role GetRolesOListById(int RoleId)
+        {
+            return _organization.GetRolesOListById(RoleId);
+        }
+        [HttpPost("AddRolesO")]
+        public int AddRolesO(Role model)
+        {
+            return _organization.AddRolesO(model);
+        }
     }
 }

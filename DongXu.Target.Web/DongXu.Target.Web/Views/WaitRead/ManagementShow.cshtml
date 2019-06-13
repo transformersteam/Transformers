@@ -11,14 +11,16 @@
     <title>管理层首页</title>
     <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/js/vue.js"></script>
-    <script src="~/js/axios.js"></script>
-    <script src="~/js/echarts.min.js"></script>
+    <script src="~/js/axios.js"></script>           
+    <script src="~/js/zpageNav.js"></script>        @*分页js*@
+    <link href="~/js/zpageNav.css" rel="stylesheet" />   @*分页样式*@
+    <script src="~/js/echarts.min.js"></script>    @*Echarts图*@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
     <div style="padding:20px;" id="app">
         <div class="panel panel-primary">
-            <div class="panel-heading">我的待阅<span>({{sum}})</span></div>
+            <div class="panel-heading">我的待阅<span>{{sum}}</span></div>
             <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
@@ -43,12 +45,15 @@
                     </tr>
                 </tbody>
             </table>
+            <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+                      v-bind:max-page="maxPage" v-on:pagehandler="getWaitRead">
+            </zpagenav>
         </div>
         <div class="panel panel-primary">
             <div class="panel-heading">积分排名</div>
             <div id="main" style="width:1200px;height:400px;margin-left:250px"></div>
         </div>
-        <div class="panel panel-primary" style="height:400px">
+        <div class="panel panel-primary" style="height:450px">
             <div class="panel-heading">红绿灯状态</div>
             <div style="float:left">
                 <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
@@ -69,20 +74,32 @@
         el: "#app",
         data: {
             waitread: [],
-            sum:0,
+            page:1,
+            pageSize: 4,
+            total: 100,
+            maxPage: 9,
+            sum:0
         },
-        mounted() {
-            this.getWaitRead();
-            getintegral();
-            getredgreen();
+        mounted() {   //钩子函数
+            this.getWaitRead();    //显示
+            getintegral();         //积分排名
+            getredgreen();         //红绿灯情况
         },
         methods: {
-            getWaitRead: function () {
+            getWaitRead: function () {      //显示
                 axios.get('@Url.Action("GetWaitReadList","WaitRead")', { params:{id:@ViewBag.id}}).then(
                     (response) => {
-                        this.waitread = response.data;
+                        console.log(response.data)
+                        this.waitread = [];
+                        this.total = response.data.total;
+                        this.maxPage = response.data.maxPage;
+                        for (var i = 0; i < response.data.getList.length; i++) {
+                            this.waitread.push(response.data.getList[i]);
+                        }
                     }
-                )
+                ).catch(function (response) {   //捕捉异常
+                    alert(response);
+                })
             }
         }
     })
@@ -159,8 +176,9 @@
                 ]
             };
             myCharty.setOption(option);
-        }
+    }
 
+    //红绿灯情况
     function getredgreen() {
         var myCharty=echarts.init(document.getElementById('redblue'))
         var option = {

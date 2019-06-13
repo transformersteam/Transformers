@@ -21,7 +21,7 @@ namespace DongXu.Target.Web
         /// <summary>
         /// 父级id
         /// </summary>
-        public int? RolePid { get; set; }
+        public int RolePid { get; set; }
 
         /// <summary>
         /// 内容

@@ -41,5 +41,12 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
             var list = _iWaitReadRepository.GetWaitReadList(id);
             return list;
         }
+
+        [HttpGet("GetUserRole")]
+        public List<Role> GetUserRole(int id)
+        {
+            var list = _iWaitReadRepository.GetUserRole(id);
+            return list;
+        }
     }
 }

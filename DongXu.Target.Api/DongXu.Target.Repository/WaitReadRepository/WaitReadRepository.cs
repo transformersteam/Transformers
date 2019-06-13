@@ -41,5 +41,22 @@ namespace DongXu.Target.Repository.WaitReadRepository
                         }).ToList();
             return list;
         }
+
+        /// <summary>
+        /// 根据登录人的id查询用户角色表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<Role> GetUserRole(int id)
+        {
+            int roleid = 0;
+            var list = (from s in context.Userrole where s.UserId==id select s).ToList();
+            foreach (var item in list)
+            {
+                roleid = item.RoleId;
+            }
+            var role = (from s in context.Role where s.RolePid == roleid select s).ToList();
+            return role;
+        }
     }
 }
