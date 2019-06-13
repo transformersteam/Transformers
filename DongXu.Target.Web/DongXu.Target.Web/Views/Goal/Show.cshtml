@@ -60,13 +60,13 @@
                 $(data).each(function (index) {
                     var tr = "<tr>" +
                         "<td>" + this.goalList[index].goalName+"</td>" +
-                        "<td>" + this.goalList[index].frequencyId+"</td>" +
-                        "<td>" + this.goalList[index].goalTypeId+"</td>" +
-                        "<td>" + this.goalList[index].indexLevelId+"</td>" +
+                        "<td>" + this.goalList[index].frequencyName+"</td>" +
+                        "<td>" + this.goalList[index].goalTypeName+"</td>" +
+                        "<td>" + this.goalList[index].indexLevelGrade+"</td>" +
                         "<td>" + this.goalList[index].goalChargePeople+"</td>" +
                         "<td>" + this.goalList[index].goalEndTime + "</td>" +
-                        "<td>" + this.goalList[index].feedbackId+"</td>" +
-                        "<td>" + this.goalList[index].goalStateId+"</td>"
+                        "<td>" + this.goalList[index].feedbackNowEvolve+"</td>" +
+                        "<td>" + this.goalList[index].goalStateName+"</td>"
                         + "</tr>";
                     $("#tb").append(tr);
                 })

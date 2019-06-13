@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DongXu.Target.Model.Dto;
 
 namespace DongXu.Target.Model
 {
@@ -19,6 +20,6 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 状态集合
         /// </summary>
-        public List<Goal> GoalList { get; set; }
+        public List<BackLog> GoalList { get; set; }
     }
 }

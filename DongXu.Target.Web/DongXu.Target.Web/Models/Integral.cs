@@ -22,5 +22,10 @@ namespace DongXu.Target.Web
         /// 积分总数
         /// </summary>
         public int? IntegralNum { get; set; }
+
+        /// <summary>
+        /// 目标id
+        /// </summary>
+        public int Goal_Id { get; set; }
     }
 }
