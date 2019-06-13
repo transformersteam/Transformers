@@ -113,6 +113,17 @@ namespace DongXu.Target.Model
 
         public virtual DbSet<WaitRead> WaitRead { get; set; }
 
+
+
+        public DbQuery<UserQuery> UserQuery { get; set; }
+
+
+
+
+
+
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -718,7 +729,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.UserIsEnable)
                     .HasColumnName("User_IsEnable")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.UserName)
                     .HasColumnName("User_Name")

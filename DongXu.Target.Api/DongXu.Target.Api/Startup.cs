@@ -21,6 +21,7 @@ using DongXu.Target.IRepository.IOrganization;
 using DongXu.Target.IRepository.IWaitRead;
 using DongXu.Target.Repository.WaitReadRepository;
 using DongXu.Target.Repository.Execute;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DongXu.Target.Api
 {
@@ -41,7 +42,14 @@ namespace DongXu.Target.Api
             services.AddDbContext<dxdatabaseContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            //OpenAPI注册
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+
             // 注册接口和实现类的映射关系 
+            services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<IOrganization, Organization>();
             services.AddScoped<IWaitReadRepository, WaitReadRepository>();
             services.AddScoped<IGoalRepository, GoalRepository>();
@@ -64,6 +72,17 @@ namespace DongXu.Target.Api
             {
                 app.UseHsts();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
 
             //允许跨域访问
             app.UseCors("AllowAnyCors");
