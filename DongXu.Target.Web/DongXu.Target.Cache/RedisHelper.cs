@@ -5,6 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using ServiceStack;
+
+using ServiceStack.Redis.Generic;
+using ServiceStack.Redis.Pipeline;
+
+
+
+
 namespace DongXu.Target.Cache
 {
     /// <summary>
@@ -123,19 +131,20 @@ namespace DongXu.Target.Cache
         private readonly string _redisServiceUrl = "127.0.0.1";
         private readonly int _redisServicePortNum = 6379;
 
+        
         //redis缓存对象
-        private RedisClient _redis = null;
+        private ServiceStack.Redis.RedisClient _redis = null;
 
         /// <summary>
         /// 定义缓存对象
         /// </summary>
-        public RedisClient Redis
+        public ServiceStack.Redis.RedisClient Redis
         {
             get
             {
                 if (_redis == null)
                 {
-                    _redis = new RedisClient(_redisServiceUrl, _redisServicePortNum);
+                    _redis = new ServiceStack.Redis.RedisClient(_redisServiceUrl, _redisServicePortNum);
                 }
                 return _redis;
             }

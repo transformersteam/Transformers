@@ -5,15 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="ServiceStack">
-      <HintPath>C:\Users\大王叫我来巡山\Desktop\MvcCoreApiDemo\Dlls\ServiceStack.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Interfaces">
-      <HintPath>C:\Users\大王叫我来巡山\Desktop\MvcCoreApiDemo\Dlls\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.ServiceInterface">
-      <HintPath>C:\Users\大王叫我来巡山\Desktop\MvcCoreApiDemo\Dlls\ServiceStack.ServiceInterface.dll</HintPath>
-    </Reference>
+    <PackageReference Include="ServiceStack" Version="5.5.0" />
+    <PackageReference Include="ServiceStack.Interfaces" Version="5.5.0" />
+    <PackageReference Include="ServiceStack.Redis" Version="5.5.0" />
   </ItemGroup>
 
 </Project>
