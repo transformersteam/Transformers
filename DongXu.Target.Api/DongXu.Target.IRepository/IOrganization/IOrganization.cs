@@ -12,5 +12,6 @@ namespace DongXu.Target.IRepository.IOrganization
         Role GetRolesById(int id);
         int UpdateRolesO(Role model);
         Role GetRolesOListById(int RoleId);
+        int UpdateRolesOName(int RoleId, string RoleName);
     }
 }
