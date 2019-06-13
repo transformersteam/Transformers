@@ -30,14 +30,14 @@ namespace DongXu.Target.Repository.WaitReadRepository
                         where Attention.UserId == id
                         select new WaitRead
                         {
-                            GoalId= s.GoalId,
-                            GoalName=s.GoalName,
-                            GoalStateName=Goalstate.GoalStateName,
-                            IndexLevelGrade=Indexlevel.IndexLevelGrade,
-                            GoalChargePeople=s.GoalChargePeople,
-                            GoalEndTime=s.GoalEndTime,
-                            FeedbackNowEvolve=Feedback.FeedbackNowEvolve,
-                            FeedbackId=Feedback.FeedbackId
+                            GoalId = s.GoalId,
+                            GoalName = s.GoalName,
+                            GoalStateName = Goalstate.GoalStateName,
+                            IndexLevelGrade = Indexlevel.IndexLevelGrade,
+                            GoalChargePeople = s.GoalChargePeople,
+                            GoalEndTime = s.GoalEndTime,
+                            FeedbackNowEvolve = Feedback.FeedbackNowEvolve,
+                            FeedbackId = Feedback.FeedbackId
                         }).ToList();
             return list;
         }
@@ -50,13 +50,57 @@ namespace DongXu.Target.Repository.WaitReadRepository
         public List<Role> GetUserRole(int id)
         {
             int roleid = 0;
-            var list = (from s in context.Userrole where s.UserId==id select s).ToList();
+            var list = (from s in context.Userrole where s.UserId == id select s).ToList();
             foreach (var item in list)
             {
                 roleid = item.RoleId;
             }
-            var role = (from s in context.Role where s.RolePid == roleid select s).ToList();
+            var role = (from s in context.Role where s.RoleId == roleid select s).ToList();
             return role;
+        }
+
+        /// <summary>
+        /// 获取积分列表
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public List<IntergalUser> GetIntegralList(List<int> list)
+        {
+            //List<Integral> interlist = new List<Integral>();
+            //List<Userrole> userrole = new List<Userrole>();
+            //var roleid = from s in list select s;   
+            //foreach (var item in roleid)
+            //{
+            //    var user = (from s in context.Userrole
+            //                   where s.RoleId == item
+            //                   select s).ToList();
+            //    foreach (var us in user)
+            //    {
+            //        int userid = us.UserId;
+            //        var userinter = (from s in context.Integral
+            //                         join User in context.User on s.UserId equals User.UserId
+            //                         where s.UserId == userid
+            //                         select new IntergalUser()
+            //                         {
+            //                             UserId=s.UserId,
+            //                             UserName=User.UserName,
+            //                             IntegralNum=s.IntegralNum
+            //                         }).ToList();
+            //    }  
+            //}
+            List<IntergalUser> interlist = new List<IntergalUser>();
+            foreach (var item in list)
+            {
+                interlist = (from s in context.Integral
+                             join User in context.User on s.UserId equals User.UserId
+                             join Userrole in context.Userrole on item equals Userrole.RoleId
+                             select new IntergalUser
+                             {
+                                 IntegralNum = s.IntegralNum,
+                                 UserName = User.UserName,
+                             }).ToList();
+            }
+            return interlist;
         }
     }
 }
