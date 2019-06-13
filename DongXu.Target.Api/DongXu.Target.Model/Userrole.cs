@@ -16,11 +16,11 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 用户id
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// 角色id
         /// </summary>
-        public int? RoleId { get; set; }
+        public int RoleId { get; set; }
     }
 }

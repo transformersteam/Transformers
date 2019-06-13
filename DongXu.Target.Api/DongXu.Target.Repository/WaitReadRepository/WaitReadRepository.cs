@@ -49,8 +49,12 @@ namespace DongXu.Target.Repository.WaitReadRepository
         /// <returns></returns>
         public List<Role> GetUserRole(int id)
         {
+            int roleid = 0;
             var list = (from s in context.Userrole where s.UserId==id select s).ToList();
-            int roleid =Convert.ToInt32(list.Select(m => m.RoleId));
+            foreach (var item in list)
+            {
+                roleid = item.RoleId;
+            }
             var role = (from s in context.Role where s.RolePid == roleid select s).ToList();
             return role;
         }

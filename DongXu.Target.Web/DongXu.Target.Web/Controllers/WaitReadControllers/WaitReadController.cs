@@ -51,7 +51,7 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
             var userrole = JsonConvert.DeserializeObject<List<Role>>(list);
             foreach (var item in userrole)
             {
-                QueryUser(item.RolePid, userrole);
+                QueryUser(item.RolePid,userrole);
             }
         }
 
