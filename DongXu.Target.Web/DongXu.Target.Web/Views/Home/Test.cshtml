@@ -23,33 +23,6 @@
 <script>
 
     $(function () {
-        //$.ajax({
-        //    url: 'https://localhost:44355/api/values/Acc',
-        //    type:'post',
-        //    accepts: "application/x-www-form-urlencoded",
-        //    contentType: "application/x-www-form-urlencoded",
-        //    data: {
-        //        'UserId': '1',
-        //        'RoleId': '1'
-        //    },
-        //    success: function (data) {
-        //        if (data > 0) {
-
-        //            alert(data);
-        //        }
-
-        //    }
-
-
-
-        //})
-
-
-
-
-
-
-
     })
 
     function testget() {
@@ -59,15 +32,10 @@
 
                 alert(data);
             }
-
         })
-
-
-
     }
 
     function testpost() {
-
         var model = { UserId: 1, RoleId: 1 };
         var val = JSON.stringify(model);
         alert(val)
@@ -81,23 +49,7 @@
             success: function (data) {
                 alert(JSON.stringify(data));
             }
-
         });
-
-
-        //$.ajax({
-        //    url: "http://localhost:5000/api/Users",
-        //    type: "POST",
-        //    contentType: "application/json; charset=utf-8",
-        //    data: '{ "UserID": 1, "UserName": "test", "UserEmail": "test@cnblogs.com" }',
-        //    dataType: 'json',
-        //    success: function (data) {
-        //        alert(JSON.stringify(data));
-        //    }
-
-        //});
-
-
     }
 
 
