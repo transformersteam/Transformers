@@ -44,5 +44,28 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
             };
             return Json(page);
         }
+
+        public void GetUserRole(int id)
+        {
+            var list= HelperHttpClient.GetAll("get", "WaitRead/GetUserRole?id=" + id, null);
+            var userrole = JsonConvert.DeserializeObject<List<Role>>(list);
+            foreach (var item in userrole)
+            {
+                QueryUser(item.RolePid, userrole);
+            }
+        }
+
+        List<Role> tmplist = new List<Role>();
+        public void QueryUser(int roleid,List<Role> list)
+        {
+            var userlist = list.Where(m => m.RolePid == roleid).ToList();
+            foreach (var item in userlist)
+            {
+                Role role = new Role();
+                role.RoleId = item.RoleId;
+                tmplist.Add(role);
+                QueryUser(item.RoleId, userlist);
+            }
+        }
     }
 }
