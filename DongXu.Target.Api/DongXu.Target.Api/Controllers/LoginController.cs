@@ -38,7 +38,8 @@ namespace DongXu.Target.Api.Controllers
         public User Login(string UserName, string UserPass)
         {
             var result = _login.Login(UserName, UserPass);
-            return result[0];
+
+            return result;
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace DongXu.Target.IRepository
 {
    public  interface ILoginRepository
     {
-        List<User> Login(string UserName, string UserPass); 
+        User Login(string UserName, string UserPass); 
         List<UserQuery> GetPower(int UserId);  
     }
 }

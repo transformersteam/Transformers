@@ -24,9 +24,9 @@ namespace DongXu.Target.Repository
             return query;
         }
 
-        public List<User> Login(string UserName, string UserPass)
+        public User Login(string UserName, string UserPass)
         {
-           var query= Context.User.Where(u => u.UserName == UserName).Where(u => u.UserPass == UserPass).ToList();
+            var query = Context.User.Where(u => u.UserName == UserName).Where(u => u.UserPass == UserPass).FirstOrDefault();
             return query;
         }
     }
