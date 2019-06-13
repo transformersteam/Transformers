@@ -34,6 +34,12 @@ namespace DongXu.Target.Repository
             return list;
         }
 
+        public Role GetRolesOListById(int RoleId)
+        {
+            Role list = db.Role.Where(m => m.RoleIdentify != 3 && m.RoleId==RoleId).FirstOrDefault();
+            return list;
+        }
+
         public int UpdateRolesO(Role model)
         {
             var oldrole = db.Role.Where(m => m.RoleId == model.RoleId).FirstOrDefault();
