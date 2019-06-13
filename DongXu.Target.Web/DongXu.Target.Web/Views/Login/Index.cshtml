@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>用户名：</td>
+                <td><input id="txtName" type="text" /></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input id="txtpass" type="text" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input id="Button1" type="button" onclick="login()" value="button" /></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
+
+<script>
+    login = function () {
+        alert(123);
+        var Name = $("#txtName").val();
+        var Pwd = $("#txtpass").val();
+        $.ajax({
+            type: "post",
+            url: "/Login/LoginIn",
+            data: { name: Name, pwd: Pwd },
+            async: false,
+            success: function (result) {
+                (result == 0) ? alert("登录失败") : window.location.href = '/shopping/index';
+            }
+        })
+    }
+
+
+</script>
