@@ -41,5 +41,15 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             return _organization.AddRolesO(model);
         }
+        [HttpGet("DeleteRolesO")]
+        public int DeleteRolesO(int id)
+        {
+            return _organization.DeleteRolesO(id);
+        }
+        [HttpPost("UpdateRolesOName")]
+        public int UpdateRolesOName(Role role)
+        {
+            return _organization.UpdateRolesOName(role.RoleId,role.RoleName);
+        }
     }
 }
