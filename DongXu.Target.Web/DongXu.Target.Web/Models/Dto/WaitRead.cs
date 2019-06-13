@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace DongXu.Target.Web.Dto
+namespace DongXu.Target.Web
 {
     /// <summary>
     /// 待阅

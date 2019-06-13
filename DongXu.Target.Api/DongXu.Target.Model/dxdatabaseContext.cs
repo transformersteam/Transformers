@@ -445,6 +445,11 @@ namespace DongXu.Target.Model
                 entity.Property(e => e.BusinessState)
                     .HasColumnName("Business_State")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.FeedbackId)
+                    .HasColumnName("Feedback_Id")
+                    .HasColumnType("int(11)");
+                
             });
 
             modelBuilder.Entity<Goalstate>(entity =>
@@ -655,7 +660,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.RoleIsEnable)
                     .HasColumnName("Role_IsEnable")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.RoleModifyPeople)
                     .HasColumnName("Role_ModifyPeople")
