@@ -73,5 +73,16 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
             var list = HelperHttpClient.GetAll("post", "WaitRead/GetIntegralList", tmplist);
             return Json(list);
         }
+
+        /// <summary>
+        /// 运行情况
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetRunCondition()
+        {
+            var list = HelperHttpClient.GetAll("get", "WaitRead/GetRunConditionList");  //根据登录人的id去查询它的角色
+            var condition = JsonConvert.DeserializeObject<List<GoalStateGoal>>(list);
+            return Json(condition);
+        }
     }
 }

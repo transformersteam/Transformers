@@ -56,5 +56,16 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
             var interlist = _iWaitReadRepository.GetIntegralList(val);
             return interlist;
         }
+
+        /// <summary>
+        /// 运行情况
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetRunConditionList")]
+        public List<GoalStateGoal> GetRunConditionList()
+        {
+            var list = _iWaitReadRepository.GetRunConditionList();
+            return list;
+        }
     }
 }
