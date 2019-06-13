@@ -13,6 +13,7 @@
     <script src="~/js/vue.js"></script>
     <script src="~/js/axios.js"></script>
     <script src="~/js/zpageNav.js"></script>
+    <link href="~/js/zpageNav.css" rel="stylesheet" />
     <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -38,7 +39,7 @@
         <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style="" />
     </div>
     <div class="mainresponsibility" id="mainresponsibility">
-        <table>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <td>业务名称</td>
@@ -66,6 +67,50 @@
                   v-bind:max-page="maxPage" v-on:pagehandler="pagehandler">
         </zpagenav>
     </div>
+    <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
+    <div id='main' style='width:600px;height:400px;'></div>
+    <!--引入echarts.js-->
+    <script src="~/echars/echarts.js"></script>
+<script>
+    //基于准备好的DOM，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var option = {
+        title: {
+            text: '积分排名',
+        },
+        tooltip: {},
+        legend: {
+            data: ['子公司']
+        },
+        xAxis: [
+            {
+                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '子公司',
+                type: 'bar',
+                data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                markPoint: {
+                    data: [
+                        { type: 'max', name: '最大值' },
+                        { type: 'min', name: '最小值' }
+                    ]
+                },
+
+            },
+        ]
+    };
+    //使用刚指定的配置项和数据显示图表
+    myChart.setOption(option);
+</script>
+
 </body>
 </html>
 <script>
@@ -139,7 +184,7 @@
             page: 1,//显示的哪一页
             pageSize: 5,//每一页显示的数据条数
             total: 100,//记录总数
-            maxPage: 9//最大页数
+            maxPage: 20//最大页数
         },
         mounted() {//进入页面即加载
             this.pagehandler();
@@ -151,50 +196,21 @@
                     this.mainresponsibilitylist = [];
                     this.total = response.data.total;
                     this.maxPage = response.data.maxPage;
-                    this.mainresponsibilitylist.push = response.data;
-
+                    for (var i = 0; i < response.data.mainResponsibilityList.length; i++) {
+                        this.mainresponsibilitylist.push(response.data.mainResponsibilityList[i]);
+                    }
                 });
             }
         }
     })
 
-    
 
-        //var option = {
-        //    title: {
-        //        text: '积分排名',
-        //    },
-        //    tooltip: {},
-        //    legend: {
-        //        data: ['子公司']
-        //    },
-        //    xAxis: [
-        //        {
-        //            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-        //        }
-        //    ],
-        //    yAxis: [
-        //        {
-        //            type: 'value'
-        //        }
-        //    ],
-        //    series: [
-        //        {
-        //            name: '子公司',
-        //            type: 'bar',
-        //            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-        //            markPoint: {
-        //                data: [
-        //                    { type: 'max', name: '最大值' },
-        //                    { type: 'min', name: '最小值' }
-        //                ]
-        //            },
 
-        //        },
-        //    ]
-        //};
-    
-    
+
+
+
+
+
 </script>
 
 
