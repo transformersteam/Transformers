@@ -118,10 +118,7 @@ namespace DongXu.Target.Model
         public DbQuery<UserQuery> UserQuery { get; set; }
 
 
-
-
-
-
+        public DbQuery<GoalStateGoal> GoalStateGoal { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
