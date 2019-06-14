@@ -24,7 +24,7 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
             //实例化HTTP客户端
             HttpClient hc = new HttpClient();
             //配置HTTP客户端要访问的服务器地址 主机名+端口+API+控制器+/
-            hc.BaseAddress = new Uri("http://localhost:51042/api/Integral/");
+            hc.BaseAddress = new Uri("http://localhost:8888/api/Integral/");
             //创建取服务端回包的任务
             Task<HttpResponseMessage> task = null;
 
@@ -101,8 +101,6 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
         {
             return View();
         }
-
-
 
     }
 }
