@@ -18,13 +18,20 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             var result = HelperHttpClient.GetAll("post", "Organization/UpdateRolesO", json);
             return Json(result);
         }
-        //public IActionResult Role()
-        //{
-        //    return View();
-        //}
+        public IActionResult Role()
+        {
+            return View();
+        }
         public IActionResult RoleIndex()
         {
             return View();
+        }
+        //查询角色
+        public List<Role> GetRolesRList()
+        {
+            var json = HelperHttpClient.GetAll("get","Organization/GetRolesRList",null);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(json);
+            return list;
         }
     }
 }
