@@ -75,23 +75,37 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         }
 
         /// <summary>
-        /// 运行情况
+        /// 运行情况Echarts
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetEchartRunCondition()
+        {
+            List<int> datacount = new List<int>();
+            List<string> dataname = new List<string>();
+            var list = HelperHttpClient.GetAll("get", "WaitRead/GetRunConditionList");  
+            var condition = JsonConvert.DeserializeObject<List<GoalStateGoal>>(list);
+            EchartModel echartModel = new EchartModel();
+            foreach (var item in condition)
+            {             
+                echartModel.name = item.GoalState_Name;
+                echartModel.value = item.count;
+                datacount.Add(echartModel.value);
+                dataname.Add(echartModel.name);
+            }
+            echartModel.dataname = dataname;
+            echartModel.datacount = datacount;
+            return Json(echartModel);
+        }
+
+        /// <summary>
+        /// 运行情况表格
         /// </summary>
         /// <returns></returns>
         public JsonResult GetRunCondition()
         {
-            var list = HelperHttpClient.GetAll("get", "WaitRead/GetRunConditionList");  //根据登录人的id去查询它的角色
+            var list = HelperHttpClient.GetAll("get", "WaitRead/GetRunConditionList");
             var condition = JsonConvert.DeserializeObject<List<GoalStateGoal>>(list);
-            List<EchartModel> echartlist = new List<EchartModel>();
-            for (int i = 0; i < condition.Count(); i++)
-            {
-                EchartModel model = new EchartModel();
-                model.name = condition[i].GoalState_Name;
-                model.value = condition[i].count;
-                echartlist.Add(model);
-            }
-            string tmpdata = JsonConvert.SerializeObject(echartlist);
-            return Json(tmpdata);
+            return Json(condition);
         }
     }
 }
