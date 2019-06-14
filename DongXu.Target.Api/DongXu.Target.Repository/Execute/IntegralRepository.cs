@@ -20,7 +20,7 @@ namespace DongXu.Target.Repository.Execute
         /// <returns></returns>
         public List<NumQuery> GetIntegralList()
         {
-            var query = context.NumQuery.FromSql("select Role.Role_Id,COUNT(Integral.Integral_Num) as num,Role.Role_Name from Integral join Role on Integral.Role_Id = Role.Role_Id  group by Role.Role_Id  order by COUNT(Integral.Integral_Num) desc").ToList();
+            var query = context.NumQuery.FromSql("select User.User_Id,SUM(Integral.Integral_Num) as num, User.User_Name from Integral join User on Integral.User_Id = User.User_Id  group by User.User_Id order by SUM(Integral.Integral_Num) desc").ToList();
             return query;
         }
     }

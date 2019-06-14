@@ -7,9 +7,9 @@ namespace DongXu.Target.Model.Dto
     public class NumQuery
     {
         /// <summary>
-        /// 公司id
+        /// 用户id
         /// </summary>
-        public int Role_Id { get; set; }
+        public int User_Id { get; set; }
 
         /// <summary>
         /// 积分总数
@@ -17,8 +17,8 @@ namespace DongXu.Target.Model.Dto
         public int num { get; set; } 
 
         /// <summary>
-        /// 角色名称
+        /// 用户名称
         /// </summary>
-        public string Role_Name { get; set; }
+        public string User_Name { get; set; }
     }
 }

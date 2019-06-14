@@ -81,8 +81,8 @@
             type: "get",
             success: function (data) {
 
-                var name = data.role_Name;
-                var num = data.integral_Num;
+                var name = data.userName;
+                var num = data.integralNum;
 
                 //基于准备好的DOM，初始化echarts实例
                 var myChart = echarts.init(document.getElementById('main'));
@@ -92,11 +92,11 @@
                     },
                     tooltip: {},
                     legend: {
-                        data: ['子公司']
+                        data: ['人员']
                     },
                     xAxis: [
                         {
-                            data: name
+                            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
                         }
                     ],
                     yAxis: [
@@ -108,7 +108,7 @@
                         {
                             name: '子公司',
                             type: 'bar',
-                            data: num,
+                            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
                             markPoint: {
                                 data: [
                                     { type: 'max', name: '最大值' },
