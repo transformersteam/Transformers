@@ -14,13 +14,13 @@ namespace DongXu.Target.Repository.Execute
         private dxdatabaseContext context = new dxdatabaseContext();
 
         /// <summary>
-        /// 根据Id获取子公司积分
+        /// 根据Id获取各人员积分
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
         public List<NumQuery> GetIntegralList()
         {
-            var query = context.NumQuery.FromSql("select User.User_Id,SUM(Integral.Integral_Num) as num, User.User_Name from Integral join User on Integral.User_Id = User.User_Id  group by User.User_Id order by SUM(Integral.Integral_Num) desc").ToList();
+            var query = context.NumQuery.FromSql("select User.User_Id,SUM(Integral.Integral_Num) as num, User.User_RealName from Integral join User on Integral.User_Id = User.User_Id  group by User.User_Id order by SUM(Integral.Integral_Num) desc").ToList();
             return query;
         }
     }

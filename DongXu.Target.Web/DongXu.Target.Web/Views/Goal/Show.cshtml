@@ -77,12 +77,15 @@
    
     $(function() {
         $.ajax({
-            url: "http://localhost:51042/api/Integral/GetIntegralList",
+            url: "/Goal/Indexecharts",
             type: "get",
             success: function (data) {
+                console.log(data);
 
-                var name = data.userName;
-                var num = data.integralNum;
+                var name = data.nameList;
+                var num = data.numList;
+
+                
 
                 //基于准备好的DOM，初始化echarts实例
                 var myChart = echarts.init(document.getElementById('main'));
@@ -96,7 +99,7 @@
                     },
                     xAxis: [
                         {
-                            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                            data: name
                         }
                     ],
                     yAxis: [
@@ -104,18 +107,37 @@
                             type: 'value'
                         }
                     ],
+                    barWidth: 35,
                     series: [
                         {
                             name: '子公司',
                             type: 'bar',
-                            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                            data: num,
                             markPoint: {
                                 data: [
-                                    { type: 'max', name: '最大值' },
-                                    { type: 'min', name: '最小值' }
+                                    //{ type: 'max', name: '最大值' },
+                                    //{ type: 'min', name: '最小值' }
                                 ]
                             },
-
+                            itemStyle: {
+                                normal: {
+                                    //定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                    color: function(params) {
+                                        // build a color map as your need.
+                                        var colorList = [
+                                            '#BBFFBB', '#FFFF37', '#FFFF37','#FF0000'
+                                        ];
+                                        return colorList[params.dataIndex]
+                                    },
+                                    //以下为是否显示，显示位置和显示格式的设置了
+                                    label: {
+                                        show: true,
+                                        position: 'top',
+//                             formatter: '{c}'
+                                        formatter: '{b}\n{c}'
+                                    }
+                                }
+                            },
                         },
                     ]
                 };
