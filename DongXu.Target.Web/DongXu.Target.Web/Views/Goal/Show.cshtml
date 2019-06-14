@@ -13,6 +13,7 @@
     <script src="~/js/vue.js"></script>
     <script src="~/js/axios.js"></script>
     <script src="~/js/zpageNav.js"></script>
+    <script src="~/js/DateTimeConvert.js"></script>
     <link href="~/js/zpageNav.css" rel="stylesheet" />
     <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
 </head>
@@ -38,7 +39,7 @@
         <input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" style="margin-right: 10px" />
         <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style="" />
     </div>
-    <div class="mainresponsibility" id="mainresponsibility">
+    <div id="mainresponsibility">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -53,13 +54,13 @@
             </thead>
             <tbody>
                 <tr v-for="item in mainresponsibilitylist">
-                    <td>{{item.GoalName}}</td>
-                    <td>{{item.GoalStateName}}</td>
-                    <td>{{item.IndexLevelGrade}}</td>
-                    <td>{{item.GoalChargePeople}}</td>
-                    <td>{{item.GoalEndTime}}</td>
-                    <td>{{item.FeedbackNowEvolve}}</td>
-                    <td>{{item.GoalStateName}}</td>
+                    <td>{{item.goalName}}</td>
+                    <td>{{item.goalStateName}}</td>
+                    <td>{{item.indexLevelGrade}}</td>
+                    <td>{{item.goalChargePeople}}</td>
+                    <td>{{item.goalEndTime}}</td>
+                    <td>{{item.feedbackNowEvolve}}</td>
+                    <td>{{item.goalStateName}}</td>
                 </tr>
             </tbody>
         </table>
@@ -72,43 +73,59 @@
     <!--引入echarts.js-->
     <script src="~/echars/echarts.js"></script>
 <script>
-    //基于准备好的DOM，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-    var option = {
-        title: {
-            text: '积分排名',
-        },
-        tooltip: {},
-        legend: {
-            data: ['子公司']
-        },
-        xAxis: [
-            {
-                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
-        series: [
-            {
-                name: '子公司',
-                type: 'bar',
-                data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                markPoint: {
-                    data: [
-                        { type: 'max', name: '最大值' },
-                        { type: 'min', name: '最小值' }
-                    ]
-                },
 
-            },
-        ]
-    };
-    //使用刚指定的配置项和数据显示图表
-    myChart.setOption(option);
+   
+    $(function() {
+        $.ajax({
+            url: "http://localhost:51042/api/Integral/GetIntegralList",
+            type: "get",
+            success: function (data) {
+
+                var name = data.role_Name;
+                var num = data.integral_Num;
+
+                //基于准备好的DOM，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'));
+                var option = {
+                    title: {
+                        text: '积分排名',
+                    },
+                    tooltip: {},
+                    legend: {
+                        data: ['子公司']
+                    },
+                    xAxis: [
+                        {
+                            data: name
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '子公司',
+                            type: 'bar',
+                            data: num,
+                            markPoint: {
+                                data: [
+                                    { type: 'max', name: '最大值' },
+                                    { type: 'min', name: '最小值' }
+                                ]
+                            },
+
+                        },
+                    ]
+                };
+                //使用刚指定的配置项和数据显示图表
+                myChart.setOption(option);
+            }
+        })
+    })
+    
+    
 </script>
 
 </body>
@@ -135,13 +152,14 @@
                 console.log(data);
                 $("#tb").empty();
                 $(data).each(function (index) {
+                    var time = dateFormat(this.goalList[index].goalEndTime);
                     var tr = "<tr>" +
                         "<td>" + this.goalList[index].goalName + "</td>" +
                         "<td>" + this.goalList[index].frequencyName + "</td>" +
                         "<td>" + this.goalList[index].goalTypeName + "</td>" +
                         "<td>" + this.goalList[index].indexLevelGrade + "</td>" +
                         "<td>" + this.goalList[index].goalChargePeople + "</td>" +
-                        "<td>" + this.goalList[index].goalEndTime + "</td>" +
+                        "<td>" + time + "</td>" +
                         "<td>" + this.goalList[index].feedbackNowEvolve + "</td>" +
                         "<td>" + this.goalList[index].goalStateName + "</td>"
                         + "</tr>";
@@ -203,14 +221,7 @@
             }
         }
     })
-
-
-
-
-
-
-
-
+    
 </script>
 
 

@@ -54,6 +54,7 @@ namespace DongXu.Target.Api
             services.AddScoped<IWaitReadRepository, WaitReadRepository>();
             services.AddScoped<IGoalRepository, GoalRepository>();
             services.AddScoped<IResponsibilityRepository,ResponsibilityRepository>();
+            services.AddScoped<IIntegralRepository, IntegralRepository>();
 
             //注册跨域服务，允许所有来源
             services.AddCors(options =>

@@ -117,6 +117,7 @@ namespace DongXu.Target.Model
 
         public DbQuery<UserQuery> UserQuery { get; set; }
 
+        public DbQuery<NumQuery> NumQuery { get; set; } 
 
 
 
@@ -617,6 +618,10 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.Goad_Id)
                     .HasColumnName("Goad_Id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RoleId) 
+                    .HasColumnName("Role_Id")
                     .HasColumnType("int(11)");
             });
 

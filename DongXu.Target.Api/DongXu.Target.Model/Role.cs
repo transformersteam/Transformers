@@ -58,5 +58,7 @@ namespace DongXu.Target.Model
         
         //标识列
         public int RoleIdentify { get; set; }
+
+        
     }
 }
