@@ -12,7 +12,8 @@ namespace DongXu.Target.Repository
         public int AddRolesO(Role model)
         {
             db.Role.Add(model);
-            return db.SaveChanges();
+            db.SaveChanges();
+            return model.RoleId;
         }
 
 
@@ -54,7 +55,6 @@ namespace DongXu.Target.Repository
             if(oldrole!=null)
             {
                 oldrole.RoleName = model.RoleName;
-                oldrole.RolePid = model.RolePid;
                 oldrole.RoleIsEnable = model.RoleIsEnable;
                 oldrole.RoleModifyPeople = model.RoleModifyPeople;
                 oldrole.RoleModifyTime = model.RoleModifyTime;
@@ -65,12 +65,14 @@ namespace DongXu.Target.Repository
                 return 0;
             }
         }
-        public int UpdateRolesOName(int RoleId,string RoleName)
+        public int UpdateRolesOName(Role model)
         {
-            var oldrole = db.Role.Where(m => m.RoleId == RoleId).FirstOrDefault();
+            var oldrole = db.Role.Where(m => m.RoleId == model.RoleId).FirstOrDefault();
             if (oldrole != null)
             {
-                oldrole.RoleName = RoleName;
+                oldrole.RoleName = model.RoleName;
+                oldrole.RoleModifyPeople = model.RoleModifyPeople;
+                oldrole.RoleModifyTime = model.RoleModifyTime;
                 return db.SaveChanges();
             }
             else

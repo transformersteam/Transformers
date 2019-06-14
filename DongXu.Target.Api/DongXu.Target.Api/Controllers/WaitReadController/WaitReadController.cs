@@ -48,5 +48,24 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
             var list = _iWaitReadRepository.GetUserRole(id);
             return list;
         }
+
+        [HttpPost("GetIntegralList")]
+        public List<IntergalUser> GetIntegralList([FromBody]List<int> val)
+        {
+           // var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(val);
+            var interlist = _iWaitReadRepository.GetIntegralList(val);
+            return interlist;
+        }
+
+        /// <summary>
+        /// 运行情况
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetRunConditionList")]
+        public List<GoalStateGoal> GetRunConditionList()
+        {
+            var list = _iWaitReadRepository.GetRunConditionList();
+            return list;
+        }
     }
 }

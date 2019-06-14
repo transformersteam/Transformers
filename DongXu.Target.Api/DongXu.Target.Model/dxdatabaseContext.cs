@@ -119,10 +119,7 @@ namespace DongXu.Target.Model
 
         public DbQuery<NumQuery> NumQuery { get; set; } 
 
-
-
-
-
+        public DbQuery<GoalStateGoal> GoalStateGoal { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
