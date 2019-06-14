@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DongXu.Target.Model.Dto
+namespace DongXu.Target.Web.Models.Dto
 {
     public class NumQuery
     {
