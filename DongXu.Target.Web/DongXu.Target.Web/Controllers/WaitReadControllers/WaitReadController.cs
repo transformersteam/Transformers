@@ -82,7 +82,16 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         {
             var list = HelperHttpClient.GetAll("get", "WaitRead/GetRunConditionList");  //根据登录人的id去查询它的角色
             var condition = JsonConvert.DeserializeObject<List<GoalStateGoal>>(list);
-            return Json(condition);
+            List<EchartModel> echartlist = new List<EchartModel>();
+            for (int i = 0; i < condition.Count(); i++)
+            {
+                EchartModel model = new EchartModel();
+                model.name = condition[i].GoalState_Name;
+                model.value = condition[i].count;
+                echartlist.Add(model);
+            }
+            string tmpdata = JsonConvert.SerializeObject(echartlist);
+            return Json(tmpdata);
         }
     }
 }
