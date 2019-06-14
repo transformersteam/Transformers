@@ -12,5 +12,11 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
         {
             return View();
         }
+        public JsonResult UpdateRolesO(Role model)
+        {
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+            var result = HelperHttpClient.GetAll("post", "Organization/UpdateRolesO", json);
+            return Json(result);
+        }
     }
 }

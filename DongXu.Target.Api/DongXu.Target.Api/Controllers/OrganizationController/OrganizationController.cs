@@ -26,6 +26,10 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             _organization = organization;
         }
+        /// <summary>
+        /// 组织管理
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetRolesOList")]
         public List<Role> GetRolesOList()
         {
@@ -50,6 +54,17 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         public int UpdateRolesOName(Role model)
         {
             return _organization.UpdateRolesOName(model);
+        }
+        /// <summary>
+        /// 岗位管理
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        [HttpPost("UpdateRolesO")]
+        public int UpdateRolesO([FromBody]string json)
+        {
+            Role model = Newtonsoft.Json.JsonConvert.DeserializeObject<Role>(json);
+            return _organization.UpdateRolesO(model);
         }
     }
 }
