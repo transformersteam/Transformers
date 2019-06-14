@@ -14,9 +14,9 @@ namespace DongXu.Target.IRepository.IOrganization
         int UpdateRolesO(Role model);
         Role GetRolesOListById(int RoleId);
         int UpdateRolesOName(Role model);
-        List<Role> GetRolesRList();
+        List<Role> GetRolesGList();
         RoleUserQuery GetRoleUserQueryList(int RoleId);
-        List<User> GetUsersList();
+        List<Role> GetRolesRList();
         //RoleUserQuery GetRoleUserQueryListById(int RoleId);
     }
 }

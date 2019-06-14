@@ -26,5 +26,12 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
         {
             return View();
         }
+        //查询角色
+        public List<Role> GetRolesRList()
+        {
+            var json = HelperHttpClient.GetAll("get","Organization/GetRolesRList",null);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(json);
+            return list;
+        }
     }
 }
