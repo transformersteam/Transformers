@@ -15,7 +15,6 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
         {
             return View();
         }
-
         //三个参数第一个参数是他的Http请求方法 第二个是方法名称  第三个是对象参数
         public string GetAll(string request, string actionName, object obj = null)
         {
@@ -61,7 +60,6 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
         {
             return View();
         }
-
         /// <summary>
         /// 积分
         /// </summary>

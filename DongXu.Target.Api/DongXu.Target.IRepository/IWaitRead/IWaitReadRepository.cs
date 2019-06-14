@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 using DongXu.Target.Model;
@@ -16,12 +17,8 @@ namespace DongXu.Target.IRepository.IWaitRead
         /// <returns></returns>
         List<WaitRead> GetWaitReadList(int id);
 
-        List<Role> GetUserRole(int id);
-
-        List<IntergalUser> GetIntegralList(List<int> list);
+        DataTable GetUserIntergal(int id);
 
         List<GoalStateGoal> GetRunConditionList();
-
-        List<IntergalUser> GetIntergalData(int id);
     }
 }

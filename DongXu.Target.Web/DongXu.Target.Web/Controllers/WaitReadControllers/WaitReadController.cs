@@ -46,32 +46,48 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
             return Json(page);
         }
 
-        public void GetUserRole(int id)
+        /// <summary>
+        /// 目标详情页面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult TargetDetails()
         {
-            var list = HelperHttpClient.GetAll("get", "WaitRead/GetUserRole?id=" + id, null);  //根据登录人的id去查询它的角色
-            var userrole = JsonConvert.DeserializeObject<List<Role>>(list);
-            foreach (var item in userrole)
-            {
-                QueryUser(item.RoleId, userrole);
-            }
+            return View();
         }
 
-        List<int> tmplist = new List<int>();
-        public void QueryUser(int roleid, List<Role> list)
+        /// <summary>
+        /// 根据id显示目标详情信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult DetailsShow(int id)
         {
-            var userlist = list.Where(m => m.RolePid == roleid).ToList();
-            foreach (var item in userlist)
-            {
-                tmplist.Add(item.RoleId);
-                QueryUser(item.RoleId, userlist);
-            }
+            return null;
         }
 
-        public JsonResult Intergal(int id)
+        /// <summary>
+        /// 用户积分
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetIntergalUser(int id)
         {
-            GetUserRole(3);
-            var list = HelperHttpClient.GetAll("post", "WaitRead/GetIntegralList", tmplist);
-            return Json(list);
+            List<int> datacount = new List<int>();
+            List<string> dataname = new List<string>();
+            var model = HelperHttpClient.GetAll("get", "WaitRead/GetUserIntergal?id=" + id, null);
+            var list = JsonConvert.DeserializeObject<List<UserIntegral>>(model);
+            EchartModel echartModel = new EchartModel();
+            foreach (var item in list)
+            {
+                echartModel.name = item.User_Name;
+                echartModel.value = item.Integral_Num;
+                datacount.Add(echartModel.value);
+                dataname.Add(echartModel.name);
+            }
+            echartModel.dataname = dataname;
+            echartModel.datacount = datacount;
+            return Json(echartModel);
         }
 
         /// <summary>
