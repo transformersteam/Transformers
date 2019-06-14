@@ -13,6 +13,7 @@
     <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/zTree_v3/js/jquery.ztree.all.min.js"></script>
     <script src="~/js/vue.js"></script>
+    <script src="~/js/axios.js"></script>
     <style>
         #max {
             width: 1500px;
@@ -75,8 +76,8 @@
                 <tr>
                     <td>组织状态:</td>
                     <td>
-                        <input id="Radio1" type="radio" value="启用" v-model="RoleIsEnable" /> 启用
-                        <input id="Radio1" type="radio" value="禁用" v-model="RoleIsEnable" /> 禁用
+                        <input id="Radio1" type="radio" value="1" v-model="RoleIsEnable" /> 启用
+                        <input id="Radio1" type="radio" value="0" v-model="RoleIsEnable" /> 禁用
                     </td>
                     <td></td>
                     <td></td>
@@ -96,9 +97,9 @@
                     <td><input id="updateTime" type="text" v-model="RoleModifyTime" readonly /></td>
                 </tr>
                 <tr>
+                    <td>{{RoleId}}</td>
+                    <td><input id="Button1" type="button" v-on:click="updateRole(RoleId,RoleName,RoleIsEnable,RoleIdentify,'超级管理员')" value="修改" /></td>
                     <td></td>
-                    <td></td>
-                    <td><input id="Button1" type="button"  :click="updateRole()" value="修改"/></td>
                     <td></td>
                 </tr>
             </table>
@@ -109,33 +110,18 @@
 <script>
     var zNodes = "";
     var RoleName = "";
-    var vm = new Vue({
-        el: "#max",
-        data: {
-            RoleName: "",
-            RoleIdentify: "",
-            RoleIsEnable: "启用",
-            RoleCreatePeople: "",
-            RoleCreateTime: "",
-            RoleModifyPeople: "",
-            RoleModifyTime: "",
-            hierarchyList: [
-                { id: '0', name: '集团总部' },
-                { id: '1', name: '集团公司' },
-                { id: '2', name: '集团部门' }
-            ],
-        },
-        created() {
-
-        },
-        methods: {
-            updateRole: function () {
-                var params = new URLSearchParams();
-                params.append('id', '123');
-                params.append('name', 'zlf');
-            }
-        }
-    })
+    var name = "NewNode";
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    var nowDate = year + "-" + month + "-" + day;
     $(function () {
         GetRolesOList();
     })
@@ -196,7 +182,7 @@
     //获取结点
     function GetRolesOList() {
         $.ajax({
-            url: "http://localhost:59538/api/Organization/GetRolesOList",
+            url: "http://localhost:8888/api/Organization/GetRolesOList",
             async: false,
             success: function (data) {
                 var json = eval(data); // 数组
@@ -228,16 +214,17 @@
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         $.ajax({
-            url: "http://localhost:59538/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
+            url: "http://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
             async: false,
             success: function (data) {
+                vm.$data.RoleId = data.roleId;
                 vm.$data.RoleName = data.roleName;
                 vm.$data.RoleIdentify = data.roleIdentify;
                 if (data.roleIsEnable == 1) {
-                    vm.$data.RoleIsEnable = "启用";
+                    vm.$data.RoleIsEnable = "1";
                 }
                 else {
-                    vm.$data.RoleIsEnable = "禁用";
+                    vm.$data.RoleIsEnable = "0";
                 }
 
                 vm.$data.RoleCreatePeople = data.roleCreatePeople;
@@ -267,7 +254,6 @@
         for (var i = 0; i < nodes.length; i++) {
             nodes[i].name = obj;
             zTree.updateNode(nodes[i]);
-            alert(111);
         }
     }
     /**
@@ -333,7 +319,7 @@
             var model = { RoleName: name, RolePid: treeNode.id, RoleCreatePeople: "管理员", RoleCreateTime: nowDate };
             var val = JSON.stringify(model);
             $.ajax({
-                url: "http://localhost:59538/api/Organization/AddRolesO",
+                url: "http://localhost:8888/api/Organization/AddRolesO",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: val,
@@ -350,49 +336,6 @@
             return false;
         });
     }
-    // 添加结点
-    //var newCount = 1;
-    //function addHoverDom(treeId, treeNode) {
-    //        var date = new Date();
-    //        var year = date.getFullYear();
-    //        var month = date.getMonth() + 1;
-    //        var day = date.getDate();
-    //        if (month < 10) {
-    //            month = "0" + month;
-    //        }
-    //        if (day < 10) {
-    //            day = "0" + day;
-    //        }
-    //        var nowDate = year + "-" + month + "-" + day;
-    //        var name = 'NewNode';
-    //        var model = { RoleName: name, RolePid: treeNode.id, RoleCreatePeople: "管理员", RoleCreateTime: nowDate};
-    //        var val = JSON.stringify(model);
-    //        $.ajax({
-    //            url: "http://localhost:59538/api/Organization/AddRolesO",
-    //            type: "POST",
-    //            contentType: "application/json; charset=utf-8",
-    //            data: val,
-    //            crossDomain: true,
-    //            dataType: 'json',
-    //            success: function (data) {
-    //                var sObj = $("#" + treeNode.tId + "_span");
-    //                if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
-    //                var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-    //                    + "' title='添加子节点' onfocus='this.blur();'></span>";
-    //                sObj.after(addStr);
-    //                var btn = $("#addBtn_" + treeNode.tId);
-    //                if (btn) btn.bind("click", function () {
-    //                    var zTree = $.fn.zTree.getZTreeObj("regionZTree");
-    //                    var newnade = { id: data, name: name, pId: treeNode.id };
-    //                    zTree.addNodes(treeNode, newnade);
-    //                    var node = zTree.getNodeByParam("id", newID, null); //根据新的id找到新添加的节点
-    //                    zTree.selectNode(node); //让新添加的节点处于选中状态
-    //                });
-    //            }
-
-    //        });
-    //        return false;
-    //}
         /**
      * 选择节点
      * param obj
@@ -405,7 +348,7 @@
     function zTreeOnRemove(event, treeId, treeNode) {
         {
             $.ajax({
-                url: "http://localhost:59538/api/Organization/DeleteRolesO?id=" + treeNode.id,
+                url: "http://localhost:8888/api/Organization/DeleteRolesO?id=" + treeNode.id,
                 type: "get",
                 success: function (data) {
                     if (data > 0) {
@@ -434,7 +377,7 @@
         var model = { "roleId": treeNode.id, "roleName": treeNode.name, "roleModifyPeople": "超级管理员", "roleModifyTime": nowDate };
         var val = JSON.stringify(model);
         $.ajax({
-            url: "http://localhost:59538/api/Organization/UpdateRolesOName",
+            url: "http://localhost:8888/api/Organization/UpdateRolesOName",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: val,
@@ -447,7 +390,52 @@
                     alert('修改失败');
                 }
             }
-
         });
     };
+    var vm = new Vue({
+        el: "#max",
+        data: {
+            RoleId: "",
+            RoleName: "",
+            RoleIdentify: "",
+            RoleIsEnable: "1",
+            RoleCreatePeople: "",
+            RoleCreateTime: "",
+            RoleModifyPeople: "",
+            RoleModifyTime: "",
+            hierarchyList: [
+                { id: '0', name: '集团总部' },
+                { id: '1', name: '集团公司' },
+                { id: '2', name: '集团部门' }
+            ],
+        },
+        created() {
+
+        },
+        methods: {
+            updateRole: function (RoleId, RoleName, RoleIsEnable, RoleIdentify, RoleModifyPeople) {
+                var params = new URLSearchParams();
+                params.append('RoleId', RoleId);
+                params.append('RoleName', RoleName);
+                params.append('RoleIsEnable', RoleIsEnable);
+                params.append('RoleIdentify', RoleIdentify);
+                params.append('RoleModifyPeople', RoleModifyPeople);
+                params.append('RoleModifyTime', nowDate);
+
+                axios.post("/Organization/UpdateRolesO", params).then((response) => {
+                    if (response.data > 0) { 
+                        /*根据 treeId 获取 zTree 对象*/
+                        var zTree = $.fn.zTree.getZTreeObj("regionZTree"),
+                            type = "refresh",
+                            silent = false,
+                            /*获取 zTree 当前被选中的节点数据集合*/
+                            nodes = zTree.getSelectedNodes();
+                        /*强行异步加载父节点的子节点。[setting.async.enable = true 时有效]*/
+                        zTree.reAsyncChildNodes(nodes[0], type, silent);
+                        alert('修改成功');
+                    }
+                });
+            }
+        }
+    })
 </script>

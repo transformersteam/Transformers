@@ -115,47 +115,47 @@ namespace DongXu.Target.Repository.WaitReadRepository
 
         public List<IntergalUser> GetIntergalData(int id)
         {
-            var tmpuser = (from s in context.Userrole where s.UserId == id select s).ToList();  //获取到用户角色
-            int roleid = 0;
-            foreach (var item in tmpuser)
-            {
-                roleid = item.RoleId;
-            }
-            var idenmodel = (from s in context.Role where s.RoleId == id select s).ToList();
-            int idenid = 0;
-            foreach (var item in idenmodel)
-            {
-                idenid = item.RoleIdentify;
-            }
-            var list = (from s in context.Role where s.RoleIdentify > idenid select s).ToList();  //获取到下属角色信息
-            List<int> roleidlist = new List<int>();
+            //var tmpuser = (from s in context.Userrole where s.UserId == id select s).ToList();  //获取到用户角色
+            //int roleid = 0;
+            //foreach (var item in tmpuser)
+            //{
+            //    roleid = item.RoleId;
+            //}
+            //var idenmodel = (from s in context.Role where s.RoleId == id select s).ToList();
+            //int idenid = 0;
+            //foreach (var item in idenmodel)
+            //{
+            //    idenid = item.RoleIdentify;
+            //}
+            //var list = (from s in context.Role where s.RoleIdentify > idenid select s).ToList();  //获取到下属角色信息
+            //List<int> roleidlist = new List<int>();
 
-            foreach (var item in list)
-            {
-                roleidlist.Add(item.RoleId);  //获取到角色id
-            }
-            List<int> useridlist = new List<int>();
+            //foreach (var item in list)
+            //{
+            //    roleidlist.Add(item.RoleId);  //获取到角色id
+            //}
+            //List<int> useridlist = new List<int>();
 
-            foreach (var item in roleidlist)
-            {
-                useridlist.Add(Convert.ToInt32(from s in context.Userrole where s.RoleId == item select s.UserId));
-            }
-            string userid = "";
-            foreach (var item in useridlist)
-            {
-                userid += item;  //获取到用户id
-            }
-            List<IntergalUser> intergalUsers = new List<IntergalUser>();        
-            foreach (var item in userid)
-            {
-                IntergalUser intergalUser = new IntergalUser();
-                intergalUser.UserName = (from s in context.User where s.UserId == item select s.UserName).ToString();
-                intergalUser.IntegralNum = Convert.ToInt32((from s in context.Integral where s.UserId == item select s.IntegralNum));
-                intergalUser.UserId = item;
-                intergalUsers.Add(intergalUser);
-            }
-            return intergalUsers;
-
+            //foreach (var item in roleidlist)
+            //{
+            //    useridlist.Add(from s in context.Userrole where s.RoleId == item select s.UserId);
+            //}
+            //string userid = "";
+            //foreach (var item in useridlist)
+            //{
+            //    userid += item;  //获取到用户id
+            //}
+            //List<IntergalUser> intergalUsers = new List<IntergalUser>();        
+            //foreach (var item in userid)
+            //{
+            //    IntergalUser intergalUser = new IntergalUser();
+            //    intergalUser.UserName = (from s in context.User where s.UserId == item select s.UserName).ToString();
+            //    intergalUser.IntegralNum = Convert.ToInt32((from s in context.Integral where s.UserId == item select s.IntegralNum));
+            //    intergalUser.UserId = item;
+            //    intergalUsers.Add(intergalUser);
+            //}
+            //return intergalUsers;
+            return null;
 
 
             //for (int i = 0; i < userid.Length; i++)

@@ -39,7 +39,7 @@ namespace DongXu.Target.Repository
 
         public List<Role> GetRolesOList()
         {
-            List<Role> list= db.Role.Where(m => m.RoleIdentify != 3).ToList();
+            List<Role> list= db.Role.Where(m => m.RoleIdentify <3).ToList();
             return list;
         }
 
@@ -55,6 +55,7 @@ namespace DongXu.Target.Repository
             if(oldrole!=null)
             {
                 oldrole.RoleName = model.RoleName;
+                oldrole.RoleIdentify = model.RoleIdentify;
                 oldrole.RoleIsEnable = model.RoleIsEnable;
                 oldrole.RoleModifyPeople = model.RoleModifyPeople;
                 oldrole.RoleModifyTime = model.RoleModifyTime;
@@ -79,6 +80,15 @@ namespace DongXu.Target.Repository
             {
                 return 0;
             }
+        }
+        /// <summary>
+        /// 角色
+        /// </summary>
+        /// <returns></returns>
+        public List<Role> GetRolesRList()
+        {
+            List<Role> list = db.Role.Where(m => m.RoleIdentify < 3).ToList();
+            return list;
         }
     }
 }

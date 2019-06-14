@@ -10,5 +10,9 @@ namespace DongXu.Target.Web
         public string name { get; set; }
 
         public int value { get; set; }
+
+        public List<int> datacount { get; set; }
+
+        public List<string> dataname { get; set; }
     }
 }

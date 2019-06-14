@@ -67,5 +67,12 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
             var list = _iWaitReadRepository.GetRunConditionList();
             return list;
         }
+
+        [HttpGet("GetIntergalData")]
+        public List<IntergalUser> GetIntergalData(int id)
+        {
+            var list = _iWaitReadRepository.GetIntergalData(id);
+            return list;
+        }
     }
 }

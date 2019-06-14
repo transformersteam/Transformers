@@ -21,7 +21,6 @@ namespace DongXu.Target.Web
 
             hc.BaseAddress = new Uri("http://localhost:8888/api/");
 
-            hc.BaseAddress = new Uri("http://localhost:64835/api/");
 
             hc.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
