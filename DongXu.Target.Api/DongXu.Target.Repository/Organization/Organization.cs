@@ -81,5 +81,14 @@ namespace DongXu.Target.Repository
                 return 0;
             }
         }
+        /// <summary>
+        /// 角色
+        /// </summary>
+        /// <returns></returns>
+        public List<Role> GetRolesRList()
+        {
+            List<Role> list = db.Role.Where(m => m.RoleIdentify < 3).ToList();
+            return list;
+        }
     }
 }
