@@ -422,7 +422,8 @@
                 params.append('RoleModifyPeople', RoleModifyPeople);
                 params.append('RoleModifyTime', nowDate);
 
-                axios.post("/Organization/UpdateRolesO", params).then((response) => {                    if (response.data > 0) { 
+                axios.post("/Organization/UpdateRolesO", params).then((response) => {
+                    if (response.data > 0) { 
                         /*根据 treeId 获取 zTree 对象*/
                         var zTree = $.fn.zTree.getZTreeObj("regionZTree"),
                             type = "refresh",
