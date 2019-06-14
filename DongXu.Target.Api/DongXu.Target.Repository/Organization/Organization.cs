@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using DongXu.Target.IRepository.IOrganization;
+using DongXu.Target.Model.Dto;
+using Microsoft.EntityFrameworkCore;
 
 namespace DongXu.Target.Repository
 {
@@ -34,7 +36,8 @@ namespace DongXu.Target.Repository
 
         public Role GetRolesById(int id)
         {
-            return db.Role.Where(m => m.RoleId == id).FirstOrDefault();
+            Role role= db.Role.Where(m => m.RoleId == id).FirstOrDefault();
+            return role;
         }
 
         public List<Role> GetRolesOList()
@@ -85,10 +88,27 @@ namespace DongXu.Target.Repository
         /// 角色
         /// </summary>
         /// <returns></returns>
-        public List<Role> GetRolesRList()
+        public List<Role> GetRolesGList()
         {
-            List<Role> list = db.Role.Where(m => m.RoleIdentify < 3).ToList();
+            List<Role> list = db.Role.Where(m => m.RoleIdentify < 4).ToList();
             return list;
         }
+
+        public RoleUserQuery GetRoleUserQueryList(int RoleId)
+        {
+            RoleUserQuery role = db.RoleUserQuery.FromSql("SELECT * from role a INNER JOIN userrole b on a.Role_Id=b.Role_Id INNER JOIN `user` c on b.User_Id=c.User_Id WHERE a.Role_Identify=3").FirstOrDefault();
+            return role;
+        }
+
+        public List<Role> GetRolesRList()
+        {
+            List<Role> list = db.Role.Where(m => m.RoleIdentify==3).ToList();
+            return list;
+        }
+
+        //public RoleUserQuery GetRoleUserQueryListById(int RoleId)
+        //{
+        //    RoleUserQuery roleuser = db.RoleUserQuery.FromSql("").FirstOrDefault();
+        //}
     }
 }
