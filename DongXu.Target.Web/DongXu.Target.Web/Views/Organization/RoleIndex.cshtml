@@ -52,9 +52,9 @@
                     <td>描述信息</td>
                     <td>操作</td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
+                <tr v-for="item in rolelist">
+                    <td>{{item.RoleName}}</td>
+                    <td>{{item.RoleContent}}</td>
                     <td></td>
                 </tr>
             </table>
@@ -63,5 +63,17 @@
 </body>
 </html>
 <script>
+    var vm = new Vue({
+        el: "#max",
+        data: {
+            rolelist:[]
+        },
+        created() {
+
+        },
+        methods: {
+
+        }
+    })
 
 </script>

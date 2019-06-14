@@ -216,11 +216,7 @@
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         $.ajax({
-
-
-
             url: "http://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
-
             async: false,
             success: function (data) {
                 vm.$data.RoleId = data.roleId;
@@ -357,10 +353,7 @@
     function zTreeOnRemove(event, treeId, treeNode) {
         {
             $.ajax({
-
-
                 url: "http://localhost:8888/api/Organization/DeleteRolesO?id=" + treeNode.id,
-
                 type: "get",
                 success: function (data) {
                     if (data > 0) {
