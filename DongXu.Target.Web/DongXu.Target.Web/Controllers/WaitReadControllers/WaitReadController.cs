@@ -20,7 +20,7 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult ManagementShow(int id)
+        public ActionResult ManagementShow(int id=1)
         {
             ViewBag.id = id;
             return View();

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace DongXu.Target.Web.Controllers
 {
@@ -53,7 +54,9 @@ namespace DongXu.Target.Web.Controllers
                     PowerList = ls
                 };
                 WriteCookie(loginModel);
-               // WriteDataToCookie(loginModel);
+                //HttpContext.Session.SetString("User_Id", user.userId.ToString());
+                 
+                // WriteDataToCookie(loginModel);
                 return 1;
             }
             
