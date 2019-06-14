@@ -112,5 +112,65 @@ namespace DongXu.Target.Repository.WaitReadRepository
             var list = context.GoalStateGoal.FromSql("SELECT ROUND(COUNT(a.GoalState_Id)/6*100,2) as percent,COUNT(a.GoalState_Id) as count ,b.GoalState_Name,b.GoalState_Explain FROM goal a INNER JOIN goalstate b on a.GoalState_Id = b.GoalState_Id GROUP BY b.GoalState_Name").ToList();
             return list;
         }
+
+        public List<IntergalUser> GetIntergalData(int id)
+        {
+            var tmpuser = (from s in context.Userrole where s.UserId == id select s).ToList();  //获取到用户角色
+            int roleid = 0;
+            foreach (var item in tmpuser)
+            {
+                roleid = item.RoleId;
+            }
+            var idenmodel = (from s in context.Role where s.RoleId == id select s).ToList();
+            int idenid = 0;
+            foreach (var item in idenmodel)
+            {
+                idenid = item.RoleIdentify;
+            }
+            var list = (from s in context.Role where s.RoleIdentify > idenid select s).ToList();  //获取到下属角色信息
+            List<int> roleidlist = new List<int>();
+
+            foreach (var item in list)
+            {
+                roleidlist.Add(item.RoleId);  //获取到角色id
+            }
+            List<int> useridlist = new List<int>();
+
+            foreach (var item in roleidlist)
+            {
+                useridlist.Add(Convert.ToInt32(from s in context.Userrole where s.RoleId == item select s.UserId));
+            }
+            string userid = "";
+            foreach (var item in useridlist)
+            {
+                userid += item;  //获取到用户id
+            }
+            List<IntergalUser> intergalUsers = new List<IntergalUser>();        
+            foreach (var item in userid)
+            {
+                IntergalUser intergalUser = new IntergalUser();
+                intergalUser.UserName = (from s in context.User where s.UserId == item select s.UserName).ToString();
+                intergalUser.IntegralNum = Convert.ToInt32((from s in context.Integral where s.UserId == item select s.IntegralNum));
+                intergalUser.UserId = item;
+                intergalUsers.Add(intergalUser);
+            }
+            return intergalUsers;
+
+
+
+            //for (int i = 0; i < userid.Length; i++)
+            //{
+            //    //var interlist = (from s in context.Integral
+            //    //                 join User in context.User on s.UserId equals User.UserId
+            //    //                 where s.UserId == userid[i]
+            //    //                 select new IntergalUser
+            //    //                 {
+            //    //                      UserName=User.UserName,
+            //    //                      IntegralNum=s.IntegralNum,
+
+            //    //                 })
+            //}
+
+        }
     }
 }

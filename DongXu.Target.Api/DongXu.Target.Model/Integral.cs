@@ -6,7 +6,7 @@ namespace DongXu.Target.Model
     /// <summary>
     /// 积分表
     /// </summary>
-    public partial class Integral
+    public  class Integral
     {
         /// <summary>
         /// 主键id
@@ -27,5 +27,10 @@ namespace DongXu.Target.Model
         /// 目标id
         /// </summary>
         public int Goad_Id { get; set; }
+
+        /// <summary>
+        /// 公司id
+        /// </summary>
+        public int RoleId { get; set; }
     }
 }

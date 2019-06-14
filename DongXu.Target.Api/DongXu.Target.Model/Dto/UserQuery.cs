@@ -4,10 +4,12 @@ using System.Text;
 
 namespace DongXu.Target.Model.Dto
 {
-   public class UserQuery
-    { /// <summary>
-      /// 用户id
-      /// </summary>
+    public class UserQuery
+    {  
+        
+        /// <summary>
+        /// 用户id
+        /// </summary>
         //public int UserId { get; set; }
 
         /// <summary>
@@ -23,7 +25,7 @@ namespace DongXu.Target.Model.Dto
         /// <summary>
         /// 真实姓名
         /// </summary>
-       // public string UserRealName { get; set; }
+        // public string UserRealName { get; set; }
 
         /// <summary>
         /// 用户角色名称
@@ -34,7 +36,7 @@ namespace DongXu.Target.Model.Dto
         /// <summary>
         /// 是否启用
         /// </summary>
-      //  public bool UserIsEnable { get; set; }
+        //  public bool UserIsEnable { get; set; }
 
         public int Power_Id { get; set; }
         public string Power_Name { get; set; }

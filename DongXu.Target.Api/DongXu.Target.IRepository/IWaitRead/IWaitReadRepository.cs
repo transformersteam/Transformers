@@ -21,5 +21,7 @@ namespace DongXu.Target.IRepository.IWaitRead
         List<IntergalUser> GetIntegralList(List<int> list);
 
         List<GoalStateGoal> GetRunConditionList();
+
+        List<IntergalUser> GetIntergalData(int id);
     }
 }
