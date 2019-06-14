@@ -92,5 +92,14 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
             public List<string> NameList { get; set; }
             public List<int> NumList { get; set; }              
         }
+
+        /// <summary>
+        /// 待办事项显示 方法
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult List() 
+        {
+            return View();
+        }
     }
 }
