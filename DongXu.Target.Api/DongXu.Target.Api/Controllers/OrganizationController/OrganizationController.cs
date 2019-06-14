@@ -19,6 +19,7 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         /// 定义私有变量
         /// </summary>
         private readonly IOrganization _organization;
+
         /// <summary>
         /// 构造函数注入
         /// </summary>
@@ -27,6 +28,7 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             _organization = organization;
         }
+
         /// <summary>
         /// 组织管理
         /// </summary>
@@ -36,32 +38,44 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             return _organization.GetRolesOList();
         }
+
+
         [HttpGet("GetRolesOListById")]
         public Role GetRolesOListById(int RoleId)
         {
             return _organization.GetRolesOListById(RoleId);
         }
+
+
         [HttpPost("AddRolesO")]
         public int AddRolesO(Role model)
         {
             return _organization.AddRolesO(model);
         }
+
+
         [HttpGet("DeleteRolesO")]
         public int DeleteRolesO(int id)
         {
             return _organization.DeleteRolesO(id);
         }
+
+
         [HttpPost("UpdateRolesOName")]
         public int UpdateRolesOName(Role model)
         {
             return _organization.UpdateRolesOName(model);
         }
+
+
         [HttpPost("UpdateRolesO")]
         public int UpdateRolesO([FromBody]string json)
         {
             Role model = Newtonsoft.Json.JsonConvert.DeserializeObject<Role>(json);
             return _organization.UpdateRolesO(model);
         }
+
+
         /// <summary>
         /// 岗位管理
         /// </summary>
@@ -72,6 +86,8 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             return _organization.GetRolesRList();
         }
+
+
         [HttpGet("GetRolesRList")]
         public List<Role> GetRolesRList()
         {

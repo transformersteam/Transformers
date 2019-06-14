@@ -113,6 +113,6 @@ namespace DongXu.Target.Model
         /// </summary>
         public int FeedbackId { get; set; }
 
-        
+        public int Goal_DutyUserId { get; set; }
     }
 }

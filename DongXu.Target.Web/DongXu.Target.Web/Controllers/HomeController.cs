@@ -15,8 +15,8 @@ namespace DongXu.Target.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        [MyActionFilter]
-       // [AllowAnonymous]
+        //[MyActionFilter]
+       [AllowAnonymous]
         public IActionResult Index()
         {
             return View();

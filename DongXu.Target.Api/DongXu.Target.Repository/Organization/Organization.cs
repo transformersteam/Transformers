@@ -106,6 +106,11 @@ namespace DongXu.Target.Repository
             return list;
         }
 
+        public List<User> GetUsersList()
+        {
+            throw new System.NotImplementedException();
+        }
+
         //public RoleUserQuery GetRoleUserQueryListById(int RoleId)
         //{
         //    RoleUserQuery roleuser = db.RoleUserQuery.FromSql("").FirstOrDefault();

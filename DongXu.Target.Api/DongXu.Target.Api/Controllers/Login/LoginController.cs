@@ -52,7 +52,6 @@ namespace DongXu.Target.Api.Controllers
         {
             var result = _login.GetPower(UserId);
             return result;
-
         }
 
     }

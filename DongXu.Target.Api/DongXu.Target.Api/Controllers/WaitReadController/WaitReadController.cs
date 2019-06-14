@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 using DongXu.Target.IRepository.IWaitRead;
 using DongXu.Target.Model.Dto;
+using System.Data;
 
 namespace DongXu.Target.Api.Controllers.WaitReadController
 {
@@ -42,19 +43,16 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
             return list;
         }
 
-        [HttpGet("GetUserRole")]
-        public List<Role> GetUserRole(int id)
+        /// <summary>
+        /// 根据登录人的id获取积分列表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetUserIntergal")]
+        public DataTable GetUserIntergal(int id)
         {
-            var list = _iWaitReadRepository.GetUserRole(id);
+            var list = _iWaitReadRepository.GetUserIntergal(id);
             return list;
-        }
-
-        [HttpPost("GetIntegralList")]
-        public List<IntergalUser> GetIntegralList([FromBody]List<int> val)
-        {
-           // var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(val);
-            var interlist = _iWaitReadRepository.GetIntegralList(val);
-            return interlist;
         }
 
         /// <summary>
@@ -65,13 +63,6 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
         public List<GoalStateGoal> GetRunConditionList()
         {
             var list = _iWaitReadRepository.GetRunConditionList();
-            return list;
-        }
-
-        [HttpGet("GetIntergalData")]
-        public List<IntergalUser> GetIntergalData(int id)
-        {
-            var list = _iWaitReadRepository.GetIntergalData(id);
             return list;
         }
     }
