@@ -18,9 +18,7 @@ namespace DongXu.Target.Web
             HttpClient hc = new HttpClient();
             //配置HTTP客户端要访问的服务器地址 主机名+端口+API+控制器+/
 
-            hc.BaseAddress = new Uri("https://localhost:44355/api/");
-
-            hc.BaseAddress = new Uri("http://localhost:64835/api/");
+            hc.BaseAddress = new Uri("http://localhost:8888/api/");
             hc.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
             //创建取服务端回包的任务
