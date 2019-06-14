@@ -123,6 +123,7 @@ namespace DongXu.Target.Model
 
         public DbQuery<UserIntegral> UserIntegral { get; set; }
 
+        public DbQuery<RoleUserQuery> RoleUserQuery { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

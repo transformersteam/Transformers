@@ -18,5 +18,13 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             var result = HelperHttpClient.GetAll("post", "Organization/UpdateRolesO", json);
             return Json(result);
         }
+        //public IActionResult Role()
+        //{
+        //    return View();
+        //}
+        public IActionResult RoleIndex()
+        {
+            return View();
+        }
     }
 }

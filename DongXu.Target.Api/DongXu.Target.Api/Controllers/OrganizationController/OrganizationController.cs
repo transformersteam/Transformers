@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using DongXu.Target.IRepository;
 using DongXu.Target.Model;
 using DongXu.Target.IRepository.IOrganization;
+using DongXu.Target.Model.Dto;
 
 namespace DongXu.Target.Api.Controllers.OrganizationController
 {
@@ -55,16 +56,31 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             return _organization.UpdateRolesOName(model);
         }
-        /// <summary>
-        /// 岗位管理
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns></returns>
         [HttpPost("UpdateRolesO")]
         public int UpdateRolesO([FromBody]string json)
         {
             Role model = Newtonsoft.Json.JsonConvert.DeserializeObject<Role>(json);
             return _organization.UpdateRolesO(model);
         }
+        /// <summary>
+        /// 岗位管理
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        [HttpGet("GetRolesRList")]
+        public List<Role> GetRolesGList()
+        {
+            return _organization.GetRolesRList();
+        }
+        [HttpGet("GetRolesRList")]
+        public List<Role> GetRolesRList()
+        {
+            return _organization.GetRolesRList();
+        }
+        //[HttpGet("GetRoleUserQueryList")]
+        //public List<RoleUserQuery> GetRoleUserQueryList(int RoleId)
+        //{
+        //    return _organization.GetRoleUserQueryList(RoleId);
+        //}
     }
 }

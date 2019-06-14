@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DongXu.Target.Model;
+using DongXu.Target.Model.Dto;
 namespace DongXu.Target.IRepository.IOrganization
 {
     public interface IOrganization
@@ -14,5 +15,8 @@ namespace DongXu.Target.IRepository.IOrganization
         Role GetRolesOListById(int RoleId);
         int UpdateRolesOName(Role model);
         List<Role> GetRolesRList();
+        RoleUserQuery GetRoleUserQueryList(int RoleId);
+        List<User> GetUsersList();
+        //RoleUserQuery GetRoleUserQueryListById(int RoleId);
     }
 }
