@@ -81,10 +81,10 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        [HttpGet("GetRolesRList")]
+        [HttpGet("GetRolesGList")]
         public List<Role> GetRolesGList()
         {
-            return _organization.GetRolesRList();
+            return _organization.GetRolesGList();
         }
 
 
