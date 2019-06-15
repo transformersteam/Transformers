@@ -86,7 +86,7 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         [HttpGet("GetRolesGList")]
         public List<Role> GetRolesGList()
         {
-            return _organization.GetRolesRList();
+            return _organization.GetRolesGList();
         }
 
 

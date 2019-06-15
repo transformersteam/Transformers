@@ -9,6 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>RoleIndex</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/js/vue.js"></script>
     <script src="~/js/axios.js"></script>
     <style>
@@ -25,9 +26,13 @@
         }
 
         #management {
-            width: 100px;
+            width: 100%;
             height: 75%;
         }
+
+            #management table {
+                width: 1200px;
+            }
     </style>
 </head>
 <body>
@@ -46,16 +51,16 @@
         </div>
         <div id="management">
             <div style="width:100%;height:20px;">角色管理</div>
-            <table>
+            <table class="table-striped">
                 <tr>
                     <td>角色名称</td>
                     <td>描述信息</td>
                     <td>操作</td>
                 </tr>
                 <tr v-for="item in rolelist">
-                    <td>{{item.RoleName}}</td>
-                    <td>{{item.RoleContent}}</td>
-                    <td></td>
+                    <td>{{item.roleName}}</td>
+                    <td>{{item.roleContent}}</td>
+                    <td><input id="Button1" type="button" value="删除" /></td>
                 </tr>
             </table>
         </div>
@@ -69,10 +74,15 @@
             rolelist:[]
         },
         created() {
-
+            this.GetRoleRList();
         },
         methods: {
-
+            GetRoleRList: function () {
+                axios.get("/Organization/GetRolesRList").then((response) => {
+                    console.log(response);
+                    this.rolelist = response.data;
+                });
+            }
         }
     })
 
