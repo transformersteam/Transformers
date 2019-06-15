@@ -27,11 +27,24 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return View();
         }
         //查询角色
-        public List<Role> GetRolesRList()
+        public Paged<Role> GetRolesRList(int pageindex=1,int pagesize=6,string name="")
         {
+            if(name==null)
+            {
+                name = "";
+            }
             var json = HelperHttpClient.GetAll("get","Organization/GetRolesRList",null);
             var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(json);
-            return list;
+            var total = list.Count(m => m.RoleName.Contains(name));
+            var maxpage = Math.Ceiling(double.Parse(((float)total / pagesize).ToString()));
+            var rolesList = list.Where(m => m.RoleName.Contains(name)).Skip((pageindex - 1) * pagesize).Take(pagesize).ToList();
+            var rolesPageList = new Paged<Role>
+            {
+                maxPage = int.Parse(maxpage.ToString()),
+                total = total,
+                GetList = rolesList
+            };
+            return rolesPageList;
         }
     }
 }

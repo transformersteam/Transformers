@@ -18,13 +18,13 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         /// <summary>
         /// 定义私有变量
         /// </summary>
-        private readonly IOrganization _organization;
+        private readonly IOrganizationRepository _organization;
 
         /// <summary>
         /// 构造函数注入
         /// </summary>
         /// <param name="organization"></param>
-        public OrganizationController(IOrganization organization)
+        public OrganizationController(IOrganizationRepository organization)
         {
             _organization = organization;
         }

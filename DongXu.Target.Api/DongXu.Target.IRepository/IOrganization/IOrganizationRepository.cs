@@ -5,7 +5,7 @@ using DongXu.Target.Model;
 using DongXu.Target.Model.Dto;
 namespace DongXu.Target.IRepository.IOrganization
 {
-    public interface IOrganization
+    public interface IOrganizationRepository
     {
         List<Role> GetRolesOList();
         int AddRolesO(Role model);

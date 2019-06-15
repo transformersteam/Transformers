@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DongXu.Target.Repository
 {
-    public class Organization : IOrganization
+    public class OrganizationRepository : IOrganizationRepository
     {
         dxdatabaseContext db = new dxdatabaseContext();
-
+        //组织管理添加
         public int AddRolesO(Role model)
         {
             db.Role.Add(model);
@@ -18,7 +18,7 @@ namespace DongXu.Target.Repository
             return model.RoleId;
         }
 
-
+        //组织管理删除
         public int DeleteRolesO(int id)
         {
             var roleo = db.Role.Where(m => m.RoleId == id).FirstOrDefault();
@@ -33,25 +33,25 @@ namespace DongXu.Target.Repository
             return resCount;
         }
 
-
+        //组织管理反填
         public Role GetRolesById(int id)
         {
             Role role= db.Role.Where(m => m.RoleId == id).FirstOrDefault();
             return role;
         }
-
+        //组织管理显示
         public List<Role> GetRolesOList()
         {
             List<Role> list= db.Role.Where(m => m.RoleIdentify <3).ToList();
             return list;
         }
-
+        //组织管理 根据id显示
         public Role GetRolesOListById(int RoleId)
         {
             Role list = db.Role.Where(m => m.RoleIdentify != 3 && m.RoleId==RoleId).FirstOrDefault();
             return list;
         }
-
+        // 组织管理 修改
         public int UpdateRolesO(Role model)
         {
             var oldrole = db.Role.Where(m => m.RoleId == model.RoleId).FirstOrDefault();
@@ -69,6 +69,7 @@ namespace DongXu.Target.Repository
                 return 0;
             }
         }
+        // 组织管理 修改
         public int UpdateRolesOName(Role model)
         {
             var oldrole = db.Role.Where(m => m.RoleId == model.RoleId).FirstOrDefault();
@@ -88,24 +89,27 @@ namespace DongXu.Target.Repository
         /// 角色
         /// </summary>
         /// <returns></returns>
+        // 岗位 显示
         public List<Role> GetRolesGList()
         {
             List<Role> list = db.Role.Where(m => m.RoleIdentify < 4).ToList();
             return list;
         }
-
+        //显示 岗位下 显示用户
         public RoleUserQuery GetRoleUserQueryList(int RoleId)
         {
             RoleUserQuery role = db.RoleUserQuery.FromSql("SELECT * from role a INNER JOIN userrole b on a.Role_Id=b.Role_Id INNER JOIN `user` c on b.User_Id=c.User_Id WHERE a.Role_Identify=3").FirstOrDefault();
             return role;
         }
-
+        // 角色 显示
         public List<Role> GetRolesRList()
         {
             List<Role> list = db.Role.Where(m => m.RoleIdentify==3).ToList();
             return list;
         }
 
+
+        //人员显示
         public List<User> GetUsersList()
         {
             throw new System.NotImplementedException();

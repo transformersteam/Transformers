@@ -50,7 +50,7 @@ namespace DongXu.Target.Api
 
             // 注册接口和实现类的映射关系 
             services.AddScoped<ILoginRepository, LoginRepository>();
-            services.AddScoped<IOrganization, Organization>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<IWaitReadRepository, WaitReadRepository>();
             services.AddScoped<IGoalRepository, GoalRepository>();
             services.AddScoped<IResponsibilityRepository,ResponsibilityRepository>();
