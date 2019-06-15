@@ -33,5 +33,13 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(json);
             return list;
         }
+
+        public IActionResult PostJob()
+        {
+
+            return View();
+        }
+
+
     }
 }

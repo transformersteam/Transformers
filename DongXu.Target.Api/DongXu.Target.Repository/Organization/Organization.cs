@@ -4,6 +4,8 @@ using System.Linq;
 using DongXu.Target.IRepository.IOrganization;
 using DongXu.Target.Model.Dto;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace DongXu.Target.Repository
 {
@@ -36,26 +38,26 @@ namespace DongXu.Target.Repository
 
         public Role GetRolesById(int id)
         {
-            Role role= db.Role.Where(m => m.RoleId == id).FirstOrDefault();
+            Role role = db.Role.Where(m => m.RoleId == id).FirstOrDefault();
             return role;
         }
 
         public List<Role> GetRolesOList()
         {
-            List<Role> list= db.Role.Where(m => m.RoleIdentify <3).ToList();
+            List<Role> list = db.Role.Where(m => m.RoleIdentify != 3).ToList();
             return list;
         }
 
         public Role GetRolesOListById(int RoleId)
         {
-            Role list = db.Role.Where(m => m.RoleIdentify != 3 && m.RoleId==RoleId).FirstOrDefault();
+            Role list = db.Role.Where(m => m.RoleIdentify != 3 && m.RoleId == RoleId).FirstOrDefault();
             return list;
         }
 
         public int UpdateRolesO(Role model)
         {
             var oldrole = db.Role.Where(m => m.RoleId == model.RoleId).FirstOrDefault();
-            if(oldrole!=null)
+            if (oldrole != null)
             {
                 oldrole.RoleName = model.RoleName;
                 oldrole.RoleIdentify = model.RoleIdentify;
@@ -100,9 +102,13 @@ namespace DongXu.Target.Repository
             return role;
         }
 
+        /// <summary>
+        /// 岗位维护
+        /// </summary>
+        /// <returns></returns>
         public List<Role> GetRolesRList()
         {
-            List<Role> list = db.Role.Where(m => m.RoleIdentify==3).ToList();
+            List<Role> list = db.Role.Where(m => m.RoleIdentify == 3).ToList();
             return list;
         }
 
@@ -115,5 +121,52 @@ namespace DongXu.Target.Repository
         //{
         //    RoleUserQuery roleuser = db.RoleUserQuery.FromSql("").FirstOrDefault();
         //}
+
+
+
+
+
+        /// <summary>
+        /// 岗位维护，当前部门下的角色
+        /// </summary>
+        /// <returns></returns>
+        public DataTable ChlidrenUserByRole(int id)
+        {
+            MySqlParameter sqlParameters = new MySqlParameter("@RoleId", MySqlDbType.Int32);
+            sqlParameters.Value = id;
+
+            var model = DbProcedureHelper.ExecuteDt("P_GetChildrenUserByRole", sqlParameters);
+            return model;
+        }
+
+        /// <summary>
+        /// 删除角色
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public int DeleteUser(int userid)
+        {
+               User user = db.User.Where(u => u.UserId == userid).FirstOrDefault();
+               user.UserIsEnable = false;
+               var query = db.SaveChanges();
+              return query;
+        }
+
+
+        /// <summary>
+        /// 添加角色
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+
+        public int AddUser(User user)
+        {
+            db.User.Add(user);
+            var query=db.SaveChanges();
+            return query;
+        }
+
+
+
     }
 }

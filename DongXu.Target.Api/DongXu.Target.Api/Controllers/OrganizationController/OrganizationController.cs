@@ -8,6 +8,8 @@ using DongXu.Target.IRepository;
 using DongXu.Target.Model;
 using DongXu.Target.IRepository.IOrganization;
 using DongXu.Target.Model.Dto;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace DongXu.Target.Api.Controllers.OrganizationController
 {
@@ -81,7 +83,7 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        [HttpGet("GetRolesRList")]
+        [HttpGet("GetRolesGList")]
         public List<Role> GetRolesGList()
         {
             return _organization.GetRolesRList();
@@ -98,5 +100,44 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         //{
         //    return _organization.GetRoleUserQueryList(RoleId);
         //}
+
+        /// <summary>
+        /// 岗位维护，当前部门下的角色
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("ChlidrenUserByRole")]
+        public DataTable ChlidrenUserByRole(int id)
+        {
+            var query = _organization.ChlidrenUserByRole(id);
+            return query;
+        }
+
+
+        /// <summary>
+        /// 删除角色,停用
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        [HttpGet("DeleteUser")]
+        public int DeleteUser(int userid)
+        {
+            var query = _organization.DeleteUser(userid);
+            return query;
+        }
+
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost("AddUser")]
+        public int AddUser([FromBody]User user)
+        {
+            var query = _organization.AddUser(user);
+            return query;
+        }
+
+
+
     }
 }
