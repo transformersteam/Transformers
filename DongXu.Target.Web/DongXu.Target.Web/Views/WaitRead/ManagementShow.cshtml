@@ -35,6 +35,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="data in waitread" class="data-row">
+                        <td>{{data.goalId}}</td>
                         <td><a href="/WaitRead/TargetDetails?id={{data.goalId}}">{{data.goalName}}</a></td>
                         <td>{{data.goalStateName}}</td>
                         <td>{{data.indexLevelGrade}}</td>

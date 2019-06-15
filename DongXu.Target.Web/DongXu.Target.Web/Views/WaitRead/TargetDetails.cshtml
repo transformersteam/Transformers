@@ -21,22 +21,22 @@
             <div class="panel-heading">指标信息</div>
             <table class="table table-bordered table-striped text-center" v-for="data in target">
                 <tr>
-                    <td>指标类别:</td>
-                    <td>指标类型:</td>
-                    <td>指标等级:</td>
-                    <td>反馈频次:</td>
+                    <td>指标类别:<span>{{data.goalType_Name}}</span></td>
+                    <td>指标类型:<span>{{data.goalType_Name}}</span></td>
+                    <td>指标等级:<span>{{data.indexLevel_Grade}}</span></td>
+                    <td>反馈频次:<span>{{data.goalType_Name}}</span></td>
                 </tr>
                 <tr>
-                    <td>责任部门:</td>
-                    <td>责任人:</td>
+                    <td>责任部门:<span>{{data.role_Name}}</span></td>
+                    <td>责任人:<span>{{data.goal_ChargePeople}}</span></td>
                     <td>填报人:</td>
                     <td>协办人:</td>
                 </tr>
                 <tr>
-                    <td>开始日期:</td>
+                    <td>开始日期:<span>{{data.goal_CreateTime}}</span></td>
                     <td>周期:</td>
-                    <td>完成日期:</td>
-                    <td>考核权重:</td>
+                    <td>完成日期:<span>{{data.goal_EndTime}}</span></td>
+                    <td>考核权重:<span>{{data.goal_Weight}}</span></td>
                 </tr>
             </table>
             <div></div>
@@ -48,7 +48,7 @@
                     <td>累计达成率</td>
                     <td>反馈周期</td>
                     <td>当日&周进展</td>
-                    <td>附件</td>
+                    @*<td>附件<span>{{data.file_Name}}</span></td>*@
                 </tr>
             </table>
             <div class="panel-heading">确认流程</div>
@@ -73,6 +73,7 @@
                 axios.get("@Url.Action("DetailsShow","WaitRead")", { params: { id:@ViewBag.id} }).then(
                     (response) => {
                         this.target = response.data;
+                        console.log(response.data)
                     }
                 )
             }
