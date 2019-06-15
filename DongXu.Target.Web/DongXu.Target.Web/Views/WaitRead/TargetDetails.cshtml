@@ -9,13 +9,46 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>目标详情页面</title>
-    <script src="~/js/jquery-3.3.1.js"></script>
+    <script src="~/js/jquery.js"></script>
     <script src="~/js/vue.js"></script>             @*vue*@
     <script src="~/js/axios.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <style>
+    .box {
+        width:397px;
+        height:300px; 
+        margin:30px auto;
+    }
+
+    .ok {
+        width:200px; 
+        height:100px; 
+        margin:0 auto;
+        text-align:center;
+        background:#999; 
+        line-height:100px; 
+        color:#FFF; 
+        display:none; 
+    }
+
+    .tbox {
+        width:397px; 
+        height:49px;
+        background:url(~/images/bak.png) no-repeat;
+        margin-top:20px;
+    }
+
+    .tbox div {
+        width:0px; 
+        height:49px;
+        background:url(~/images/pro.png) no-repeat;
+        text-align:center
+    }
+
+  </style>
 </head>
 <body>
-    <span>当前办理进度</span>
+    当前办理进度：<div class="tiao"></div>
     <div id="app">
         <div class="panel panel-primary">
             <div class="panel-heading">指标信息</div>
@@ -52,9 +85,7 @@
                 </tr>
             </table>
             <div class="panel-heading">确认流程</div>
-            <table class="table table-bordered table-striped text-center">
-                
-            </table>
+            <table class="table table-bordered table-striped text-center"></table>
         </div>
     </div>
 </body>
@@ -66,7 +97,8 @@
             target: []
         },
         mounted() {
-            this.getdata();
+            this.getdata();   //目标详情
+            this.gettiao();   //进度条
         },
         methods: {
             getdata: function () {
@@ -76,6 +108,11 @@
                         console.log(response.data)
                     }
                 )
+            },
+            gettiao: function () {
+                var tiao = $(".tiao");
+                console.log(tiao)
+                tiao.css("width",@ViewBag.progressid+"%").html(@ViewBag.progressid+"%");
             }
         }
     })
