@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DongXu.Target.Model.Dto
+namespace DongXu.Target.Web
 {
     /// <summary>
     /// 目标详情

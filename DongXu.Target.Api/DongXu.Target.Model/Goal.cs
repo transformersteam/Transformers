@@ -114,5 +114,7 @@ namespace DongXu.Target.Model
         public int FeedbackId { get; set; }
 
         public int Goal_DutyUserId { get; set; }
+
+        public int Goal_DutyCommanyId { get; set; }
     }
 }

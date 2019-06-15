@@ -17,8 +17,24 @@ namespace DongXu.Target.IRepository.IWaitRead
         /// <returns></returns>
         List<WaitRead> GetWaitReadList(int id);
 
+        /// <summary>
+        /// 积分详情柱状图
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         DataTable GetUserIntergal(int id);
 
+        /// <summary>
+        /// 运行情况
+        /// </summary>
+        /// <returns></returns>
         List<GoalStateGoal> GetRunConditionList();
+
+        /// <summary>
+        /// 根据目标id查看目标详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<TargetDetails> GetTargetDetailById(int id);
     }
 }
