@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="data in waitread" class="data-row">
-                        <td><a href="/WaitRead/TargetDetails?id={{data.goalId}}">{{data.goalName}}</a></td>
+                        <td><a v-on:click="details(data.goalId,data.feedbackNowEvolve)">{{data.goalName}}</a></td>
                         <td>{{data.goalStateName}}</td>
                         <td>{{data.indexLevelGrade}}</td>
                         <td>{{data.goalChargePeople}}</td>
@@ -130,6 +130,11 @@
                         this.condition = response.data   //运行情况表格显示
                     }
                 )
+            },
+            details: function (id, progressid) {         //点击目标名称跳转到目标详情页面
+                alert(id);
+                alert(progressid)
+                location.href = '/WaitRead/TargetDetails?id=' + id + "&progressid=" + progressid;
             }
         }
     })

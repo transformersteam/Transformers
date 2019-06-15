@@ -9,34 +9,67 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>目标详情页面</title>
-    <script src="~/js/jquery-3.3.1.js"></script>
+    <script src="~/js/jquery.js"></script>
     <script src="~/js/vue.js"></script>             @*vue*@
     <script src="~/js/axios.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <style>
+    .box {
+        width:397px;
+        height:300px; 
+        margin:30px auto;
+    }
+
+    .ok {
+        width:200px; 
+        height:100px; 
+        margin:0 auto;
+        text-align:center;
+        background:#999; 
+        line-height:100px; 
+        color:#FFF; 
+        display:none; 
+    }
+
+    .tbox {
+        width:397px; 
+        height:49px;
+        background:url(~/images/bak.png) no-repeat;
+        margin-top:20px;
+    }
+
+    .tbox div {
+        width:0px; 
+        height:49px;
+        background:url(~/images/pro.png) no-repeat;
+        text-align:center
+    }
+
+  </style>
 </head>
 <body>
-    <span>当前办理进度</span>
+    当前办理进度：<div class="tiao"></div>
     <div id="app">
         <div class="panel panel-primary">
             <div class="panel-heading">指标信息</div>
             <table class="table table-bordered table-striped text-center" v-for="data in target">
                 <tr>
-                    <td>指标类别:</td>
-                    <td>指标类型:</td>
-                    <td>指标等级:</td>
-                    <td>反馈频次:</td>
+                    <td>指标类别:<span>{{data.goalType_Name}}</span></td>
+                    <td>指标类型:<span>{{data.goalType_Name}}</span></td>
+                    <td>指标等级:<span>{{data.indexLevel_Grade}}</span></td>
+                    <td>反馈频次:<span>{{data.goalType_Name}}</span></td>
                 </tr>
                 <tr>
-                    <td>责任部门:</td>
-                    <td>责任人:</td>
+                    <td>责任部门:<span>{{data.role_Name}}</span></td>
+                    <td>责任人:<span>{{data.goal_ChargePeople}}</span></td>
                     <td>填报人:</td>
                     <td>协办人:</td>
                 </tr>
                 <tr>
-                    <td>开始日期:</td>
+                    <td>开始日期:<span>{{data.goal_CreateTime}}</span></td>
                     <td>周期:</td>
-                    <td>完成日期:</td>
-                    <td>考核权重:</td>
+                    <td>完成日期:<span>{{data.goal_EndTime}}</span></td>
+                    <td>考核权重:<span>{{data.goal_Weight}}</span></td>
                 </tr>
             </table>
             <div></div>
@@ -48,13 +81,11 @@
                     <td>累计达成率</td>
                     <td>反馈周期</td>
                     <td>当日&周进展</td>
-                    <td>附件</td>
+                    @*<td>附件<span>{{data.file_Name}}</span></td>*@
                 </tr>
             </table>
             <div class="panel-heading">确认流程</div>
-            <table class="table table-bordered table-striped text-center">
-                
-            </table>
+            <table class="table table-bordered table-striped text-center"></table>
         </div>
     </div>
 </body>
@@ -66,15 +97,22 @@
             target: []
         },
         mounted() {
-            this.getdata();
+            this.getdata();   //目标详情
+            this.gettiao();   //进度条
         },
         methods: {
             getdata: function () {
                 axios.get("@Url.Action("DetailsShow","WaitRead")", { params: { id:@ViewBag.id} }).then(
                     (response) => {
                         this.target = response.data;
+                        console.log(response.data)
                     }
                 )
+            },
+            gettiao: function () {
+                var tiao = $(".tiao");
+                console.log(tiao)
+                tiao.css("width",@ViewBag.progressid+"%").html(@ViewBag.progressid+"%");
             }
         }
     })

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using DongXu.Target.Model;
 using DongXu.Target.Model.Dto;
@@ -17,6 +18,12 @@ namespace DongXu.Target.IRepository.IOrganization
         List<Role> GetRolesGList();
         RoleUserQuery GetRoleUserQueryList(int RoleId);
         List<Role> GetRolesRList();
+        DataTable ChlidrenUserByRole(int id);
+        int DeleteUser(int userid);
+        int AddUser(User user);
+
+
+
         //RoleUserQuery GetRoleUserQueryListById(int RoleId);
     }
 }

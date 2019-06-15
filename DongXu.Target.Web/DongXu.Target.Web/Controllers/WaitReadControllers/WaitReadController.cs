@@ -51,9 +51,10 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult TargetDetails(int id)
+        public ActionResult TargetDetails(int id,int progressid)
         {
             ViewBag.id = id;
+            ViewBag.progressid = progressid;
             return View();
         }
 

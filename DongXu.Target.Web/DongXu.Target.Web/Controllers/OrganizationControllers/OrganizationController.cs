@@ -46,5 +46,13 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             };
             return rolesPageList;
         }
+
+        public IActionResult PostJob()
+        {
+
+            return View();
+        }
+
+
     }
 }
