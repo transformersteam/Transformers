@@ -51,13 +51,8 @@ namespace DongXu.Target.Repository.WaitReadRepository
         /// <returns></returns>
         public DataTable GetUserIntergal(int id)
         {
-            //MySqlParameter[] sqlParameters =
-            //{
-            //    new MySqlParameter("@User_Id",MySqlDbType.Int32),
-            //};
             MySqlParameter sqlParameters = new MySqlParameter("@User_Id", MySqlDbType.Int32);
             sqlParameters.Value = id;
-
             var model = DbProcedureHelper.ExecuteDt("P_IntegralList", sqlParameters);
             return model;
         }
@@ -69,6 +64,29 @@ namespace DongXu.Target.Repository.WaitReadRepository
         public List<GoalStateGoal> GetRunConditionList()
         {
             var list = context.GoalStateGoal.FromSql("SELECT ROUND(COUNT(a.GoalState_Id)/6*100,2) as percent,COUNT(a.GoalState_Id) as count ,b.GoalState_Name,b.GoalState_Explain FROM goal a INNER JOIN goalstate b on a.GoalState_Id = b.GoalState_Id GROUP BY b.GoalState_Name").ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 根据目标id查询目标详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<TargetDetails> GetTargetDetailById(int id)
+        {
+            var list = context.TargetDetails.FromSql($"SELECT c.GoalType_Name,d.Integral_Num,h.IndexLevel_Grade,g.Frequency_Name,e.Role_Name,a.Goal_ChargePeople,a.Goal_Informant,a.Goal_Organiser, a.Goal_CreateTime, a.Goal_EndTime, a.Goal_Weight,f.File_Name FROM goal a INNER JOIN goaltype b on a.GoalType_Id = b.GoalType_Id INNER JOIN goaltype c on c.GoalType_PId = b.GoalType_Id INNER JOIN Integral d on a.IndexLevel_Id = d.Integral_Id INNER JOIN IndexLevel h on h.IndexLevel_Id = a.IndexLevel_Id INNER JOIN role e on a.Goal_DutyCommanyId = e.Role_Id INNER JOIN files f on f.Goal_Id = a.File_Id INNER JOIN Frequency g on g.Frequency_Id = a.Frequency_Id WHERE a.Goal_Id = {id}").ToList();
+
+            //var targerlist = from s in context.Goal
+            //                 join Goaltype in context.Goaltype on s.GoalTypeId equals Goaltype.GoalTypeId
+            //                 join Integral in context.Integral on s.GoalId equals Integral.Goad_Id
+            //                 join Indexlevel in context.Indexlevel on s.IndexLevelId equals Indexlevel.IndexLevelId
+            //                 join Role in context.Role on s.Goal_DutyCommanyId equals Role.RoleId
+            //                 join Files in context.Files on s.FileId equals Files.FilesId
+            //                 join Frequency in context.Frequency on s.FrequencyId equals Frequency.FrequencyId
+            //                 select new TargetDetails
+            //                 {
+
+            //                 }
             return list;
         }
     }

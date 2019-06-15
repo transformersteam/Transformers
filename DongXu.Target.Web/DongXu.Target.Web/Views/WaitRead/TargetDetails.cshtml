@@ -15,11 +15,11 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <span>当前办理进度{{}}</span>
-    <div>
+    <span>当前办理进度</span>
+    <div id="app">
         <div class="panel panel-primary">
             <div class="panel-heading">指标信息</div>
-            <table class="table table-bordered table-striped text-center">
+            <table class="table table-bordered table-striped text-center" v-for="data in target">
                 <tr>
                     <td>指标类别:</td>
                     <td>指标类型:</td>
@@ -59,3 +59,23 @@
     </div>
 </body>
 </html>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            target: []
+        },
+        mounted() {
+            this.getdata();
+        },
+        methods: {
+            getdata: function () {
+                axios.get("@Url.Action("DetailsShow","WaitRead")", { params: { id:@ViewBag.id} }).then(
+                    (response) => {
+                        this.target = response.data;
+                    }
+                )
+            }
+        }
+    })
+</script>

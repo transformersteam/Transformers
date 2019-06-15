@@ -51,8 +51,9 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult TargetDetails()
+        public ActionResult TargetDetails(int id)
         {
+            ViewBag.id = id;
             return View();
         }
 
@@ -63,7 +64,9 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// <returns></returns>
         public JsonResult DetailsShow(int id)
         {
-            return null;
+            var target= HelperHttpClient.GetAll("get", "WaitRead/GetTargetDetailById?id=" + id, null);
+            var list = JsonConvert.DeserializeObject<List<TargetDetails>>(target);
+            return Json(list);
         }
 
         /// <summary>

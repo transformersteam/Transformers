@@ -125,6 +125,8 @@ namespace DongXu.Target.Model
 
         public DbQuery<RoleUserQuery> RoleUserQuery { get; set; }
 
+        public DbQuery<TargetDetails> TargetDetails { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

@@ -65,5 +65,17 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
             var list = _iWaitReadRepository.GetRunConditionList();
             return list;
         }
+
+        /// <summary>
+        /// 根据目标id查看目标详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetTargetDetailById")]
+        public List<TargetDetails> GetTargetDetailById(int id)
+        {
+            var list = _iWaitReadRepository.GetTargetDetailById(id);
+            return list;
+        }
     }
 }
