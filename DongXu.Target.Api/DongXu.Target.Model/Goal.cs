@@ -113,8 +113,14 @@ namespace DongXu.Target.Model
         /// </summary>
         public int FeedbackId { get; set; }
 
+        /// <summary>
+        /// 责任人
+        /// </summary>
         public int Goal_DutyUserId { get; set; }
 
+        /// <summary>
+        /// 责任单位
+        /// </summary>
         public int Goal_DutyCommanyId { get; set; }
     }
 }

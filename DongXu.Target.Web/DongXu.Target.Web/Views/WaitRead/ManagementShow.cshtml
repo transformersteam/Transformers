@@ -12,6 +12,7 @@
     <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/js/vue.js"></script>             @*vue*@
     <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>
     <script src="~/js/zpageNav.js"></script>        @*分页js*@
     <link href="~/js/zpageNav.css" rel="stylesheet" />   @*分页样式*@
     <script src="~/js/echarts.min.js"></script>    @*Echarts图*@
@@ -55,7 +56,29 @@
         </div>
         <div class="panel panel-primary" style="height:450px">
             <div class="panel-heading">红绿灯状态</div>
-            <div style="float:left">
+            <br />
+            <input id="tableshow" type="button" value="切换表格" class="btn btn-primary" />
+            <div id="statetable">
+                <table class="table table-bordered table-striped text-center" style="height:400px">
+                    <thead>
+                        <tr>
+                            <td>目标序号</td>
+                            <td>公司名称</td>
+                            <td>目标状态</td>
+                            <td>状态总数</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="statedata in statetable">
+                            <td><a v-on:click="detailsById(statedata.goal_Id)">{{statedata.goal_Id}}</a></td>
+                            <td>{{statedata.role_Name}}</td>
+                            <td>{{statedata.goalState_Id}}</td>
+                            <td>{{statedata.statecount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="float:left" id="echartshow">
                 <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
             </div>
             <div style="float:right;width:700px;height:358px">
@@ -94,12 +117,13 @@
         el: "#app",
         data: {
             waitread: [],
-            condition:[],
-            page:1,
+            condition: [],
+            statetable: [],
+            page: 1,
             pageSize: 4,
             total: 100,
             maxPage: 9,
-            sum:0
+            sum: 0
         },
         mounted() {   //钩子函数
             this.getWaitRead();    //显示
@@ -107,14 +131,16 @@
             getintegral();         //积分排名
             getredgreen();         //红绿灯情况
             getCondition();        //运行情况
+            this.getStateTable();       //红绿灯表格
+            //$("#statetable").hide();
         },
         methods: {
             getWaitRead: function () {      //显示
-                axios.get('@Url.Action("GetWaitReadList","WaitRead")', { params:{id:@ViewBag.id}}).then(
+                axios.get('@Url.Action("GetWaitReadList","WaitRead")', { params: { id:@ViewBag.id} }).then(
                     (response) => {
                         this.waitread = [];
                         this.total = response.data.total;
-                        this.maxPage = response.data.maxPage; 
+                        this.maxPage = response.data.maxPage;
                         for (var i = 0; i < response.data.getList.length; i++) {
                             this.waitread.push(response.data.getList[i]);  //待阅数据
                             this.sum = this.waitread.length;   //计算总数
@@ -135,10 +161,32 @@
                 alert(id);
                 alert(progressid)
                 location.href = '/WaitRead/TargetDetails?id=' + id + "&progressid=" + progressid;
+            },
+            getStateTable: function () {      //红绿灯状态表格
+                axios.get('@Url.Action("GetBusinessStateTableList","WaitRead")').then(
+                    (response) => {
+                        console.log(response.data)
+                        this.statetable = response.data;   //红绿灯状态表格显示
+                    }
+                )
+            },
+            detailsById: function (id) {
+                alert(id)
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.open({
+                        type: 2,
+                        title: title,
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['1000px', '700px'],
+                        content:"/WaitRead/TargetDetails",
+                    });
+                })
             }
         }
     })
-
+            
     //积分排名
     function getintegral() {
         var myCharty = echarts.init(document.getElementById('main'))
@@ -203,7 +251,7 @@
                         ]
                 };
                 myCharty.setOption(option);
-                }            
+                }
             })
         }
 
@@ -283,6 +331,22 @@
          myCharty.setOption(option);
     }
 
+    //切换表格
+    $("#tableshow").click(function () {
+        if ($("#tableshow").val()=="切换表格") {
+            alert(111)
+            $("#echartshow").hide();
+            $("#statetable").show();
+            $("#tableshow").val("切换柱状图");
+
+        }
+        if ($("#tableshow").val()=="切换柱状图") {
+            $("#tableshow").val("切换表格");
+            $("#statetable").hide();
+            $("#echartshow").show();
+        }
+    })
+
     //运行情况
     function getCondition() {
         var dataname = [];
@@ -312,7 +376,7 @@
                             legend: {
                                 orient: 'vertical',
                                 left: 'left',
-                                data: dataname                              
+                                data: dataname
                             },
                             series : [
                                 {

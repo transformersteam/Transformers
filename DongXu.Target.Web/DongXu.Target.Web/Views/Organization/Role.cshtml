@@ -137,7 +137,7 @@
     //获取结点
     function GetRolesRList() {
         $.ajax({
-            url: "http://localhost:8888/api/Organization/GetRolesRList",
+            url: "https://localhost:8888/api/Organization/GetRolesRList",
             async: false,
             success: function (data) {
                 var json = eval(data); // 数组
@@ -169,7 +169,7 @@
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         $.ajax({
-            url: "http://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
+            url: "https://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
             async: false,
             success: function (data) {
                 console.log(data);
@@ -184,7 +184,7 @@
     }
     function GetRoleUserQueryList(roleId) {
         $.ajax({
-            url: "http://localhost:8888/api/Organization/GetRoleUserQueryList?RoleId=" + roleId,
+            url: "https://localhost:8888/api/Organization/GetRoleUserQueryList?RoleId=" + roleId,
             success: function (data) {
                 vm.$data.RoleUserQueryList = data;
             }

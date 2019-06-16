@@ -77,5 +77,16 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
             var list = _iWaitReadRepository.GetTargetDetailById(id);
             return list;
         }
+
+        /// <summary>
+        /// 红绿灯状态表格
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetBusinessStateTable")]
+        public List<BusinessStateTable> GetBusinessStateTable()
+        {
+            var list = _iWaitReadRepository.GetBusinessStateTable();
+            return list;
+        }
     }
 }
