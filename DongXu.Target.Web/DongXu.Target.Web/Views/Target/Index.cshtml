@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link href="~/Progress/normalize.css" rel="stylesheet" />
+    <link href="~/Progress/style.css" rel="stylesheet" />
+    <link href="~/Progress/number-pb.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+
+        <div>
+            目标名称：<input id="Text1" type="text" />
+            目标类别：<select id="Select1"><option></option></select>
+            目标状态：<select id="Select2"><option></option></select>
+            目标级别：<select id="Select3"><option></option></select>
+            责任部门：<select id="Select3"><option></option></select>
+            责任人：<select id="Select3"><option></option></select>
+
+
+
+
+        </div>
+
+
+        <span>目标列表</span>
+        <table style="text-align:center"  class="table table-bordered">
+            <thead>
+                <tr>
+                    <td text-alig="center">序号</td>
+                    <td style="text-align:center">目标名称</td>
+                    <td>级别</td>
+                    <td>类别</td>
+                    <td>责任部门</td>
+                    <td>责任人</td>
+                    <td>完成时间</td>
+                    <td>当前进度</td>
+                </tr>
+            </thead>
+            <tbody id="container">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/Progress/jquery.velocity.min.js"></script>
+<script src="~/Progress/number-pb.js"></script>
+<script>
+    $(function () {
+        targetList();
+
+    })
+
+    function targetList() {
+        $.ajax({
+            url: "http://localhost:8888/api/Target/GoalQueryList",
+            async: false,
+            success: function (data) {
+                console.log(data)
+                var str = '';
+                $(data).each(function () {
+                    str += '<tr>'
+                        + '<td>1</td>'
+                        + '<td>' + this.goal_Name + '</td>'
+                        + '<td>' + this.indexLevel_Grade + '</td>'
+                        + '<td>' + this.goalType_Name + '</td>'
+                        + '<td>' + this.role_Name + '</td>'
+                        + '<td>' + this.user_Name + '</td>'
+                        + '<td>' + this.goal_EndTime + '</td>'
+                        + '<td style="text-align:center"><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve +'%</div></div></td></tr>'
+                })
+                $("#container").append(str);
+            }
+
+
+        })
+
+
+    }
+
+
+
+</script>

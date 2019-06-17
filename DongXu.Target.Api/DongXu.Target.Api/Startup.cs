@@ -34,6 +34,29 @@ namespace DongXu.Target.Api
             Configuration = configuration;
         }
 
+        /**
+ *                             _ooOoo_
+ *                            o8888888o
+ *                            88" . "88
+ *                            (| -_- |)
+ *                            O\  =  /O
+ *                         ____/`---'\____
+ *                       .'  \\|     |//  `.
+ *                      /  \\|||  :  |||//  \
+ *                     /  _||||| -:- |||||-  \
+ *                     |   | \\\  -  /// |   |
+ *                     | \_|  ''\---/''  |   |
+ *                     \  .-\__  `-`  ___/-. /
+ *                   ___`. .'  /--.--\  `. . __
+ *                ."" '<  `.___\_<|>_/___.'  >'"".
+ *               | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+ *               \  \ `-.   \_ __\ /__ _/   .-` /  /
+ *          ======`-.____`-.___\_____/___.-`____.-'======
+ *                             `=---='
+ *          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *                     佛祖保佑        永无BUG
+*/
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -58,6 +81,7 @@ namespace DongXu.Target.Api
             services.AddScoped<IResponsibilityRepository,ResponsibilityRepository>();
             services.AddScoped<IIntegralRepository, IntegralRepository>();
             services.AddScoped<IGoalManageRepository, GoalManageRepository>();
+            services.AddScoped<ITargetRepository, TargetRepository>();
 
             //注册跨域服务，允许所有来源
             services.AddCors(options =>
@@ -96,3 +120,6 @@ namespace DongXu.Target.Api
         }
     }
 }
+
+
+
