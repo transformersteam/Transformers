@@ -17,6 +17,8 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
     [ApiController]
     public class OrganizationController : ControllerBase
     {
+        
+
         /// <summary>
         /// 定义私有变量
         /// </summary>
