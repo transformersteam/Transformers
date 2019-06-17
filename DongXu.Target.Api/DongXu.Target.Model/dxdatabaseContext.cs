@@ -113,7 +113,7 @@ namespace DongXu.Target.Model
 
         public virtual DbSet<WaitRead> WaitRead { get; set; }
 
-
+        public DbQuery<AddUser> addUsers { get; set; }
 
         public DbQuery<UserQuery> UserQuery { get; set; }
 

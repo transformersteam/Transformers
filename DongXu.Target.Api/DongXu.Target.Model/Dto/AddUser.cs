@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace DongXu.Target.Model
+namespace DongXu.Target.Model.Dto
 {
-    /// <summary>
-    /// 用户表
-    /// </summary>
-    public partial class User
+   public class AddUser
     {
         /// <summary>
         /// 用户id
@@ -43,5 +41,6 @@ namespace DongXu.Target.Model
         /// </summary>
         public DateTime? UserCreateTime { get; set; }
 
+        public int userRoleid { get; set; }
     }
 }

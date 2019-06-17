@@ -62,7 +62,7 @@ namespace DongXu.Target.Api
             //注册跨域服务，允许所有来源
             services.AddCors(options =>
                 options.AddPolicy("AllowAnyCors",
-                p => p.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials())
+                p => p.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials().AllowAnyOrigin())
             );
         }
 
