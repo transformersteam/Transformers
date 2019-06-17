@@ -24,7 +24,6 @@ namespace DongXu.Target.IRepository.IOrganization
         int AddUser(AddUser addUser);
         DataTable ChildrenJobByRole(int Role_Id);
 
-        int AddUser(User user);
         //查询权限
         List<Power> GetPowerList();
 

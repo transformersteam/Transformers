@@ -32,6 +32,10 @@ namespace DongXu.Target.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+            services.AddMvc();
+
+
             //注册Cookie身份验证服务 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options => options.LoginPath = new PathString("/home/index"));

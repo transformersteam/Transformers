@@ -1,4 +1,4 @@
-﻿
+﻿@using DongXu.Target.Web.Conn;
 @{
     Layout = null;
 }
@@ -41,7 +41,7 @@
         var val = JSON.stringify(model);
         alert(val)
         $.ajax({
-            url: "http://localhost:8888/api/Values/test",
+            url: "@APIConn.MyAPIConn"+"Values/test",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: val,
@@ -86,7 +86,7 @@
 
         alert("val:" + val);
         $.ajax({
-            url: "http://localhost:8888/api/Organization/AddUser",
+            url: "@APIConn.MyAPIConn"+"Organization/AddUser",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: val,
