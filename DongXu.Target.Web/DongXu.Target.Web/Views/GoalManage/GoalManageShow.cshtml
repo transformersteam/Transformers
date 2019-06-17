@@ -9,15 +9,31 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>目标管理</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/zTree_v3/js/jquery.ztree.all.min.js"></script>
+    <link href="~/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <style>
+    #tree {
+        width: 30%;
+        height: 200%;
+        float: left;
+        border: 1px solid #000
+    }
+
+    </style>
 </head>
 <body>
-    <div id="goaltree" style="float:left">
-        <ul id="ztree" class="ztree"></ul>
+    <div id="goaltree" style="        float: left;
+        padding-left: 100px">
+        <div style="height: 1500px">
+            <div class="panel-heading">目标库</div>
+            <ul id="ztree" class="ztree" style="        height: 500px"></ul>
+        </div>
     </div>
-    <div>
+    <div style="float: right;padding-right: 100px" id="app">
         <div class="panel-heading">目标详情</div>
-        <table class="table table-bordered table-striped text-center">
+        <table class="table table-bordered table-striped text-center" style="        width: 1300px">
             <tr>
                 <td>指标名称</td>
                 <td>指标单位</td>
@@ -30,6 +46,7 @@
             </tr>
             <tr>
                 <td>反馈频次</td>
+                <td colspan="3"></td>
             </tr>
             <tr>
                 <td>开始时间</td>
@@ -59,8 +76,6 @@
                 <td colspan="3"></td>
             </tr>
         </table>
-    </div>
-    <div>
         <div class="panel-heading">指标分解</div>
         <table class="table table-bordered table-striped text-center">
             <tr>
@@ -94,94 +109,102 @@
                 <td>月份</td>
             </tr>
         </table>
-    </div>
-    <div>
         <div class="panel-heading">反馈确认</div>
-        <div style="padding:20px,5px,20px,5px">
+        <div style="padding-left: 100px">
             确认流程
         </div>
-        <div>
-            <span>郭莱(模块运营总经理)</span>
-            <span>明和(单位一把手)</span>
-            <span>柯振亮(集团运营负责人)</span>
-            <span>王振华(督办领导)</span>
+        <div style="padding-left: 250px">
+            <p>郭莱(模块运营总经理)</p>
+            <p>明和(单位一把手)</p>
+            <p>柯振亮(集团运营负责人)</p>
+            <p>王振华(督办领导)</p>
         </div>
-    </div>
-    <div style="float:right">
-        <input id="Button1" type="button" value="设置关注人" />&nbsp;&nbsp;
-        <input id="Button1" type="button" value="指标删除" />&nbsp;&nbsp;
-        <input id="Button1" type="button" value="指标调整" />
+        <div style="        float: right">
+            <input id="Button1" type="button" value="设置关注人" class="btn btn-primary" />&nbsp;&nbsp;
+            <input id="Button1" type="button" value="指标删除" class="btn btn-primary" />&nbsp;&nbsp;
+            <input id="Button1" type="button" value="指标调整" class="btn btn-primary" />
+        </div>
     </div>
 </body>
 </html>
 <script>
-        var setting = {
-                view: {
-                    dblClickExpand: false,//双击节点时，是否自动展开父节点的标识
-                    showLine: true,//是否显示节点之间的连线
-                    fontCss: { 'color': 'black', 'font-weight': 'bold' },//字体样式函数
-                    selectedMulti: true, //设置是否允许同时选中多个节点
-                },
-                check: {
-                    //chkboxType: { "Y": "ps", "N": "ps" },
-                    chkboxType: { "Y": "", "N": "" },
-                    chkStyle: "checkbox",//复选框类型
-                    enable: true //每个节点上是否显示 CheckBox
-                },
-                //增删改，移动复制
-                edit: {
-                    enable: true, //如果enable为flase，那么树就不能移动了
-                    showRemoveBtn: false, //是否显示树的删除按钮
-                    showRenameBtn: false, //是否显示数的重命名按钮
-                    isSimpleData: true, //数据是否采用简单 Array 格式，默认false
-                    treeNodeKey: "id",  //在isSimpleData格式下，当前节点id属性
-                    treeNodeParentKey: "parentId",//在isSimpleData格式下，当前节点的父节点id属性
-                    showLine: true, //是否显示节点间的连线
-                    removeTitle: "删除节点",//删除Logo的提示
-                    renameTitle: "编辑节点",//修改Logo的提示
-                    //拖拽
-                    drag: {
-                        isCopy: true,//能够复制
-                        isMove: true,//能够移动
-                        prev: false,//不能拖拽到节点前
-                        next: false,//不能拖拽到节点后
-                        inner: true//只能拖拽到节点中
-                    }
-                },
-                data: {
-                    simpleData: {//简单数据模式
-                        enable: true,
-                        idKey: "id",
-                        pIdKey: "pId",
-                        rootPId: null
-                    }
-                },
-                callback: {
-                    beforeExpand: zTreeBeforeExpand, // 用于捕获父节点展开之前的事件回调函数，并且根据返回值确定是否允许展开操作
-                    //单击事件
-                    onClick: zTreeOnClick
-                }
+    $(function () {
+        getGoalList();
+    })
+    var setting = {
+        view: {
+            dblClickExpand: false,//双击节点时，是否自动展开父节点的标识
+            showLine: true,//是否显示节点之间的连线
+            fontCss: { 'color': 'black', 'font-weight': 'bold' },//字体样式函数
+            selectedMulti: true, //设置是否允许同时选中多个节点
+        },
+        check: {
+            //chkboxType: { "Y": "ps", "N": "ps" },
+            chkboxType: { "Y": "", "N": "" },
+            chkStyle: "checkbox",//复选框类型
+            enable: true //每个节点上是否显示 CheckBox
+        },
+        //增删改，移动复制
+        edit: {
+            enable: true, //如果enable为flase，那么树就不能移动了
+            showRemoveBtn: false, //是否显示树的删除按钮
+            showRenameBtn: false, //是否显示数的重命名按钮
+            isSimpleData: true, //数据是否采用简单 Array 格式，默认false
+            treeNodeKey: "id",  //在isSimpleData格式下，当前节点id属性
+            treeNodeParentKey: "parentId",//在isSimpleData格式下，当前节点的父节点id属性
+            showLine: true, //是否显示节点间的连线
+            removeTitle: "删除节点",//删除Logo的提示
+            renameTitle: "编辑节点",//修改Logo的提示
+            //拖拽
+            drag: {
+                isCopy: true,//能够复制
+                isMove: true,//能够移动
+                prev: false,//不能拖拽到节点前
+                next: false,//不能拖拽到节点后
+                inner: true//只能拖拽到节点中
+            }
+        },
+        data: {
+            simpleData: {//简单数据模式
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: null
+            }
+        },
+        callback: {
+            beforeExpand: zTreeBeforeExpand, // 用于捕获父节点展开之前的事件回调函数，并且根据返回值确定是否允许展开操作
+            //单击事件
+            onClick: zTreeOnClick
+        }
     };
 
-        //获取结点
+    function zTreeBeforeExpand(treeId, treeNode) {
+        return true;
+    };
+
+    //获取结点
     function getGoalList() {
         $.ajax({
-            url: "https://localhost:8888/api/Organization/GetRolesRList",
+            url: "/GoalManage/GetJsonGoalTree",
+            type:"get",
             async: false,
             success: function (data) {
+                alert(data)
                 var json = eval(data); // 数组
+                console.log(json)
                 zNodes = "[";
                 $.each(json, function (index, item) {
-                    if (json[index].rolePid == 0) {
-                        zNodes += "{id:" + json[index].roleId
-                            + ",pId:" + json[index].rolePid
-                            + ",name:'" + json[index].roleName
+                    if (json[index].goal_ParentId == 0) {
+                        zNodes += "{id:" + json[index].goalId
+                            + ",pId:" + json[index].goal_ParentId
+                            + ",name:'" + json[index].goalName
                             + "',open:true}";
                     }
                     else {
-                        zNodes += "{id:" + json[index].roleId
-                            + ",pId:" + json[index].rolePid
-                            + ",name:'" + json[index].roleName
+                        zNodes += "{id:" + json[index].goalId
+                            + ",pId:" + json[index].goal_ParentId
+                            + ",name:'" + json[index].goalName
                             + "'}";
                     }
                     if (index != json.length - 1)
@@ -189,10 +212,21 @@
                 });
                 zNodes += "]";
                 zNodes = eval(zNodes);
-                zTreeObj = $.fn.zTree.init($("#regionZTree"),setting, zNodes);
+                zTreeObj = $.fn.zTree.init($("#ztree"), setting, zNodes);
             },
             error: function (e) {
             }
         });
     };
+
+    //点击事件
+    function zTreeOnClick(treeNode) {   //treeNode节点信息
+        
+    }
+
+    function getNodeDetailsById(int id) {   //获取节点id 查询详情
+        var vm = new Vue({
+            el:"#app"
+        })
+    }
 </script>
