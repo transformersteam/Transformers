@@ -1,0 +1,209 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>目标下达</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/js/vue.js"></script>             @*vue*@
+    <script src="~/js/axios.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="panel-heading">目标详情</div>
+        <table class="table table-bordered table-striped text-center">
+            <tr>
+                <td>指标名称:<input id="Text1" type="text" /></td>
+                <td>
+                    指标单位:
+                    <select id="commany">
+                        <option v-for="(data,index) in commanydata" :value="index">{{data.roleName}}</option>
+                    </select>
+                </td>
+                <td>主治标:<input id="Text1" type="text" value="2019年集团经营目标" /></td>
+            </tr>
+            <tr>
+                <td>
+                    指标类型:
+                    <select id="Select1">
+                        <option></option>
+                    </select>
+                </td>
+                <td>
+                    指标类别:
+                    <select id="Select1">
+                        <option></option>
+                    </select>
+                </td>
+                <td>
+                    指标等级:
+                    <select id="Select1">
+                        <option></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>反馈频次</td>
+                <td colspan="3">
+                    <select id="Select1">
+                        <option></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    开始时间:
+                    <input id="Text1" type="time" />
+                </td>
+                <td>
+                    完成时间:
+                    <input id="Text1" type="time" />
+                </td>
+                <td>
+                    周期:              
+                    <input id="Text1" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    责任单位:
+                    <input id="search" type="text" class="layui-icon-search" />
+                </td>
+                <td>
+                    责任人:
+                    <input id="Text1" type="text" />
+                </td>
+                <td>
+                    考核权重:
+                    <input id="Text1" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    填报人:
+                    <input id="Text1" type="text" />
+                </td>
+                <td>协办人:</td>
+                <td colspan="2">
+                    <input id="Text1" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>计算公式/评价标准</td>
+                <td colspan="3">
+                    <input id="Text1" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>数据来源</td>
+                <td colspan="3">
+                    <input id="Text1" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>支持表格</td>
+                <td colspan="3">
+                    <input id="Button1" type="button" value="上传" class="btn btn-primary" />
+                </td>
+            </tr>
+        </table>
+        <div class="panel-heading">指标分解</div>
+        <table class="table table-bordered table-striped text-center">
+            <tr>
+                <td>月份</td>
+                <td>1月</td>
+                <td>1-2月</td>
+                <td>1-3月</td>
+                <td>1-4月</td>
+                <td>1-5月</td>
+                <td>1-6月</td>
+                <td>1-7月</td>
+                <td>1-8月</td>
+                <td>1-9月</td>
+                <td>1-10月</td>
+                <td>1-11月</td>
+                <td>年度目标</td>
+            </tr>
+            <tr>
+                <td>目标值</td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+            </tr>
+        </table>
+        <div class="panel-heading">反馈确认</div>
+        <div style="padding-left: 100px">
+            确认流程
+        </div>
+        <div style="padding-left: 250px">
+            <input id="Text1" type="text" class="layui-icon-friends" />
+        </div>
+        <div style="float: right">
+            <input id="Button1" type="button" value="删除" class="btn btn-primary" />&nbsp;&nbsp;
+            <input id="Button1" type="button" value="保存" class="btn btn-primary" />&nbsp;&nbsp;
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            commanydata: [],
+        },
+        mounted() {
+            this.bindCommany();
+        },
+        methods: {
+            bindCommany: function () {
+                axios.get("@Url.Action("GetCommanyList","GoalManage")").then(
+                    (response) => {
+                        this.commanydata = response.data;
+                        console.log(response.data)
+                    }
+                )
+            }
+        }
+    })
+</script>

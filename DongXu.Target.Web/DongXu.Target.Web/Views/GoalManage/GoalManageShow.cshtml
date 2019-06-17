@@ -11,69 +11,79 @@
     <title>目标管理</title>
     <script src="~/js/jquery-3.3.1.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <script src="~/zTree_v3/js/jquery.ztree.all.min.js"></script>
+    <script src="~/zTree_v3/js/jquery.ztree.all.min.js"></script>             @*ztree*@
     <link href="~/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="~/js/vue.js"></script>             @*vue*@
+    <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
     <style>
-    #tree {
-        width: 30%;
-        height: 200%;
-        float: left;
-        border: 1px solid #000
-    }
-
+        #tree {
+            width: 30%;
+            height: 200%;
+            float: left;
+            border: 1px solid #000
+        }
     </style>
 </head>
 <body>
-    <div id="goaltree" style="        float: left;
-        padding-left: 100px">
+    <div id="goaltree" style="float: left;padding-left: 100px">
         <div style="height: 1500px">
-            <div class="panel-heading">目标库</div>
-            <ul id="ztree" class="ztree" style="        height: 500px"></ul>
+            <div class="panel-heading" style="font-size:20px">
+                目标库
+                <div style="float:right">
+                    <input id="Button1" type="button" value="目标下达" onclick="goalAdd()" class="btn btn-primary" />
+                </div>
+            </div>
+            <div>
+                <div class="panel-heading">目标名称</div>
+                <ul id="ztree" class="ztree" style="height: 500px"></ul>
+            </div>
         </div>
     </div>
-    <div style="float: right;padding-right: 100px" id="app">
+    <div style="float:right;padding-right: 100px" id="app">
         <div class="panel-heading">目标详情</div>
-        <table class="table table-bordered table-striped text-center" style="        width: 1300px">
+        <table class="table table-bordered table-striped text-center" style="width: 1300px" v-for="data in goaldetails">
             <tr>
-                <td>指标名称</td>
-                <td>指标单位</td>
-                <td>主治标</td>
+                <td>指标名称:<span>{{data.goalName}}</span></td>
+                <td>指标单位:<span>{{data.role_Name}}</span></td>
+                <td>主治标:<span>2019年集团经营目标</span></td>
             </tr>
             <tr>
-                <td>指标类型</td>
-                <td>指标类别</td>
-                <td>指标等级</td>
+                <td>指标类型:<span>{{data.goalType_Name}}</span></td>
+                <td>指标类别:<span>{{data.goalType_Name}}</span></td>
+                <td>指标等级:<span>{{data.indexLevel_Grade}}</span></td>
             </tr>
             <tr>
                 <td>反馈频次</td>
-                <td colspan="3"></td>
+                <td colspan="3"><span>{{data.frequency_Name}}</span></td>
             </tr>
             <tr>
-                <td>开始时间</td>
-                <td>完成时间</td>
-                <td>周期</td>
+                <td>开始时间:<span>{{data.goal_CreateTime}}</span></td>
+                <td>完成时间:<span>{{data.goal_EndTime}}</span></td>
+                <td>周期:<span>{{}}</span></td>
             </tr>
             <tr>
-                <td>责任单位</td>
-                <td>责任人</td>
-                <td>考核权重</td>
+                <td>责任单位:<span>{{data.role_Name}}</span></td>
+                <td>责任人:<span>{{data.goal_ChargePeople}}</span></td>
+                <td>考核权重:<span>{{data.goal_Weight}}</span></td>
             </tr>
             <tr>
-                <td>填报人</td>
-                <td>协办人</td>
+                <td>填报人:<span>{{data.goal_Informant}}</span></td>
+                <td>协办人:<span>{{data.goal_Organiser}}</span></td>
                 <td></td>
             </tr>
             <tr>
                 <td>计算公式/评价标准</td>
-                <td colspan="3"></td>
+                <td colspan="3"><span>{{}}</span></td>
             </tr>
             <tr>
                 <td>数据来源</td>
-                <td colspan="3"></td>
+                <td colspan="3"><span>{{}}</span></td>
             </tr>
             <tr>
                 <td>支持表格</td>
-                <td colspan="3"></td>
+                <td colspan="3"><span>{{data.file_Name}}</span></td>
             </tr>
         </table>
         <div class="panel-heading">指标分解</div>
@@ -119,7 +129,7 @@
             <p>柯振亮(集团运营负责人)</p>
             <p>王振华(督办领导)</p>
         </div>
-        <div style="        float: right">
+        <div style="float: right">
             <input id="Button1" type="button" value="设置关注人" class="btn btn-primary" />&nbsp;&nbsp;
             <input id="Button1" type="button" value="指标删除" class="btn btn-primary" />&nbsp;&nbsp;
             <input id="Button1" type="button" value="指标调整" class="btn btn-primary" />
@@ -128,9 +138,12 @@
 </body>
 </html>
 <script>
+    //文档就绪函数
     $(function () {
         getGoalList();
     })
+
+    //ztree配置信息
     var setting = {
         view: {
             dblClickExpand: false,//双击节点时，是否自动展开父节点的标识
@@ -187,12 +200,10 @@
     function getGoalList() {
         $.ajax({
             url: "/GoalManage/GetJsonGoalTree",
-            type:"get",
+            type: "get",
             async: false,
             success: function (data) {
-                alert(data)
                 var json = eval(data); // 数组
-                console.log(json)
                 zNodes = "[";
                 $.each(json, function (index, item) {
                     if (json[index].goal_ParentId == 0) {
@@ -215,18 +226,52 @@
                 zTreeObj = $.fn.zTree.init($("#ztree"), setting, zNodes);
             },
             error: function (e) {
+                alert(e)
             }
         });
     };
 
     //点击事件
-    function zTreeOnClick(treeNode) {   //treeNode节点信息
-        
+    function zTreeOnClick(event, treeId,treeNode) {   //treeNode节点信息
+         console.log(treeNode)
+        getNodeDetailsById(treeNode.id,treeNode.name);    //传递目标id
+
     }
 
-    function getNodeDetailsById(int id) {   //获取节点id 查询详情
+    //根据id查询目标详情
+    function getNodeDetailsById(id,name) {   //获取节点id 查询详情
         var vm = new Vue({
-            el:"#app"
+            el: "#app",
+            data: {
+                goaldetails: [],
+                goalName:"",
+            },
+            mounted() {
+                this.detailsById();
+            },
+            methods: {
+                detailsById: function () {    //根据id显示目标详情
+                    axios.get('@Url.Action("GetGoalDetailsById","GoalManage")', { params: {id:id}}).then(
+                        (response) => {
+                            this.goaldetails = response.data;
+                        }
+                    )
+                }
+            }
         })
+    }
+
+    function goalAdd() {
+        layui.use('layer', function () {
+              var layer = layui.layer;
+                    layer.open({
+                        type: 2,
+                        title:"目标详情",
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['1500px', '900px'],
+                        content: "/GoalManage/GoalAdd",
+                    });
+         })
     }
 </script>

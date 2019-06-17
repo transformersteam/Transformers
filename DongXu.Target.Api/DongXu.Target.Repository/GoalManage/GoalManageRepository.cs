@@ -23,5 +23,53 @@ namespace DongXu.Target.Repository.GoalManage
             var list = context.Goal.ToList();
             return list;
         }
+
+        /// <summary>
+        /// 查询公司列表
+        /// </summary>
+        /// <returns></returns>
+        public List<Role> GetCommanyList()
+        {
+            var list = context.Role.Where(m => m.RoleIdentify == 1).ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询指标类型类别
+        /// </summary>
+        /// <returns></returns>
+        public List<Goaltype> GetParentType(int id)
+        {
+            if(!string.IsNullOrWhiteSpace(id.ToString()) && id!=0)   //子节点
+            {
+                var list = context.Goaltype.Where(m => m.GoalTypePid ==id).ToList();
+                return list;
+            }
+            else       //父节点
+            {
+                var list = context.Goaltype.Where(m => m.GoalTypePid == 0).ToList();
+                return list;
+            }
+        }
+        
+        /// <summary>
+        /// 查询责任人
+        /// </summary>
+        /// <returns></returns>
+        public List<User> GetDutyUserList()
+        {
+            var list = context.User.Where(m => m.User_IdentityId == 0 || m.User_IdentityId == 1).ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询协办人
+        /// </summary>
+        /// <returns></returns>
+        public List<User> GetDothingUserList()
+        {
+            var list = context.User.ToList();
+            return list;
+        }
     }
 }

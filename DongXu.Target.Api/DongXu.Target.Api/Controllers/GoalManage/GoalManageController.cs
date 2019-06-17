@@ -35,5 +35,50 @@ namespace DongXu.Target.Api.Controllers.GoalManage
             var list = iGoalManageRepository.GetGoalList();
             return list;
         }
+
+        /// <summary>
+        /// 查询公司列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetCommanyList")]
+        public List<Role> GetCommanyList()
+        {
+            var list = iGoalManageRepository.GetCommanyList();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询指标类别类型
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetParentType")]
+        public List<Goaltype> GetParentType(int id)
+        {
+            var list = iGoalManageRepository.GetParentType(id);
+            return list;
+        }
+
+        /// <summary>
+        /// 查询责任人
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetDutyUserList")]
+        public List<User> GetDutyUserList()
+        {
+            var list = iGoalManageRepository.GetDutyUserList();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询协办人
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetDothingUserList")]
+        public List<User> GetDothingUserList()
+        {
+            var list = iGoalManageRepository.GetDothingUserList();
+            return list;
+        }
     }
 }

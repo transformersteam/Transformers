@@ -519,7 +519,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.GoalTypeIsUse)
                     .HasColumnName("GoalType_IsUse")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.GoalTypeName)
                     .HasColumnName("GoalType_Name")
