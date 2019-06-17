@@ -24,6 +24,8 @@ using DongXu.Target.Repository.Execute;
 using Swashbuckle.AspNetCore.Swagger;
 using DongXu.Target.IRepository.IGoalManage;
 using DongXu.Target.Repository.GoalManage;
+using DongXu.Target.Repository.Company;
+using DongXu.Target.IRepository.ICompany;
 
 namespace DongXu.Target.Api
 {
@@ -58,6 +60,7 @@ namespace DongXu.Target.Api
             services.AddScoped<IResponsibilityRepository,ResponsibilityRepository>();
             services.AddScoped<IIntegralRepository, IntegralRepository>();
             services.AddScoped<IGoalManageRepository, GoalManageRepository>();
+            services.AddScoped<ICompanyIntegralRepository, CompanyIntegralRepository>(); 
 
             //注册跨域服务，允许所有来源
             services.AddCors(options =>

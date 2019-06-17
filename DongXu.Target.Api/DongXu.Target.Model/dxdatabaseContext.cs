@@ -129,6 +129,8 @@ namespace DongXu.Target.Model
 
         public DbQuery<BusinessStateTable> BusinessStateTable { get; set; }
 
+        public DbQuery<CompanyIntegral> CompanyIntegral { get; set; } 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
