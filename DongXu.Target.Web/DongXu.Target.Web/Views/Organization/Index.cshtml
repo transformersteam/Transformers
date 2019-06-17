@@ -183,7 +183,7 @@
     function GetRolesOList() {
         $.ajax({
 
-            url: "https://localhost:8888/api/Organization/GetRolesOList",
+            url: "http://localhost:8888/api/Organization/GetRolesOList",
 
             async: false,
             success: function (data) {
@@ -215,7 +215,7 @@
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         $.ajax({
-            url: "https://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
+            url: "http://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
             async: false,
             success: function (data) {
                 vm.$data.RoleId = data.roleId;
@@ -322,7 +322,7 @@
             $.ajax({
 
 
-                url: "https://localhost:8888/api/Organization/AddRolesO",
+                url: "http://localhost:8888/api/Organization/AddRolesO",
 
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
@@ -352,7 +352,7 @@
     function zTreeOnRemove(event, treeId, treeNode) {
         {
             $.ajax({
-                url: "https://localhost:8888/api/Organization/DeleteRolesO?id=" + treeNode.id,
+                url: "http://localhost:8888/api/Organization/DeleteRolesO?id=" + treeNode.id,
                 type: "get",
                 success: function (data) {
                     if (data > 0) {
@@ -381,10 +381,7 @@
         var model = { "roleId": treeNode.id, "roleName": treeNode.name, "roleModifyPeople": "超级管理员", "roleModifyTime": nowDate };
         var val = JSON.stringify(model);
         $.ajax({
-
-
-            url: "https://localhost:8888/api/Organization/UpdateRolesOName",
-
+            url: "http://localhost:8888/api/Organization/UpdateRolesOName",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: val,

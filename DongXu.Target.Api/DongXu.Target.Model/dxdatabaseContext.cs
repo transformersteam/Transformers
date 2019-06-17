@@ -643,7 +643,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.PowerIsEnable)
                     .HasColumnName("Power_IsEnable")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.PowerName)
                     .HasColumnName("Power_Name")

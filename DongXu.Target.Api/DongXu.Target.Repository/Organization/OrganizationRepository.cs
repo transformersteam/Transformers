@@ -176,6 +176,24 @@ namespace DongXu.Target.Repository
             List<Power> list = db.Power.ToList();
             return list;
         }
-
+        //添加角色
+        public int AddRole(Role model)
+        {
+            db.Role.Add(model);
+            db.SaveChanges();
+            return model.RoleId;
+        }
+        //添加角色 关联
+        public int AddRolepower(int rid,int[] power)
+        {
+            for(int i=0;i<power.Length;i++)
+            {
+                Rolepower rp = new Rolepower();
+                rp.RoleId = rid;
+                rp.RolePowerId = power[i];
+                db.Rolepower.Add(rp);
+            }
+            return db.SaveChanges();
+        }
     }
 }

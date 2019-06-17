@@ -143,5 +143,17 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
             var list = _organization.GetPowerList();
             return list;
         }
+        //添加角色
+        [HttpPost("AddRole")]
+        public int AddRole(Role model)
+        {
+            return _organization.AddRole(model);
+        }
+        //添加角色 关联
+        [HttpPost("AddRolepower")]
+        public int AddRolepower(int rid, int[] power)
+        {
+            return _organization.AddRolepower(rid, power);
+        }
     }
 }

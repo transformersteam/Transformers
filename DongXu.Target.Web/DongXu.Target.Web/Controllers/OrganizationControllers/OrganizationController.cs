@@ -67,12 +67,24 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return list;
         }
         //显示所有权限
-        public List<Role> GetPowerList()
+        public List<Power> GetPowerList()
         {
             var result = HelperHttpClient.GetAll("get", "Organization/GetPowerList", null);
-            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(result);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Power>>(result);
             return list;
         }
-
+        //添加角色
+        public JsonResult AddRole(Role model)
+        {
+            string jsonm = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+            var result = HelperHttpClient.GetAll("post","Organization/AddRole",jsonm);
+            return Json(result);
+        }
+        //添加角色 权限
+        public JsonResult AddRolePower(int rid,int[] power)
+        {
+            var result = HelperHttpClient.GetAll("post", "Organization/AddRole", new { rid, power });
+            return Json(result);
+        }
     }
 }
