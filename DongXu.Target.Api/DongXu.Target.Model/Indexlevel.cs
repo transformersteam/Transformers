@@ -26,6 +26,6 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 是否启用
         /// </summary>
-        public sbyte? IndexLevelIsUse { get; set; }
+        public int? IndexLevelIsUse { get; set; }
     }
 }

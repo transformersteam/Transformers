@@ -40,5 +40,17 @@ namespace DongXu.Target.IRepository.IGoalManage
         /// </summary>
         /// <returns></returns>
         List<User> GetDothingUserList();
+
+        /// <summary>
+        /// 查询指标等级
+        /// </summary>
+        /// <returns></returns>
+        List<Indexlevel> GetIndexlevelList();
+
+        /// <summary>
+        /// 查询反馈频次
+        /// </summary>
+        /// <returns></returns>
+        List<Frequency> GetFrequencieList();
     } 
 }

@@ -100,5 +100,27 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             var list= JsonConvert.DeserializeObject<List<User>>(dothinguser);
             return Json(list);
         }
+
+        /// <summary>
+        /// 查询指标等级
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetIndexlevelList()
+        {
+            var indexleave= HelperHttpClient.GetAll("get", "GoalManage/GetIndexlevelList", null);
+            var list= JsonConvert.DeserializeObject<List<Indexlevel>>(indexleave);
+            return Json(list);
+        }
+
+        /// <summary>
+        /// 查询反馈频次
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetFrequencieList()
+        {
+            var frequency= HelperHttpClient.GetAll("get", "GoalManage/GetFrequencieList", null);
+            var list = JsonConvert.DeserializeObject<List<Frequency>>(frequency);
+            return Json(list);
+        }
     }
 }

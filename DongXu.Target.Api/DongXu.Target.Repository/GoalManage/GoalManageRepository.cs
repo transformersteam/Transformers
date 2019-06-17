@@ -71,5 +71,25 @@ namespace DongXu.Target.Repository.GoalManage
             var list = context.User.ToList();
             return list;
         }
+
+        /// <summary>
+        /// 查询指标等级
+        /// </summary>
+        /// <returns></returns>
+        public List<Indexlevel> GetIndexlevelList()
+        {
+            var list = context.Indexlevel.ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询反馈频次
+        /// </summary>
+        /// <returns></returns>
+        public List<Frequency> GetFrequencieList()
+        {
+            var list = context.Frequency.ToList();
+            return list;
+        }
     }
 }

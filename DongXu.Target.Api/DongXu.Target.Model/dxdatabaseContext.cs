@@ -380,7 +380,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.FrequencyIsUse)
                     .HasColumnName("Frequency_IsUse")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.FrequencyName)
                     .HasColumnName("Frequency_Name")
@@ -557,7 +557,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.IndexLevelIsUse)
                     .HasColumnName("IndexLevel_IsUse")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Indexs>(entity =>

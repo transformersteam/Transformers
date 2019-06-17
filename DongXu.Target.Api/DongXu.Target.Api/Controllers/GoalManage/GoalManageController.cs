@@ -80,5 +80,27 @@ namespace DongXu.Target.Api.Controllers.GoalManage
             var list = iGoalManageRepository.GetDothingUserList();
             return list;
         }
+
+        /// <summary>
+        /// 查询指标等级
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetIndexlevelList")]
+        public List<Indexlevel> GetIndexlevelList()
+        {
+            var list = iGoalManageRepository.GetIndexlevelList();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询反馈频次
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetFrequencieList")]
+        public List<Frequency> GetFrequencieList()
+        {
+            var list = iGoalManageRepository.GetFrequencieList();
+            return list;
+        }
     }
 }
