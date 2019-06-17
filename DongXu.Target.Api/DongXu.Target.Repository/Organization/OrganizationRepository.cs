@@ -169,5 +169,13 @@ namespace DongXu.Target.Repository
             var query=db.SaveChanges();
             return query;
         }
+        
+        //查询所有权限
+        public List<Power> GetPowerList()
+        {
+            List<Power> list = db.Power.ToList();
+            return list;
+        }
+
     }
 }

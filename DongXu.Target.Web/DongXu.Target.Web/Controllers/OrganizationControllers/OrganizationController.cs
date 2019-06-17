@@ -60,10 +60,19 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return View();
         }
         //角色添加 绑定部门下拉
-        public JsonResult GetRolesOList()
+        public List<Role> GetRolesOList()
         {
             var result = HelperHttpClient.GetAll("get", "Organization/GetRolesOList", null);
-            return Json(result);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(result);
+            return list;
         }
+        //显示所有权限
+        public List<Role> GetPowerList()
+        {
+            var result = HelperHttpClient.GetAll("get", "Organization/GetPowerList", null);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(result);
+            return list;
+        }
+
     }
 }

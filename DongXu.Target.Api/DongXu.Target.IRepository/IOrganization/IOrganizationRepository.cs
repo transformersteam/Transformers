@@ -21,7 +21,8 @@ namespace DongXu.Target.IRepository.IOrganization
         DataTable ChlidrenUserByRole(int id);
         int DeleteUser(int userid);
         int AddUser(User user);
-
+        //查询权限
+        List<Power> GetPowerList();
 
 
         //RoleUserQuery GetRoleUserQueryListById(int RoleId);

@@ -136,8 +136,12 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
             var query = _organization.AddUser(user);
             return query;
         }
-
-
-
+        //查询所有权限
+        [HttpGet("GetPowerList")]
+        public List<Power> GetPowerList()
+        {
+            var list = _organization.GetPowerList();
+            return list;
+        }
     }
 }

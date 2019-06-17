@@ -27,6 +27,14 @@
                         <option :value="item.roleId" v-for="item in rolesOList">{{item.roleName}}</option>
 </select></td>
             </tr>
+            <tr>
+                <td>角色描述</td>
+                <td><input id="Text1" type="text" /></td>
+            </tr>
+            <tr>
+                <td>选择权限</td>
+                <td><input id="Checkbox1" type="checkbox" v-for="item in power" :value="item.roleId"/>{{item.roleName}}</td>
+            </tr>
         </table>
     </div>
 </body>
@@ -35,7 +43,8 @@
     var vm = new Vue({
         el: "#addrole",
         data: {
-            rolesOList:[],
+            rolesOList: [],
+            power:[]
         },
         created() {
             this.GetRolesOList()
@@ -44,9 +53,9 @@
             GetRolesOList: function () {
                 axios.get("/Organization/GetRolesOList").then((response) => {
                     this.rolesOList = response.data;
-                    console.log(this.rolesOList);
                 });
             }
+
         }
     })
 </script>
