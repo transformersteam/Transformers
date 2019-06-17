@@ -26,7 +26,7 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 是否启用
         /// </summary>
-        public sbyte? GoalTypeIsUse { get; set; }
+        public int? GoalTypeIsUse { get; set; }
 
         /// <summary>
         /// 创建时间
