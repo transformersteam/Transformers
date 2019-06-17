@@ -26,6 +26,6 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 是否启用
         /// </summary>
-        public sbyte? FrequencyIsUse { get; set; }
+        public int? FrequencyIsUse { get; set; }
     }
 }

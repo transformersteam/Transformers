@@ -129,6 +129,15 @@ namespace DongXu.Target.Model
 
         public DbQuery<BusinessStateTable> BusinessStateTable { get; set; }
 
+
+        /// <summary>
+        /// 目标查询
+        /// </summary>
+        public DbQuery<GoalQuery> GoalQuery { get; set; }
+
+        public DbQuery<CompanyIntegral> CompanyIntegral { get; set; } 
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -371,7 +380,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.FrequencyIsUse)
                     .HasColumnName("Frequency_IsUse")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.FrequencyName)
                     .HasColumnName("Frequency_Name")
@@ -519,7 +528,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.GoalTypeIsUse)
                     .HasColumnName("GoalType_IsUse")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.GoalTypeName)
                     .HasColumnName("GoalType_Name")
@@ -548,7 +557,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.IndexLevelIsUse)
                     .HasColumnName("IndexLevel_IsUse")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Indexs>(entity =>

@@ -43,5 +43,10 @@ namespace DongXu.Target.Model
         /// </summary>
         public DateTime? UserCreateTime { get; set; }
 
+        /// <summary>
+        /// 用户标识列
+        /// </summary>
+        public int User_IdentityId { get; set; }
+
     }
 }

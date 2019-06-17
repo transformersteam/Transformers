@@ -1,0 +1,301 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>目标下达</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/js/vue.js"></script>             @*vue*@
+    <script src="~/js/axios.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="panel-heading">目标详情</div>
+        <table class="table table-bordered table-striped text-center">
+            <tr>
+                <td>
+                    指标名称:
+                    <input id="Text1" type="text" class="layui-input layui-input" />
+                </td>
+                <td>
+                    指标单位:
+                    <select id="commany" class="layui-input layui-select">
+                        <option v-for="(data,index) in commanydata" :value="index">{{data.roleName}}</option>
+                    </select>
+                </td>
+                <td>
+                    主指标:
+                    <input id="Text1" type="text" class="layui-input layui-input" value="2019集团经营目标" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    指标类型:
+                    <select id="Select1" v-on:change="getChild()" class="layui-input layui-select" v-model="parentid">
+                        <option v-for="(data,index) in goaltype" :value="data.goalTypeId">{{data.goalTypeName}}</option>
+                    </select>
+                </td>
+                <td>
+                    指标类别:
+                    <select id="Select1" class="layui-input layui-select">
+                        <option v-for="(data,index) in goalchildtype" :value="index">{{data.goalTypeName}}</option>
+                    </select>
+                </td>
+                <td>
+                    指标等级:
+                    <select id="Select1" class="layui-input layui-select">
+                        <option v-for="(data,index) in indexleave" :value="index">{{data.indexLevelGrade}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    反馈频次
+                    <select id="Select1" class="layui-input layui-select">
+                        <option v-for="(data,index) in frequency" :value="index">{{data.frequencyName}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    开始时间:
+                    <input id="time" type="text" placeholder="yyyy-MM-dd"  class="layui-input" style="text-align:center" />
+                </td>
+                <td>
+                    完成时间:
+                    <input id="endtime" type="text" placeholder="yyyy-MM-dd" class="layui-input" style="text-align:center" />
+                </td>
+                <td>
+                    周期:              
+                    <input id="Text1" type="text" class="layui-input layui-input" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    责任单位:
+                    <select id="commany" class="layui-input layui-select">
+                        <option v-for="(data,index) in commanydata" :value="index">{{data.roleName}}</option>
+                    </select>
+                </td>
+                <td>
+                    责任人:
+                    <select id="commany" class="layui-input layui-select">
+                        <option v-for="(data,index) in dutyuser" :value="index">{{data.userRealName}}</option>
+                    </select>
+                </td>
+                <td>
+                    考核权重:
+                    <input id="Text1" type="text" class="layui-input layui-input" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    填报人:
+                    <select id="writeuser" class="layui-input layui-select">
+                        <option v-for="(data,index) in commanydata" :value="index">{{data.roleName}}</option>
+                    </select>
+                </td>
+                <td colspan="2">
+                    协办人:
+                    <select id="dothinguser" class="layui-input layui-select">
+                        <option v-for="(data,index) in dothinguser" :value="index">{{data.userRealName}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:10px,10px">计算公式/评价标准</td>
+                <td colspan="3">
+                    <input id="Text1" type="text" class="layui-input layui-textarea" />
+                </td>
+            </tr>
+            <tr>
+                <td>数据来源</td>
+                <td colspan="3">
+                    <input id="Text1" type="text" class="layui-input layui-textarea" />
+                </td>
+            </tr>
+            <tr>
+                <td>支持表格</td>
+                <td colspan="2">
+                    <button type="button" class="layui-btn">
+                        <i class="layui-icon"></i>
+                        上传文件
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <div class="panel-heading">指标分解</div>
+        <table class="table table-bordered table-striped text-center">
+            <tr>
+                <td>月份</td>
+                <td>1月</td>
+                <td>1-2月</td>
+                <td>1-3月</td>
+                <td>1-4月</td>
+                <td>1-5月</td>
+                <td>1-6月</td>
+                <td>1-7月</td>
+                <td>1-8月</td>
+                <td>1-9月</td>
+                <td>1-10月</td>
+                <td>1-11月</td>
+                <td>年度目标</td>
+            </tr>
+            <tr>
+                <td>目标值</td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+                <td>
+                    <input id="Text1" type="text" style="width:50px" />
+                </td>
+            </tr>
+        </table>
+        <div class="panel-heading">反馈确认</div>
+        <div style="padding-left: 100px">
+            确认流程
+        </div>
+        <div style="padding-left: 250px">
+            <input id="Text1" type="text" class="layui-icon-friends" />
+        </div>
+        <div style="float: right">
+            <input id="Button1" type="button" value="删除" class="btn btn-primary" />&nbsp;&nbsp;
+            <input id="Button1" type="button" value="保存" class="btn btn-primary" />&nbsp;&nbsp;
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    layui.use('laydate', function(){
+          var laydate = layui.laydate;
+          //执行一个laydate实例
+          laydate.render({
+            elem: '#time' //指定元素
+          });
+    });
+
+    layui.use('laydate', function(){
+          var laydate = layui.laydate;
+          //执行一个laydate实例
+          laydate.render({
+            elem: '#endtime' //指定元素
+          });
+    });
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            commanydata: [],   //单位
+            dutyuser: [],      //责任人
+            dothinguser: [],   //协办人
+            indexleave: [],    //指标等级
+            frequency: [],     //反馈频次
+            goaltype: [],       //目标类型
+            goalchildtype:[],  //子集目标类型
+            parentid:0,
+        },
+        mounted() {
+            this.bindCommany();
+            this.bindDutyUser();
+            this.bindDothingUser();
+            this.bindLeave();
+            this.bindFrequency();
+            this.bindGoalType();
+        },
+        methods: {
+            bindCommany: function () {             //绑定单位下拉框
+                axios.get("@Url.Action("GetCommanyList","GoalManage")").then(
+                    (response) => {
+                        this.commanydata = response.data;
+                        console.log(response.data)
+                    }
+                )
+            },
+            bindDutyUser: function () {            //绑定责任人下拉框
+                axios.get("@Url.Action("GetDutyUserList","GoalManage")").then(
+                    (response) => {
+                        this.dutyuser = response.data;
+                        console.log(response.data)
+                    }
+                )
+            },
+            bindDothingUser: function () {         //绑定协办人下拉框
+                axios.get("@Url.Action("GetDothingUserList","GoalManage")").then(
+                    (response) => {
+                        this.dothinguser = response.data;
+                        console.log(response.data)
+                    }
+                )
+            },
+            bindLeave: function () {               //查询指标等级
+                axios.get("@Url.Action("GetIndexlevelList","GoalManage")").then(
+                    (response) => {
+                        this.indexleave = response.data;
+                        console.log(response.data)
+                    }
+                )
+            },
+            bindFrequency: function () {           //查询反馈频次
+                axios.get("@Url.Action("GetFrequencieList","GoalManage")").then(
+                    (response) => {
+                        this.frequency = response.data;
+                        console.log(response.data)
+                    }
+                )
+            },
+            bindGoalType: function () {            //查询目标类型
+                axios.get("@Url.Action("GetGoalTypeList","GoalManage")", { params: {id:0}}).then(
+                    (response) => {
+                        this.goaltype = response.data;
+                        console.log(response.data)
+                    }
+                )
+            },
+            getChild: function () {               //绑定类别下拉框  二级联动
+                axios.get("@Url.Action("GetGoalTypeList","GoalManage")", { params: {id:this.parentid}}).then(
+                    (response) => {
+                        this.goalchildtype = response.data;
+                    }
+                )
+            }
+        }
+    })
+</script>

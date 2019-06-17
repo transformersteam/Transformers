@@ -10,96 +10,38 @@
     <meta name="viewport" content="width=device-width" />
     <title>Test</title>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
 
-    <div>
-        <button onclick="testpost()">post</button>
-        <button onclick="testget()">get</button>
-        <input id="Button1" type="button" value="a" onclick="acc()" />
+    <table>
+        <tr>
+            <th data-field="wrongpercent" data-align="center" data-formatter="wrongPercent">错误率%</th>
+        </tr>
+
+    </table>
+    <div style="width:100px" class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60"
+             aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+            <span class="sr-only">40% 完成</span>
+        </div>
     </div>
 </body>
 </html>
 <script>
-
     $(function () {
+
+        wrongPercent();
     })
 
-    function testget() {
-        $.ajax({
-            url: 'http://localhost:8888/api/values',
-            success: function (data) {
-
-                alert(data);
-            }
-        })
+    function wrongPercent(value, row, index) {
+        var res = 100 * 20 / 70;
+        return ["<div class='progress'> <div class='progress-bar' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100' style='width:50%'>70</div> </div>"];
+        //        return res.toFixed(2);
     }
-
-    function testpost() {
-        var model = { UserId: 1, RoleId: 1 };
-        var val = JSON.stringify(model);
-        alert(val)
-        $.ajax({
-            url: "@APIConn.MyAPIConn"+"Values/test",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: val,
-            crossDomain:true,
-            dataType: 'json',
-            success: function (data) {
-                alert(JSON.stringify(data));
-            }
-        });
-    }
-
-    function acc() {
-        var model = { UserId: 1  };
-        //var acc = {
-        //    "user": {
-        //        "userId": 0,
-        //        "userName": UserName,
-        //        "userPass": UserPass,
-        //        "userRealName": UserRealName,
-        //        "userIsEnable": UserIsEnable,
-        //        "userCreateTime": UserCreateTime,
-        //    },
-        //    "userRoleid": roleid
-        //};
-       
-        var acc = {
-            "userId": 0,
-            "userName": 1,
-            "userPass": 1,
-            "userRealName": 1,
-            "userRoleName": 1,
-            "userIsEnable": true,
-            "userCreateTime": "2019-06-16T13:31:57.236Z",
-            "userRoleid": 17
-        };
-;
-        var val = JSON.stringify(acc);
-
-
-        
-
-
-        alert("val:" + val);
-        $.ajax({
-            url: "@APIConn.MyAPIConn"+"Organization/AddUser",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: val,
-            crossDomain: true,
-            dataType: 'json',
-            success: function (data) {
-                alert(data);
-            }
-        });
-
-    }
-
-
 
 
 </script>
