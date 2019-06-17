@@ -54,8 +54,12 @@
                 axios.get("/Organization/GetRolesOList").then((response) => {
                     this.rolesOList = response.data;
                 });
+            },
+            GetPowerList: function () {
+                axios.get("/Organization/GetRolesOList").then((response) => {
+                    this.rolesOList = response.data;
+                });
             }
-
         }
     })
 </script>
