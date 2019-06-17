@@ -26,7 +26,6 @@ namespace DongXu.Target.Api.Controllers.ExecuteController
             IntegralRepository = integral;
         }
 
-
         /// <summary>
         /// 积分获取
         /// </summary>

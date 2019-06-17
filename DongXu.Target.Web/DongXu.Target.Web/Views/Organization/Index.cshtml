@@ -1,4 +1,4 @@
-﻿
+﻿@using DongXu.Target.Web.Conn;
 @{
     Layout = null;
 }
@@ -181,10 +181,9 @@
     };
     //获取结点
     function GetRolesOList() {
+
         $.ajax({
-
-            url: "http://localhost:8888/api/Organization/GetRolesOList",
-
+            url: "@APIConn.MyAPIConn"+"/Organization/GetRolesOList",
             async: false,
             success: function (data) {
                 var json = eval(data); // 数组
@@ -215,7 +214,7 @@
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         $.ajax({
-            url: "http://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
+            url: "@APIConn.MyAPIConn"+"/Organization/GetRolesOListById?RoleId=" + treeNode.id,
             async: false,
             success: function (data) {
                 vm.$data.RoleId = data.roleId;
@@ -320,10 +319,7 @@
             var model = { RoleName: name, RolePid: treeNode.id, RoleCreatePeople: "管理员", RoleCreateTime: nowDate };
             var val = JSON.stringify(model);
             $.ajax({
-
-
-                url: "http://localhost:8888/api/Organization/AddRolesO",
-
+                url: "@APIConn.MyAPIConn"+"/Organization/AddRolesO",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: val,
@@ -346,13 +342,13 @@
      */
     function removeHoverDom(treeId, treeNode) {
         $("#addBtn_" + treeNode.tId).unbind().remove();
-        
+
     };
     //删除节点
     function zTreeOnRemove(event, treeId, treeNode) {
         {
             $.ajax({
-                url: "http://localhost:8888/api/Organization/DeleteRolesO?id=" + treeNode.id,
+                url: "@APIConn.MyAPIConn"+"/Organization/DeleteRolesO?id=" + treeNode.id,
                 type: "get",
                 success: function (data) {
                     if (data > 0) {
@@ -381,7 +377,7 @@
         var model = { "roleId": treeNode.id, "roleName": treeNode.name, "roleModifyPeople": "超级管理员", "roleModifyTime": nowDate };
         var val = JSON.stringify(model);
         $.ajax({
-            url: "http://localhost:8888/api/Organization/UpdateRolesOName",
+            url: "@APIConn.MyAPIConn"+"/Organization/UpdateRolesOName",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: val,
@@ -427,7 +423,7 @@
                 params.append('RoleModifyTime', nowDate);
 
                 axios.post("/Organization/UpdateRolesO", params).then((response) => {
-                    if (response.data > 0) { 
+                    if (response.data > 0) {
                         /*根据 treeId 获取 zTree 对象*/
                         var zTree = $.fn.zTree.getZTreeObj("regionZTree"),
                             type = "refresh",

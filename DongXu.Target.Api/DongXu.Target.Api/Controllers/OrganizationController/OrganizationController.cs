@@ -17,6 +17,8 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
     [ApiController]
     public class OrganizationController : ControllerBase
     {
+        
+
         /// <summary>
         /// 定义私有变量
         /// </summary>
@@ -131,11 +133,26 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost("AddUser")]
-        public int AddUser([FromBody]User user)
+        public int AddUser(AddUser user)
         {
             var query = _organization.AddUser(user);
+            return 1;
+        }
+
+
+        /// <summary>
+        /// 获取该部门下所有职业
+        /// </summary>
+        /// <param name="Role_Id"></param>
+        /// <returns></returns>
+        [HttpGet("ChildrenJobByRole")]
+        public DataTable ChildrenJobByRole(int Role_Id)
+        {
+            var query = _organization.ChildrenJobByRole(Role_Id);
             return query;
         }
+
+
         //查询所有权限
         [HttpGet("GetPowerList")]
         public List<Power> GetPowerList()

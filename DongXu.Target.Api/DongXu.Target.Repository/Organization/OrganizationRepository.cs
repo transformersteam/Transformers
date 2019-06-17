@@ -151,10 +151,10 @@ namespace DongXu.Target.Repository
         /// <returns></returns>
         public int DeleteUser(int userid)
         {
-               User user = db.User.Where(u => u.UserId == userid).FirstOrDefault();
-               user.UserIsEnable = false;
-               var query = db.SaveChanges();
-              return query;
+            User user = db.User.Where(u => u.UserId == userid).FirstOrDefault();
+            user.UserIsEnable = false;
+            var query = db.SaveChanges();
+            return query;
         }
 
         /// <summary>
@@ -162,11 +162,37 @@ namespace DongXu.Target.Repository
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-
-        public int AddUser(User user)
+        public int AddUser(AddUser adduser) 
         {
+            User user = new User();
+            user.UserId = adduser.UserId;
+            user.UserName = adduser.UserName;
+            user.UserPass = adduser.UserPass;
+            user.UserRealName = adduser.UserRealName;
+            user.UserRoleName = adduser.UserRoleName;
+            user.UserIsEnable = adduser.UserIsEnable;
+            user.UserCreateTime = adduser.UserCreateTime; 
+            
+            Userrole userrole = new Userrole();
             db.User.Add(user);
-            var query=db.SaveChanges();
+            var query = db.SaveChanges();
+            userrole.UserId = user.UserId;
+            userrole.RoleId = adduser.userRoleid;
+            db.Userrole.Add(userrole);
+            db.SaveChanges();
+            return query;
+        }
+
+        /// <summary>
+        /// 获取该部门下所有职业
+        /// </summary>
+        /// <param name="Role_Id"></param>
+        /// <returns></returns>
+        public DataTable ChildrenJobByRole(int Role_Id)
+        {
+            MySqlParameter sqlParameters = new MySqlParameter("@RoleId", MySqlDbType.Int32);
+            sqlParameters.Value = Role_Id;
+            var query = DbProcedureHelper.ExecuteDt("P_GetChildrenJobByRoleId", sqlParameters);
             return query;
         }
         

@@ -12,7 +12,8 @@
     <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/js/vue.js"></script>             @*vue*@
     <script src="~/js/axios.js"></script>
-    <script src="~/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
     <script src="~/js/zpageNav.js"></script>        @*分页js*@
     <link href="~/js/zpageNav.css" rel="stylesheet" />   @*分页样式*@
     <script src="~/js/echarts.min.js"></script>    @*Echarts图*@
@@ -54,12 +55,12 @@
             <div class="panel-heading">积分排名</div>
             <div id="main" style="width:1200px;height:400px;margin-left:250px"></div>
         </div>
-        <div class="panel panel-primary" style="height:450px">
+        <div class="panel panel-primary" style="height:500px">
             <div class="panel-heading">红绿灯状态</div>
             <br />
             <input id="tableshow" type="button" value="切换表格" class="btn btn-primary" />
-            <div id="statetable">
-                <table class="table table-bordered table-striped text-center" style="height:400px">
+            <div id="statetable" style="float:left">
+                <table class="table table-bordered table-striped text-center" style="width:1000px;margin-left:50px">
                     <thead>
                         <tr>
                             <td>目标序号</td>
@@ -82,7 +83,7 @@
                 <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
             </div>
             <div style="float:right;width:700px;height:358px">
-                <div id="dfd" style="width:700px;height:400px;margin-right:250px"></div>
+                <div id="redblueechart" style="width:700px;height:400px;margin-right:250px"></div>
             </div>
         </div>
         <div class="panel panel-primary" style="height:400px">
@@ -132,7 +133,7 @@
             getredgreen();         //红绿灯情况
             getCondition();        //运行情况
             this.getStateTable();       //红绿灯表格
-            //$("#statetable").hide();
+            $("#statetable").hide();
         },
         methods: {
             getWaitRead: function () {      //显示
@@ -170,23 +171,23 @@
                     }
                 )
             },
-            detailsById: function (id) {
+            detailsById: function (id) {    //点击数字显示详情
                 alert(id)
                 layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.open({
                         type: 2,
-                        title: title,
+                        title:"目标详情",
                         shadeClose: true,
                         shade: 0.8,
                         area: ['1000px', '700px'],
-                        content:"/WaitRead/TargetDetails",
+                        content: "/WaitRead/TargetDetails?id=" + id,
                     });
                 })
             }
         }
     })
-            
+
     //积分排名
     function getintegral() {
         var myCharty = echarts.init(document.getElementById('main'))
@@ -335,12 +336,12 @@
     $("#tableshow").click(function () {
         if ($("#tableshow").val()=="切换表格") {
             alert(111)
-            $("#echartshow").hide();
             $("#statetable").show();
+            $("#echartshow").hide();
             $("#tableshow").val("切换柱状图");
-
         }
-        if ($("#tableshow").val()=="切换柱状图") {
+        else if ($("#tableshow").val() == "切换柱状图") {
+            alert(222)
             $("#tableshow").val("切换表格");
             $("#statetable").hide();
             $("#echartshow").show();

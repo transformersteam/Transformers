@@ -21,7 +21,7 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 目标状态id
         /// </summary>
-        public int? GoalStateId { get; set; }
+        public int GoalStateId { get; set; }
 
         /// <summary>
         /// 指标单位id
@@ -106,7 +106,7 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 待办状态 待办已办
         /// </summary>
-        public int BusinessState { get; set; }
+        public int Business_State { get; set; }
 
         /// <summary>
         /// 进度百分比
@@ -122,5 +122,10 @@ namespace DongXu.Target.Model
         /// 责任单位
         /// </summary>
         public int Goal_DutyCommanyId { get; set; }
+
+        /// <summary>
+        /// 父级节点
+        /// </summary>
+        public int Goal_ParentId { get; set; }
     }
 }

@@ -80,7 +80,7 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
             List<int> datacount = new List<int>();
             List<string> dataname = new List<string>();
             var model = HelperHttpClient.GetAll("get", "WaitRead/GetUserIntergal?id=" + id, null);
-            var list = JsonConvert.DeserializeObject<List<UserIntegral>>(model);
+            var list = JsonConvert.DeserializeObject<List<UserIntegral>>(model).OrderByDescending(m=>m.Integral_Num);
             EchartModel echartModel = new EchartModel();
             foreach (var item in list)
             {
