@@ -22,7 +22,7 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// <returns></returns>
         public ActionResult ManagementShow(int id=1)
         {
-            ViewBag.id = id;
+            ViewBag.id = id;   //登录人id
             return View();
         }
 
@@ -126,6 +126,17 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
             var list = HelperHttpClient.GetAll("get", "WaitRead/GetRunConditionList");
             var condition = JsonConvert.DeserializeObject<List<GoalStateGoal>>(list);
             return Json(condition);
+        }
+
+        /// <summary>
+        /// 红绿灯状态表格
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetBusinessStateTableList()
+        {
+            var list= HelperHttpClient.GetAll("get", "WaitRead/GetBusinessStateTable");
+            var statelist= JsonConvert.DeserializeObject<List<BusinessStateTable>>(list);
+            return Json(statelist);
         }
     }
 }

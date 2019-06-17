@@ -183,15 +183,14 @@
     function GetRolesOList() {
         $.ajax({
 
-            url: "http://localhost:8888/api/Organization/GetRolesOList",
+            url: "https://localhost:8888/api/Organization/GetRolesOList",
 
             async: false,
             success: function (data) {
                 var json = eval(data); // 数组
                 zNodes = "[";
                 $.each(json, function (index, item) {
-                    if (json[index].rolePid == 0) {
-                        zNodes += "{id:" + json[index].roleId
+                    if (json[index].rolePid == 0) {                        zNodes += "{id:" + json[index].roleId
                             + ",pId:" + json[index].rolePid
                             + ",name:'" + json[index].roleName
                             + "',open:true}";
@@ -216,7 +215,7 @@
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         $.ajax({
-            url: "http://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
+            url: "https://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
             async: false,
             success: function (data) {
                 vm.$data.RoleId = data.roleId;
@@ -323,7 +322,7 @@
             $.ajax({
 
 
-                url: "http://localhost:8888/api/Organization/AddRolesO",
+                url: "https://localhost:8888/api/Organization/AddRolesO",
 
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
@@ -353,7 +352,7 @@
     function zTreeOnRemove(event, treeId, treeNode) {
         {
             $.ajax({
-                url: "http://localhost:8888/api/Organization/DeleteRolesO?id=" + treeNode.id,
+                url: "https://localhost:8888/api/Organization/DeleteRolesO?id=" + treeNode.id,
                 type: "get",
                 success: function (data) {
                     if (data > 0) {
@@ -384,7 +383,7 @@
         $.ajax({
 
 
-            url: "http://localhost:8888/api/Organization/UpdateRolesOName",
+            url: "https://localhost:8888/api/Organization/UpdateRolesOName",
 
             type: "POST",
             contentType: "application/json; charset=utf-8",

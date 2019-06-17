@@ -77,5 +77,15 @@ namespace DongXu.Target.Repository.WaitReadRepository
             var list = context.TargetDetails.FromSql($"SELECT c.GoalType_Name,d.Integral_Num,h.IndexLevel_Grade,g.Frequency_Name,e.Role_Name,a.Goal_ChargePeople,a.Goal_Informant,a.Goal_Organiser, a.Goal_CreateTime, a.Goal_EndTime, a.Goal_Weight,f.File_Name FROM goal a INNER JOIN goaltype b on a.GoalType_Id = b.GoalType_Id INNER JOIN goaltype c on c.GoalType_PId = b.GoalType_Id INNER JOIN Integral d on a.IndexLevel_Id = d.Integral_Id INNER JOIN IndexLevel h on h.IndexLevel_Id = a.IndexLevel_Id INNER JOIN role e on a.Goal_DutyCommanyId = e.Role_Id INNER JOIN files f on f.Goal_Id = a.File_Id INNER JOIN Frequency g on g.Frequency_Id = a.Frequency_Id WHERE a.Goal_Id = {id}").ToList();
             return list;
         }
+
+        /// <summary>
+        /// 红绿灯状态表格
+        /// </summary>
+        /// <returns></returns>
+        public List<BusinessStateTable> GetBusinessStateTable()
+        {
+            var list = context.BusinessStateTable.FromSql("SELECT a.goal_id ,b.role_Name,a.goalstate_id,COUNT(a.goalstate_id) as statecount FROM goal a INNER JOIN role b on a.Goal_DutyCommanyId = b.role_id WHERE a.goalstate_id = 1 || a.goalstate_id = 3 || a.goalstate_id = 5").ToList();
+            return list;
+        }
     }
 }

@@ -214,7 +214,7 @@
     function GetRolesOList() {
         $.ajax({
 
-            url: "http://localhost:8888/api/Organization/GetRolesOList",
+            url: "https://localhost:8888/api/Organization/GetRolesOList",
 
             async: false,
             success: function (data) {
@@ -247,7 +247,7 @@
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         //$.ajax({
-        //    url: "http://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
+        //    url: "https://localhost:8888/api/Organization/GetRolesOListById?RoleId=" + treeNode.id,
         //    async: false,
         //    success: function (data) {
         //        vm.$data.RoleId = data.roleId;
@@ -279,7 +279,7 @@
         window.treeNodeid = treeNode.id;
         alert(treeNode.id);
         $.ajax({
-            url: "http://localhost:8888/api/Organization/ChlidrenUserByRole?id=" + treeNode.id,
+            url: "https://localhost:8888/api/Organization/ChlidrenUserByRole?id=" + treeNode.id,
             success: function (data) {
                 console.log(data);
                 $("#righttab").empty();

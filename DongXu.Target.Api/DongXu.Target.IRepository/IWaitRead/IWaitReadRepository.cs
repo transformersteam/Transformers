@@ -36,5 +36,11 @@ namespace DongXu.Target.IRepository.IWaitRead
         /// <param name="id"></param>
         /// <returns></returns>
         List<TargetDetails> GetTargetDetailById(int id);
+
+        /// <summary>
+        /// 红绿灯状态表格
+        /// </summary>
+        /// <returns></returns>
+        List<BusinessStateTable> GetBusinessStateTable();
     }
 }

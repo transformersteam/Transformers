@@ -137,6 +137,7 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
             return 1;
         }
 
+
         /// <summary>
         /// 获取该部门下所有职业
         /// </summary>
@@ -147,6 +148,15 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             var query = _organization.ChildrenJobByRole(Role_Id);
             return query;
+        }
+
+
+        //查询所有权限
+        [HttpGet("GetPowerList")]
+        public List<Power> GetPowerList()
+        {
+            var list = _organization.GetPowerList();
+            return list;
         }
 
     }

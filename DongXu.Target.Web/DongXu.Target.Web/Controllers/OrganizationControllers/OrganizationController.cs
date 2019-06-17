@@ -8,6 +8,7 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
 {
     public class OrganizationController : Controller
     {
+        //组织管理
         public IActionResult Index()
         {
             return View();
@@ -18,10 +19,12 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             var result = HelperHttpClient.GetAll("post", "Organization/UpdateRolesO", json);
             return Json(result);
         }
+        //岗位管理
         public IActionResult Role()
         {
             return View();
         }
+        //角色管理
         public IActionResult RoleIndex()
         {
             return View();
@@ -46,13 +49,30 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             };
             return rolesPageList;
         }
-
+        //岗位管理
         public IActionResult PostJob()
         {
-
             return View();
         }
-
+        //角色添加
+        public IActionResult AddRoleR()
+        {
+            return View();
+        }
+        //角色添加 绑定部门下拉
+        public List<Role> GetRolesOList()
+        {
+            var result = HelperHttpClient.GetAll("get", "Organization/GetRolesOList", null);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(result);
+            return list;
+        }
+        //显示所有权限
+        public List<Role> GetPowerList()
+        {
+            var result = HelperHttpClient.GetAll("get", "Organization/GetPowerList", null);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(result);
+            return list;
+        }
 
     }
 }

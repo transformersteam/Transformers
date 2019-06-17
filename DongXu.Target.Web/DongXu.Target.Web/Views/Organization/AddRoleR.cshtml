@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddRoleR</title>
+    <script src="~/js/vue.js"></script>
+    <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="addrole">
+        <table class="layui-table">
+            <tr>
+                <td>角色姓名</td>
+                <td><input id="Text1" type="text"  /></td>
+            </tr>
+            <tr>
+                <td>所属部门</td>
+                <td><select name="roleo" lay-verify="" lay-search >
+                        <option :value="item.roleId" v-for="item in rolesOList">{{item.roleName}}</option>
+</select></td>
+            </tr>
+            <tr>
+                <td>角色描述</td>
+                <td><input id="Text1" type="text" /></td>
+            </tr>
+            <tr>
+                <td>选择权限</td>
+                <td><input id="Checkbox1" type="checkbox" v-for="item in power" :value="item.roleId"/>{{item.roleName}}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+        el: "#addrole",
+        data: {
+            rolesOList: [],
+            power:[]
+        },
+        created() {
+            this.GetRolesOList()
+        },
+        methods: {
+            GetRolesOList: function () {
+                axios.get("/Organization/GetRolesOList").then((response) => {
+                    this.rolesOList = response.data;
+                });
+            },
+            GetPowerList: function () {
+                axios.get("/Organization/GetRolesOList").then((response) => {
+                    this.rolesOList = response.data;
+                });
+            }
+        }
+    })
+</script>
