@@ -9,32 +9,117 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style type="text/css">
+        .demo {
+            position: relative;
+        }
 
-    <link href="~/Progress/normalize.css" rel="stylesheet" />
-    <link href="~/Progress/style.css" rel="stylesheet" />
-    <link href="~/Progress/number-pb.css" rel="stylesheet" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+            .demo i {
+                position: absolute;
+                bottom: 10px;
+                right: 24px;
+                top: auto;
+                cursor: pointer;
+            }
+    </style>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/Progress/jquery.velocity.min.js"></script>
+
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+
+
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
 </head>
 <body>
-    <div>
 
+
+    <div class="container">
+        <div class="row" style="padding: 20px 0">
+            <h3> </h3>
+            <h3> </h3>
+            <h3> </h3>
+            <h3> </h3>
+        </div>
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">目标名称</span>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">目标类别</span>
+                    <select class="form-control">
+                        <option>default</option>
+                        <option>one</option>
+                        <option>two</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">目标级别</span>
+                    <select class="form-control">
+                        <option>default</option>
+                        <option>one</option>
+                        <option>two</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">责任部门</span>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">责任人</span>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">完成时间</span>
+                    @*<input class="form-control" type="text">*@
+                    <input style="width:288px" class="form-control" type="text" id="config-demo">
+
+                </div>
+            </div>
+
+            <div class="form-group  col-lg-3">
+                <div  style="padding-left:80px" class="col-sm-10 col-sm-offset-2">
+                    <button class="btn btn-primary">查询</button>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
         <div>
-            目标名称：<input id="Text1" type="text" />
-            目标类别：<select id="Select1"><option></option></select>
-            目标状态：<select id="Select2"><option></option></select>
-            目标级别：<select id="Select3"><option></option></select>
-            责任部门：<select id="Select3"><option></option></select>
-            责任人：<select id="Select3"><option></option></select>
-
-
 
 
         </div>
 
 
         <span>目标列表</span>
-        <table style="text-align:center"  class="table table-bordered">
+        <table style="text-align:center" class="table table-bordered">
             <thead>
                 <tr>
                     <td text-alig="center">序号</td>
@@ -47,24 +132,66 @@
                     <td>当前进度</td>
                 </tr>
             </thead>
-            <tbody id="container">
-            </tbody>
+            <tbody id="container"></tbody>
         </table>
     </div>
+
+
 </body>
 </html>
 
 
 
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/Progress/jquery.velocity.min.js"></script>
-<script src="~/Progress/number-pb.js"></script>
+
 <script>
+
+    var startTime = '';
+    var endTime = '';
+
+
+
+
+
+
     $(function () {
+        bb();
         targetList();
 
     })
+
+    function bb() {
+        var beginTimeStore = '';
+        var endTimeStore = '';
+        $('#config-demo').daterangepicker({
+            "timePicker": true,
+            "timePicker24Hour": true,
+            "linkedCalendars": false,
+            "autoUpdateInput": false,
+            "locale": {
+                format: 'YYYY-MM-DD',
+                separator: ' ~ ',
+                applyLabel: "应用",
+                cancelLabel: "取消",
+                resetLabel: "重置",
+            }
+        }, function (start, end, label) {
+            beginTimeStore = start;
+            endTimeStore = end;
+            startTime = this.startDate.format(this.locale.format);
+            endTime = this.endDate.format(this.locale.format);
+            console.log(this.startDate.format(this.locale.format));
+            console.log(this.endDate.format(this.locale.format));
+            if (!this.startDate) {
+                this.element.val('');
+            } else {
+                this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
+            }
+            });
+    }
+
+
+
 
     function targetList() {
         $.ajax({
@@ -86,12 +213,17 @@
                 })
                 $("#container").append(str);
             }
-
-
         })
+    }
+
+
+    function typelevel() {
+
 
 
     }
+
+
 
 
 
