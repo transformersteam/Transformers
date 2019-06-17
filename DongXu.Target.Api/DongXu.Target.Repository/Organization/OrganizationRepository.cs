@@ -212,14 +212,43 @@ namespace DongXu.Target.Repository
         //添加角色 关联
         public int AddRolepower(int rid,int[] power)
         {
+            List<Rolepower> rplist = new List<Rolepower>();
             for(int i=0;i<power.Length;i++)
             {
                 Rolepower rp = new Rolepower();
                 rp.RoleId = rid;
-                rp.RolePowerId = power[i];
-                db.Rolepower.Add(rp);
+                rp.PowerId = power[i];
+                rplist.Add(rp);
             }
+            db.Rolepower.AddRange(rplist);
+            //db.Database.ExecuteSqlCommand("insert into rolepower(Role_Id,Power_Id) values(@RoleId,@RolePowerId)", rplist);
             return db.SaveChanges();
+        }
+        //删除角色
+        public int DeleteRolesR(int id)
+        {
+            var roleo = db.Role.Where(m => m.RoleId == id).FirstOrDefault();
+            db.Role.Remove(roleo);
+            //1.0 先按照条件查询
+            var list = db.Rolepower.Where(m => m.RoleId == id).ToList();
+            //2.0 遍历集合，将 要删除的 对象 的代理对象的State 设置为 Deleted
+            list.ForEach(u => db.Rolepower.Remove(u));
+            //3.0 执行更新
+            int resCount = db.SaveChanges();
+
+            return resCount;
+        }
+        //反填角色
+        public Role GetRoleById(int roleId)
+        {
+            Role role = db.Role.Where(m => m.RoleId == roleId).FirstOrDefault();
+            return role;
+        }
+        //反填权限
+        public Rolepower GetRolepowerById(int roleId)
+        {
+            Rolepower rolepower = db.Rolepower.Where(m => m.RoleId == roleId).FirstOrDefault();
+            return rolepower;
         }
     }
 }

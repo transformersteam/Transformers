@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using DongXu.Target.Cache;
+using DongXu.Target.Web.Models.Dto;
 
 namespace DongXu.Target.Web.Controllers.OrganizationControllers
 {
@@ -22,7 +23,7 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
         public JsonResult UpdateRolesO(Role model)
         {
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
-            var result = HelperHttpClient.GetAll("post", "Organization/UpdateRolesO", json);
+            var result = HelperHttpClient.GetAll("post","Organization/UpdateRolesO",json);
             return Json(result);
         }
 
@@ -70,7 +71,12 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
         {
             return View();
         }
-
+        //角色修改
+        public IActionResult UptRolesR(int id)
+        {
+            ViewBag.id = id;
+            return View();
+        }
         //角色添加 绑定部门下拉
         public List<Role> GetRolesOList()
         {
@@ -90,14 +96,35 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
         public JsonResult AddRole(Role model)
         {
             string jsonm = Newtonsoft.Json.JsonConvert.SerializeObject(model);
-            var result = HelperHttpClient.GetAll("post","Organization/AddRole",jsonm);
+            var result = HelperHttpClient.GetAll("post", "Organization/AddRole", jsonm);
             return Json(result);
         }
         //添加角色 权限
-        public JsonResult AddRolePower(int rid,int[] power)
+        public JsonResult AddRolePower(RolePower rp)
         {
-            var result = HelperHttpClient.GetAll("post", "Organization/AddRole", new { rid, power });
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(rp);
+            var result = HelperHttpClient.GetAll("post", "Organization/AddRolepower", json);
             return Json(result);
+        }
+        //删除角色及权限
+        public JsonResult DeleteRolesR(int id)
+        {
+            var result = HelperHttpClient.GetAll("post", "Organization/DeleteRolesR", id);
+            return Json(result);
+        }
+        //反填角色
+        public Role GetRoleById(int roleId)
+        {
+            var result = HelperHttpClient.GetAll("get", "Organization/GetRoleById?roleId="+ roleId, null);
+            Role role = Newtonsoft.Json.JsonConvert.DeserializeObject<Role>(result);
+            return role;
+        }
+        //反填权限
+        public Rolepower GetRolepowerById(int roleId)
+        {
+            var result = HelperHttpClient.GetAll("get","Organization/GetRolepowerById?roleId=" + roleId, null);
+            Rolepower rolepower = Newtonsoft.Json.JsonConvert.DeserializeObject<Rolepower>(result);
+            return rolepower;
         }
     }
 }

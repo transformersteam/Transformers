@@ -20,24 +20,27 @@
         <table class="layui-table">
             <tr>
                 <td>角色姓名</td>
-                <td><input id="txtName" type="text" v-model="RoleName"/></td>
+                <td><input id="txtName" type="text" v-model="RoleName" /></td>
             </tr>
             <tr>
                 <td>所属部门</td>
-                <td><select id="roleo" lay-verify="" lay-search v-model="RolePid">
-                        <option :value="item.roleId" v-for="item in rolesOList">{{item.roleName}}</option></select></td>
+                <td>
+                    <select id="roleo" lay-verify="" lay-search v-model="RolePid">
+                        <option v-for="item in rolesOList" :value="item.roleId">{{item.roleName}}</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>角色描述</td>
-                <td><input id="txtContext" type="text" v-model="RoleContent"/></td>
+                <td><input id="txtContext" type="text" v-model="RoleContent" /></td>
             </tr>
             <tr>
                 <td>选择权限</td>
-                <td><span v-for="item in power"><input id="Checkbox1" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)"/><label>{{item.powerName}}</label></span></td>
+                <td><span v-for="item in power"><input id="Checkbox1" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input id="Button1" type="button" value="添加" class="layui-btn layui-btn-normal" v-on:click="AddRole(RoleName, RolePid, RoleContent)"/></td>
+                <td><input id="Button1" type="button" value="修改" name="qx" class="layui-btn layui-btn-normal" v-on:click="UptRole(RoleName, RolePid, RoleContent)" /></td>
             </tr>
         </table>
     </div>
@@ -65,11 +68,13 @@
             RoleName: "",
             RolePid: "",
             RoleContent: "",
-            powerId:[]
+            powerId: []
         },
         created() {
-            this.GetRolesOList(),
-            this.GetPowerList()
+                this.GetRolesOList(),
+                this.GetPowerList(),
+                this.GetRoleById(@ViewBag.id),
+                this.GetRolepowerById(@ViewBag.id)
         },
         methods: {
             GetRolesOList: function () {
@@ -82,20 +87,42 @@
                     this.power = response.data;
                 });
             },
-            AddRole: function (RoleName, RolePid, RoleContent) {
+            GetRoleById: function (id) {
+                axios.get("/Organization/GetRoleById", { params: { roleId:id} }).then((response) => {
+                    this.RoleName = response.data.roleName;
+                    this.RolePid = response.data.roleName;
+                    this.RoleContent = response.data.roleContent;
+                });
+            },
+            GetRolepowerById: function (id) {
+                axios.get("/Organization/GetRolepowerById", { params: { roleId: id } }).then((response) => {
+                    console.log(response);
+                    for (var i = 0; i < response.data.powerId; i++) {
+                        alert(response.data.powerId);
+                        var qx = document.getElementsByName("qx");
+                        console.log(qx);
+                        for (var j = 0; j < qx.length; j++) {
+                            if (response.data.powerId[i] == qx[j].value) {
+                                qx[j].checked = true;
+                            }
+                        }
+                    }
+                });
+            },
+            UptRole: function (RoleName, RolePid, RoleContent) {
                 var params = new URLSearchParams();
-                params.append('RoleName',RoleName);
-                params.append('RoleIdentify',3);
-                params.append('RoleIsEnable',1);
-                params.append('RolePid',RolePid);
+                params.append('RoleName', RoleName);
+                params.append('RoleIdentify', 3);
+                params.append('RoleIsEnable', 1);
+                params.append('RolePid', RolePid);
                 params.append('RoleContent', RoleContent);
                 params.append('RoleCreateTime', nowDate);
                 params.append('RoleCreatePeople', RoleCreatePeople);
-                axios.post("/Organization/AddRole",params).then((response) => {
+                axios.post("/Organization/AddRole", params).then((response) => {
                     if (response.data > 0) {
                         this.AddRolePower(response.data, this.powerId);
                     }
-                }); 
+                });
             },
             GetPowerId: function (powerId) {
                 this.powerId.push(powerId);
@@ -104,14 +131,14 @@
                 var params = new URLSearchParams();
                 params.append('rid', rid);
                 params.append('power', JSON.stringify(this.powerId));
-                axios.post("/Organization/AddRolePower",params).then((response) => {
+                axios.post("/Organization/AddRolePower", params).then((response) => {
                     if (response.data > 0) {
                         alert('添加成功');
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭  
+                        parent.layer.close(index); //再执行关闭
                         location.href = '/Organization/RoleIndex';
                     }
-                }); 
+                });
             }
         }
     })

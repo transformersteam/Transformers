@@ -30,9 +30,12 @@ namespace DongXu.Target.IRepository.IOrganization
         int AddRole(Role model);
         //添加角色权限关联
         int AddRolepower(int rid,int[] power);
-
-
-
+        //删除角色
+        int DeleteRolesR(int id);
+        //反填角色
+        Role GetRoleById(int roleId);
+        //反填权限
+        Rolepower GetRolepowerById(int roleId);
         //RoleUserQuery GetRoleUserQueryListById(int RoleId);
     }
 }

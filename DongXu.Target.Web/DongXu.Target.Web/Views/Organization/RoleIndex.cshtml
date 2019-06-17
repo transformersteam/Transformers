@@ -68,7 +68,7 @@
                 <tr v-for="item in rolelist">
                     <td>{{item.roleName}}</td>
                     <td>{{item.roleContent}}</td>
-                    <td><input id="Button1" type="button" value="设置" class="layui-btn layui-btn-normal" /><input id="Button1" type="button" value="删除" class="layui-btn layui-btn-normal" /></td>
+                    <td><input id="Button1" type="button" value="设置" class="layui-btn layui-btn-normal" v-on:click="UptRolesR(item.roleId)"/><input id="Button1" type="button" value="删除" class="layui-btn layui-btn-normal" v-on:click="DeleteRolesR(item.roleId)"/></td>
                 </tr>
             </table>
             <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
@@ -116,7 +116,17 @@
                     content: url
                 });
             })
-        }
+            },
+            DeleteRolesR: function (id) {
+                if (confirm('确定要删除吗') == true) {
+                    axios.get("/Organization/DeleteRolesR", { params: { id: id } }).then((response) => {
+                        alert('删除成功');
+                    });
+                }
+            },
+            UptRolesR: function (id) {
+                this.Open('/Organization/UptRolesR?id=' + id, '修改角色');
+            }
         }
     })
 

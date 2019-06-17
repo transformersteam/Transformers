@@ -162,15 +162,39 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         }
         //添加角色
         [HttpPost("AddRole")]
-        public int AddRole(Role model)
+        public int AddRole([FromBody]string json)
         {
-            return _organization.AddRole(model);
+            Role role = Newtonsoft.Json.JsonConvert.DeserializeObject<Role>(json);
+            return _organization.AddRole(role);
         }
         //添加角色 关联
         [HttpPost("AddRolepower")]
-        public int AddRolepower(int rid, int[] power)
+        public int AddRolepower([FromBody]string json)
         {
-            return _organization.AddRolepower(rid, power);
+            RolePower rp = Newtonsoft.Json.JsonConvert.DeserializeObject<RolePower>(json);
+            int rid = rp.Rid;
+            string str = rp.Power.Substring(1, rp.Power.Length - 2);
+            string[] strArray = str.Split(',');
+            int[] intLst = Array.ConvertAll<string, int>(strArray, s => int.Parse(s));
+            return _organization.AddRolepower(rid, intLst);
+        }
+        //删除角色
+        [HttpPost("DeleteRolesR")]
+        public int DeleteRolesR([FromBody]int id)
+        {
+            return _organization.DeleteRolesR(id);
+        }
+        //反填角色
+        [HttpGet("GetRoleById")]
+        public Role GetRoleById(int roleId)
+        {
+            return _organization.GetRoleById(roleId);
+        }
+        //反填权限
+        [HttpGet("GetRolepowerById")]
+        public Rolepower GetRolepowerById(int roleId)
+        {
+            return _organization.GetRolepowerById(roleId);
         }
     }
 }
