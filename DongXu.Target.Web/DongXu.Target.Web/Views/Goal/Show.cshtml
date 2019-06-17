@@ -182,7 +182,7 @@
     //待办事项显示
     function getgoallist(index) {
         $.ajax({
-            url: "@APIConn.MyAPIConn"+"Goal/GetGoalList",
+            url: "http://localhost:8888/Api/Goal/GetGoalList",
             type: "get",
             data: { pageIndex: index, pageSize: pageSize },
             dataType: "json",
@@ -248,7 +248,7 @@
         methods: {
             pagehandler: function (page) {
                 this.page = page;//当前显示页面
-                axios.get("@APIConn.MyAPIConn"+"MainResponsibility/GetMainResponsibilityList", { params: { pageindex: page, pagesize: this.pageSize } }).then((response) => {
+                axios.get("http://localhost:8888/api/MainResponsibility/GetMainResponsibilityList", { params: { pageindex: page, pagesize: this.pageSize } }).then((response) => {
                     this.mainresponsibilitylist = [];
                     this.total = response.data.total;
                     this.maxPage = response.data.maxPage;
