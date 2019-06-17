@@ -458,14 +458,26 @@ namespace DongXu.Target.Model
                     .HasColumnName("Role_Id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.BusinessState)
+                entity.Property(e => e.Business_State)
                     .HasColumnName("Business_State")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.FeedbackId)
                     .HasColumnName("Feedback_Id")
                     .HasColumnType("int(11)");
-                
+
+                entity.Property(e => e.Goal_DutyUserId)
+                    .HasColumnName("Goal_DutyUserId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Goal_DutyCommanyId)
+                    .HasColumnName("Goal_DutyCommanyId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Goal_ParentId)
+                   .HasColumnName("Goal_ParentId")
+                   .HasColumnType("int(11)");
+
             });
 
             modelBuilder.Entity<Goalstate>(entity =>

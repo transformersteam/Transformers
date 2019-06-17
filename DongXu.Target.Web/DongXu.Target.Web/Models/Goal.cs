@@ -111,5 +111,20 @@ namespace DongXu.Target.Web.Models
         /// 进度百分比
         /// </summary>
         public int FeedbackId { get; set; }
+
+        /// <summary>
+        /// 责任人
+        /// </summary>
+        public int Goal_DutyUserId { get; set; }
+
+        /// <summary>
+        /// 责任单位
+        /// </summary>
+        public int Goal_DutyCommanyId { get; set; }
+
+        /// <summary>
+        /// 父级节点
+        /// </summary>
+        public int Goal_ParentId { get; set; }
     }
 }
