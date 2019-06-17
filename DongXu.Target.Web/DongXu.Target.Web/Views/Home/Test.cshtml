@@ -17,6 +17,7 @@
     <div>
         <button onclick="testpost()">post</button>
         <button onclick="testget()">get</button>
+        <input id="Button1" type="button" value="a" onclick="acc()" />
     </div>
 </body>
 </html>
@@ -27,7 +28,7 @@
 
     function testget() {
         $.ajax({
-            url: 'https://localhost:44355/api/values',
+            url: 'http://localhost:8888/api/values',
             success: function (data) {
 
                 alert(data);
@@ -40,7 +41,7 @@
         var val = JSON.stringify(model);
         alert(val)
         $.ajax({
-            url: "https://localhost:44355/api/values/test",
+            url: "http://localhost:8888/api/Values/test",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: val,
@@ -50,6 +51,52 @@
                 alert(JSON.stringify(data));
             }
         });
+    }
+
+    function acc() {
+        var model = { UserId: 1  };
+        //var acc = {
+        //    "user": {
+        //        "userId": 0,
+        //        "userName": UserName,
+        //        "userPass": UserPass,
+        //        "userRealName": UserRealName,
+        //        "userIsEnable": UserIsEnable,
+        //        "userCreateTime": UserCreateTime,
+        //    },
+        //    "userRoleid": roleid
+        //};
+       
+        var acc = {
+            "userId": 0,
+            "userName": 1,
+            "userPass": 1,
+            "userRealName": 1,
+            "userRoleName": 1,
+            "userIsEnable": true,
+            "userCreateTime": "2019-06-16T13:31:57.236Z",
+            "userRoleid": 17
+        };
+;
+        var val = JSON.stringify(acc);
+
+
+        
+
+
+        alert("val:" + val);
+        $.ajax({
+            url: "http://localhost:8888/api/Organization/AddUser",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: val,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (data) {
+                alert(data);
+            }
+        });
+
     }
 
 

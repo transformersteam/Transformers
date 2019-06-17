@@ -57,7 +57,7 @@
     </style>
 </head>
 
-<body>
+<body><input id="Button1" onclick="acc()" type="button" value="button" />
     <div id="max">
         <div id="title"><p>组织管理</p></div>
         <div id="tree">
@@ -90,23 +90,46 @@
                 </div>
 
                 
-
+                
                     <div class="modal-body">
-                        用户名：<input id="btnname" type="button" value="button" /><br>
-                        密码：<input id="btnpass" type="button" value="button" /><br>
-                        真实姓名：<input id="btnrealname" type="button" value="button" /><br>
-                        是否启用：<input id="btnenable" type="button" value="button" /><br>
-                        创建时间：<input id="btntime" type="button" value="button" /><br>
-                       <select id="Select1">
-                        <option></option>
-                       </select>
+                        <table class="table">
+                            <tr>
+                                <td>用户名：</td>
+                                <td><input id="btnname" type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>密码：</td>
+                                <td><input id="btnpass" type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>真实姓名：</td>
+                                <td><input id="btnrealname" type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>是否启用：</td>
+                                <td><input id="Radio1" name="radenable" type="radio" value="true" />启用
+                                    <input id="Radio1" name="radenable" type="radio" value="false" />未启用</td>
+                            </tr>
+                            <tr>
+                                <td>创建时间：</td>
+                                <td><input id="btntime" type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>职业：</td>
+                                <td>
+                                    <select id="Select1">
+                                        <option></option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                        </table>
+                        
                     </div>
-
-               
-
+                    <input id="Button1" type="button" onclick="acc()" value="button" />
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" onclick="" class="btn btn-primary">提交更改</button>
+                    <button type="button" onclick="addUser()" class="btn btn-primary">提交更改</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
@@ -253,6 +276,7 @@
         //        }
         //    }
         //})
+        window.treeNodeid = treeNode.id;
         alert(treeNode.id);
         $.ajax({
             url: "http://localhost:8888/api/Organization/ChlidrenUserByRole?id=" + treeNode.id,
@@ -268,17 +292,25 @@
         })
     }
 
-    function addUser() {
 
 
-
-    }
-
+    
+    $('#myModal').on('shown.bs.modal', function (e) {
+        $.ajax({
+            url: "http://localhost:8888/api/Organization/ChildrenJobByRole?Role_Id=" + treeNodeid,
+            success: function (data) {
+                $("#Select1").empty();
+                $(data).each(function () {
+                    $("#Select1").append('<option  value="' + this.role_Id + '">'+this.role_Name+'</option>')
+                })
+            }
+        })
+    })
     
 
     function deleteUser(userid) {
         $.ajax({
-            url: "http://localhost:8888/api/Organization/DeleteUser?userid=" + userid,
+            url: "https://localhost:8888/api/Organization/DeleteUser?userid=" + userid,
             success: function (data) {
                 if (data> 0 )
                 {
@@ -290,35 +322,76 @@
         })
     }
 
-    function addUser(treeNodeid) {
+
+
+    function addUser() {
         var UserName = $("#btnname").val();
         var UserPass = $("#btnpass").val();
         var UserRealName = $("#btnrealname").val();
-        var UserIsEnable = $("#btnenable").val();
+        var UserRoleName = $("#Select1").text();  
+        var UserIsEnable = $("input[name='radenable']:checked").val();
         var UserCreateTime = $("#btntime").val();
+        var roleid = $("#Select1").val();
 
-        var data = { UserName: UserName, UserPass: UserPass, UserRealName: UserRealName, UserIsEnable: UserIsEnable, UserCreateTime: UserCreateTime };
-        var val = JSON.stringify(model);
-       
+        var user = {
+            "userId": 0,
+            "userName": UserName,
+            "userPass": UserPass,
+            "userRealName": UserRealName,
+            "userRoleName": UserRoleName,
+            "userIsEnable": UserIsEnable,
+            "userCreateTime": UserCreateTime,
+            "userRoleid": roleid
+        };
+        var val = JSON.stringify(user);
+
         $.ajax({
-            url: "https://localhost:8888/api/Organization/AddUser",
+            url: "http://localhost:8888/api/Organization/AddUser",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: val,
             crossDomain: true,
             dataType: 'json',
             success: function (data) {
-                alert(JSON.stringify(data));
+                if (data > 0) {
+                    $("#myModal").modal('hide');  //手动关闭
+                    window.location.reload();
+                    return;
+                }
+                alert("添加失败");
             }
         });
-
     }
 
 
 
+    function acc() {
 
+        var acc = {
+            "userId": 0,
+            "userName": 1,
+            "userPass": 1,
+            "userRealName": 1,
+            "userRoleName": 1,
+            "userIsEnable": true,
+            "userCreateTime": "2019-06-16T13:31:57.236Z",
+            "userRoleid": 17
+        };
+        var val = JSON.stringify(acc);
+        alert("val:" + val);
+        $.ajax({
+            url: "http://localhost:8888/api/Organization/AddUser",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: val,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (data) {
+                alert(data);
+            }
+        });
 
-
+    }
 
 
     /**

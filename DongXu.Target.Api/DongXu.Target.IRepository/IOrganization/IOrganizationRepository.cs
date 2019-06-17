@@ -20,9 +20,8 @@ namespace DongXu.Target.IRepository.IOrganization
         List<Role> GetRolesRList();
         DataTable ChlidrenUserByRole(int id);
         int DeleteUser(int userid);
-        int AddUser(User user);
-
-
+        int AddUser(AddUser addUser);
+        DataTable ChildrenJobByRole(int Role_Id);
 
         //RoleUserQuery GetRoleUserQueryListById(int RoleId);
     }
