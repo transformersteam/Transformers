@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using DongXu.Target.Web.Models.Dto;
+﻿using DongXu.Target.Web.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace DongXu.Target.Web.Controllers.CompanyIntegralController
 {
@@ -66,17 +65,15 @@ namespace DongXu.Target.Web.Controllers.CompanyIntegralController
             List<string> listName = new List<string>();
             foreach (var item in echartvalue)
             {
-
-
                 listName.Add(item.Role_Name);
                 listNum.Add(item.num);
-
             }
-             
+
             t.NameList = listName;
             t.NumList = listNum;
             return Json(t);
         }
+
         public class test
         {
             public List<string> NameList { get; set; }
@@ -91,5 +88,6 @@ namespace DongXu.Target.Web.Controllers.CompanyIntegralController
         {
             return View();
         }
+
     }
 }

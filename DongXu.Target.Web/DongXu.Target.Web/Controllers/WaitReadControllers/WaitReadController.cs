@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace DongXu.Target.Web.Controllers.WaitReadControllers
 {
@@ -20,7 +18,7 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult ManagementShow(int id=1)
+        public ActionResult ManagementShow(int id = 1)
         {
             ViewBag.id = id;   //登录人id
             return View();
@@ -51,7 +49,7 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult TargetDetails(int id,int progressid)
+        public ActionResult TargetDetails(int id, int progressid)
         {
             ViewBag.id = id;
             ViewBag.progressid = progressid;
@@ -65,7 +63,7 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// <returns></returns>
         public JsonResult DetailsShow(int id)
         {
-            var target= HelperHttpClient.GetAll("get", "WaitRead/GetTargetDetailById?id=" + id, null);
+            var target = HelperHttpClient.GetAll("get", "WaitRead/GetTargetDetailById?id=" + id, null);
             var list = JsonConvert.DeserializeObject<List<TargetDetails>>(target);
             return Json(list);
         }
@@ -80,7 +78,7 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
             List<int> datacount = new List<int>();
             List<string> dataname = new List<string>();
             var model = HelperHttpClient.GetAll("get", "WaitRead/GetUserIntergal?id=" + id, null);
-            var list = JsonConvert.DeserializeObject<List<UserIntegral>>(model).OrderByDescending(m=>m.Integral_Num);
+            var list = JsonConvert.DeserializeObject<List<UserIntegral>>(model).OrderByDescending(m => m.Integral_Num);
             EchartModel echartModel = new EchartModel();
             foreach (var item in list)
             {
@@ -102,11 +100,11 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         {
             List<int> datacount = new List<int>();
             List<string> dataname = new List<string>();
-            var list = HelperHttpClient.GetAll("get", "WaitRead/GetRunConditionList");  
+            var list = HelperHttpClient.GetAll("get", "WaitRead/GetRunConditionList");
             var condition = JsonConvert.DeserializeObject<List<GoalStateGoal>>(list);
             EchartModel echartModel = new EchartModel();
             foreach (var item in condition)
-            {             
+            {
                 echartModel.name = item.GoalState_Name;
                 echartModel.value = item.count;
                 datacount.Add(echartModel.value);
@@ -134,8 +132,8 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// <returns></returns>
         public JsonResult GetBusinessStateTableList()
         {
-            var list= HelperHttpClient.GetAll("get", "WaitRead/GetBusinessStateTable");
-            var statelist= JsonConvert.DeserializeObject<List<BusinessStateTable>>(list);
+            var list = HelperHttpClient.GetAll("get", "WaitRead/GetBusinessStateTable");
+            var statelist = JsonConvert.DeserializeObject<List<BusinessStateTable>>(list);
             return Json(statelist);
         }
     }

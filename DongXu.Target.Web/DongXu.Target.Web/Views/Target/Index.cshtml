@@ -1,4 +1,4 @@
-﻿
+﻿@using DongXu.Target.Web.Conn;
 @{
     Layout = null;
 }
@@ -25,7 +25,6 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/Progress/jquery.velocity.min.js"></script>
 
-
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -33,19 +32,17 @@
     <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
 
-
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
 </head>
 <body>
 
-
     <div class="container">
         <div class="row" style="padding: 20px 0">
             <h3> </h3>
             <h3> </h3>
-            <h3> </h3>
+            <h3> 进度查询页面</h3>
             <h3> </h3>
         </div>
         <div class="row">
@@ -53,16 +50,14 @@
             <div class="form-group col-lg-3">
                 <div class="input-group">
                     <span class="input-group-addon">目标名称</span>
-                    <input class="form-control" type="text">
+                    <input id="textgoalname" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group col-lg-3">
                 <div class="input-group">
                     <span class="input-group-addon">目标类别</span>
-                    <select class="form-control">
-                        <option>default</option>
-                        <option>one</option>
-                        <option>two</option>
+                    <select id="textgoaltype" class="form-control">
+                        <option value="0">全部</option>
                     </select>
                 </div>
             </div>
@@ -70,10 +65,8 @@
             <div class="form-group col-lg-3">
                 <div class="input-group">
                     <span class="input-group-addon">目标级别</span>
-                    <select class="form-control">
-                        <option>default</option>
-                        <option>one</option>
-                        <option>two</option>
+                    <select id="textgoalleave" class="form-control">
+                        <option value="0">全部</option>
                     </select>
                 </div>
             </div>
@@ -81,14 +74,14 @@
             <div class="form-group col-lg-3">
                 <div class="input-group">
                     <span class="input-group-addon">责任部门</span>
-                    <input class="form-control" type="text">
+                    <input id="txtgoalrole" class="form-control" type="text">
                 </div>
             </div>
 
             <div class="form-group col-lg-3">
                 <div class="input-group">
                     <span class="input-group-addon">责任人</span>
-                    <input class="form-control" type="text">
+                    <input id="txtgoaluser" class="form-control" type="text">
                 </div>
             </div>
 
@@ -97,27 +90,17 @@
                     <span class="input-group-addon">完成时间</span>
                     @*<input class="form-control" type="text">*@
                     <input style="width:288px" class="form-control" type="text" id="config-demo">
-
                 </div>
             </div>
 
             <div class="form-group  col-lg-3">
-                <div  style="padding-left:80px" class="col-sm-10 col-sm-offset-2">
-                    <button class="btn btn-primary">查询</button>
+                <div style="padding-left:80px" class="col-sm-10 col-sm-offset-2">
+                    <button onclick="select()" class="btn btn-primary">查询</button>
                 </div>
-
             </div>
-
-
-
-
         </div>
         <div>
-
-
         </div>
-
-
         <span>目标列表</span>
         <table style="text-align:center" class="table table-bordered">
             <thead>
@@ -135,32 +118,22 @@
             <tbody id="container"></tbody>
         </table>
     </div>
-
-
 </body>
 </html>
-
-
-
-
 
 <script>
 
     var startTime = '';
     var endTime = '';
 
-
-
-
-
-
     $(function () {
-        bb();
+        loadSelect();
+        loadtime();
         targetList();
 
     })
 
-    function bb() {
+    function loadtime() {
         var beginTimeStore = '';
         var endTimeStore = '';
         $('#config-demo').daterangepicker({
@@ -187,15 +160,77 @@
             } else {
                 this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
             }
-            });
+        });
     }
 
+    function loadSelect() {
 
+        ///加载目标类别
+        $.ajax({
+            url: "@APIConn.MyAPIConn"+"GoalManage/GetParentType",
+            success: function (data) {
+                $(data).each(function () {
+                    $("#textgoaltype").append('<option value="' + this.goalTypeId + '">' + this.goalTypeName + '</option>')
+                })
+            }
+        })
+        //加载目标级别
+        $.ajax({
+            url:  "@APIConn.MyAPIConn"+"GoalManage/GetIndexlevelList",
+            success: function (data) {
+                $(data).each(function () {
+                    $("#textgoalleave").append('<option value="' + this.indexLevelId + '">' + this.indexLevelGrade + '</option>')
+                })
+            }
+        })
+    }
 
+    //加载操作
+    function select() {
 
+        var goalname = "";
+        var goaltype = 0;
+        var goalleave = 0;
+        var goalrole = "";
+        var goaluser = "";
+        var strTime = "";
+        var endTimes = "";
+
+        goalname = $("#textgoalname").val();
+        goaltype = $("#textgoaltype").val();
+        goalleave = $("#textgoalleave").val();
+        goalrole = $("#txtgoalrole").val();
+        goaluser = $("#txtgoaluser").val();
+        strTime = startTime;
+        endTimes = endTime;
+
+        $.ajax({
+            url: "@APIConn.MyAPIConn"+"Target/GoalQueryList?goalname=" + goalname + "&goaltype=" + goaltype + "&goalleave=" + goalleave + "&goalrole=" + goalrole + "&goaluser=" + goaluser + "&strTime=" + strTime + "&endTime=" + endTimes,
+            success: function (data) {
+                $("#container").empty();
+                console.log(data)
+                var str = '';
+                $(data).each(function () {
+                    str += '<tr>'
+                        + '<td>1</td>'
+                        + '<td>' + this.goal_Name + '</td>'
+                        + '<td>' + this.indexLevel_Grade + '</td>'
+                        + '<td>' + this.goalType_Name + '</td>'
+                        + '<td>' + this.role_Name + '</td>'
+                        + '<td>' + this.user_Name + '</td>'
+                        + '<td>' + new Date(this.goal_EndTime).Format("yyyy-MM-dd hh:mm:ss")  + '</td>'
+                        + '<td style="text-align:center"><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve + '%</div></div></td></tr>'
+                })
+                $("#container").append(str);
+
+            }
+        })
+    }
+
+    //加载目标列表
     function targetList() {
         $.ajax({
-            url: "http://localhost:8888/api/Target/GoalQueryList",
+            url:  "@APIConn.MyAPIConn"+"Target/GoalQueryList",
             async: false,
             success: function (data) {
                 console.log(data)
@@ -208,23 +243,30 @@
                         + '<td>' + this.goalType_Name + '</td>'
                         + '<td>' + this.role_Name + '</td>'
                         + '<td>' + this.user_Name + '</td>'
-                        + '<td>' + this.goal_EndTime + '</td>'
-                        + '<td style="text-align:center"><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve +'%</div></div></td></tr>'
+                        + '<td>' + new Date(this.goal_EndTime).Format("yyyy-MM-dd hh:mm:ss") + '</td>'
+                        + '<td style="text-align:center"><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve + '%</div></div></td></tr>'
                 })
                 $("#container").append(str);
             }
         })
     }
 
-
-    function typelevel() {
-
-
-
+    //时间处理
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1,                 //月份
+            "d+": this.getDate(),                    //日
+            "h+": this.getHours(),                   //小时
+            "m+": this.getMinutes(),                 //分
+            "s+": this.getSeconds(),                 //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds()             //毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
     }
-
-
-
-
-
 </script>

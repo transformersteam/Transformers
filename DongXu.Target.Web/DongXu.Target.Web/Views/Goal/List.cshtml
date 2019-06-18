@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -9,7 +8,262 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>List</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script src="~/js/axios.js"></script>
+    <script src="~/js/zpageNav.js"></script>
+    <script src="~/js/DateTimeConvert.js"></script>
+    <link href="~/js/zpageNav.css" rel="stylesheet" />
+    <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+<div style="padding:20px;" id="app">
+    <div class="panel panel-primary">
+        <div class="panel-heading">待办事项</div>
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+            <tr>
+                <td>业务名称</td>
+                <td>频次</td>
+                <td>类型</td>
+                <td>级别</td>
+                <td>责任人</td>
+                <td>完成时间</td>
+                <td>完成状态</td>
+                <td>状态</td>
+            </tr>
+            </thead>
+            <tbody id="tb">
+            <tr>
+                       
+            </tr>
+            </tbody>
+        </table>
+        <input id="Button1" type="button" href="javascript:void(0)" onclick="first()" value="首页" class="btn btn-sm" style="margin-right: 10px"/>
+        <input id="Button2" type="button" href="javascript:void(0)" onclick="prve()" value="上一页" class="btn btn-sm" style="margin-right: 10px"/>
+        <input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" style="margin-right: 10px"/>
+        <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style=""/>
+    </div>
+    <div class="panel panel-primary" style="height:380px">
+        <div class="panel-heading">主责事项</div>
+        <br />
+        
+        <div id="mainresponsibility" style="float:left">
+            <table class="table table-bordered table-striped text-center" style="width:1000px;margin-left:50px">
+                <thead>
+                <tr>
+                    <td>业务名称</td>
+                    <td>完成情况</td>
+                    <td>级别</td>
+                    <td>责任人</td>
+                    <td>完成时间</td>
+                    <td>当前进度</td>
+                    <td>状态</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="item in mainresponsibilitylist">
+                    <td>{{item.goalName}}</td>
+                    <td>{{item.goalStateName}}</td>
+                    <td>{{item.indexLevelGrade}}</td>
+                    <td>{{item.goalChargePeople}}</td>
+                    <td>{{item.goalEndTime}}</td>
+                    <td>{{item.feedbackNowEvolve}}</td>
+                    <td>{{item.goalStateName}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+                      v-bind:max-page="maxPage" v-on:pagehandler="pagehandler">
+            </zpagenav>
+        </div>
+        @*<div style="float:left" id="echartshow">
+            <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
+        </div>*@
+        @*<div style="float:right;width:700px;height:358px">
+            <div id="redblueechart" style="width:700px;height:400px;margin-right:250px"></div>
+        </div>*@
+    </div>
+   
+            <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
+            <div id='main' style='width: 800px; height: 400px;'></div>
+            <!--引入echarts.js-->
+            <script src="~/echars/echarts.js"></script>
+            <script>
+
+
+                $(function () {
+                    $.ajax({
+                        url: "/Goal/Indexecharts",
+                        type: "get",
+                        success: function (data) {
+                            console.log(data);
+
+                            var name = data.nameList;
+                            var num = data.numList;
+
+
+                            //基于准备好的DOM，初始化echarts实例
+                            var myChart = echarts.init(document.getElementById('main'));
+                            var option = {
+                                title: {
+                                    text: '积分排名',
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['人员']
+                                },
+                                xAxis: [
+                                    {
+                                        data: name
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value'
+                                    }
+                                ],
+                                barWidth: 35,
+                                series: [
+                                    {
+                                        name: '',
+                                        type: 'bar',
+                                        data: num,
+                                        markPoint: {
+                                            data: [
+                                                //{ type: 'max', name: '最大值' },
+                                                //{ type: 'min', name: '最小值' }
+                                            ]
+                                        },
+                                        itemStyle: {
+                                            normal: {
+                                                //定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                                color: function (params) {
+                                                    // build a color map as your need.
+                                                    var colorList = [
+                                                        '#BBFFBB', '#BBFFBB', '#FFFF37',
+                                                        '#FFFF37', '#FFFF37', '#FFFF37',
+                                                        '#FFFF37', '#FFFF37', '#FFFF37',
+                                                        '#FFFF37', '#FF0000', '#FF0000'
+                                                    ];
+                                                    return colorList[params.dataIndex]
+                                                },
+                                                //以下为是否显示，显示位置和显示格式的设置
+                                                label: {
+                                                    show: true,
+                                                    position: 'top',
+                                                    //                             formatter: '{c}'
+                                                    formatter: '{b}\n{c}'
+                                                }
+                                            }
+                                        },
+                                    },
+                                ]
+                            };
+                            //使用刚指定的配置项和数据显示图表
+                            myChart.setOption(option);
+                        }
+                    })
+                })
+
+
+            </script>
+        </div>
 </body>
+
 </html>
+
+</html>
+<script>
+    var pageIndex = 1;
+    var pageSize = 5;
+    var total = 0;
+
+    //文档就绪函数
+    $(function () {
+        getgoallist(pageIndex);
+    });
+
+    //待办事项显示
+    function getgoallist(index) {
+        $.ajax({
+            url: "http://localhost:8888/Api/Goal/GetGoalList",
+            type: "get",
+            data: { pageIndex: index, pageSize: pageSize },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $("#tb").empty();
+                $(data).each(function (index) {
+                    var time = dateFormat(this.goalList[index].goalEndTime);
+                    var tr = "<tr>" +
+                        "<td>" + this.goalList[index].goalName + "</td>" +
+                        "<td>" + this.goalList[index].frequencyName + "</td>" +
+                        "<td>" + this.goalList[index].goalTypeName + "</td>" +
+                        "<td>" + this.goalList[index].indexLevelGrade + "</td>" +
+                        "<td>" + this.goalList[index].goalChargePeople + "</td>" +
+                        "<td>" + time + "</td>" +
+                        "<td>" + this.goalList[index].feedbackNowEvolve + "</td>" +
+                        "<td>" + this.goalList[index].goalStateName + "</td>"
+                        + "</tr>";
+                    $("#tb").append(tr);
+                })
+                total = data.Total;
+            }
+        });
+    }
+
+    //首页
+    function first() {
+        pageIndex = 1;
+        getgoallist(pageIndex);
+    }
+
+    //上页
+    function prve() {
+        pageIndex = pageIndex > 1 ? pageIndex - 1 : 1;
+        getgoallist(pageIndex);
+    }
+
+    //下页
+    function next() {
+        var nums = Math.ceil(total / pageSize);
+        pageIndex = pageIndex < nums ? pageIndex + 1 : pageIndex;
+        getgoallist(pageIndex);
+    }
+
+    //尾页
+    function last() {
+        pageIndex = Math.ceil(total / pageSize);
+        getgoallist(pageIndex);
+    }
+
+    //主责事项显示
+    var vue = new Vue({
+        el: "#mainresponsibility",
+        data: {
+            mainresponsibilitylist: [],//定义数组
+            page: 1,//显示的哪一页
+            pageSize: 5,//每一页显示的数据条数
+            total: 100,//记录总数
+            maxPage: 20//最大页数
+        },
+        mounted() {//进入页面即加载
+            this.pagehandler();
+        },
+        methods: {
+            pagehandler: function (page) {
+                this.page = page;//当前显示页面
+                axios.get("http://localhost:8888/api/MainResponsibility/GetMainResponsibilityList", { params: { pageindex: page, pagesize: this.pageSize } }).then((response) => {
+                    this.mainresponsibilitylist = [];
+                    this.total = response.data.total;
+                    this.maxPage = response.data.maxPage;
+                    for (var i = 0; i < response.data.mainResponsibilityList.length; i++) {
+                        this.mainresponsibilitylist.push(response.data.mainResponsibilityList[i]);
+                    }
+                });
+            }
+        }
+    })
+</script>
+

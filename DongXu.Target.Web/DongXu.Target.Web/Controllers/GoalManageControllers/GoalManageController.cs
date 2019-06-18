@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DongXu.Target.Web.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -57,7 +61,55 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         }
 
         /// <summary>
-        /// 获取公司列表
+        /// 目标下达
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> GoalSubmit([FromForm]IFormCollection formData,GoalBaseData baseData)
+        {
+            var goal = new Goal()
+            {
+                GoalName = baseData.GoalName,
+                RoleId = baseData.RoleId,
+                GoalTypeId = baseData.GoalTypeId,
+                FrequencyId = baseData.FrequencyId,
+                IndexLevelId = baseData.IndexLevelId,
+                GoalStartTime = baseData.GoalStartTime,
+                GoalEndTime = baseData.GoalEndTime,
+                GoalWeight = baseData.GoalWeight,
+                Goal_DutyUserId = baseData.Goal_DutyUserId,
+                Goal_DutyCommanyId = baseData.Goal_DutyCommanyId,
+                Goal_ParentId = baseData.Goal_ParentId
+            };
+            var goalId = HelperHttpClient.GetAll("post", "GoalAdd/GoalManage", goal);  //添加成功返回自增长id
+            
+            IFormFileCollection files = formData.Files;
+            long size = files.Sum(f => f.Length);
+            foreach (var item in files)
+            {
+                var inputName = item.Name;
+                var filePath = @"F:\360Downloads\" + item.FileName.Substring(item.FileName.LastIndexOf("\\") + 1);
+                if(item.Length>0)
+                {
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream);
+                    }
+                }
+                var file = new Files()
+                {
+                    FileName = item.FileName,
+                    FileUrl = filePath,
+                    CreateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd")),
+                    GoalId = int.Parse(goalId),
+                };
+                var i = HelperHttpClient.GetAll("post", "GoalFileAdd/GoalManage", file);
+            }
+            return Ok(new { count = files.Count, size });
+        }
+
+        /// <summary>
+        /// 获取公司列表  指标单位  公司
         /// </summary>
         /// <returns></returns>
         public JsonResult GetCommanyList()
@@ -66,15 +118,37 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             var list = JsonConvert.DeserializeObject<List<Role>>(commany);
             return Json(list);
         }
+        
+        /// <summary>
+        /// 获取公司列表  责任单位  部门
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetDutyCommanyList()
+        {
+            var commany = HelperHttpClient.GetAll("get", "GoalManage/GetDutyCommanyList", null);
+            var list = JsonConvert.DeserializeObject<List<Role>>(commany);
+            return Json(list);
+        }
 
         /// <summary>
-        /// 获取目标类型
+        /// 获取目标类型  父级
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public JsonResult GetGoalTypeList(int id)
+        public JsonResult GetGoalParentTypeList()
         {
-            var goaltype= HelperHttpClient.GetAll("get", "GoalManage/GetParentType?id="+id, null);
+            var goaltype= HelperHttpClient.GetAll("get", "GoalManage/GetParentType", null);
+            var list = JsonConvert.DeserializeObject<List<Goaltype>>(goaltype);
+            return Json(list);
+        }
+
+        /// <summary>
+        /// 获取目标类型 子集
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetGoalChildTypeList()
+        {
+            var goaltype = HelperHttpClient.GetAll("get", "GoalManage/GetChildType", null);
             var list = JsonConvert.DeserializeObject<List<Goaltype>>(goaltype);
             return Json(list);
         }
