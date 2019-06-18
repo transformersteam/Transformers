@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace DongXu.Target.Web.Controllers
 {
@@ -20,7 +16,7 @@ namespace DongXu.Target.Web.Controllers
         /// <returns></returns>
         public IActionResult TableResult()
         {
-            string str = string.Format("Target/GoalQueryList?goalname=1&goaltype=1&goalleave=1&goalrole=1&goaluser=1&strTime=2019-06-07&endTime=2019-09-07"); 
+            string str = string.Format("Target/GoalQueryList?goalname=1&goaltype=1&goalleave=1&goalrole=1&goaluser=1&strTime=2019-06-07&endTime=2019-09-07");
             var target = HelperHttpClient.GetAll("get", "WaitRead/GetTargetDetailById?id=", null);
             return View();
         }

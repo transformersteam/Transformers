@@ -13,7 +13,7 @@ namespace DongXu.Target.Repository
     public class TargetRepository : ITargetRepository
     {
         dxdatabaseContext Context = new dxdatabaseContext();
-        public List<GoalQuery> GoalQueryList(string goalname, int goaltype, int goalleave, string goalrole, string goaluser, string strTime, string endTime)
+        public List<GoalQuery> GoalQueryList(string goalname, int goaltype, int goalleave, string goalrole, string goaluser, string strTime, string endTime, int goalstate=0)
         {
 
             string sql = string.Format("select goal.Goal_Name,indexlevel.IndexLevel_Grade,goaltype.GoalType_Name, " +
@@ -23,6 +23,10 @@ namespace DongXu.Target.Repository
                 "join role on Goal_DutyCommanyId = role.Role_Id " +
                 "join user on Goal_DutyUserId = user.User_Id join feedback on goal.Feedback_Id = feedback.Feedback_Id where 1=1 ");
 
+            if (goalstate != 0)
+            {
+                sql += string.Format("  and goal.GoalState_Id={0}", goalstate);
+            }
             if (!string.IsNullOrEmpty(goalname))
             {
                 sql += string.Format("  and goal.Goal_Name like '%{0}%'",goalname);

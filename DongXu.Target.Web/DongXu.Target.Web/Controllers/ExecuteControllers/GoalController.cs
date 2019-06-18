@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using DongXu.Target.Web.Models.Dto;
+﻿using DongXu.Target.Web.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace DongXu.Target.Web.Controllers.ExecuteControllers
 {
@@ -15,6 +14,7 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
         {
             return View();
         }
+
         //三个参数第一个参数是他的Http请求方法 第二个是方法名称  第三个是对象参数
         public string GetAll(string request, string actionName, object obj = null)
         {
@@ -56,10 +56,11 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
         /// 待办事项显示 方法
         /// </summary>
         /// <returns></returns>
-        public IActionResult Show() 
+        public IActionResult Show()
         {
             return View();
         }
+
         /// <summary>
         /// 积分
         /// </summary>
@@ -67,38 +68,35 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
         /// <returns></returns>
         public JsonResult Indexecharts()
         {
-            var list = GetAll("get","GetIntegralList");
+            var list = GetAll("get", "GetIntegralList");
             List<NumQuery> echartvalue = JsonConvert.DeserializeObject<List<NumQuery>>(list);
             test t = new test();
             List<int> listNum = new List<int>();
             List<string> listName = new List<string>();
             foreach (var item in echartvalue)
             {
-
-
                 listName.Add(item.User_RealName);
                 listNum.Add(item.num);
-
             }
 
             t.NameList = listName;
             t.NumList = listNum;
             return Json(t);
         }
-        public class  test
+
+        public class test
         {
             public List<string> NameList { get; set; }
-            public List<int> NumList { get; set; }              
+            public List<int> NumList { get; set; }
         }
 
         /// <summary>
         /// 待办事项显示 方法
         /// </summary>
         /// <returns></returns>
-        public IActionResult List() 
+        public IActionResult List()
         {
             return View();
         }
-
     }
 }

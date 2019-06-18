@@ -1,4 +1,4 @@
-﻿
+﻿@using DongXu.Target.Web.Conn;
 @{
     Layout = null;
 }
@@ -15,7 +15,6 @@
     <script src="~/js/echarts.min.js"></script>    @*Echarts图*@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 
-
     @*选项卡*@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -27,63 +26,339 @@
     <script src="~/ntabs/js/nth-tabs.js"></script>
 
 
-</head>
-<body>
-    <div style="padding:20px;" id="app">
-        <div class="panel panel-primary" style="height:600px">
-            <div class="panel-heading">运行情况</div>
-            <div id="condition" style="float:left;width:900px;height:350px;margin-left:30px;padding-top:15px;padding-right:20px">
 
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
+</head>
+<body style="height:100%">
+    <div class="panel panel-primary" style="height:180px">
+        <div class="panel-heading">查询条件</div>
+        <div style="margin-top:10px" class="row">
+            <!--前缀-->
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">目标名称</span>
+                    <input id="textgoalname" class="form-control" type="text">
+                </div>
             </div>
-            <div style="margin:0 auto">
-                <table style="" class="table table-bordered table-striped text-center">
-                    <thead>
-                        <tr>
-                            <td>目标状态</td>
-                            <td>数量</td>
-                            <td>比例</td>
-                            <td>说明</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="data in condition" class="data-row">
-                            <td>{{data.goalState_Name}}</td>
-                            <td>{{data.count}}</td>
-                            <td>{{data.percent}}%</td>
-                            <td>{{data.goalState_Explain}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">目标类别</span>
+                    <select id="textgoaltype" class="form-control">
+                        <option value="0">全部</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">目标级别</span>
+                    <select id="textgoalleave" class="form-control">
+                        <option value="0">全部</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">责任部门</span>
+                    <input id="txtgoalrole" class="form-control" type="text">
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">责任人</span>
+                    <input id="txtgoaluser" class="form-control" type="text">
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">完成时间</span>
+                    @*<input class="form-control" type="text">*@
+                    <input style="width:288px" class="form-control" type="text" id="config-demo">
+                </div>
+            </div>
+
+            @*<div class="form-group  col-lg-3">
+                <div style="" class="col-sm-10 col-sm-offset-2">*@
+                    <button onclick="select()" class="btn btn-primary">查询</button>
+                @*</div>*@
             </div>
         </div>
+
+    
+
+
+
+
+
+
+    @*<div style="padding:20px;" id="app">*@
+    <div id="app" class="panel panel-primary" style="height:370px">
+        <div class="panel-heading">运行情况</div>
+        <div id="condition" style="float:left;width:50%;height:300px;margin-left:30px;">
+        </div>
+        <div>
+
+            <table style="width:500px;margin-top:50px" class="table table-bordered table-striped text-center">
+                <thead>
+                    <tr>
+                        <td>目标状态</td>
+                        <td>数量</td>
+                        <td>比例</td>
+                        <td>说明</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="data in condition" class="data-row">
+                        <td>{{data.goalState_Name}}</td>
+                        <td>{{data.count}}</td>
+                        <td>{{data.percent}}%</td>
+                        <td>{{data.goalState_Explain}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+    @*</div>*@
+
+
+    <div class="panel panel-primary" style="height:300px">
+        <div class="panel-heading">具体详情</div>
+        <ul id="myTab" class="nav nav-tabs" role="tablist">
+            <li style="width:200px" class="active" data="0"><a href="#bulletin" role="tab" data="0">未完成（到期）</a></li>
+            <li style="width:150px" data="1"><a href="#rule" role="tab" data="1">预计延期</a></li>
+            <li style="width:200px"><a href="#forum" role="tab" data="2">已完成（延期）</a></li>
+            <li style="width:100px"><a href="#security" role="tab" data="3">未启动</a></li>
+            <li style="width:200px"><a href="#welfare" role="tab" data="4">已完成(按期)</a></li>
+            <li><a href="#normal" role="tab" data="5">正常推进</a></li>
+        </ul>
+        <!-- 选项卡面板 -->
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active" id="bulletin">
+                公告内容面板
+            </div>
+            <div class="tab-pane " id="rule">
+                规则内容面板
+            </div>
+            <div class="tab-pane " id="forum">
+                论坛内容面板
+            </div>
+            <div class="tab-pane " id="security">
+                安全内容面板
+            </div>
+            <div class="tab-pane " id="welfare">
+                公益内容面板
+            </div>
+            <div class="tab-pane " id="normal">
+                正常推进
+            </div>
+        </div>
+
     </div>
 
 
-    
-        <div class="page-wrapper">
-            <!--使用时只需此标签，class固定,id自己定义-->
-            <div style="height:1000px" class="nth-tabs" id="main-tabs">
-            </div>
-        </div>
-        <table>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-            </tr>
-        </table>
 
-        
 
+   
 </body>
 </html>
+<script>
+
+    var acc = "0";
+    var state = 0;
+    var num = 0;
+    var goalname = "";
+    var goaltype = 0;
+    var goalleave = 0;
+    var goalrole = "";
+    var goaluser = "";
+    var strTime = "";
+    var endTimes = "";
+
+    var getcontainer = "";
+
+    $(function () {
+        loadtime();
+        loadSelect();
+        var questionType = 0;
+        for (var i = 0; i < 10; i++) {
+            if ($("#myTab").children('li')[i].className == "active") {
+                tablelist("0");
+                $(this).tab("show");
+                break;
+            }
+        }
+
+        //goalname = $("#textgoalname").val();
+        //goaltype = $("#textgoaltype").val();
+        //goalleave = $("#textgoalleave").val();
+        //goalrole = $("#txtgoalrole").val();
+        //goaluser = $("#txtgoaluser").val();
+        //strTime = startTime;
+        //endTimes = endTime;
+
+        $("#myTab a").click(function (e) {
+            e.preventDefault();
+            //调用函数追加表格
+            acc = $(this).attr("data");
+            tablelist(acc);
+
+            $(this).tab("show");
+        });
+    })
+
+    function select() {   
+        goalname = $("#textgoalname").val();
+        goaltype = $("#textgoaltype").val();
+        goalleave = $("#textgoalleave").val();
+        goalrole = $("#txtgoalrole").val();
+        goaluser = $("#txtgoaluser").val();
+
+        tablelist(state);
+
+
+    }
+
+
+    function tablelist(id) {
+        getcontainerBynum(id);
+        $.ajax({
+            url: "@APIConn.MyAPIConn" + "Target/GoalQueryList?goalname=" + goalname + "&goaltype=" + goaltype + "&goalleave=" + goalleave + "&goalrole=" + goalrole + "&goaluser=" + goaluser + "&strTime=" + strTime + "&endTime=" + endTimes + "&goalstate=" + state,
+                success: function (data) {
+                    $("#" + getcontainer).empty();
+                    var str = '';
+                    var str1 = '<table class="table table-border"><thead><tr><td text-alig="center">序号</td><td style="text-align:center">目标名称</td><td>级别</td><td>类别</td><td>责任部门</td><td>责任人</td><td>完成时间</td><td>当前进度</td></tr></thead><tbody>';
+                    $(data).each(function () {
+
+                        str += '<tr>'
+                            + '<td>1</td>'
+                            + '<td>' + this.goal_Name + '</td>'
+                            + '<td>' + this.indexLevel_Grade + '</td>'
+                            + '<td>' + this.goalType_Name + '</td>'
+                            + '<td>' + this.role_Name + '</td>'
+                            + '<td>' + this.user_Name + '</td>'
+                            + '<td>' + new Date(this.goal_EndTime).Format("yyyy-MM-dd hh:mm:ss") + '</td>'
+                            + '<td style="text-align:center"><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve + '%</div></div></td></tr>'
+
+                    })
+                    str1 = str1 + str + '</tbody></table >';
+                    $("#" + getcontainer).append(str1);
+
+                    //清空时间选择器
+                     strTime = "";
+                    endTimes = "";
+                    $("#config-demo").val("");
+                }
+                //str,str1是为了拼接html代码
+            })
+
+    }
+
+    //根据传值判断表格所要追加的容器
+    function getcontainerBynum(num) {
+        switch (num) {
+            case "0": getcontainer = "bulletin"; state = 1; break;
+            case "1": getcontainer = "rule"; state = 2; break;
+            case "2": getcontainer = "forum"; state = 3;break;
+            case "3": getcontainer = "security"; state = 4;break;
+            case "4": getcontainer = "welfare"; state = 5;break;
+            case "5": getcontainer = "normal"; state = 6;break;
+        }
+    }
+
+    //加载页面下拉框
+        function loadSelect() {
+
+        ///加载目标类别
+        $.ajax({
+            url: "@APIConn.MyAPIConn"+"GoalManage/GetParentType",
+            success: function (data) {
+                $(data).each(function () {
+                    $("#textgoaltype").append('<option value="' + this.goalTypeId + '">' + this.goalTypeName + '</option>')
+                })
+            }
+        })
+        //加载目标级别
+        $.ajax({
+            url:  "@APIConn.MyAPIConn"+"GoalManage/GetIndexlevelList",
+            success: function (data) {
+                $(data).each(function () {
+                    $("#textgoalleave").append('<option value="' + this.indexLevelId + '">' + this.indexLevelGrade + '</option>')
+                })
+            }
+        })
+    }
+
+
+    //时间选择器
+    function loadtime() {
+        var beginTimeStore = '';
+        var endTimeStore = '';
+        $('#config-demo').daterangepicker({
+            "timePicker": true,
+            "timePicker24Hour": true,
+            "linkedCalendars": false,
+            "autoUpdateInput": false,
+            "locale": {
+                format: 'YYYY-MM-DD',
+                separator: ' ~ ',
+                applyLabel: "应用",
+                cancelLabel: "取消",
+                resetLabel: "重置",
+            }
+        }, function (start, end, label) {
+            beginTimeStore = start;
+            endTimeStore = end;
+            startTime = this.startDate.format(this.locale.format);
+            endTime = this.endDate.format(this.locale.format);
+            strTime = startTime;
+            endTimes = endTime;
+
+            console.log(this.startDate.format(this.locale.format));
+            console.log(this.endDate.format(this.locale.format));
+            if (!this.startDate) {
+                this.element.val('');
+            } else {
+                this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
+            }
+        });
+    }
+
+
+
+
+    //时间处理
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1,                 //月份
+            "d+": this.getDate(),                    //日
+            "h+": this.getHours(),                   //小时
+            "m+": this.getMinutes(),                 //分
+            "s+": this.getSeconds(),                 //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds()             //毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+</script>
 <script type="module">
     var vm = new Vue({
         el: "#app",
@@ -163,66 +438,4 @@
                     }
                 })
             }
-</script>
-
-<script>
-
-
-
-
-    var nthTabs;
-
-    $(function () {
-
-        //一个低门槛的演示,更多需求看源码
-
-        //基于bootstrap tab的自定义多标签的jquery实用插件
-        nthTabs = $("#main-tabs").nthTabs();
-
-
-
-        // 批量新建示例
-        nthTabs.addTabs([
-            {
-                id: 'user-manage',
-                title: '用户管理',
-                active: false,
-                content: '这是用户管理页面~'
-            },
-            {
-                id: 'permission-manage',
-                title: '权限管理',
-                active: false,
-               // url: '<partial name="~/Views/RunState/TableResult.cshtml"/>'
-                content: '@await Html.PartialAsync("TableResult")'
-            }
-        ]);
-
-        // 连贯操作示例
-        nthTabs.addTab({
-            id: 'menu-manage',
-            title: '菜单管理',
-            active: false,
-            content: '这是菜单管理页面~'
-        }).addTab({
-            id: 'role-manage',
-            title: '角色管理',
-            active: false,
-            content: '这是角色管理页面~'
-        });
-
-
-
-
-
-
-
-
-
-        // 选项卡切换事件处理器
-        nthTabs.tabToggleHandler(function (data) {
-            console.log(data);
-        });
-
-    });
 </script>
