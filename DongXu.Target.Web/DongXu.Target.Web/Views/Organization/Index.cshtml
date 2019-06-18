@@ -26,7 +26,7 @@
             height: 60px;
         }
 
-           #title p {
+            #title p {
                 margin-left: 15px;
                 margin-top: 15px;
             }
@@ -321,7 +321,6 @@
             var val = JSON.stringify(model);
             $.ajax({
 
-
                 url: "@APIConn.MyAPIConn"+"/Organization/AddRolesO",
 
                 type: "POST",
@@ -381,7 +380,6 @@
         var model = { "roleId": treeNode.id, "roleName": treeNode.name, "roleModifyPeople": "超级管理员", "roleModifyTime": nowDate };
         var val = JSON.stringify(model);
         $.ajax({
-
 
             url: "@APIConn.MyAPIConn"+"/Organization/UpdateRolesOName",
 

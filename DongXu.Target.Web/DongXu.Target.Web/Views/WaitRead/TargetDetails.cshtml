@@ -13,42 +13,50 @@
     <script src="~/js/vue.js"></script>             @*vue*@
     <script src="~/js/axios.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <style>
-    .box {
-        width:397px;
-        height:300px; 
-        margin:30px auto;
-    }
+        .box {
+            width: 397px;
+            height: 300px;
+            margin: 30px auto;
+        }
 
-    .ok {
-        width:200px; 
-        height:100px; 
-        margin:0 auto;
-        text-align:center;
-        background:#999; 
-        line-height:100px; 
-        color:#FFF; 
-        display:none; 
-    }
+        .ok {
+            width: 200px;
+            height: 100px;
+            margin: 0 auto;
+            text-align: center;
+            background: #999;
+            line-height: 100px;
+            color: #FFF;
+            display: none;
+        }
 
-    .tbox {
-        width:397px; 
-        height:49px;
-        background:url(~/images/bak.png) no-repeat;
-        margin-top:20px;
-    }
+        .tbox {
+            width: 397px;
+            height: 49px;
+            background: url(~/images/bak.png) no-repeat;
+            margin-top: 20px;
+        }
 
-    .tbox div {
-        width:0px; 
-        height:49px;
-        background:url(~/images/pro.png) no-repeat;
-        text-align:center
-    }
-
-  </style>
+            .tbox div {
+                width: 0px;
+                height: 49px;
+                background: url(~/images/pro.png) no-repeat;
+                text-align: center
+            }
+    </style>
 </head>
 <body>
-    当前办理进度：<div class="tiao"></div>
+    当前办理进度：
+    <div class="progress progress-striped active">
+        @ViewBag.progressid%
+        <div class="progress-bar progress-bar-" role="progressbar"
+             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+             style="width: @ViewBag.progressid%;">
+        </div>
+    </div>
+
     <div id="app">
         <div class="panel panel-primary">
             <div class="panel-heading">指标信息</div>
@@ -108,11 +116,6 @@
                         console.log(response.data)
                     }
                 )
-            },
-            gettiao: function () {
-                var tiao = $(".tiao");
-                console.log(tiao)
-                tiao.css("width",@ViewBag.progressid+"%").html(@ViewBag.progressid+"%");
             }
         }
     })

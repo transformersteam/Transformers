@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using DongXu.Target.Cache;
+﻿using DongXu.Target.Cache;
 using DongXu.Target.Web.Models.Dto;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-
-
+using System.Security.Claims;
 
 namespace DongXu.Target.Web.Controllers
 {
@@ -33,7 +27,7 @@ namespace DongXu.Target.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="tmpUser"></param>
         public void WriteCookie(LoginModel tmpUser)
