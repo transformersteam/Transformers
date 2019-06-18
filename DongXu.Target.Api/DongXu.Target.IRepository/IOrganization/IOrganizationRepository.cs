@@ -26,9 +26,17 @@ namespace DongXu.Target.IRepository.IOrganization
 
         //查询权限
         List<Power> GetPowerList();
-
-
-
-        //RoleUserQuery GetRoleUserQueryListById(int RoleId);
+        //添加角色
+        int AddRole(Role model);
+        //添加角色权限关联
+        int AddRolepower(int rid,int[] power);
+        //删除角色
+        int DeleteRolesR(int id);
+        //反填角色
+        Role GetRoleById(int roleId);
+        //反填权限
+        List<Rolepower> GetRolepowerById(int roleId);
+        //修改权限
+        int UpdateRoles(Role model,int[] power);
     }
 }

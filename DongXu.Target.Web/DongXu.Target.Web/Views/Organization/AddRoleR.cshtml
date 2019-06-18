@@ -9,6 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>AddRoleR</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/js/vue.js"></script>
     <script src="~/js/axios.js"></script>
     <script src="~/layui-v2.4.5/layui/layui.js"></script>
@@ -19,35 +20,56 @@
         <table class="layui-table">
             <tr>
                 <td>角色姓名</td>
-                <td><input id="Text1" type="text"  /></td>
+                <td><input id="txtName" type="text" v-model="RoleName"/></td>
             </tr>
             <tr>
                 <td>所属部门</td>
-                <td><select name="roleo" lay-verify="" lay-search >
-                        <option :value="item.roleId" v-for="item in rolesOList">{{item.roleName}}</option>
-</select></td>
+                <td><select id="roleo" lay-verify="" lay-search v-model="RolePid">
+                        <option :value="item.roleId" v-for="item in rolesOList">{{item.roleName}}</option></select></td>
             </tr>
             <tr>
                 <td>角色描述</td>
-                <td><input id="Text1" type="text" /></td>
+                <td><input id="txtContext" type="text" v-model="RoleContent"/></td>
             </tr>
             <tr>
                 <td>选择权限</td>
-                <td><input id="Checkbox1" type="checkbox" v-for="item in power" :value="item.roleId"/>{{item.roleName}}</td>
+                <td><span v-for="item in power"><input id="Checkbox1" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)"/><label>{{item.powerName}}</label></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input id="Button1" type="button" value="添加" class="layui-btn layui-btn-normal" v-on:click="AddRole(RoleName, RolePid, RoleContent)"/></td>
             </tr>
         </table>
     </div>
 </body>
 </html>
 <script>
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var RoleCreatePeople = "管理员";
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    var nowDate = year + "-" + month + "-" + day;
+
     var vm = new Vue({
         el: "#addrole",
         data: {
             rolesOList: [],
-            power:[]
+            power: [],
+            RoleName: "",
+            RolePid: "",
+            RoleContent: "",
+            powerId:[]
         },
         created() {
-            this.GetRolesOList()
+            this.GetRolesOList(),
+            this.GetPowerList()
         },
         methods: {
             GetRolesOList: function () {
@@ -56,9 +78,40 @@
                 });
             },
             GetPowerList: function () {
-                axios.get("/Organization/GetRolesOList").then((response) => {
-                    this.rolesOList = response.data;
+                axios.get("/Organization/GetPowerList").then((response) => {
+                    this.power = response.data;
                 });
+            },
+            AddRole: function (RoleName, RolePid, RoleContent) {
+                var params = new URLSearchParams();
+                params.append('RoleName',RoleName);
+                params.append('RoleIdentify',3);
+                params.append('RoleIsEnable',1);
+                params.append('RolePid',RolePid);
+                params.append('RoleContent', RoleContent);
+                params.append('RoleCreateTime', nowDate);
+                params.append('RoleCreatePeople', RoleCreatePeople);
+                axios.post("/Organization/AddRole",params).then((response) => {
+                    if (response.data > 0) {
+                        this.AddRolePower(response.data, this.powerId);
+                    }
+                }); 
+            },
+            GetPowerId: function (powerId) {
+                this.powerId.push(powerId);
+            },
+            AddRolePower: function (rid) {
+                var params = new URLSearchParams();
+                params.append('rid', rid);
+                params.append('power', JSON.stringify(this.powerId));
+                axios.post("/Organization/AddRolePower",params).then((response) => {
+                    if (response.data > 0) {
+                        alert('添加成功');
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭  
+                        location.href = '/Organization/RoleIndex';
+                    }
+                }); 
             }
         }
     })

@@ -129,7 +129,8 @@ namespace DongXu.Target.Model
 
         public DbQuery<BusinessStateTable> BusinessStateTable { get; set; }
 
-
+        public DbQuery<TrafficLight> TrafficLight { get; set; }
+         
         /// <summary>
         /// 目标查询
         /// </summary>
@@ -664,7 +665,7 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.PowerIsEnable)
                     .HasColumnName("Power_IsEnable")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.PowerName)
                     .HasColumnName("Power_Name")

@@ -36,7 +36,7 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 是否启用
         /// </summary>
-        public sbyte? PowerIsEnable { get; set; }
+        public bool? PowerIsEnable { get; set; }
 
         /// <summary>
         /// 创建时间

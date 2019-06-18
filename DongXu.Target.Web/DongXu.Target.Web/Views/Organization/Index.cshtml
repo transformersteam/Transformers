@@ -183,7 +183,6 @@
     function GetRolesOList() {
 
         $.ajax({
-            url: "http://localhost:8888/api/Organization/GetRolesOList",
             url: "@APIConn.MyAPIConn"+"/Organization/GetRolesOList",
             async: false,
             success: function (data) {
@@ -317,12 +316,10 @@
                 day = "0" + day;
             }
             var nowDate = year + "-" + month + "-" + day;
-            var model = { RoleName: name, RolePid: treeNode.id, RoleCreatePeople: "管理员", RoleCreateTime: nowDate };
+            var model = { RoleName:name, RolePid: treeNode.id, RoleCreatePeople: "管理员", RoleCreateTime: nowDate };
             var val = JSON.stringify(model);
             $.ajax({
-
                 url: "@APIConn.MyAPIConn"+"/Organization/AddRolesO",
-
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: val,
@@ -380,9 +377,7 @@
         var model = { "roleId": treeNode.id, "roleName": treeNode.name, "roleModifyPeople": "超级管理员", "roleModifyTime": nowDate };
         var val = JSON.stringify(model);
         $.ajax({
-
             url: "@APIConn.MyAPIConn"+"/Organization/UpdateRolesOName",
-
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: val,

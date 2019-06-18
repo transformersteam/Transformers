@@ -202,6 +202,82 @@ namespace DongXu.Target.Repository
             List<Power> list = db.Power.ToList();
             return list;
         }
+        //添加角色
+        public int AddRole(Role model)
+        {
+            db.Role.Add(model);
+            db.SaveChanges();
+            return model.RoleId;
+        }
+        //添加角色 关联
+        public int AddRolepower(int rid,int[] power)
+        {
+            List<Rolepower> rplist = new List<Rolepower>();
+            for(int i=0;i<power.Length;i++)
+            {
+                Rolepower rp = new Rolepower();
+                rp.RoleId = rid;
+                rp.PowerId = power[i];
+                rplist.Add(rp);
+            }
+            db.Rolepower.AddRange(rplist);
+            //db.Database.ExecuteSqlCommand("insert into rolepower(Role_Id,Power_Id) values(@RoleId,@RolePowerId)", rplist);
+            return db.SaveChanges();
+        }
+        //删除角色
+        public int DeleteRolesR(int id)
+        {
+            var roleo = db.Role.Where(m => m.RoleId == id).FirstOrDefault();
+            db.Role.Remove(roleo);
+            //1.0 先按照条件查询
+            var list = db.Rolepower.Where(m => m.RoleId == id).ToList();
+            //2.0 遍历集合，将 要删除的 对象 的代理对象的State 设置为 Deleted
+            list.ForEach(u => db.Rolepower.Remove(u));
+            //3.0 执行更新
+            int resCount = db.SaveChanges();
+
+            return resCount;
+        }
+        //反填角色
+        public Role GetRoleById(int roleId)
+        {
+            Role role = db.Role.Where(m => m.RoleId == roleId).FirstOrDefault();
+            return role;
+        }
+        //反填权限
+        public List<Rolepower> GetRolepowerById(int roleId)
+        {
+            List<Rolepower> rolepower = db.Rolepower.Where(m => m.RoleId == roleId).ToList();
+            return rolepower;
+        }
+        //修改权限
+        public int UpdateRoles(Role model,int[] power)
+        {
+            var role = db.Role.Where(m => m.RoleId == model.RoleId).FirstOrDefault();
+            if (role != null)
+            {
+                role.RoleName = model.RoleName;
+                role.RoleContent = model.RoleContent;
+                role.RolePid = model.RolePid;
+                role.RoleModifyPeople = model.RoleModifyPeople;
+                role.RoleModifyTime = model.RoleModifyTime;
+                db.Database.ExecuteSqlCommand($"DELETE from rolepower where Role_Id={model.RoleId}");
+                List<Rolepower> rplist = new List<Rolepower>();
+                for (int i = 0; i<power.Length; i++)
+                {
+                    Rolepower rp = new Rolepower();
+                    rp.RoleId = model.RoleId;
+                    rp.PowerId = power[i];
+                    rplist.Add(rp);
+                }
+                db.Rolepower.AddRange(rplist);
+                return db.SaveChanges();
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
     }
 }
