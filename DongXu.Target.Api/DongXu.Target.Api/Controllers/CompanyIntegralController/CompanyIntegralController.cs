@@ -37,5 +37,49 @@ namespace DongXu.Target.Api.Controllers.CompanyIntegralController
             var list = CompanyIntegralRepository.GetCompanyIntegralList();
             return list;
         }
+
+        /// <summary>
+        /// 第一个公司红绿灯
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetTrafficLightOneList")]
+        public List<TrafficLight> GetTrafficLightOnelList() 
+        {
+            var list = CompanyIntegralRepository.GetTrafficLightOneList();
+            return list;
+        }
+
+        /// <summary>
+        /// 第二个公司红绿灯
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetTrafficLightTwolList")]
+        public List<TrafficLight> GetTrafficLightTwolList()
+        {
+            var list = CompanyIntegralRepository.GetTrafficLightOneList();
+            return list;
+        }
+
+        /// <summary>
+        /// 第三个公司红绿灯
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetTrafficLightThreelList")]
+        public List<TrafficLight> GetTrafficLightThreelList()
+        {
+            var list = CompanyIntegralRepository.GetTrafficLightOneList();
+            return list;
+        }
+
+        /// <summary>
+        /// 第四个公司红绿灯
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetTrafficLightFourlList")] 
+        public List<TrafficLight> GetTrafficLightFourlList()
+        {
+            var list = CompanyIntegralRepository.GetTrafficLightOneList();
+            return list;
+        }
     }
 }

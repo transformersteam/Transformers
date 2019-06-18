@@ -316,7 +316,7 @@
                 day = "0" + day;
             }
             var nowDate = year + "-" + month + "-" + day;
-            var model = { RoleName: name, RolePid: treeNode.id, RoleCreatePeople: "管理员", RoleCreateTime: nowDate };
+            var model = { RoleName:name, RolePid: treeNode.id, RoleCreatePeople: "管理员", RoleCreateTime: nowDate };
             var val = JSON.stringify(model);
             $.ajax({
                 url: "@APIConn.MyAPIConn"+"/Organization/AddRolesO",

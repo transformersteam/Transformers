@@ -91,5 +91,6 @@ namespace DongXu.Target.Web.Controllers.CompanyIntegralController
         {
             return View();
         }
+
     }
 }

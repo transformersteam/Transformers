@@ -192,9 +192,23 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         }
         //反填权限
         [HttpGet("GetRolepowerById")]
-        public Rolepower GetRolepowerById(int roleId)
+        public List<Rolepower> GetRolepowerById(int roleId)
         {
             return _organization.GetRolepowerById(roleId);
+        }
+        //修改权限
+        [HttpPost("UpdateRoles")]
+        public int UpdateRoles(UpdateRoleDto model)
+        {
+            int[] p= Newtonsoft.Json.JsonConvert.DeserializeObject<int[]>(model.power);
+            Role role = new Role();
+            role.RoleId = model.RoleId;
+            role.RoleName = model.RoleName;
+            role.RolePid = model.RolePid;
+            role.RoleContent = model.RoleContent;
+            role.RoleModifyPeople = model.RoleModifyPeople;
+            role.RoleModifyTime = model.RoleModifyTime;
+            return _organization.UpdateRoles(role, p);
         }
     }
 }
