@@ -17,17 +17,40 @@ namespace DongXu.Target.IRepository.IGoalManage
         List<Goal> GetGoalList();
 
         /// <summary>
+        /// 目标下达
+        /// </summary>
+        /// <param name="goal"></param>
+        int GoalAdd(Goal goal);
+
+        /// <summary>
+        /// 目标文件 添加
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        int GoalFileAdd(Files files);
+
+        /// <summary>
         /// 查询公司列表
         /// </summary>
         /// <returns></returns>
         List<Role> GetCommanyList();
 
         /// <summary>
-        /// 查询指标类别类型
+        /// 查询公司列表  责任单位
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        List<Goaltype> GetParentType(int id);
+        List<Role> GetDutyCommanyList();
+
+        /// <summary>
+        /// 查询指标类别类型  父级
+        /// </summary>
+        /// <returns></returns>
+        List<Goaltype> GetParentType();
+
+        /// <summary>
+        /// 查询指标类别类型 子集
+        /// <returns></returns>
+        List<Goaltype> GetChildType();
 
         /// <summary>
         /// 查询责任人

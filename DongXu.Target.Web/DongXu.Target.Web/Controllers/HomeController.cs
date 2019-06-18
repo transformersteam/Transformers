@@ -10,13 +10,14 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using DongXu.Target.Cache;
 
 namespace DongXu.Target.Web.Controllers
 {
     public class HomeController : BaseController
     {
         //[MyActionFilter]
-       [AllowAnonymous]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();

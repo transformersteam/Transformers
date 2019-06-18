@@ -31,6 +31,11 @@ namespace DongXu.Target.Web.Models.Dto
         public string userPass { get; set; } 
 
         /// <summary>
+        /// 用户真实姓名
+        /// </summary>
+        public string userRealName { get; set; }
+
+        /// <summary>
         /// 角色名称
         /// </summary>
         public string Role_Name { get; set; }
