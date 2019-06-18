@@ -70,7 +70,7 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return View();
         }
         //角色修改
-        public IActionResult UptRolesR(int id)
+        public IActionResult UptRolesR(int id) 
         {
             ViewBag.id = id;
             return View();
@@ -91,9 +91,9 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return list;
         }
         //添加角色
-        public JsonResult AddRole(Role model)
+        public JsonResult AddRole(Role role)
         {
-            string jsonm = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+            string jsonm = Newtonsoft.Json.JsonConvert.SerializeObject(role);
             var result = HelperHttpClient.GetAll("post", "Organization/AddRole", jsonm);
             return Json(result);
         }

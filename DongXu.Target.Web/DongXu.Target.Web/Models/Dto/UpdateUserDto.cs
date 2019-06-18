@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DongXu.Target.Web
+namespace DongXu.Target.Web.Models.Dto
 {
-    /// <summary>
-    /// 用户表
-    /// </summary>
-    public partial class User
+    public class UpdateUserDto
     {
         /// <summary>
         /// 用户id
@@ -36,15 +35,20 @@ namespace DongXu.Target.Web
         /// <summary>
         /// 是否启用
         /// </summary>
-        public sbyte? UserIsEnable { get; set; }
+        public bool UserIsEnable { get; set; }
 
         /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime? UserCreateTime { get; set; }
+
         /// <summary>
         /// 用户标识列
         /// </summary>
         public int User_IdentityId { get; set; }
+        /// <summary>
+        /// 拥有角色
+        /// </summary>
+        public string Role { get; set; }
     }
 }

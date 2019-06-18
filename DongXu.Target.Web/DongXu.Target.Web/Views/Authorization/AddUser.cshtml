@@ -1,0 +1,129 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddUser</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="addrole">
+        <table class="layui-table">
+            <tr>
+                <td>人员姓名</td>
+                <td><input id="" type="text" v-model="UserRealName" /></td>
+            </tr>
+            <tr>
+                <td>用户账号</td>
+                <td><input id="" type="text" v-model="UserName" /></td>
+            </tr>
+            <tr>
+                <td>用户密码</td>
+                <td><input id="" type="password" v-model="UserPass" /></td>
+            </tr>
+            <tr>
+                <td>用户标识</td>
+                <td>
+                    <select id="" v-model="User_IdentityId">
+                        <option value="5" selected="selected">--请选择--</option>
+                        <option :value="item.Id" v-for="item in identity" >{{item.Name}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>选择角色</td>
+                <td><span v-for="item in user"><input id="Checkbox1" type="checkbox" :value="item.roleId" v-on:click="GetRoleId(item.roleId,item.roleName)" /><label>{{item.roleName}}</label></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input id="Button1" type="button" value="添加" class="layui-btn layui-btn-normal" v-on:click="AddUser(UserRealName, UserName, UserPass,User_IdentityId)" /></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var RoleCreatePeople = "管理员";
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    var nowDate = year + "-" + month + "-" + day;
+
+    var vm = new Vue({
+        el: "#addrole",
+        data: {
+            identity: [
+                { Id: '0', Name: '总裁' },
+                { Id: '1', Name: '经理' },
+                { Id: '2', Name: '职员' }
+            ],
+            user: [],
+            UserRealName: "",
+            UserName: "",
+            UserPass: "",
+            User_IdentityId:"",
+            roleId: [],
+            roleName:[]
+        },
+        created() {
+            this.GetRoleList()
+        },
+        methods: {
+            GetRoleList: function () {
+                axios.get("/Authorization/GetRolesRList").then((response) => {
+                    this.user = response.data;
+                });
+            },
+            AddUser:function (UserRealName, UserName, UserPass, User_IdentityId) {
+                var UserRoleName = this.roleName.join(',');
+                var params = new URLSearchParams();
+                params.append('UserRealName', UserRealName);
+                params.append('UserName', UserName);
+                params.append('UserPass', UserPass);
+                params.append('User_IdentityId', User_IdentityId);
+                params.append('UserRoleName', UserRoleName);
+                params.append('UserIsEnable', 1);
+                params.append('UserCreateTime', nowDate);
+                axios.post("/Authorization/AddUsers",params).then((response) => {
+                    if (response.data > 0) {
+                        this.AddUserrole(response.data);
+                    }
+                });
+            },
+            GetRoleId: function (roleId,roleName) {
+                this.roleId.push(roleId);
+                this.roleName.push(roleName);
+            },
+            AddUserrole: function (uid) {
+                var params = new URLSearchParams();
+                params.append('Uid', uid);
+                params.append('RoleId', JSON.stringify(this.roleId));
+                axios.post("/Authorization/AddUserrole",params).then((response) => {
+                    if (response.data > 0) {
+                        alert('添加成功');
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                        location.href = '/Authorization/Index';
+
+                    }
+                });
+            }
+        }
+    })
+</script>
