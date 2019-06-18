@@ -12,8 +12,6 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
     
     public class OrganizationController : Controller
     {
-        
-
         //组织管理
         public IActionResult Index()
         {
@@ -120,10 +118,10 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return role;
         }
         //反填权限
-        public Rolepower GetRolepowerById(int roleId)
+        public List<Rolepower> GetRolepowerById(int roleId)
         {
             var result = HelperHttpClient.GetAll("get","Organization/GetRolepowerById?roleId=" + roleId, null);
-            Rolepower rolepower = Newtonsoft.Json.JsonConvert.DeserializeObject<Rolepower>(result);
+            List<Rolepower> rolepower=Newtonsoft.Json.JsonConvert.DeserializeObject<List<Rolepower>>(result);
             return rolepower;
         }
     }

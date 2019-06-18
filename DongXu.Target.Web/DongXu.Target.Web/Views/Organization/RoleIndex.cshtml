@@ -112,7 +112,7 @@
                     title: title,
                     shadeClose: true,
                     shade: 0.8,
-                    area: ['1000px', '700px'],
+                    area: ['700px', '400px'],
                     content: url
                 });
             })
@@ -121,6 +121,7 @@
                 if (confirm('确定要删除吗') == true) {
                     axios.get("/Organization/DeleteRolesR", { params: { id: id } }).then((response) => {
                         alert('删除成功');
+                        location.href = "/Organization/RoleIndex";
                     });
                 }
             },

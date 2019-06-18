@@ -245,10 +245,39 @@ namespace DongXu.Target.Repository
             return role;
         }
         //反填权限
-        public Rolepower GetRolepowerById(int roleId)
+        public List<Rolepower> GetRolepowerById(int roleId)
         {
-            Rolepower rolepower = db.Rolepower.Where(m => m.RoleId == roleId).FirstOrDefault();
+            List<Rolepower> rolepower = db.Rolepower.Where(m => m.RoleId == roleId).ToList();
             return rolepower;
         }
+        //修改权限
+        public int UpdateRoles(Role model,int[] power)
+        {
+            var role = db.Role.Where(m => m.RoleId == model.RoleId).FirstOrDefault();
+            if (role != null)
+            {
+                role.RoleName = model.RoleName;
+                role.RoleContent = model.RoleContent;
+                role.RolePid = model.RolePid;
+                role.RoleModifyPeople = model.RoleModifyPeople;
+                role.RoleModifyTime = model.RoleModifyTime;
+                db.Database.ExecuteSqlCommand($"DELETE from rolepower where Role_Id={model.RoleId}");
+                List<Rolepower> rplist = new List<Rolepower>();
+                for (int i = 0; i<power.Length; i++)
+                {
+                    Rolepower rp = new Rolepower();
+                    rp.RoleId = model.RoleId;
+                    rp.PowerId = power[i];
+                    rplist.Add(rp);
+                }
+                db.Rolepower.AddRange(rplist);
+                return db.SaveChanges();
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
     }
 }

@@ -35,7 +35,8 @@ namespace DongXu.Target.IRepository.IOrganization
         //反填角色
         Role GetRoleById(int roleId);
         //反填权限
-        Rolepower GetRolepowerById(int roleId);
-        //RoleUserQuery GetRoleUserQueryListById(int RoleId);
+        List<Rolepower> GetRolepowerById(int roleId);
+        //修改权限
+        int UpdateRoles(Role model,int[] power);
     }
 }

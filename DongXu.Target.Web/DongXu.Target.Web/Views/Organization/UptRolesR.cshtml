@@ -1,4 +1,4 @@
-﻿
+﻿@using DongXu.Target.Web.Conn;
 @{
     Layout = null;
 }
@@ -25,7 +25,7 @@
             <tr>
                 <td>所属部门</td>
                 <td>
-                    <select id="roleo" lay-verify="" lay-search v-model="RolePid">
+                    <select id="roleo" v-model="RolePid">
                         <option v-for="item in rolesOList" :value="item.roleId">{{item.roleName}}</option>
                     </select>
                 </td>
@@ -36,11 +36,11 @@
             </tr>
             <tr>
                 <td>选择权限</td>
-                <td><span v-for="item in power"><input id="Checkbox1" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span></td>
+                <td><span v-for="item in power"><input id="Checkbox1" name="qx" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input id="Button1" type="button" value="修改" name="qx" class="layui-btn layui-btn-normal" v-on:click="UptRole(RoleName, RolePid, RoleContent)" /></td>
+                <td><input id="Button1" type="button" value="修改" class="layui-btn layui-btn-normal" onclick="UptRole()" /></td>
             </tr>
         </table>
     </div>
@@ -73,8 +73,8 @@
         created() {
                 this.GetRolesOList(),
                 this.GetPowerList(),
-                this.GetRoleById(@ViewBag.id),
-                this.GetRolepowerById(@ViewBag.id)
+                this.GetRoleById(@ViewBag.id)@*,
+                this.GetRolepowerById(@ViewBag.id)*@
         },
         methods: {
             GetRolesOList: function () {
@@ -94,21 +94,20 @@
                     this.RoleContent = response.data.roleContent;
                 });
             },
-            GetRolepowerById: function (id) {
-                axios.get("/Organization/GetRolepowerById", { params: { roleId: id } }).then((response) => {
-                    console.log(response);
-                    for (var i = 0; i < response.data.powerId; i++) {
-                        alert(response.data.powerId);
-                        var qx = document.getElementsByName("qx");
-                        console.log(qx);
-                        for (var j = 0; j < qx.length; j++) {
-                            if (response.data.powerId[i] == qx[j].value) {
-                                qx[j].checked = true;
-                            }
-                        }
-                    }
-                });
-            },
+            //GetRolepowerById: function (id) {
+            //    axios.get("/Organization/GetRolepowerById", { params: { roleId: id } }).then((response) => {
+            //        console.log(response);
+            //        for (var i = 0; i < response.data; i++) {
+            //            var qx = document.getElementsByName("qx");
+            //            for (var j = 0; j < qx.length; j++) {
+            //                if (response.data[i].powerId == qx[j].value) {
+            //                    alert(1111);
+            //                    qx[j].checked = true;
+            //                }
+            //            }
+            //        }
+            //    });
+            //},
             UptRole: function (RoleName, RolePid, RoleContent) {
                 var params = new URLSearchParams();
                 params.append('RoleName', RoleName);
@@ -142,4 +141,61 @@
             }
         }
     })
+    $(function(){
+         GetRolepowerById(@ViewBag.id);
+    })
+    function GetRolepowerById(id) {
+        $.ajax({
+            url: '/Organization/GetRolepowerById?roleId=' + id,
+            type: 'get',
+            success: function (data) {
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    var qx = document.getElementsByName("qx");
+                    for (var j = 0; j < qx.length; j++) {
+                        if (data[i].powerId == qx[j].value) {
+                            qx[j].checked = true;
+                        }
+                    }
+                }
+            }
+        })
+    }
+    function UptRole() {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var nowDate = year + "-" + month + "-" + day;
+        var JId = new Array();
+        $("input[type=Checkbox]:checked").each(function () {
+            JId.push($(this).val());
+
+        })
+       var power= JSON.stringify(JId);
+        var model = { RoleId:@ViewBag.id, RoleName: vm.$data.RoleName, RolePid: vm.$data.RolePid, RoleContent: vm.$data.RoleContent, RoleModifyPeople: "超级管理员", RoleModifyTime: nowDate, power: power };
+        var val = JSON.stringify(model);
+            $.ajax({
+                url: "@APIConn.MyAPIConn" +"Organization/UpdateRoles",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: val,
+                crossDomain: true,
+                dataType: 'json',
+                success: function (data) {
+                    if (data > 0) {
+                        alert('修改成功');
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭  
+                        location.href = '/Organization/RoleIndex';
+                    }
+                }
+            });
+    }
 </script>
