@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using DongXu.Target.IRepository.TrafficLightRanking;
@@ -30,7 +31,7 @@ namespace DongXu.Target.Api.Controllers.TrafficLightRankingController
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetTrafficLightRankingList")]
-        public List<Model.Dto.TrafficLightRanking> GetTrafficLightRankingList()
+        public DataTable GetTrafficLightRankingList()
         {
             var list = TrafficLightRankingRepository.GetTrafficLightRankingList();
             return list; 

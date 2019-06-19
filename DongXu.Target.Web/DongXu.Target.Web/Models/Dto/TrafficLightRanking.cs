@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DongXu.Target.Model.Dto
+namespace DongXu.Target.Web.Models.Dto
 {
     public class TrafficLightRanking
     {
@@ -27,7 +27,7 @@ namespace DongXu.Target.Model.Dto
         public decimal GreenLight { get; set; }
 
         /// <summary>
-        /// 总数
+        /// 公司名称
         /// </summary>
         public decimal TargetNumber { get; set; }
 
@@ -44,6 +44,6 @@ namespace DongXu.Target.Model.Dto
         /// <summary>
         /// 绿灯百分比
         /// </summary>
-        public decimal GreenLightPercentage { get; set; } 
+        public decimal GreenLightPercentage { get; set; }
     }
 }
