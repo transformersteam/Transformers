@@ -85,11 +85,11 @@
                 <div id="redblueechart" style="width:700px;height:400px;margin-right:250px"></div>
             </div>
         </div>
-        <div class="panel panel-primary" style="height:400px">
+        @*<div class="panel panel-primary" style="height:400px">
             <div class="panel-heading">运行情况</div>
-            <div id="condition" style="float:left;width:900px;height:350px;margin-left:30px;padding-top:15px;padding-left:20px"></div>
-            <div style="float:right;width:700px;padding-right:50px">
-                <table class="table table-bordered table-striped text-center">
+            <div id="condition" style="float:left;width:40%;height:350px;"></div>
+            <div style="margin:0 auto">
+                <table style="float:right;width:40%;" class="table table-bordered table-striped text-center">
                     <thead>
                         <tr>
                             <td>目标状态</td>
@@ -108,7 +108,38 @@
                     </tbody>
                 </table>
             </div>
+        </div>*@
+        <div id="app" class="panel panel-primary" style="height:370px">
+            <div class="panel-heading">运行情况</div>
+            <div id="condition" style="float:left;width:50%;height:300px;margin-left:30px;">
+            </div>
+            <div>
+
+                <table style="width:500px;margin-top:50px" class="table table-bordered table-striped text-center">
+                    <thead>
+                        <tr>
+                            <td>目标状态</td>
+                            <td>数量</td>
+                            <td>比例</td>
+                            <td>说明</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="data in condition" class="data-row">
+                            <td>{{data.goalState_Name}}</td>
+                            <td>{{data.count}}</td>
+                            <td>{{data.percent}}%</td>
+                            <td>{{data.goalState_Explain}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
         </div>
+
+
+
     </div>
 </body>
 </html>
@@ -147,7 +178,7 @@
                         }
                     }
                 ).catch(function (response) {   //捕捉异常
-                    alert(response);
+                    //alert(response);
                 })
             },
             getRunCondition: function () {     //运行情况
@@ -158,8 +189,8 @@
                 )
             },
             details: function (id, progressid) {         //点击目标名称跳转到目标详情页面
-                alert(id);
-                alert(progressid)
+                //alert(id);
+                //alert(progressid)
                 location.href = '/WaitRead/TargetDetails?id=' + id + "&progressid=" + progressid;
             },
             getStateTable: function () {      //红绿灯状态表格
@@ -171,8 +202,8 @@
                 )
             },
             detailsById: function (id,progressid) {    //点击数字显示详情
-                alert(id)
-                alert(progressid);
+                //alert(id)
+                //alert(progressid);
                 layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.open({
@@ -198,7 +229,7 @@
             data: {id:@ViewBag.id},
             dataType: "json",
             success: function (data) {
-                alert(data)
+                //alert(data)
                 console.log(data)
                 alldata.push(data.datacount);
                 alldata.push(data.dataname);
@@ -337,13 +368,13 @@
     //切换表格
     $("#tableshow").click(function () {
         if ($("#tableshow").val()=="切换表格") {
-            alert(111)
+            //alert(111)
             $("#statetable").show();
             $("#echartshow").hide();
             $("#tableshow").val("切换柱状图");
         }
         else if ($("#tableshow").val() == "切换柱状图") {
-            alert(222)
+            //alert(222)
             $("#tableshow").val("切换表格");
             $("#statetable").hide();
             $("#echartshow").show();
