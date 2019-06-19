@@ -45,9 +45,9 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         [HttpPost("GoalAdd")]
         public int GoalAdd([FromBody]string goal)
         {
-            var list = JsonConvert.DeserializeObject<Goal>(goal);
-            int i = iGoalManageRepository.GoalAdd(list);
-            return i;
+            //var list = JsonConvert.DeserializeObject<Goal>(goal);
+            //int i = iGoalManageRepository.GoalAdd(list);
+            return 1;
         }
 
         /// <summary>
