@@ -17,11 +17,41 @@
     <link href="~/js/zpageNav.css" rel="stylesheet" />   @*分页样式*@
     <script src="~/js/echarts.min.js"></script>    @*Echarts图*@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
     <div style="padding:20px;" id="app">
         <div class="panel panel-primary">
             <div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>
+            @*<ul id="myTab" class="nav nav-tabs" role="tablist">
+                <li style="width:200px" class="active" data="0"><a href="#bulletin" role="tab" data="0">未完成（到期）</a></li>
+                <li style="width:150px" data="1"><a href="#rule" role="tab" data="1">预计延期</a></li>
+                <li style="width:200px"><a href="#forum" role="tab" data="2">已完成（延期）</a></li>
+                <li style="width:100px"><a href="#security" role="tab" data="3">未启动</a></li>
+                <li style="width:200px"><a href="#welfare" role="tab" data="4">已完成(按期)</a></li>
+                <li><a href="#normal" role="tab" data="5">正常推进</a></li>
+            </ul>*@
+            <!-- 选项卡面板 -->
+            @*<div id="myTabContent" class="tab-content">
+                <div class="tab-pane active" id="bulletin">
+                    公告内容面板
+                </div>
+                <div class="tab-pane " id="rule">
+                    规则内容面板
+                </div>
+                <div class="tab-pane " id="forum">
+                    论坛内容面板
+                </div>
+                <div class="tab-pane " id="security">
+                    安全内容面板
+                </div>
+                <div class="tab-pane " id="welfare">
+                    公益内容面板
+                </div>
+                <div class="tab-pane " id="normal">
+                    正常推进
+                </div>
+            </div>*@
             <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
@@ -112,6 +142,27 @@
     </div>
 </body>
 </html>
+
+@*<script>
+    $(function () {
+        var questionType = 0;
+        for (var i = 0; i < 10; i++) {
+            if ($("#myTab").children('li')[i].className == "active") {
+                tablelist("0");
+                $(this).tab("show");
+                break;
+            }
+        }
+        $("#myTab a").click(function (e) {
+            e.preventDefault();
+            //调用函数追加表格
+            acc = $(this).attr("data");
+            alert(acc);
+
+            $(this).tab("show");
+        });
+    })
+</script>*@
 <script type="module">
     var vm = new Vue({
         el: "#app",
