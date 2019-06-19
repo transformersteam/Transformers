@@ -41,7 +41,7 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         /// </summary>
         /// <param name="goal"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("GoalAdd")]
         public int GoalAdd(Goal goal)
         {
             int i = iGoalManageRepository.GoalAdd(goal);
@@ -53,7 +53,7 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         /// </summary>
         /// <param name="files"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("GoalFileAdd")]
         public int GoalFileAdd(Files files)
         {
             int i = iGoalManageRepository.GoalFileAdd(files);
