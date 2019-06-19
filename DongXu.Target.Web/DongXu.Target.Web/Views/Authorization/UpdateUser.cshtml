@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td>选择角色</td>
-                <td><span v-for="item in user"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId" v-on:click="GetRoleId(item.roleId,item.roleName)" /><label>{{item.roleName}}</label></span></td>
+                <td><span v-for="item in user"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId"/>{{item.roleName}}</span></td>
             </tr>
             <tr>
                 <td></td>
@@ -144,9 +144,10 @@
         $("input[type=Checkbox]:checked").each(function () {
             JId.push($(this).val());
             JName.push(this.nextSibling.nodeValue);
+            
         })
         var Role = JSON.stringify(JId);
-        var RoleName = JSON.stringify(JName);
+        var RoleName = JName.join(',');
         var model = { UserId:@ViewBag.id, UserRealName: vm.$data.UserRealName, User_IdentityId: vm.$data.User_IdentityId, RoleModifyPeople: "超级管理员", RoleModifyTime: nowDate, Role: Role, UserRoleName: RoleName};
         var val = JSON.stringify(model);
             $.ajax({

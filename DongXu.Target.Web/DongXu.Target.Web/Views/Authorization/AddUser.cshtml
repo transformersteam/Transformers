@@ -82,7 +82,8 @@
             roleName:[]
         },
         created() {
-            this.GetRoleList()
+            this.GetRoleList(),
+                this.User_IdentityId = this.identity[0].Id;
         },
         methods: {
             GetRoleList: function () {

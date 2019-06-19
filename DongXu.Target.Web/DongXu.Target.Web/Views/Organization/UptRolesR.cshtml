@@ -73,8 +73,7 @@
         created() {
                 this.GetRolesOList(),
                 this.GetPowerList(),
-                this.GetRoleById(@ViewBag.id)@*,
-                this.GetRolepowerById(@ViewBag.id)*@
+                this.GetRoleById(@ViewBag.id)
         },
         methods: {
             GetRolesOList: function () {
@@ -90,24 +89,10 @@
             GetRoleById: function (id) {
                 axios.get("/Organization/GetRoleById", { params: { roleId:id} }).then((response) => {
                     this.RoleName = response.data.roleName;
-                    this.RolePid = response.data.roleName;
+                    this.RolePid = response.data.rolePid;
                     this.RoleContent = response.data.roleContent;
                 });
             },
-            //GetRolepowerById: function (id) {
-            //    axios.get("/Organization/GetRolepowerById", { params: { roleId: id } }).then((response) => {
-            //        console.log(response);
-            //        for (var i = 0; i < response.data; i++) {
-            //            var qx = document.getElementsByName("qx");
-            //            for (var j = 0; j < qx.length; j++) {
-            //                if (response.data[i].powerId == qx[j].value) {
-            //                    alert(1111);
-            //                    qx[j].checked = true;
-            //                }
-            //            }
-            //        }
-            //    });
-            //},
             UptRole: function (RoleName, RolePid, RoleContent) {
                 var params = new URLSearchParams();
                 params.append('RoleName', RoleName);

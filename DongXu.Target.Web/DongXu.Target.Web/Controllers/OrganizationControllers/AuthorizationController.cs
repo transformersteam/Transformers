@@ -20,7 +20,7 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
         }
 
         /// <summary>
-        /// 
+        /// 分页显示
         /// </summary>
         /// <param name="pageindex"></param>
         /// <param name="pagesize"></param>
@@ -45,6 +45,7 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             };
             return usersPageList;
         }
+
         /// <summary>
         /// 修改人员页面
         /// </summary>
@@ -54,46 +55,79 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             ViewBag.id = id;
             return View();
         }
-        //添加人员AddUser
+
+        /// <summary>
+        /// 添加人员AddUser
+        /// </summary>
+        /// <returns></returns>
         public IActionResult AddUser()
         {
             return View();
         }
-        //显示所有人员
+
+        /// <summary>
+        /// 显示所有人员
+        /// </summary>
+        /// <returns></returns>
         public List<Role> GetRolesRList()
         {
             var result = HelperHttpClient.GetAll("get","Organization/GetRolesRList", null);
             var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(result);
             return list;
         }
-        //添加人员
+
+        /// <summary>
+        /// 添加人员
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public JsonResult AddUsers(User model)
         {
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
             var result = HelperHttpClient.GetAll("post", "Authorization/AddUser", json);
             return Json(result);
         }
-        //添加人员 角色
+        
+        /// <summary>
+        /// 添加人员 角色
+        /// </summary>
+        /// <param name="rp"></param>
+        /// <returns></returns>
         public JsonResult AddUserrole(UserRoleDto rp)
         {
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(rp);
             var result = HelperHttpClient.GetAll("post","Authorization/AddUserrole",json);
             return Json(result);
         }
-        //删除人员
+
+        /// <summary>
+        /// 删除人员
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public JsonResult DeleteUser(int id)
         {
             var result = HelperHttpClient.GetAll("post", "Authorization/DeleteUser", id);
             return Json(result);
         }
-        //反填角色
+
+        /// <summary>
+        /// 反填角色
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public User GetUserById(int userId)
         {
             var result = HelperHttpClient.GetAll("get", "Authorization/GetUserById?userId=" + userId, null);
             User user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(result);
             return user;
         }
-        //反填权限
+
+        /// <summary>
+        /// 反填权限
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public List<Userrole> GetUserroleById(int userId)
         {
             var result = HelperHttpClient.GetAll("get", "Authorization/GetUserroleById?userId=" + userId, null);

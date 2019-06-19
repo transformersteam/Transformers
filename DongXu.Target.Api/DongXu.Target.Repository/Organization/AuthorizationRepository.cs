@@ -15,14 +15,24 @@ namespace DongXu.Target.Repository.Organization
     public class AuthorizationRepository : IAuthorizationRepository
     {
         dxdatabaseContext db = new dxdatabaseContext();
-        //添加人员
+        /// <summary>
+        /// 添加人员
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public int AddUser(User model)
         {
             db.User.Add(model);
             db.SaveChanges();
             return model.UserId;
         }
-        //添加人员 角色关联
+
+        /// <summary>
+        /// 添加人员 角色关联
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public int AddUserrole(int uid, int[] role)
         {
             List<Userrole> rplist = new List<Userrole>();
@@ -37,7 +47,12 @@ namespace DongXu.Target.Repository.Organization
             //db.Database.ExecuteSqlCommand("insert into rolepower(Role_Id,Power_Id) values(@RoleId,@RolePowerId)", rplist);
             return db.SaveChanges();
         }
-        //删除人员
+        
+        /// <summary>
+        /// 删除人员
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         public int DeleteUser(int userid)
         {
             User user = db.User.Where(u => u.UserId == userid).FirstOrDefault();
@@ -51,31 +66,55 @@ namespace DongXu.Target.Repository.Organization
 
             return resCount;
         }
-        //显示角色
+        
+        /// <summary>
+        /// 显示角色
+        /// </summary>
+        /// <returns></returns>
         public List<Role> GetRoleList()
         {
             throw new NotImplementedException();
         }
 
-        //显示人员
+        
+        /// <summary>
+        /// 显示人员
+        /// </summary>
+        /// <returns></returns>
         public List<User> GetUserList()
         {
             List<User> userList = db.User.ToList();
             return userList;
         }
-        //反填人员
+        
+        /// <summary>
+        /// 反填人员
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public User GetUserById(int userId)
         {
             User user = db.User.Where(m => m.UserId == userId).FirstOrDefault();
             return user;
         }
-        //反填人员角色
+        
+        /// <summary>
+        /// 反填人员角色
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public List<Userrole> GetUserroleById(int userId)
         {
             List<Userrole> userrole = db.Userrole.Where(m => m.UserId == userId).ToList();
             return userrole;
         }
-        //修改人员角色
+
+        /// <summary>
+        /// 修改人员角色
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public int UpdateUser(User user, int[] role)
         {
             var tmpUser = db.User.Where(m => m.UserId == user.UserId).FirstOrDefault();
@@ -83,6 +122,7 @@ namespace DongXu.Target.Repository.Organization
             {
                 tmpUser.UserRealName = user.UserRealName;
                 tmpUser.User_IdentityId = user.User_IdentityId;
+                tmpUser.UserRoleName = user.UserRoleName;
                 db.Database.ExecuteSqlCommand($"DELETE from Userrole where User_Id={user.UserId}");
                 List<Userrole> rplist = new List<Userrole>();
                 for (int i = 0; i < role.Length; i++)

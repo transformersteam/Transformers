@@ -12,12 +12,20 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
     
     public class OrganizationController : Controller
     {
-        //组织管理
+        /// <summary>
+        /// 组织管理
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
-        
+
+        /// <summary>
+        /// 修改组织
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public JsonResult UpdateRolesO(Role model)
         {
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
@@ -25,19 +33,31 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return Json(result);
         }
 
-        //岗位管理
+        /// <summary>
+        /// 岗位管理页面
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Role()
         {
             return View();
         }
 
-        //角色管理
+        /// <summary>
+        /// 角色管理页面
+        /// </summary>
+        /// <returns></returns>
         public IActionResult RoleIndex()
         {
             return View();
         }
 
-        //查询角色
+        /// <summary>
+        /// 查询显示角色
+        /// </summary>
+        /// <param name="pageindex"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Paged<Role> GetRolesRList(int pageindex=1,int pagesize=6,string name="")
         {
             if(name==null)
@@ -58,24 +78,39 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return rolesPageList;
         }
 
-        //岗位管理
+        /// <summary>
+        /// 岗位管理
+        /// </summary>
+        /// <returns></returns>
         public IActionResult PostJob()
         {
             return View();
         }
 
-        //角色添加
+        /// <summary>
+        /// 角色添加
+        /// </summary>
+        /// <returns></returns>
         public IActionResult AddRoleR()
         {
             return View();
         }
-        //角色修改
+
+        /// <summary>
+        /// 角色修改
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult UptRolesR(int id) 
         {
             ViewBag.id = id;
             return View();
         }
-        //角色添加 绑定部门下拉
+
+        /// <summary>
+        /// 角色添加 绑定部门下拉
+        /// </summary>
+        /// <returns></returns>
         public List<Role> GetRolesOList()
         {
             var result = HelperHttpClient.GetAll("get", "Organization/GetRolesOList", null);
@@ -83,41 +118,69 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             return list;
         }
 
-        //显示所有权限
+        /// <summary>
+        /// 显示所有权限
+        /// </summary>
+        /// <returns></returns>
         public List<Power> GetPowerList()
         {
             var result = HelperHttpClient.GetAll("get", "Organization/GetPowerList", null);
             var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Power>>(result);
             return list;
         }
-        //添加角色
+
+        /// <summary>
+        /// 添加角色
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public JsonResult AddRole(Role role)
         {
             string jsonm = Newtonsoft.Json.JsonConvert.SerializeObject(role);
             var result = HelperHttpClient.GetAll("post", "Organization/AddRole", jsonm);
             return Json(result);
         }
-        //添加角色 权限
+
+        /// <summary>
+        /// 添加角色 权限
+        /// </summary>
+        /// <param name="rp"></param>
+        /// <returns></returns>
         public JsonResult AddRolePower(RolePower rp)
         {
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(rp);
             var result = HelperHttpClient.GetAll("post", "Organization/AddRolepower", json);
             return Json(result);
         }
-        //删除角色及权限
+
+        /// <summary>
+        /// 删除角色及权限
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public JsonResult DeleteRolesR(int id)
         {
             var result = HelperHttpClient.GetAll("post", "Organization/DeleteRolesR", id);
             return Json(result);
         }
-        //反填角色
+
+        /// <summary>
+        /// 反填角色
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         public Role GetRoleById(int roleId)
         {
             var result = HelperHttpClient.GetAll("get", "Organization/GetRoleById?roleId="+ roleId, null);
             Role role = Newtonsoft.Json.JsonConvert.DeserializeObject<Role>(result);
             return role;
         }
-        //反填权限
+
+        /// <summary>
+        /// 反填权限
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         public List<Rolepower> GetRolepowerById(int roleId)
         {
             var result = HelperHttpClient.GetAll("get","Organization/GetRolepowerById?roleId=" + roleId, null);
