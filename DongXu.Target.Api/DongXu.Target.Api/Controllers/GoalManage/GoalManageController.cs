@@ -6,6 +6,7 @@ using DongXu.Target.IRepository.IGoalManage;
 using DongXu.Target.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DongXu.Target.Api.Controllers.GoalManage
 {
@@ -42,9 +43,10 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         /// <param name="goal"></param>
         /// <returns></returns>
         [HttpPost("GoalAdd")]
-        public int GoalAdd(Goal goal)
+        public int GoalAdd([FromBody]string goal)
         {
-            int i = iGoalManageRepository.GoalAdd(goal);
+            var list = JsonConvert.DeserializeObject<Goal>(goal);
+            int i = iGoalManageRepository.GoalAdd(list);
             return i;
         }
 
@@ -54,7 +56,7 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         /// <param name="files"></param>
         /// <returns></returns>
         [HttpPost("GoalFileAdd")]
-        public int GoalFileAdd(Files files)
+        public int GoalFileAdd([FromBody]Files files)
         {
             int i = iGoalManageRepository.GoalFileAdd(files);
             return i;
