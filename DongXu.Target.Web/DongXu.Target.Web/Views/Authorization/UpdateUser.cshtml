@@ -19,24 +19,21 @@
     <div id="addrole">
         <table class="layui-table">
             <tr>
-                <td>角色姓名</td>
-                <td><input id="txtName" type="text" v-model="RoleName" /></td>
+                <td>人员姓名</td>
+                <td><input id="" type="text" v-model="UserRealName" /></td>
             </tr>
             <tr>
-                <td>所属部门</td>
+                <td>用户标识</td>
                 <td>
-                    <select id="roleo" v-model="RolePid">
-                        <option v-for="item in rolesOList" :value="item.roleId">{{item.roleName}}</option>
+                    <select id="" v-model="User_IdentityId">
+                        <option value="5" selected="selected">--请选择--</option>
+                        <option :value="item.Id" v-for="item in identity">{{item.Name}}</option>
                     </select>
                 </td>
             </tr>
             <tr>
-                <td>角色描述</td>
-                <td><input id="txtContext" type="text" v-model="RoleContent" /></td>
-            </tr>
-            <tr>
-                <td>选择权限</td>
-                <td><span v-for="item in power"><input id="Checkbox1" name="qx" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span></td>
+                <td>选择角色</td>
+                <td><span v-for="item in user"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId"/>{{item.roleName}}</span></td>
             </tr>
             <tr>
                 <td></td>
@@ -63,34 +60,33 @@
     var vm = new Vue({
         el: "#addrole",
         data: {
-            rolesOList: [],
-            power: [],
-            RoleName: "",
-            RolePid: "",
-            RoleContent: "",
-            powerId: []
+            identity: [
+                { Id: '0', Name: '总裁' },
+                { Id: '1', Name: '经理' },
+                { Id: '2', Name: '职员' }
+            ],
+            user: [],
+            UserRealName: "",
+            UserName: "",
+            UserPass: "",
+            User_IdentityId: "",
+            roleId: [],
+            roleName: []
         },
         created() {
-                this.GetRolesOList(),
-                this.GetPowerList(),
-                this.GetRoleById(@ViewBag.id)
+            this.GetRoleList(),
+            this.GetUserById(@ViewBag.id)
         },
         methods: {
-            GetRolesOList: function () {
-                axios.get("/Organization/GetRolesOList").then((response) => {
-                    this.rolesOList = response.data;
+            GetRoleList: function () {
+                axios.get("/Authorization/GetRolesRList").then((response) => {
+                    this.user = response.data;
                 });
             },
-            GetPowerList: function () {
-                axios.get("/Organization/GetPowerList").then((response) => {
-                    this.power = response.data;
-                });
-            },
-            GetRoleById: function (id) {
-                axios.get("/Organization/GetRoleById", { params: { roleId:id} }).then((response) => {
-                    this.RoleName = response.data.roleName;
-                    this.RolePid = response.data.rolePid;
-                    this.RoleContent = response.data.roleContent;
+            GetUserById: function (id) {
+                axios.get("/Authorization/GetUserById", { params: { userId:id} }).then((response) => {
+                    this.UserRealName = response.data.userRealName;
+                    this.User_IdentityId = response.data.user_IdentityId;
                 });
             },
             UptRole: function (RoleName, RolePid, RoleContent) {
@@ -108,44 +104,29 @@
                     }
                 });
             },
-            GetPowerId: function (powerId) {
-                this.powerId.push(powerId);
-            },
-            AddRolePower: function (rid) {
-                var params = new URLSearchParams();
-                params.append('rid', rid);
-                params.append('power', JSON.stringify(this.powerId));
-                axios.post("/Organization/AddRolePower", params).then((response) => {
-                    if (response.data > 0) {
-                        alert('添加成功');
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                        location.href = '/Organization/RoleIndex';
-                    }
-                });
-            }
         }
     })
-    $(function(){
-         GetRolepowerById(@ViewBag.id);
-    })
-    function GetRolepowerById(id) {
+
+
+    $(function () {
+        GetUserroleById(@ViewBag.id);
+    });
+    function GetUserroleById(id) {
         $.ajax({
-            url: '/Organization/GetRolepowerById?roleId=' + id,
+            url: '/Authorization/GetUserroleById?userId=' + id,
             type: 'get',
             success: function (data) {
-                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     var qx = document.getElementsByName("qx");
                     for (var j = 0; j < qx.length; j++) {
-                        if (data[i].powerId == qx[j].value) {
+                        if (data[i].roleId == qx[j].value) {
                             qx[j].checked = true;
                         }
                     }
                 }
             }
         })
-    }
+    };
     function UptRole() {
         var date = new Date();
         var year = date.getFullYear();
@@ -159,15 +140,18 @@
         }
         var nowDate = year + "-" + month + "-" + day;
         var JId = new Array();
+        var JName = [];
         $("input[type=Checkbox]:checked").each(function () {
             JId.push($(this).val());
-
+            JName.push(this.nextSibling.nodeValue);
+            
         })
-       var power= JSON.stringify(JId);
-        var model = { RoleId:@ViewBag.id, RoleName: vm.$data.RoleName, RolePid: vm.$data.RolePid, RoleContent: vm.$data.RoleContent, RoleModifyPeople: "超级管理员", RoleModifyTime: nowDate, power: power };
+        var Role = JSON.stringify(JId);
+        var RoleName = JName.join(',');
+        var model = { UserId:@ViewBag.id, UserRealName: vm.$data.UserRealName, User_IdentityId: vm.$data.User_IdentityId, RoleModifyPeople: "超级管理员", RoleModifyTime: nowDate, Role: Role, UserRoleName: RoleName};
         var val = JSON.stringify(model);
             $.ajax({
-                url: "@APIConn.MyAPIConn" +"Organization/UpdateRoles",
+                url: "@APIConn.MyAPIConn" +"Authorization/UpdateUser",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: val,
@@ -177,8 +161,8 @@
                     if (data > 0) {
                         alert('修改成功');
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭  
-                        location.href = '/Organization/RoleIndex';
+                        parent.layer.close(index); //再执行关闭
+                        location.href = '/Authorization/Index';
                     }
                 }
             });

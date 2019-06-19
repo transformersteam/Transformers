@@ -1,0 +1,135 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RoleIndex</title>
+    <script src="~/js/vue.js"></script>
+    <script src="~/js/axios.js"></script>
+    <script src="~/js/zpageNav.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/js/zpageNav.css" rel="stylesheet" />
+
+    <style>
+        #max {
+            width: 1500px;
+            height: 600px;
+            margin-left: 30px;
+        }
+
+        #query {
+            width: 100%;
+            height: 15%;
+            margin-bottom: 10px;
+        }
+
+        #management {
+            width: 100%;
+            height: 75%;
+        }
+
+            #management table {
+                width: 100%;
+            }
+
+                #management table button {
+                    float: right;
+                }
+    </style>
+</head>
+<body>
+    <div id="max">
+        <div id="query">
+            <table class="layui-table">
+                <tr style="background-color:aquamarine">
+                    <td colspan="3">查询条件</td>
+                </tr>
+                <tr>
+                    <td>人员名称:</td>
+                    <td><input id="Text1" type="text" class="layui-input" v-model="searchroleName" /></td>
+                    <td><input id="Button1" type="button" value="查询" class="layui-btn layui-btn-normal" v-on:click="GetRoleRList(1,searchroleName)" /><input id="Button1" type="button" value="新增" class="layui-btn layui-btn-normal" v-on:click="AddRoleR()" /></td>
+                </tr>
+            </table>
+        </div>
+        <div id="management">
+            <div style="width:100%;height:20px;">人员管理</div>
+            <table class="layui-table">
+                <tr style="background-color:aquamarine">
+                    <td>人员名称</td>
+                    <td>描述信息</td>
+                    <td>操作</td>
+                </tr>
+                <tr v-for="item in userlist">
+                    <td>{{item.userRealName}}</td>
+                    <td>{{item.userRoleName}}</td>
+                    <td><input id="Button1" type="button" value="设置" class="layui-btn layui-btn-normal" v-on:click="UpdateUser(item.userId)" /><input id="Button1" type="button" value="删除" class="layui-btn layui-btn-normal" v-on:click="DeleteUser(item.userId)" /></td>
+                </tr>
+            </table>
+            <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+                      v-bind:max-page="maxPage" v-on:pagehandler="GetRoleRList">
+            </zpagenav>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+        el: "#max",
+        data: {
+            searchroleName:"",
+            userlist: [],
+            page: 1,  //显示的是哪一页
+            pageSize: 6, //每一页显示的数据条数
+            total: 100, //记录总数
+            maxPage: 9  //最大页数
+        },
+        created() {
+            this.GetRoleRList();
+        },
+        methods: {
+            GetRoleRList: function (page, name) {
+                this.page = page
+                axios.get("/Authorization/GetRoleList", { params: { pageindex: page, pagesize: this.pageSize, name: name} }).then((response) => {
+                    this.total = response.data.total;
+                    this.maxPage = response.data.maxPage;
+                    this.userlist = response.data.getList;
+                });
+            },
+            AddRoleR: function () {
+                this.Open('/Authorization/AddUser', '添加人员');
+            },
+            Open:function (url, title) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type: 2,
+                    title: title,
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['800px', '500px'],
+                    content: url
+                });
+            })
+            },
+            DeleteUser: function (id) {
+                if (confirm('确定要删除吗') == true) {
+                    axios.get("/Authorization/DeleteUser", { params: { id: id } }).then((response) => {
+
+                        alert('删除成功');
+                        location.href = "/Authorization/Index";
+                    });
+                }
+            },
+            UpdateUser: function (id) {
+                this.Open('/Authorization/UpdateUser?id=' + id, '修改人员');
+            }
+        }
+    })
+
+</script>
