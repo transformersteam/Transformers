@@ -89,7 +89,8 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalSources=baseData.GoalSources,
                 GoalStateId=4,                       
             };
-            var goalId = HelperHttpClient.GetAll("post", "GoalAdd/GoalManage", goal);  //添加成功返回自增长id
+            var goaldata = JsonConvert.SerializeObject(goal);
+            var goalId = HelperHttpClient.GetAll("post", "GoalAdd/GoalManage", goaldata);  //添加成功返回自增长id
             
             IFormFileCollection files = formData.Files;
             long size = files.Sum(f => f.Length);
