@@ -24,7 +24,7 @@
                 <tr>
                     <td>
                         指标名称:
-                        <input id="goalName" type="text" autocomplete="off" name="goalName" class="layui-input layui-input" lay-verify="goalName" value="" placeholder="请输入指标名称" />
+                        <input id="goalName" type="text" autocomplete="off" name="GoalName" class="layui-input layui-input" lay-verify="goalName" value="" placeholder="请输入指标名称" />
                     </td>
                     <td>
                         指标单位:
@@ -76,19 +76,19 @@
                     </td>
                     <td>
                         周期:
-                        <input id="period" type="text" class="layui-input layui-input" onmouseup="getTime()" />
+                        <input id="period" type="text" name="GoalPeriod" class="layui-input layui-input" onmouseup="getTime()" />
                     </td>
                 </tr>
                 <tr>
                     <td>
                         责任单位:
-                        <select id="dutycommany" class="layui-input layui-select">
+                        <select id="dutycommany" class="layui-input layui-select" name="Goal_DutyCommanyId">
                             <option v-for="(data,index) in dutycommany" :value="index">{{data.roleName}}</option>
                         </select>
                     </td>
                     <td>
                         责任人:
-                        <select id="dutyuser" class="layui-input layui-select" name="Goal_DutyCommanyId">
+                        <select id="dutyuser" class="layui-input layui-select" name="Goal_DutyUserId">
                             <option v-for="(data,index) in dutyuser" :value="index">{{data.userRealName}}</option>
                         </select>
                     </td>
@@ -193,8 +193,26 @@
             <div style="padding-left: 100px">
                 确认流程
             </div>
-            <div style="padding-left: 250px">
-                <input id="Text1" type="text" class="layui-icon-friends" />
+            <div style="padding-left: 250px" id="endaudit">
+                <div style="float:left">
+                    <input id="Button1" type="button" value="添加审核人" class="layui-btn" onclick="addAudit()" />
+                </div>
+                <div style="margin-left:200px" id="audit">
+                    <ul id="shuttle_box">
+                        <li class="shuttle_box_li shuttle_box_near" style="border:2px">
+                            <ul id="shuttle_box_left">
+                                <li v-for="(data,index) in dutyuser">
+                                    <input id="Checkbox1" type="checkbox" :value="data.userId" />{{data.userRealName}}
+                                </li>
+                                <li>
+                                    <input id="value" type="hidden" name="AuditValue" />
+                                    <input id="btnSure" type="button" class="layui-btn" value="确定" onclick="auditSure()"/>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <span id="auditname">您选择的审核人为:</span>
             </div>
             <div class="layui-form-item" style="float: right">
                 <div class="layui-input-block">
@@ -206,7 +224,7 @@
 </body>
 </html>
 <script>
-        layui.use(['form', 'layedit', 'laydate'], function () {
+    layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
                 , layer = layui.layer
                 , layedit = layui.layedit
@@ -232,7 +250,7 @@
             form.render();
         })
 
-        var vm = new Vue({
+    var vm = new Vue({
             el: "#app",
             data: {
                 commanydata: [],   //单位
@@ -253,6 +271,7 @@
                 this.bindGoalType();
                 this.bindDutyCommany();
                 this.bindGoalChildType();
+                $("#audit").hide();
             },
             methods: {
                 bindCommany: async function () {             //绑定单位下拉框
@@ -268,6 +287,7 @@
                     axios.get("@Url.Action("GetDutyUserList","GoalManage")").then(
                         (response) => {
                             this.dutyuser = response.data;
+                            console.log(this.dutyuser)
                         }
                     )
                 },
@@ -323,57 +343,37 @@
             }
     })
 
-    //目标下达 添加
-    @*function add() {
-        var model = {
-            GoalName: $("#goalName").val(),
-            RoleId: $("#commany").val(),
-            Goal_ParentId: 0,
-            GoalTypeId: $("#goalChildType").val(),
-            IndexLevelId: $("#indexleavel").val(),
-            FrequencyId: $("#frequency").val(),
-            GoalStartTime: $("#begintime").val(),
-            GoalEndTime: $("#endtime").val(),
-            //GoalPeriod: @DateTime.Now.ToString("yyyy MM dd"),
-            GoalUnit: $("#dutycommany").text(),
-            GoalChargePeople: $("#dutyuser").text(),
-            GoalWeight: $("#weight").val(),
-            GoalInformant: $("#informant").text(),
-            GoalOrganiser: $("#dothinguser").text(),
-            GoalFormula: $("#formula").val(),
-            GoalSources: $("#source").val(),
-            Goal_DutyUserId: $("#dutyuser").val(),
-            Goal_DutyCommanyId: $("#GoalUnit").val(),
-            IndexsJanuary:("#january").val(),
-            IndexsFebruary: $("#february").val(),
-            IndexsMarch: $("#match").val(),
-            IndexsApril: $("#april").val(),
-            IndexsMay: $("#may").val(),
-            IndexsJune: $("#june").val(),
-            IndexsJuly: $("#july").val(),
-            IndexsAugust: $("#august").val(),
-            IndexsSeptember: $("#september").val(),
-            IndexsOctober: $("#october").val(),
-            IndexsNovember: $("#november").val(),
-            IndexsYearTarget: ("#december").val()
-        }
-        $.ajax({
-            url: "/GoalManage/GoalSubmit",
-            type: "post",
-            data: {
-                baseData: model
-            },
-            success: function (i) {
-                if (i > 0) {
-                    alert('添加成功');
-                }
-            }
-        })
-    }*@
-
+    //计算周期
     function getTime() {
         var begintime = $("#begintime").val();
         var endtime = $("#endtime").val();
         alert(endtime)
+    }
+
+    //点击添加审核人
+    function addAudit() {
+        $("#audit").show();
+    }
+
+    var obj = "";
+    //点击确定
+    function auditSure() {        
+        $("input[type='checkbox']").each(function () {
+            if ($(this).is(":checked")) {
+                obj += this.value + ',';
+            }
+        })
+        var auditsure = document.getElementById("value");
+        $("#value").val(obj)
+        if (auditsure == "") {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.msg('您还没有选择审批人呢');
+                return false
+            });
+        }
+        else {
+            $("#endaudit").hide();
+        }      
     }
 </script>
