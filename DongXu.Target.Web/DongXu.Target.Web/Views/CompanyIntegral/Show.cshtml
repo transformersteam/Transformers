@@ -24,11 +24,8 @@
                     url: "/CompanyIntegral/Indexecharts",
                     type: "get",
                     success: function (data) {
-                        console.log(data);
-
                         var name = data.nameList;
                         var num = data.numList;
-
 
                         //基于准备好的DOM，初始化echarts实例
                         var myChart = echarts.init(document.getElementById('main'));
@@ -94,5 +91,132 @@
             })
         </script>
     </div>
+    <div>
+        <div style="float: left">
+            <table class="table table-bordered">
+                <thead style="text-align: center;">
+                    <tr>
+                        <td rowspan="2">部门名称</td>
+                        <td colspan="4">SSS</td>
+                    </tr>
+                    <tr>
+                        <td>绿灯</td>
+                        <td>黄灯</td>
+                        <td>红灯</td>
+                        <td>积分</td>
+                    </tr>
+                </thead>
+                <tbody id="tb1" style="text-align: center;"></tbody>
+            </table>
+        </div>
+        <div style="float: left">
+            <table class="table table-bordered">
+                <thead style="text-align: center;">
+                    <tr>
+                        <td colspan="4">SS</td>
+                    </tr>
+                    <tr>
+                        <td>绿灯</td>
+                        <td>黄灯</td>
+                        <td>红灯</td>
+                        <td>积分</td>
+                    </tr>
+                </thead>
+                <tbody id="tb2" style="text-align: center;"></tbody>
+            </table>
+        </div>
+        <div style="float: left">
+            <table class="table table-bordered">
+                <thead style="text-align: center;">
+                    <tr>
+                        <td colspan="4">S</td>
+                    </tr>
+                    <tr>
+                        <td>绿灯</td>
+                        <td>黄灯</td>
+                        <td>红灯</td>
+                        <td>积分</td>
+                    </tr>
+                </thead>
+                <tbody id="tb3" style="text-align: center;"></tbody>
+            </table>
+        </div>
+
+    </div>
 </body>
 </html>
+<script>
+    //文档就绪函数
+    $(function () {
+        gettrafficlightssslist();
+        gettrafficlightsslist();
+        gettrafficlightslist();
+    });
+
+    //第一个子公司红绿灯
+    function gettrafficlightssslist() {
+        $.ajax({
+            url: "http://localhost:8888/api/CompanyIntegral/GetTrafficLightSSSList",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $("#tb").empty();
+                $(data).each(function () {
+                    var num = this.redLight * 0 + this.yellowLight * 3 + this.greenLight * 5;
+                    var tr = "<tr>" +
+                        "<td>" + this.role_Name + "</td>" +
+                        "<td>" + this.redLight + "</td>" +
+                        "<td>" + this.yellowLight + "</td>" +
+                        "<td>" + this.greenLight + "</td>" +
+                        "<td>" + num + "</td>"
+                        + "</tr>";
+                    $("#tb1").append(tr);
+                });
+            }
+        })
+    }
+
+    //第二个子公司红绿灯
+    function gettrafficlightsslist() {
+        $.ajax({
+            url: "http://localhost:8888/api/CompanyIntegral/GetTrafficLightSSList",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $("#tb").empty();
+                $(data).each(function () {
+                    var num = this.redLight * 0 + this.yellowLight * 3 + this.greenLight * 5;
+                    var tr = "<tr>" +
+                        "<td>" + this.redLight + "</td>" +
+                        "<td>" + this.yellowLight + "</td>" +
+                        "<td>" + this.greenLight + "</td>" +
+                        "<td>" + num + "</td>"
+                        + "</tr>";
+                    $("#tb2").append(tr);
+                });
+            }
+        })
+    }
+
+    //第三个子公司红绿灯
+    function gettrafficlightslist() {
+        $.ajax({
+            url: "http://localhost:8888/api/CompanyIntegral/GetTrafficLightSList",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $("#tb").empty();
+                $(data).each(function () {
+                    var num = this.redLight * 0 + this.yellowLight * 3 + this.greenLight * 5;
+                    var tr = "<tr>" +
+                        "<td>" + this.redLight + "</td>" +
+                        "<td>" + this.yellowLight + "</td>" +
+                        "<td>" + this.greenLight + "</td>" +
+                        "<td>" + num + "</td>"
+                        + "</tr>";
+                    $("#tb3").append(tr);
+                });
+            }
+        })
+    }
+</script>

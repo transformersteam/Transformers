@@ -14,23 +14,18 @@ namespace DongXu.Target.IRepository.ICompany
         List<CompanyIntegral> GetCompanyIntegralList();
 
         /// <summary>
-        /// 第一个子公司红绿灯
+        /// 子公司红绿灯-SSS
         /// </summary>
-        List<TrafficLight> GetTrafficLightOneList();
+        List<TrafficLight> GetTrafficLightSSSList();
 
         /// <summary>
-        /// 第二个子公司红绿灯
+        /// 子公司红绿灯-SS
         /// </summary>
-        List<TrafficLight> GetTrafficLightTwoList();
+        List<TrafficLight> GetTrafficLightSSList();
 
         /// <summary>
-        /// 第三个子公司红绿灯
+        /// 子公司红绿灯-S
         /// </summary>
-        List<TrafficLight> GetTrafficLightThreeList();
-
-        /// <summary>
-        /// 第四个子公司红绿灯
-        /// </summary>
-        List<TrafficLight> GetTrafficLightFourList(); 
+        List<TrafficLight> GetTrafficLightSList(); 
     }
 }

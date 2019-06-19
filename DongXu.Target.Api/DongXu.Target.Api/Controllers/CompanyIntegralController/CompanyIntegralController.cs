@@ -42,10 +42,10 @@ namespace DongXu.Target.Api.Controllers.CompanyIntegralController
         /// 第一个公司红绿灯
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetTrafficLightOneList")]
-        public List<TrafficLight> GetTrafficLightOnelList() 
+        [HttpGet("GetTrafficLightSSSList")]
+        public List<TrafficLight> GetTrafficLightSSSList()   
         {
-            var list = CompanyIntegralRepository.GetTrafficLightOneList();
+            var list = CompanyIntegralRepository.GetTrafficLightSSSList();
             return list;
         }
 
@@ -53,10 +53,10 @@ namespace DongXu.Target.Api.Controllers.CompanyIntegralController
         /// 第二个公司红绿灯
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetTrafficLightTwolList")]
-        public List<TrafficLight> GetTrafficLightTwolList()
+        [HttpGet("GetTrafficLightSSList")]
+        public List<TrafficLight> GetTrafficLightSSList()
         {
-            var list = CompanyIntegralRepository.GetTrafficLightOneList();
+            var list = CompanyIntegralRepository.GetTrafficLightSSList();
             return list;
         }
 
@@ -64,22 +64,12 @@ namespace DongXu.Target.Api.Controllers.CompanyIntegralController
         /// 第三个公司红绿灯
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetTrafficLightThreelList")]
-        public List<TrafficLight> GetTrafficLightThreelList()
+        [HttpGet("GetTrafficLightSList")]
+        public List<TrafficLight> GetTrafficLightSList()
         {
-            var list = CompanyIntegralRepository.GetTrafficLightOneList();
+            var list = CompanyIntegralRepository.GetTrafficLightSList();
             return list;
         }
 
-        /// <summary>
-        /// 第四个公司红绿灯
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetTrafficLightFourlList")] 
-        public List<TrafficLight> GetTrafficLightFourlList()
-        {
-            var list = CompanyIntegralRepository.GetTrafficLightOneList();
-            return list;
-        }
     }
 }
