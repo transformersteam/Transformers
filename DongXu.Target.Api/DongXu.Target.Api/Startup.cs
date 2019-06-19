@@ -26,6 +26,7 @@ using DongXu.Target.IRepository.IGoalManage;
 using DongXu.Target.Repository.GoalManage;
 using DongXu.Target.Repository.Company;
 using DongXu.Target.IRepository.ICompany;
+using DongXu.Target.Repository.Organization;
 
 namespace DongXu.Target.Api
 {
@@ -83,7 +84,7 @@ namespace DongXu.Target.Api
             services.AddScoped<IResponsibilityRepository,ResponsibilityRepository>();
             services.AddScoped<IIntegralRepository, IntegralRepository>();
             services.AddScoped<IGoalManageRepository, GoalManageRepository>();
-
+            services.AddScoped<IAuthorizationRepository,AuthorizationRepository>();
             services.AddScoped<ITargetRepository, TargetRepository>();
 
             services.AddScoped<ICompanyIntegralRepository, CompanyIntegralRepository>(); 

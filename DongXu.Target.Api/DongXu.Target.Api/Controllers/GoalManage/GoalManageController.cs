@@ -37,6 +37,30 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         }
 
         /// <summary>
+        /// 目标下达
+        /// </summary>
+        /// <param name="goal"></param>
+        /// <returns></returns>
+        [HttpPost("GoalAdd")]
+        public int GoalAdd(Goal goal)
+        {
+            int i = iGoalManageRepository.GoalAdd(goal);
+            return i;
+        }
+
+        /// <summary>
+        /// 目标文件 添加
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        [HttpPost("GoalFileAdd")]
+        public int GoalFileAdd(Files files)
+        {
+            int i = iGoalManageRepository.GoalFileAdd(files);
+            return i;
+        }
+
+        /// <summary>
         /// 查询公司列表
         /// </summary>
         /// <returns></returns>
@@ -48,14 +72,36 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         }
 
         /// <summary>
+        /// 查询公司列表 指标单位
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetDutyCommanyList")]
+        public List<Role> GetDutyCommanyList()
+        {
+            var list = iGoalManageRepository.GetDutyCommanyList();
+            return list;
+        }
+
+        /// <summary>
         /// 查询指标类别类型
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetParentType")]
-        public List<Goaltype> GetParentType(int id)
+        public List<Goaltype> GetParentType()
         {
-            var list = iGoalManageRepository.GetParentType(id);
+            var list = iGoalManageRepository.GetParentType();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询指标类型  子集
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetChildType")]
+        public List<Goaltype> GetChildType()
+        {
+            var list = iGoalManageRepository.GetChildType();
             return list;
         }
 

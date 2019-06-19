@@ -25,7 +25,32 @@ namespace DongXu.Target.Repository.GoalManage
         }
 
         /// <summary>
-        /// 查询公司列表
+        /// 目标下达
+        /// </summary>
+        /// <param name="goal"></param>
+        /// <returns></returns>
+        public int GoalAdd(Goal goal)
+        {
+            context.Goal.Add(goal);
+            int i = context.SaveChanges();
+            int id = goal.GoalId;
+            return id;
+        }
+
+        /// <summary>
+        /// 目标文件 添加
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        public int GoalFileAdd(Files files)
+        {
+            context.Files.Add(files);
+            int i = context.SaveChanges();
+            return i;
+        }
+
+        /// <summary>
+        /// 查询公司列表  指标单位
         /// </summary>
         /// <returns></returns>
         public List<Role> GetCommanyList()
@@ -35,21 +60,33 @@ namespace DongXu.Target.Repository.GoalManage
         }
 
         /// <summary>
-        /// 查询指标类型类别
+        /// 查询公司列表  责任单位
         /// </summary>
         /// <returns></returns>
-        public List<Goaltype> GetParentType(int id)
+        public List<Role> GetDutyCommanyList()
         {
-            if(!string.IsNullOrWhiteSpace(id.ToString()) && id!=0)   //子节点
-            {
-                var list = context.Goaltype.Where(m => m.GoalTypePid ==id).ToList();
-                return list;
-            }
-            else       //父节点
-            {
-                var list = context.Goaltype.Where(m => m.GoalTypePid == 0).ToList();
-                return list;
-            }
+            var list = context.Role.Where(m => m.RoleIdentify==2).ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询指标类型  父集
+        /// </summary>
+        /// <returns></returns>
+        public List<Goaltype> GetParentType()
+        {
+            var list = context.Goaltype.Where(m => m.GoalTypePid == 0).ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 查询指标类型  子集
+        /// </summary>
+        /// <returns></returns>
+        public List<Goaltype> GetChildType()
+        {
+            var list = context.Goaltype.Where(m => m.GoalTypePid != 0).ToList();
+            return list;
         }
         
         /// <summary>

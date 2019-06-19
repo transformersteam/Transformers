@@ -7,6 +7,8 @@ namespace DongXu.Target.IRepository.IOrganization
 {
      public interface IAuthorizationRepository
     {
+        //显示人员
+        List<User> GetUserList();
         //查询角色
         List<Role> GetRoleList();
         //添加人员

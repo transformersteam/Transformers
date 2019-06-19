@@ -25,7 +25,7 @@
             <tr>
                 <td>所属部门</td>
                 <td><select id="roleo" lay-verify="" lay-search v-model="RolePid">
-                        <option :value="item.roleId" v-for="item in rolesOList">{{item.roleName}}</option></select></td>
+                        <option  v-for="item in rolesOList" :value="item.roleId">{{item.roleName}}</option></select></td>
             </tr>
             <tr>
                 <td>角色描述</td>
@@ -69,12 +69,14 @@
         },
         created() {
             this.GetRolesOList(),
-            this.GetPowerList()
+                this.GetPowerList()
+
         },
         methods: {
             GetRolesOList: function () {
                 axios.get("/Organization/GetRolesOList").then((response) => {
                     this.rolesOList = response.data;
+                    this.RolePid = this.rolesOList[0].roleId;
                 });
             },
             GetPowerList: function () {
