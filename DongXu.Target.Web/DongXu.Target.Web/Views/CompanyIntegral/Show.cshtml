@@ -13,90 +13,107 @@
     <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
-        <div id='main' style='width: 1000px; height: 400px;'></div>
-        <!--引入echarts.js-->
-        <script src="~/echars/echarts.js"></script>
-        <script>
-            $(function () {
-                $.ajax({
-                    url: "/CompanyIntegral/Indexecharts",
-                    type: "get",
-                    success: function (data) {
-                        var name = data.nameList;
-                        var num = data.numList;
+<div class="panel panel-primary" style="height:480px">
+    <div class="panel-heading">积分排名</div>
+    <br />
+        
+    <div id="mainresponsibility" style="float:left">
+        
+            <div style="margin-left: 120px">
+                <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
+                <div id='main' style='width: 1000px; height: 400px;'></div>
+                <!--引入echarts.js-->
+                <script src="~/echars/echarts.js"></script>
+                <script>
+                    $(function () {
+                        $.ajax({
+                            url: "/CompanyIntegral/Indexecharts",
+                            type: "get",
+                            success: function (data) {
+                                var name = data.nameList;
+                                var num = data.numList;
 
-                        //基于准备好的DOM，初始化echarts实例
-                        var myChart = echarts.init(document.getElementById('main'));
-                        var option = {
-                            title: {
-                                text: '公司积分排名',
-                            },
-                            tooltip: {},
-                            legend: {
-                                data: ['子公司']
-                            },
-                            xAxis: [
-                                {
-                                    data: name
-                                }
-                            ],
-                            yAxis: [
-                                {
-                                    type: 'value'
-                                }
-                            ],
-                            barWidth: 35,
-                            series: [
-                                {
-                                    name: '',
-                                    type: 'bar',
-                                    data: num,
-                                    markPoint: {
-                                        data: [
-                                            //{ type: 'max', name: '最大值' },
-                                            //{ type: 'min', name: '最小值' }
-                                        ]
+                                //基于准备好的DOM，初始化echarts实例
+                                var myChart = echarts.init(document.getElementById('main'));
+                                var option = {
+                                    title: {
+                                        text: '子公司积分排名',
                                     },
-                                    itemStyle: {
-                                        normal: {
-                                            //定义一个list，然后根据所以取得不同的值，这样就实现了，
-                                            color: function (params) {
-                                                // build a color map as your need.
-                                                var colorList = [
-                                                    '#BBFFBB', '#BBFFBB', '#FFFF37',
-                                                    '#FFFF37', '#FFFF37', '#FFFF37',
-                                                    '#FFFF37', '#FFFF37', '#FFFF37',
-                                                    '#FFFF37', '#FF0000', '#FF0000'
-                                                ];
-                                                return colorList[params.dataIndex]
-                                            },
-                                            //以下为是否显示，显示位置和显示格式的设置
-                                            label: {
-                                                show: true,
-                                                position: 'top',
-                                                //                             formatter: '{c}'
-                                                formatter: '{b}\n{c}'
-                                            }
+                                    tooltip: {},
+                                    legend: {
+                                        data: ['子公司']
+                                    },
+                                    xAxis: [
+                                        {
+                                            data: name
                                         }
-                                    },
-                                },
-                            ]
-                        };
-                        //使用刚指定的配置项和数据显示图表
-                        myChart.setOption(option);
-                    }
-                })
-            })
-        </script>
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'value'
+                                        }
+                                    ],
+                                    barWidth: 35,
+                                    series: [
+                                        {
+                                            name: '',
+                                            type: 'bar',
+                                            data: num,
+                                            markPoint: {
+                                                data: [
+                                                    //{ type: 'max', name: '最大值' },
+                                                    //{ type: 'min', name: '最小值' }
+                                                ]
+                                            },
+                                            itemStyle: {
+                                                normal: {
+                                                    //定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                                    color: function (params) {
+                                                        // build a color map as your need.
+                                                        var colorList = [
+                                                            '#BBFFBB', '#BBFFBB', '#FFFF37',
+                                                            '#FFFF37', '#FFFF37', '#FFFF37',
+                                                            '#FFFF37', '#FFFF37', '#FFFF37',
+                                                            '#FFFF37', '#FF0000', '#FF0000'
+                                                        ];
+                                                        return colorList[params.dataIndex]
+                                                    },
+                                                    //以下为是否显示，显示位置和显示格式的设置
+                                                    label: {
+                                                        show: true,
+                                                        position: 'top',
+                                                        //                             formatter: '{c}'
+                                                        formatter: '{b}\n{c}'
+                                                    }
+                                                }
+                                            },
+                                        },
+                                    ]
+                                };
+                                //使用刚指定的配置项和数据显示图表
+                                myChart.setOption(option);
+                            }
+                        })
+                    })
+                </script>
+            </div>
+       
+       
     </div>
-    <div>
-        <div style="float: left">
-            <table class="table table-bordered">
-                <thead style="text-align: center;">
+</div>
+    
+<div class="panel panel-primary" style="height:320px">
+    <div class="panel-heading">积分明细</div>
+    <br />
+
+    <div id="mainresponsibility" style="float:left">
+
+        <div style="margin-left: 280px">
+            <div style="float: left">
+                <table class="table table-bordered">
+                    <thead style="text-align: center;">
                     <tr>
-                        <td rowspan="2">部门名称</td>
+                        <td rowspan="2" style="padding-top: 10px">部门名称</td>
                         <td colspan="4">SSS</td>
                     </tr>
                     <tr>
@@ -105,13 +122,13 @@
                         <td>红灯</td>
                         <td>积分</td>
                     </tr>
-                </thead>
-                <tbody id="tb1" style="text-align: center;"></tbody>
-            </table>
-        </div>
-        <div style="float: left">
-            <table class="table table-bordered">
-                <thead style="text-align: center;">
+                    </thead>
+                    <tbody id="tb1" style="text-align: center;"></tbody>
+                </table>
+            </div>
+            <div style="float: left">
+                <table class="table table-bordered">
+                    <thead style="text-align: center;">
                     <tr>
                         <td colspan="4">SS</td>
                     </tr>
@@ -121,13 +138,13 @@
                         <td>红灯</td>
                         <td>积分</td>
                     </tr>
-                </thead>
-                <tbody id="tb2" style="text-align: center;"></tbody>
-            </table>
-        </div>
-        <div style="float: left">
-            <table class="table table-bordered">
-                <thead style="text-align: center;">
+                    </thead>
+                    <tbody id="tb2" style="text-align: center;"></tbody>
+                </table>
+            </div>
+            <div style="float: left">
+                <table class="table table-bordered">
+                    <thead style="text-align: center;">
                     <tr>
                         <td colspan="4">S</td>
                     </tr>
@@ -137,12 +154,16 @@
                         <td>红灯</td>
                         <td>积分</td>
                     </tr>
-                </thead>
-                <tbody id="tb3" style="text-align: center;"></tbody>
-            </table>
+                    </thead>
+                    <tbody id="tb3" style="text-align: center;"></tbody>
+                </table>
+            </div>
+
         </div>
 
     </div>
+</div>
+
 </body>
 </html>
 <script>
