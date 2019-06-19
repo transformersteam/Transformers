@@ -138,6 +138,11 @@ namespace DongXu.Target.Model
 
         public DbQuery<CompanyIntegral> CompanyIntegral { get; set; } 
 
+        /// <summary>
+        /// 周报数据
+        /// </summary>
+        public DbQuery<WeekData> WeekData { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
