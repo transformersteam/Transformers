@@ -40,5 +40,17 @@ namespace DongXu.Target.Api.Controllers
             return query;
         }
 
+        /// <summary>
+        /// 目标跟踪
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("TargetTrackList")]
+        public List<TargetTrack> TargetTrackList()
+        {
+            var query = _target.TargetTrackList();
+            return query;
+        }
+
+
     }
 }
