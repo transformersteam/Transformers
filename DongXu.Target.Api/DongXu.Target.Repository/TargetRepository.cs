@@ -26,7 +26,7 @@ namespace DongXu.Target.Repository
         /// <param name="endTime"></param>
         /// <param name="goalstate"></param>
         /// <returns></returns>
-        public List<GoalQuery> GoalQueryList(string goalname, int goaltype, int goalleave, string goalrole, string goaluser, string strTime, string endTime, int goalstate = 0)
+        public GoalQuery GoalQueryList(int pageIndex,int pageSize, string goalname, int goaltype, int goalleave, string goalrole, string goaluser, string strTime, string endTime, int goalstate = 0)
         {
 
             string sql = string.Format("select goal.Goal_Name,indexlevel.IndexLevel_Grade,goaltype.GoalType_Name, " +
@@ -65,13 +65,22 @@ namespace DongXu.Target.Repository
                 sql += string.Format("  and goal.Goal_EndTime BETWEEN '{0} 00:00:00' and '{1} 23:59:59'", strTime, endTime);
             }
 
+            int i = (pageIndex - 1) * pageSize;
+            string sqlcount = string.Format("select count(*) as count from ({0}) as a", sql);
+            sql += string.Format(" limit {0},{1}",i,pageSize);
 
-
-
+            
+            var count = Context.TotalCount.FromSql(sqlcount).FirstOrDefault();
 
             var query = Context.GoalQuery.FromSql(sql).ToList();
+            GoalQuery goalQuery = new GoalQuery
+            {
+                goalQueryList = query,
+                TotalCount = count.count
+            };
 
-            return query;
+
+            return goalQuery;
         }
 
         /// <summary>

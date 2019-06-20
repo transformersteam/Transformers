@@ -135,6 +135,7 @@ namespace DongXu.Target.Model
         public DbQuery<TrafficLightRanking> TrafficLightRanking { get; set; } 
 
 
+        public DbQuery<TotalCount> TotalCount { get; set; }
 
 
         public DbQuery<TargetTrack> TargetTracks { get; set; }
@@ -143,7 +144,7 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 目标查询
         /// </summary>
-        public DbQuery<GoalQuery> GoalQuery { get; set; }
+        public DbQuery<GoalQuerys> GoalQuery { get; set; }
 
         public DbQuery<CompanyIntegral> CompanyIntegral { get; set; } 
 
