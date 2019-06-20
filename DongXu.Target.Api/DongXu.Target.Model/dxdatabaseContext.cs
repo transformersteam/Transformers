@@ -131,6 +131,7 @@ namespace DongXu.Target.Model
 
         public DbQuery<TrafficLight> TrafficLight { get; set; }
 
+        public DbQuery<AuditDto> AuditDto { get; set; }
         
         public DbQuery<TrafficLightRanking> TrafficLightRanking { get; set; } 
 

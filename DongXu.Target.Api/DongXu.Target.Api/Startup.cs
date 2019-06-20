@@ -90,8 +90,9 @@ namespace DongXu.Target.Api
             services.AddScoped<IGoalManageRepository, GoalManageRepository>();
             services.AddScoped<IAuthorizationRepository,AuthorizationRepository>();
             services.AddScoped<ITargetRepository, TargetRepository>();
+            services.AddScoped<IAuditRepository, AuditRepository>();
+            services.AddScoped<ICompanyIntegralRepository, CompanyIntegralRepository>(); 
             services.AddScoped<IWeekQueryRepository, WeekQueryRepository>();
-
             services.AddScoped<ICompanyIntegralRepository, CompanyIntegralRepository>();
             services.AddScoped<ITrafficLightRankingRepository,TrafficLightRankingRepository>();
 
