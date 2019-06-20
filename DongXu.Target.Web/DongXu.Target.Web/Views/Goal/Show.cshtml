@@ -1,5 +1,4 @@
-﻿@using DongXu.Target.Web.Conn;
-@{
+﻿@{
     Layout = null;
 }
 
@@ -8,7 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Show</title>
+    <title>List</title>
     <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/js/vue.js"></script>
     <script src="~/js/axios.js"></script>
@@ -16,154 +15,179 @@
     <script src="~/js/DateTimeConvert.js"></script>
     <link href="~/js/zpageNav.css" rel="stylesheet" />
     <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script>
+        //时间格式化函数，此处仅针对yyyy-MM-dd hh:mm:ss 的格式进行格式化
+        dateFormat: function(time) {
+            var date = new Date(time);
+            var year = date.getFullYear();
+            /* 在日期格式中，月份是从0开始的，因此要加0
+             * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+             * */
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            // 拼接
+            return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+        }
+    </script>
 </head>
 <body>
-    <div>
-        <table>
-            <tr>
-                代办业务
-            </tr>
-            <tr>
-                <div>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr style="background-color: #ccc;">
-                                <td>业务名称</td>
-                                <td>频次</td>
-                                <td>类型</td>
-                                <td>级别</td>
-                                <td>责任人</td>
-                                <td>完成时间</td>
-                                <td data-field="wrongpercent" data-align="center" data-formatter="wrongPercent">完成状态</td>
-                                <td>状态</td>
-                            </tr>
-                        </thead>
-                        <tbody id="tb"></tbody>
-                    </table>
-                    <input id="Button1" type="button" href="javascript:void(0)" onclick="first()" value="首页" class="btn btn-sm" style="margin-right: 10px" />
-                    <input id="Button2" type="button" href="javascript:void(0)" onclick="prve()" value="上一页" class="btn btn-sm" style="margin-right: 10px" />
-                    <input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" style="margin-right: 10px" />
-                    <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style="" />
-                </div>
-            </tr>
-            <tr>
-                主责事项
-            </tr>
-        </table>
-
-        <div id="mainresponsibility">
-            <table class="table table-bordered">
+    <div style="padding:20px;" id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="margin:0 auto">待办事项</div>
+            <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
                         <td>业务名称</td>
-                        <td>完成情况</td>
+                        <td>频次</td>
+                        <td>类型</td>
                         <td>级别</td>
                         <td>责任人</td>
                         <td>完成时间</td>
-                        <td>当前进度</td>
+                        <td>完成状态</td>
                         <td>状态</td>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="item in mainresponsibilitylist">
-                        <td>{{item.goalName}}</td>
-                        <td>{{item.goalStateName}}</td>
-                        <td>{{item.indexLevelGrade}}</td>
-                        <td>{{item.goalChargePeople}}</td>
-                        <td>{{item.goalEndTime}}</td>
-                        <td>{{item.feedbackNowEvolve}}</td>
-                        <td>{{item.goalStateName}}</td>
-                    </tr>
+                <tbody id="tb">
+                    <tr></tr>
                 </tbody>
             </table>
-            <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
-                      v-bind:max-page="maxPage" v-on:pagehandler="pagehandler">
-            </zpagenav>
+            <div style="padding-left:40%">
+                <input id="Button1" type="button" href="javascript:void(0)" onclick="first()" value="首页" class="btn btn-sm" style="" />
+                <input id="Button2" type="button" href="javascript:void(0)" onclick="prve()" value="上一页" class="btn btn-sm" style="" />
+                <input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" style="" />
+                <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style="" />
+            </div>
         </div>
-        <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
-        <div id='main' style='width: 1000px; height: 400px;'></div>
-        <!--引入echarts.js-->
-        <script src="~/echars/echarts.js"></script>
-        <script>
 
-            $(function () {
-                $.ajax({
-                    url: "/Goal/Indexecharts",
-                    type: "get",
-                    success: function (data) {
-                        console.log(data);
+        <div class="panel panel-primary" style="height:350px">
+            <div class="panel-heading">主责事项</div>
+            <br />
 
-                        var name = data.nameList;
-                        var num = data.numList;
+            <div id="mainresponsibility" style="margin:0 auto">
+                <table class="table table-bordered table-striped text-center" style="width:1000px;margin:0 auto">
+                    <thead>
+                        <tr>
+                            <td>业务名称</td>
+                            <td>完成情况</td>
+                            <td>级别</td>
+                            <td>责任人</td>
+                            <td>完成时间</td>
+                            <td>当前进度</td>
+                            <td>状态</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in mainresponsibilitylist">
+                            <td>{{item.goalName}}</td>
+                            <td>{{item.goalStateName}}</td>
+                            <td>{{item.indexLevelGrade}}</td>
+                            <td>{{item.goalChargePeople}}</td>
+                            <td>{{item.goalEndTime}}</td>
+                            <td>{{item.feedbackNowEvolve}}</td>
+                            <td>{{item.goalStateName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+                          v-bind:max-page="maxPage" v-on:pagehandler="pagehandler">
+                </zpagenav>
+            </div>
+        </div>
 
-                        //基于准备好的DOM，初始化echarts实例
-                        var myChart = echarts.init(document.getElementById('main'));
-                        var option = {
-                            title: {
-                                text: '积分排名',
-                            },
-                            tooltip: {},
-                            legend: {
-                                data: ['人员']
-                            },
-                            xAxis: [
-                                {
-                                    data: name
-                                }
-                            ],
-                            yAxis: [
-                                {
-                                    type: 'value'
-                                }
-                            ],
-                            barWidth: 35,
-                            series: [
-                                {
-                                    name: '',
-                                    type: 'bar',
-                                    data: num,
-                                    markPoint: {
-                                        data: [
-                                            //{ type: 'max', name: '最大值' },
-                                            //{ type: 'min', name: '最小值' }
-                                        ]
+        <div class="panel panel-primary" style="height:350px;margin:0 auto">
+            <div class="panel-heading">积分排名</div>
+
+            <div id="main" style="width:100%;height:300px">
+                <script src="~/echars/echarts.js"></script>
+                <script>
+                    $(function () {
+                        $.ajax({
+                            url: "/Goal/Indexecharts",
+                            type: "get",
+                            success: function (data) {
+
+                                var name = data.nameList;
+                                var num = data.numList;
+
+
+                                //基于准备好的DOM，初始化echarts实例
+                                var myChart = echarts.init(document.getElementById('main'));
+                                var option = {
+                                    title: {
+                                        text: '',
                                     },
-                                    itemStyle: {
-                                        normal: {
-                                            //定义一个list，然后根据所以取得不同的值，这样就实现了，
-                                            color: function (params) {
-                                                // build a color map as your need.
-                                                var colorList = [
-                                                    '#BBFFBB', '#BBFFBB', '#FFFF37',
-                                                    '#FFFF37', '#FFFF37', '#FFFF37',
-                                                    '#FFFF37', '#FFFF37', '#FFFF37',
-                                                    '#FFFF37', '#FF0000', '#FF0000'
-                                                ];
-                                                return colorList[params.dataIndex]
-                                            },
-                                            //以下为是否显示，显示位置和显示格式的设置
-                                            label: {
-                                                show: true,
-                                                position: 'top',
-                                                //                             formatter: '{c}'
-                                                formatter: '{b}\n{c}'
-                                            }
+                                    tooltip: {},
+                                    legend: {
+                                        data: ['人员']
+                                    },
+                                    xAxis: [
+                                        {
+                                            data: name
                                         }
-                                    },
-                                },
-                            ]
-                        };
-                        //使用刚指定的配置项和数据显示图表
-                        myChart.setOption(option);
-                    }
-                })
-            })
-        </script>
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'value'
+                                        }
+                                    ],
+                                    barWidth: 35,
+                                    series: [
+                                        {
+                                            name: '',
+                                            type: 'bar',
+                                            data: num,
+                                            markPoint: {
+                                                data: [
+                                                    //{ type: 'max', name: '最大值' },
+                                                    //{ type: 'min', name: '最小值' }
+                                                ]
+                                            },
+                                            itemStyle: {
+                                                normal: {
+                                                    //定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                                    color: function (params) {
+                                                        // build a color map as your need.
+                                                        var colorList = [
+                                                            '#BBFFBB', '#BBFFBB', '#FFFF37',
+                                                            '#FFFF37', '#FFFF37', '#FFFF37',
+                                                            '#FFFF37', '#FFFF37', '#FFFF37',
+                                                            '#FFFF37', '#FF0000', '#FF0000'
+                                                        ];
+                                                        return colorList[params.dataIndex]
+                                                    },
+                                                    //以下为是否显示，显示位置和显示格式的设置
+                                                    label: {
+                                                        show: true,
+                                                        position: 'top',
+                                                        //                             formatter: '{c}'
+                                                        formatter: '{b}\n{c}'
+                                                    }
+                                                }
+                                            },
+                                        },
+                                    ]
+                                };
+                                //使用刚指定的配置项和数据显示图表
+                                myChart.setOption(option);
+                            }
+                        })
+                    })
+                </script>
+            </div>
+        </div>
     </div>
 </body>
 </html>
 <script>
-
     var pageIndex = 1;
     var pageSize = 5;
     var total = 0;
@@ -185,16 +209,16 @@
                 $("#tb").empty();
                 $(data).each(function (index) {
                     var time = dateFormat(this.goalList[index].goalEndTime);
-                    var tr = "<tr>" +
-                        "<td>" + this.goalList[index].goalName + "</td>" +
-                        "<td>" + this.goalList[index].frequencyName + "</td>" +
-                        "<td>" + this.goalList[index].goalTypeName + "</td>" +
-                        "<td>" + this.goalList[index].indexLevelGrade + "</td>" +
-                        "<td>" + this.goalList[index].goalChargePeople + "</td>" +
-                        "<td>" + time + "</td>" +
-                        "<td>" + this.goalList[index].feedbackNowEvolve + "</td>" +
-                        "<td>" + this.goalList[index].goalStateName + "</td>"
-                        + "</tr>";
+                    var tr = '<tr>' +
+                        '<td>' + this.goalList[index].goalName + '</td>' +
+                        '<td>' + this.goalList[index].frequencyName + '</td>' +
+                        '<td>' + this.goalList[index].goalTypeName + '</td>' +
+                        '<td>' + this.goalList[index].indexLevelGrade + '</td>' +
+                        '<td>' + this.goalList[index].goalChargePeople + '</td>' +
+                        '<td>' + time + '</td>' +
+                        '<td><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.goalList[index].feedbackNowEvolve + '%">' + this.goalList[index].feedbackNowEvolve + '%</div></div></td>' +
+                        '<td>' + this.goalList[index].goalStateName + '</td>'
+                        + '</tr>';
                     $("#tb").append(tr);
                 })
                 total = data.Total;
@@ -227,6 +251,7 @@
         getgoallist(pageIndex);
     }
 
+    //主责事项显示
     var vue = new Vue({
         el: "#mainresponsibility",
         data: {
@@ -254,9 +279,8 @@
         }
     })
 
-    function wrongPercent(value, row, index) {
-        var res = 100 * row.wrongnums / row.testnums;
-        return ["<div class='progress'> <div class='progress-bar' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100' style='width:" + res.toFixed(2) + "%'>" + res.toFixed(2) + "</div> </div>"];
-        //        return res.toFixed(2);
-    }
+
+
+
 </script>
+

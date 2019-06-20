@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PagedList.Core;
-using Webdiyer.WebControls.Mvc;
 using X.PagedList.Mvc.Core;
 
 namespace DongXu.Target.Web.Controllers.ScheduleControllers
