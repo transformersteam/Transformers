@@ -73,7 +73,7 @@
                 </tr>
             </table>
             <div style="float:right">
-                <input id="Button1" type="button" value="导出" class="btn btn-primary btn-lg" />
+                <input id="Button1" type="button" value="导出" class="btn btn-primary btn-lg" onclick="exportdata()" />
                 <input id="Button1" type="submit" value="查询" class="btn btn-primary btn-lg" />
             </div>
         </form>
@@ -113,7 +113,6 @@
         </table>
         @Html.PagedListPager(Model, pageIndex => Url.Action("WeekShow", new { pageIndex, pageSize = 5 }), new X.PagedList.Mvc.Common.PagedListRenderOptionsBase
         {
-
                LinkToPreviousPageFormat = "上一页",
                LinkToFirstPageFormat = "首页",
                LinkToNextPageFormat = "下一页",
@@ -121,8 +120,6 @@
                MaximumPageNumbersToDisplay = 5,
                DisplayItemSliceAndTotal = false
         })
-        @*@Html.pag(Model, new pageroptions { pageindexparametername = "pageindex" })*@
-        @*<pager list="@Model" options="@PagedListRenderOptions" asp-controller="WeekSearch" asp-action="WeekShow" asp-all-route-data="RouteData" />*@
     </div>
 </body>
 </html>
@@ -159,5 +156,14 @@
                 this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
             }
         });
+    }
+
+    function exportdata() {
+        $.ajax({
+            url: "/WeekSearch/Export",
+            success: function () {
+                alert("导出成功")
+            }
+        })
     }
 </script>

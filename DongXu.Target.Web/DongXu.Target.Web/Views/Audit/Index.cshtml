@@ -9,6 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <script src="~/js/jquery.js"></script>
     <script src="~/js/vue.js"></script>
     <script src="~/js/axios.js"></script>
     <script src="~/layui-v2.4.5/layui/layui.js"></script>
@@ -25,8 +26,8 @@
                     <td><strong>事项类型:</strong> {{item.goalType_Name}}</td>
                     <td><strong>事项等级:</strong> {{item.indexLevel_Grade}}</td>
                     <td><strong>反馈频次:</strong> {{item.frequency_Name}}</td>
-                </tr> 
-                <tr> 
+                </tr>
+                <tr>
                     <td><strong>责任部门:</strong> {{item.goal_Unit}}</td>
                     <td><strong>责任人:</strong> {{item.goal_ChargePeople}}</td>
                     <td><strong>填报人:</strong> {{item.goal_Informant}}</td>
@@ -80,16 +81,16 @@
             <table class="layui-table">
                 <tr>
                     <td><strong>确认人:</strong></td>
-                    <td></td>
+                    <td v-for="item in apparDtoList">{{item.user_Name}}@*<span id="state" value='{{item.apprActivity_IsExecute}}'></span>*@</td>
                 </tr>
             </table>
         </div>
         <div id="1-4">
-            <div id="1-4-1" style="background-color:darkgray;height:40px;"><h5  style="padding-top:10px"><strong>意见说明</strong></h5></div>
-            <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+            <div id="1-4-1" style="background-color:darkgray;height:40px;"><h5 style="padding-top:10px"><strong>意见说明</strong></h5></div>
+            <textarea name="desc" placeholder="请输入内容" class="layui-textarea" v-model="ApprActivity_Opinion"></textarea>
         </div>
         <div id="1-5">
-            <div id="1-5-1" style="background-color:darkgray;height:40px;"><h5  style="padding-top:10px"><strong>情况说明</strong></h5></div>
+            <div id="1-5-1" style="background-color:darkgray;height:40px;"><h5 style="padding-top:10px"><strong>情况说明</strong></h5></div>
             <table class="layui-table">
                 <thead>
                     <tr>
@@ -100,15 +101,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr v-for="item in apparOpinoin">
+                        <td>{{item.user_Name}}</td>
+                        <td v-if="'{{item.apprActivity_IsExecute}}'">通过</td>
+                        <td>{{item.apprActivity_Opinion}}</td>
+                        <td>{{item.apprActivity_CreateTime}}</td>
                     </tr>
                 </tbody>
             </table>
 
+        </div>
+        <div id="1-5-1" hidden="hidden">
+            <table>
+                <tr>
+                    <td><input id="Text1" type="text" v-model="GoalId" /></td>
+                    <td><input id="Text1" type="text" v-model="next_Id" /></td>
+                    <td><input id="Text1" type="text" v-model="apprConfiguration_Id" /></td>
+                    <td><input id="Text1" type="text" v-model="apprActivity_Id" /></td>
+                </tr>
+            </table>
+        </div>
+        <div id="1-6">
+            <div id="1-6-1">
+                <input id="Button1" type="button" value="退回" class="layui-btn layui-btn-normal" v-on:click="Back(next_Id,apprConfiguration_Id,apprActivity_Id,ApprActivity_Opinion,GoalId)" style="margin-left:45%" />
+                <input id="Button1" type="button" value="确认" class="layui-btn layui-btn-normal" v-on:click="Confirm(next_Id,apprConfiguration_Id,apprActivity_Id,ApprActivity_Opinion,GoalId)" style="margin-left:3%" />
+            </div>
         </div>
     </div>
 </body>
@@ -117,22 +134,59 @@
     var vm = new Vue({
         el: "#max",
         data: {
+            url:"",
             auditDtoList: [],
-            FeedbackNowEvolve:"",
-            GoalStateName: ""
+            apparDtoList: [],
+            apparOpinoin: [],
+            next_Id: "",
+            apprConfiguration_Id: "",
+            apprActivity_Id: "",
+            ApprActivity_Opinion: "",
+            GoalId:""
 
         },
         created() {
             this.GetAuditDtoList();
+            this.GetApprDtoList();
+            this.GetApprOpinionList();
         },
         methods: {
             GetAuditDtoList: function (userId = 1, goalId=1) {
                 axios.get("/Audit/GetAuditDtoList", { params: { userId: userId, goalId: goalId } }).then((response) => {
-                    
                     this.auditDtoList = response.data;
-                    console.log(this.auditDtoList);
+                    for (var i = 0; i < response.data.length; i++) {
+                        this.next_Id = response.data[i].next_Id;
+                        this.apprConfiguration_Id = response.data[i].apprConfiguration_Id;
+                        this.apprActivity_Id = response.data[i].apprActivity_Id;
+                        this.GoalId = response.data[i].goal_Id;
+                    }
+                });
+            },
+             GetApprDtoList: function (goalId = 1) {
+                   axios.get("/Audit/GetApprDtoList", { params: { goalId: goalId } }).then((response) => {
+
+                       this.apparDtoList = response.data;
+                       
+                });
+            },
+            GetApprOpinionList: function (goalId = 1) {
+                axios.get("/Audit/GetApprOpinionList", { params: { goalId: goalId } }).then((response) => {
+                    this.apparOpinoin = response.data;
+                });
+            },
+            Confirm: function (next_Id, apprConfiguration_Id, apprActivity_Id, ApprActivity_Opinion, GoalId) {
+                axios.get("/Audit/Audit", { params: { NextId: next_Id, ApprConfigurationId: apprConfiguration_Id, ApprActivityId: apprActivity_Id, ApprActivityOpinion: ApprActivity_Opinion, ApprActivityIsExecute: 1, GoalId: GoalId } }).then((response) => {
+                    if (response.data > 0) {
+                        alert('审批完成');
+                        location.href = "";
+                    }
+                });
+            },
+            Back: function (next_Id, apprConfiguration_Id, apprActivity_Id, ApprActivity_Opinion, GoalId) {
+                axios.get("/Audit/Audit", { params: { NextId: next_Id, ApprConfigurationId: apprConfiguration_Id, ApprActivityId: apprActivity_Id, ApprActivityOpinion: ApprActivity_Opinion, ApprActivityIsExecute: 0, GoalId: GoalId } }).then((response) => {
+                    
                 });
             }
-            },
+            }
     })
 </script>
