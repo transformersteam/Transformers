@@ -28,7 +28,7 @@ namespace DongXu.Target.Api.Controllers.ProgressQueryController
         [HttpPost("GetWeekList")]
         public PageData<WeekData> GetWeekList([FromBody]WeekQueryData data)
         {
-            var list = iWeekQueryRepository.GetWeekList(data.pageIndex, data.pageSize, data.goalName, data.typeId, data.leaveId, data.stateId, data.dutyCommanyName, data.dutyUserName, data.goaltime);
+            var list = iWeekQueryRepository.GetWeekList(data.pageIndex, data.pageSize, data.goalName, data.typeId, data.leaveId, data.stateId, data.dutyCommanyName, data.dutyUserName, data.begintime,data.endtime);
             return list;
         }
     }

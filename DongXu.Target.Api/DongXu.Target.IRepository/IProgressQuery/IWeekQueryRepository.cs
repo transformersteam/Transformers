@@ -20,6 +20,6 @@ namespace DongXu.Target.IRepository.IProgressQuery
         /// <param name="dutyUserName"></param>
         /// <param name="goaltime"></param>
         /// <returns></returns>
-        PageData<WeekData> GetWeekList(int pageIndex, int pageSize, string goalName, int typeId, int leaveId, int stateId, string dutyCommanyName, string dutyUserName, string goaltime);
+        PageData<WeekData> GetWeekList(int pageIndex, int pageSize, string goalName, int typeId, int leaveId, int stateId, string dutyCommanyName, string dutyUserName, string begintime, string endtime);
     }
 }

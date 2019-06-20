@@ -23,6 +23,8 @@ namespace DongXu.Target.Model
 
         public string dutyUserName { get; set; }
 
-        public string goaltime { get; set; }
+        public string begintime { get; set; }
+
+        public string endtime { get; set; }
     }
 }

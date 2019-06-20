@@ -21,7 +21,7 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
         /// 周报查询
         /// </summary>
         /// <returns></returns>
-        public ActionResult WeekShow(int pageIndex=1, int pageSize=5, string goalName="", int typeId=0, int leaveId = 0, int stateId = 0, string dutyCommanyName="", string dutyUserName="",string goaltime="")
+        public ActionResult WeekShow(int pageIndex=1, int pageSize=5, string goalName="", int typeId=0, int leaveId = 0, int stateId = 0, string dutyCommanyName="", string dutyUserName="",string begintime="",string endtime="")
         {
             WeekQueryData data = new WeekQueryData();
             data.pageIndex = pageIndex;
@@ -32,10 +32,11 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             data.stateId = stateId;
             data.dutyCommanyName = dutyCommanyName;
             data.dutyUserName = dutyUserName;
-            data.goaltime = goaltime;
+            data.begintime = begintime;
+            data.endtime = endtime;
             var weekdata = HelperHttpClient.GetAll("post","WeekQuery/GetWeekList",data);
             var list = JsonConvert.DeserializeObject<PageData<WeekData>>(weekdata);
-            X.PagedList.StaticPagedList<WeekData> pagelist = new X.PagedList.StaticPagedList<WeekData>(list.GetData, pageIndex, pageSize,25);
+            X.PagedList.StaticPagedList<WeekData> pagelist = new X.PagedList.StaticPagedList<WeekData>(list.GetData, pageIndex, pageSize,list.TotalCount);
             return View(pagelist);
         }
     }

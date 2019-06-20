@@ -30,37 +30,29 @@
 </head>
 <body>
     <div style="padding:20px">
-        <form action="/" method="post">
+        <form action="/WeekSearch/WeekShow" method="post">
             <div class="panel-heading">周报查询</div>
             <table class="table table-bordered table-striped text-center">
-                <tr>
+                <tr style="text-align:center">
                     <td>目标名称:</td>
                     <td>
-                        <input id="Text1" type="text" class="layui-input" />
+                        <input id="Text1" type="text" class="layui-input" name="goalName" />
                     </td>
                     <td>目标类型:</td>
                     <td>
-                        <select class="form-control">
-                            <option value="value">请选择</option>
-                        </select>
-                    </td>
-                    <td>目标类别:</td>
-                    <td>
-                        <select class="form-control">
+                        <select class="form-control" name="typeId">
                             <option value="value">请选择</option>
                         </select>
                     </td>
                     <td>目标级别:</td>
                     <td>
-                        <select class="form-control">
+                        <select class="form-control" name="leaveId">
                             <option value="value">请选择</option>
                         </select>
                     </td>
-                </tr>
-                <tr>
                     <td>目标状态:</td>
                     <td>
-                        <select class="form-control">
+                        <select class="form-control" name="stateId">
                             <option value="value">请选择</option>
                         </select>
                     </td>
@@ -68,35 +60,21 @@
                 <tr>
                     <td>责任部门:</td>
                     <td>
-                        <input id="Text1" type="text" class="layui-input" />
+                        <input id="Text1" type="text" class="layui-input" name="dutyCommanyName" />
                     </td>
                     <td>责任人:</td>
                     <td>
-                        <input id="Text1" type="text" class="layui-input" />
+                        <input id="Text1" type="text" class="layui-input" name="dutyUserName" />
                     </td>
-                    <td>年份:</td>
-                    <td>
-                        <select class="form-control">
-                            <option value="value">请选择</option>
-                        </select>
-                    </td>
-                    <td>周次:</td>
-                    <td>
-                        <select class="form-control">
-                            <option value="value">请选择</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
                     <td>提报日期:</td>
                     <td>
-                        <input style="width:288px" class="layui-input" type="text" id="config-demo">
+                        <input class="layui-input" name="goaltime" type="text" id="config-demo">
                     </td>
                 </tr>
             </table>
             <div style="float:right">
                 <input id="Button1" type="button" value="导出" class="btn btn-primary btn-lg" />
-                <input id="Button1" type="button" value="查询" class="btn btn-primary btn-lg" />
+                <input id="Button1" type="submit" value="查询" class="btn btn-primary btn-lg" />
             </div>
         </form>
     </div>
