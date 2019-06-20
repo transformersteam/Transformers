@@ -195,5 +195,29 @@ namespace DongXu.Target.Model.Dto
         /// 创建时间
         /// </summary>
         public DateTime? GoalState_CreateTime { get; set; }
+        /// <summary>
+        /// 下一步id
+        /// </summary>
+        public int Next_Id { get; set; }
+        /// <summary>
+        /// 活动id
+        /// </summary>
+        public int State_Id { get; set; }
+        /// <summary>
+        /// 意见
+        /// </summary>
+        public string ApprActivity_Opinion { get; set; }
+        /// <summary>
+        /// 配置表id
+        /// </summary>
+        public int ApprConfiguration_Id { get; set; }
+        /// <summary>
+        /// 活动表id
+        /// </summary>
+        public int ApprActivity_Id { get; set; }
+        /// <summary>
+        /// 审批状态
+        /// </summary>
+        public int ApprActivity_IsExecute { get; set; }
     }
 }

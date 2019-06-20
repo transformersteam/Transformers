@@ -135,11 +135,12 @@ namespace DongXu.Target.Model
         
         public DbQuery<TrafficLightRanking> TrafficLightRanking { get; set; } 
 
-
-
+        public DbQuery<ApprDto> ApprDto { get; set; }
 
         public DbQuery<TargetTrack> TargetTracks { get; set; }
-         
+
+        public DbQuery<ApprOpinion> ApprOpinion { get; set; }
+
 
         /// <summary>
         /// 目标查询
@@ -179,11 +180,11 @@ namespace DongXu.Target.Model
 
                 entity.Property(e => e.ApprActivityIsExecute)
                     .HasColumnName("ApprActivity_IsExecute")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ApprActivityIsUse)
                     .HasColumnName("ApprActivity_IsUse")
-                    .HasColumnType("tinyint(1)");
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.ApprActivityOpinion)
                     .HasColumnName("ApprActivity_Opinion")

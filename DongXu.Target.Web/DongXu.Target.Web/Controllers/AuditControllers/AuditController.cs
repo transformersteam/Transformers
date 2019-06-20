@@ -11,7 +11,7 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
     public class AuditController : Controller
     {
         /// <summary>
-        /// 审核首页
+        /// 首页
         /// </summary>
         /// <returns></returns>
         public IActionResult Index()
@@ -31,6 +31,35 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
             List<AuditDto> list = new List<AuditDto>();
             list.Add(auditDtoList);
             return Json(list);
+        }
+        /// <summary>
+        /// 审批流程
+        /// </summary>
+        /// <param name="goalId"></param>
+        /// <returns></returns>
+        public JsonResult GetApprDtoList(int goalId)
+        {
+            var result = HelperHttpClient.GetAll("get", "Audit/GetApprDtoList?goalId=" + goalId,null);
+            var apparDtoList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApprDto>>(result);
+            return Json(apparDtoList);
+        }
+        /// <summary>
+        /// 审批意见
+        /// </summary>
+        /// <param name="goalId"></param>
+        /// <returns></returns>
+        public JsonResult GetApprOpinionList(int goalId)
+        {
+            var result = HelperHttpClient.GetAll("get", "Audit/GetApprOpinionList?goalId=" + goalId, null);
+            var apprOpinionList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApprOpinion>>(result);
+            return Json(apprOpinionList);
+        }
+        public JsonResult Audit(Appractivity appractivity)
+        {
+            appractivity.ApprActivityIsUse = true;
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(appractivity);
+            var result = HelperHttpClient.GetAll("post", "Audit/Audit", json);
+            return Json(result);
         }
     }
 }

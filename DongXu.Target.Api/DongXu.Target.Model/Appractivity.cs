@@ -48,12 +48,12 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 执行操作
         /// </summary>
-        public sbyte? ApprActivityIsExecute { get; set; }
+        public int ApprActivityIsExecute { get; set; }
 
         /// <summary>
         /// 是否启用
         /// </summary>
-        public sbyte? ApprActivityIsUse { get; set; }
+        public bool ApprActivityIsUse { get; set; }
 
         /// <summary>
         /// 创建时间
