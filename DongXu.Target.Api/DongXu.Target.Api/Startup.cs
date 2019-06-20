@@ -27,6 +27,8 @@ using DongXu.Target.Repository.GoalManage;
 using DongXu.Target.Repository.Company;
 using DongXu.Target.IRepository.ICompany;
 using DongXu.Target.Repository.Organization;
+using DongXu.Target.IRepository.IProgressQuery;
+using DongXu.Target.Repository.ProgressQuery;
 using DongXu.Target.IRepository.TrafficLightRanking;
 using DongXu.Target.Repository.TrafficLightRanking;
 
@@ -88,7 +90,9 @@ namespace DongXu.Target.Api
             services.AddScoped<IGoalManageRepository, GoalManageRepository>();
             services.AddScoped<IAuthorizationRepository,AuthorizationRepository>();
             services.AddScoped<ITargetRepository, TargetRepository>();
-
+            services.AddScoped<IAuditRepository, AuditRepository>();
+            services.AddScoped<ICompanyIntegralRepository, CompanyIntegralRepository>(); 
+            services.AddScoped<IWeekQueryRepository, WeekQueryRepository>();
             services.AddScoped<ICompanyIntegralRepository, CompanyIntegralRepository>();
             services.AddScoped<ITrafficLightRankingRepository,TrafficLightRankingRepository>();
 

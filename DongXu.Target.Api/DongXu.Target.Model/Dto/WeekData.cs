@@ -58,5 +58,15 @@ namespace DongXu.Target.Model.Dto
         /// 目标结束时间
         /// </summary>
         public DateTime Goal_EndTime { get; set; }
+
+        /// <summary>
+        /// 周报id
+        /// </summary>
+        public int Frequency_Id { get; set; }
+
+        /// <summary>
+        /// 目标状态id
+        /// </summary>
+        public int GoalState_Id { get; set; }
     }
 }
