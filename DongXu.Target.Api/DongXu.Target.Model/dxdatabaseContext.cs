@@ -130,7 +130,9 @@ namespace DongXu.Target.Model
         public DbQuery<BusinessStateTable> BusinessStateTable { get; set; }
 
         public DbQuery<TrafficLight> TrafficLight { get; set; }
-         
+
+        public DbQuery<AuditDto> AuditDto { get; set; }
+
         /// <summary>
         /// 目标查询
         /// </summary>
