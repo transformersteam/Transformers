@@ -1,0 +1,163 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>周报查询</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
+    <script src="~/js/vue.js"></script>             @*vue*@
+    <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/js/zpageNav.js"></script>        @*分页js*@
+    <link href="~/js/zpageNav.css" rel="stylesheet" />   @*分页样式*@
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+</head>
+<body>
+    <div style="padding:20px">
+        <div class="panel-heading">周报查询</div>
+        <table class="table table-bordered table-striped text-center">
+            <tr>
+                <td>目标名称:</td>
+                <td>
+                    <input id="Text1" type="text" class="layui-input" />
+                </td>
+                <td>目标类型:</td>
+                <td>
+                    <select class="form-control">
+                        <option value="value">请选择</option>
+                    </select>
+                </td>
+                <td>目标类别:</td>
+                <td>
+                    <select class="form-control">
+                        <option value="value">请选择</option>
+                    </select>
+                </td>
+                <td>目标级别:</td>
+                <td>
+                    <select class="form-control">
+                        <option value="value">请选择</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>目标状态:</td>
+                <td>
+                    <select class="form-control">
+                        <option value="value">请选择</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>责任部门:</td>
+                <td>
+                    <input id="Text1" type="text" class="layui-input" />
+                </td>
+                <td>责任人:</td>
+                <td>
+                    <input id="Text1" type="text" class="layui-input" />
+                </td>
+                <td>年份:</td>
+                <td>
+                    <select class="form-control">
+                        <option value="value">请选择</option>
+                    </select>
+                </td>
+                <td>周次:</td>
+                <td>
+                    <select class="form-control">
+                        <option value="value">请选择</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>提报日期:</td>
+                <td>
+                    <input style="width:288px" class="layui-input" type="text" id="config-demo">
+                </td>
+            </tr>
+        </table>
+        <div style="float:right">
+            <input id="Button1" type="button" value="导出" class="btn btn-primary btn-lg" />
+            <input id="Button1" type="button" value="查询" class="btn btn-primary btn-lg" />
+        </div>
+    </div>
+    <div style="padding:20px">
+        <div class="panel-heading">周报列表</div>
+        <table class="table table-bordered table-striped text-center">
+            <tr>
+                <td>序号</td>
+                <td>目标名称</td>
+                <td>级别</td>
+                <td>类别</td>
+                <td>责任部门</td>
+                <td>责任人</td>
+                <td>年份</td>
+                <td>提报状态</td>
+                <td>提报日期</td>
+                <td>当周进展</td>
+                <td>状态</td>
+            </tr>
+            <tr>
+                <td>序号</td>
+                <td>目标名称</td>
+                <td>级别</td>
+                <td>类别</td>
+                <td>责任部门</td>
+                <td>责任人</td>
+                <td>年份</td>
+                <td>提报状态</td>
+                <td>提报日期</td>
+                <td>当周进展</td>
+                <td>状态</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        loadtime();
+    })
+
+    function loadtime() {
+        var beginTimeStore = '';
+        var endTimeStore = '';
+        $('#config-demo').daterangepicker({
+            "timePicker": true,
+            "timePicker24Hour": true,
+            "linkedCalendars": false,
+            "autoUpdateInput": false,
+            "locale": {
+                format: 'YYYY-MM-DD',
+                separator: ' ~ ',
+                applyLabel: "应用",
+                cancelLabel: "取消",
+                resetLabel: "重置",
+            }
+        }, function (start, end, label) {
+            beginTimeStore = start;
+            endTimeStore = end;
+            startTime = this.startDate.format(this.locale.format);
+            endTime = this.endDate.format(this.locale.format);
+            console.log(this.startDate.format(this.locale.format));
+            console.log(this.endDate.format(this.locale.format));
+            if (!this.startDate) {
+                this.element.val('');
+            } else {
+                this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
+            }
+        });
+    }
+</script>

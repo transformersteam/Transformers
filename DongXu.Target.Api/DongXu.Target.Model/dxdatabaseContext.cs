@@ -132,6 +132,14 @@ namespace DongXu.Target.Model
         public DbQuery<TrafficLight> TrafficLight { get; set; }
 
         public DbQuery<AuditDto> AuditDto { get; set; }
+        
+        public DbQuery<TrafficLightRanking> TrafficLightRanking { get; set; } 
+
+
+
+
+        public DbQuery<TargetTrack> TargetTracks { get; set; }
+         
 
         /// <summary>
         /// 目标查询
@@ -139,6 +147,11 @@ namespace DongXu.Target.Model
         public DbQuery<GoalQuery> GoalQuery { get; set; }
 
         public DbQuery<CompanyIntegral> CompanyIntegral { get; set; } 
+
+        /// <summary>
+        /// 周报数据
+        /// </summary>
+        public DbQuery<WeekData> WeekData { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

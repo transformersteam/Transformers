@@ -79,9 +79,18 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalWeight = baseData.GoalWeight,
                 Goal_DutyUserId = baseData.Goal_DutyUserId,
                 Goal_DutyCommanyId = baseData.Goal_DutyCommanyId,
-                Goal_ParentId = baseData.Goal_ParentId
+                Goal_ParentId = baseData.Goal_ParentId,
+                BusinessState = 0,
+                FeedbackId = 1,
+                FileId = 0,
+                GoalCreateTime =Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd")),
+                GoalFormula=baseData.GoalFormula,
+                GoalPeriod =baseData.GoalPeriod,
+                GoalSources=baseData.GoalSources,
+                GoalStateId=4,                       
             };
-            var goalId = HelperHttpClient.GetAll("post", "GoalAdd/GoalManage", goal);  //添加成功返回自增长id
+            var goaldata = JsonConvert.SerializeObject(goal);
+            var goalId = HelperHttpClient.GetAll("post", "GoalManage/GoalAdd", goaldata);  //添加成功返回自增长id
             
             IFormFileCollection files = formData.Files;
             long size = files.Sum(f => f.Length);

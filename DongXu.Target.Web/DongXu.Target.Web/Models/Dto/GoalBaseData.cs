@@ -15,7 +15,7 @@ namespace DongXu.Target.Web.Models
         /// <summary>
         /// 指标单位id
         /// </summary>
-        public int? RoleId { get; set; }
+        public int RoleId { get; set; }
 
         /// <summary>
         /// 父级节点
@@ -25,12 +25,12 @@ namespace DongXu.Target.Web.Models
         /// <summary>
         /// 指标类型id
         /// </summary>
-        public int? GoalTypeId { get; set; }
+        public int GoalTypeId { get; set; }
 
         /// <summary>
         /// 指标等级id
         /// </summary>
-        public int? IndexLevelId { get; set; }
+        public int IndexLevelId { get; set; }
 
         /// <summary>
         /// 反馈频次id
@@ -161,5 +161,7 @@ namespace DongXu.Target.Web.Models
         /// 十二月
         /// </summary>
         public int? IndexsYearTarget { get; set; }
+
+        public string AuditValue { get; set; }
     }
 }
