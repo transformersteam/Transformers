@@ -35,6 +35,7 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/page/bootstrapPager.js"></script>
 </head>
 <body>
 
@@ -117,12 +118,35 @@
             </thead>
             <tbody id="container"></tbody>
         </table>
+        <input id="Button1" type="button" href="javascript:void(0)" onclick="first()" value="首页" class="btn btn-sm" style="margin-right: 10px" />
+        <input id="Button2" type="button" href="javascript:void(0)" onclick="prve()" value="上一页" class="btn btn-sm" style="margin-right: 10px" />
+        <input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" style="margin-right: 10px" />
+        <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style="" />
     </div>
+
+<script>   
+
+
+
+
+
+
+</script>
+
 </body>
 </html>
 
 <script>
-
+    var pageIndex = 1;
+    var pageSize = 10;
+    var toalCount = 0;
+    var goalname = "";
+    var goaltype = 0;
+    var goalleave = 0;
+    var goalrole = "";
+    var goaluser = "";
+    var strTime = "";
+    var endTimes = "";
     var startTime = '';
     var endTime = '';
 
@@ -188,13 +212,7 @@
     //加载操作
     function select() {
 
-        var goalname = "";
-        var goaltype = 0;
-        var goalleave = 0;
-        var goalrole = "";
-        var goaluser = "";
-        var strTime = "";
-        var endTimes = "";
+ 
 
         goalname = $("#textgoalname").val();
         goaltype = $("#textgoaltype").val();
@@ -205,12 +223,12 @@
         endTimes = endTime;
 
         $.ajax({
-            url: "@APIConn.MyAPIConn"+"Target/GoalQueryList?goalname=" + goalname + "&goaltype=" + goaltype + "&goalleave=" + goalleave + "&goalrole=" + goalrole + "&goaluser=" + goaluser + "&strTime=" + strTime + "&endTime=" + endTimes,
+            url: "@APIConn.MyAPIConn" + "Target/GoalQueryList?pageIndex=" + pageIndex + "&pageSize=" + pageSize+"&goalname=" + goalname + "&goaltype=" + goaltype + "&goalleave=" + goalleave + "&goalrole=" + goalrole + "&goaluser=" + goaluser + "&strTime=" + strTime + "&endTime=" + endTimes,
             success: function (data) {
-                $("#container").empty();
                 console.log(data)
+                $("#container").empty();
                 var str = '';
-                $(data).each(function () {
+                $(data.goalQueryList).each(function () {
                     str += '<tr>'
                         + '<td>1</td>'
                         + '<td>' + this.goal_Name + '</td>'
@@ -230,14 +248,18 @@
     //加载目标列表
     function targetList() {
         $.ajax({
-            url:  "@APIConn.MyAPIConn"+"Target/GoalQueryList",
+            url: "@APIConn.MyAPIConn" + "Target/GoalQueryList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&goalname=" + goalname + "&goaltype=" + goaltype + "&goalleave=" + goalleave + "&goalrole=" + goalrole + "&goaluser=" + goaluser + "&strTime=" + strTime + "&endTime=" + endTimes,
             async: false,
             success: function (data) {
+                $("#container").empty();
+                toalCount = data.totalCount;
                 console.log(data)
                 var str = '';
-                $(data).each(function () {
+                var i = 1;
+                $(data.goalQueryList).each(function () {
+
                     str += '<tr>'
-                        + '<td>1</td>'
+                        + '<td>' + i++ + '</td>'
                         + '<td>' + this.goal_Name + '</td>'
                         + '<td>' + this.indexLevel_Grade + '</td>'
                         + '<td>' + this.goalType_Name + '</td>'
@@ -247,6 +269,10 @@
                         + '<td style="text-align:center"><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve + '%</div></div></td></tr>'
                 })
                 $("#container").append(str);
+
+
+
+
             }
         })
     }
@@ -268,5 +294,31 @@
             if (new RegExp("(" + k + ")").test(fmt))
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
+    }
+
+
+    //首页
+    function first() {
+        pageIndex = 1;
+        targetList();
+    }
+
+    //上页
+    function prve() {
+        pageIndex = pageIndex > 1 ? pageIndex - 1 : 1;
+        targetList();
+    }
+
+    //下页
+    function next() {
+        var nums = Math.ceil(toalCount / pageSize);
+        pageIndex = pageIndex < nums ? pageIndex + 1 : pageIndex; 
+        targetList();
+    }
+
+    //尾页
+    function last() {
+        pageIndex = Math.ceil(toalCount / pageSize);
+        targetList();
     }
 </script>

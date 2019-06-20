@@ -1,0 +1,138 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/js/vue.js"></script>
+    <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="max">
+        <div><p>当前办理进度:</p></div>
+        <div id="1-1">
+            <div id="1-1-1" style="background-color:darkgray;height:40px;"><h4 style="padding-top:10px"><strong>目标信息</strong></h4></div>
+            <table class="layui-table" v-for="item in auditDtoList">
+                <tr>
+                    <td><strong>事项分类:</strong> {{item.goalType_Name}}</td>
+                    <td><strong>事项类型:</strong> {{item.goalType_Name}}</td>
+                    <td><strong>事项等级:</strong> {{item.indexLevel_Grade}}</td>
+                    <td><strong>反馈频次:</strong> {{item.frequency_Name}}</td>
+                </tr> 
+                <tr> 
+                    <td><strong>责任部门:</strong> {{item.goal_Unit}}</td>
+                    <td><strong>责任人:</strong> {{item.goal_ChargePeople}}</td>
+                    <td><strong>填报人:</strong> {{item.goal_Informant}}</td>
+                    <td><strong>协办人:</strong> {{item.goal_Organiser}}</td>
+                </tr>
+                <tr>
+                    <td><strong>考核权重:</strong> {{item.goal_Weight}}</td>
+                    <td><strong>开始日期:</strong> {{item.goal_StartTime}}</td>
+                    <td><strong>完成日期:</strong> {{item.goal_EndTime}}</td>
+                    <td><strong>周 期:  </strong>  {{item.goal_Period}}</td>
+                </tr>
+                <tr>
+                    <td><strong>完成标准:</strong> 按时完成</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div id="1-2">
+            <div id="1-2-1" style="background-color:darkgray;height:40px;"><h5 style="padding-top:10px"><strong>执行情况</strong></h5></div>
+            <table class="layui-table" v-for="item in auditDtoList">
+                <tr>
+                    <td colspan="4"><strong>累计工作进展:</strong> {{item.feedback_WorkEvolve}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>当日&周进展:</strong> {{item.feedback_DayEvolve}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>存在问题:</strong> {{item.feedback_Question}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>解决措施:</strong> {{item.feedback_Measure}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>需要团协调事项:</strong> {{item.feedback_CoordinateMatters}}</td>
+                </tr>
+                <tr>
+                    <td><strong>返回周次: </strong> 2018年第22周</td>
+                    <td><strong>当前进度: </strong> {{item.feedback_NowEvolve}}</td>
+                    <td><strong>当前状态: </strong> {{item.goalState_Name}}</td>
+                    <td><strong>附件: </strong> <a>{{item.file_Name}}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>操作时间:</strong> {{item.apprActivity_CreateTime}}</td>
+                </tr>
+            </table>
+        </div>
+        <div id="1-3">
+            <div id="1-3-1" style="background-color:darkgray;height:40px;"><h5 style="padding-top:10px"><strong>确认流程</strong></h5></div>
+            <table class="layui-table">
+                <tr>
+                    <td><strong>确认人:</strong></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div id="1-4">
+            <div id="1-4-1" style="background-color:darkgray;height:40px;"><h5  style="padding-top:10px"><strong>意见说明</strong></h5></div>
+            <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+        <div id="1-5">
+            <div id="1-5-1" style="background-color:darkgray;height:40px;"><h5  style="padding-top:10px"><strong>情况说明</strong></h5></div>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>确认人</th>
+                        <th>执行操作</th>
+                        <th>意见</th>
+                        <th>操作时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+        el: "#max",
+        data: {
+            auditDtoList: [],
+            FeedbackNowEvolve:"",
+            GoalStateName: ""
+
+        },
+        created() {
+            this.GetAuditDtoList();
+        },
+        methods: {
+            GetAuditDtoList: function (userId = 1, goalId=1) {
+                axios.get("/Audit/GetAuditDtoList", { params: { userId: userId, goalId: goalId } }).then((response) => {
+                    
+                    this.auditDtoList = response.data;
+                    console.log(this.auditDtoList);
+                });
+            }
+            },
+    })
+</script>

@@ -95,14 +95,8 @@
                 @*</div>*@
             </div>
         </div>
-
-    
-
-
-
-
-
-
+        </div>
+   
     @*<div style="padding:20px;" id="app">*@
     <div id="app" class="panel panel-primary" style="height:370px">
         <div class="panel-heading">运行情况</div>
@@ -134,7 +128,6 @@
     </div>
     @*</div>*@
 
-
     <div class="panel panel-primary" style="height:300px">
         <div class="panel-heading">具体详情</div>
         <ul id="myTab" class="nav nav-tabs" role="tablist">
@@ -149,34 +142,40 @@
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane active" id="bulletin">
                 公告内容面板
+
             </div>
             <div class="tab-pane " id="rule">
                 规则内容面板
+
             </div>
             <div class="tab-pane " id="forum">
                 论坛内容面板
+
             </div>
             <div class="tab-pane " id="security">
                 安全内容面板
+
             </div>
             <div class="tab-pane " id="welfare">
                 公益内容面板
+
             </div>
             <div class="tab-pane " id="normal">
                 正常推进
+
             </div>
         </div>
 
     </div>
-
-
-
 
    
 </body>
 </html>
 <script>
 
+    var pageIndex = 1;
+    var pageSize = 3;
+    var toalCount = 0;
     var acc = "0";
     var state = 0;
     var num = 0;
@@ -214,6 +213,7 @@
             e.preventDefault();
             //调用函数追加表格
             acc = $(this).attr("data");
+            pageIndex = 1;
             tablelist(acc);
 
             $(this).tab("show");
@@ -236,25 +236,33 @@
     function tablelist(id) {
         getcontainerBynum(id);
         $.ajax({
-            url: "@APIConn.MyAPIConn" + "Target/GoalQueryList?goalname=" + goalname + "&goaltype=" + goaltype + "&goalleave=" + goalleave + "&goalrole=" + goalrole + "&goaluser=" + goaluser + "&strTime=" + strTime + "&endTime=" + endTimes + "&goalstate=" + state,
-                success: function (data) {
+            //"Target/GoalQueryList?goalname=" + goalname + "&goaltype=" + goaltype + "&goalleave=" + goalleave + "&goalrole=" + goalrole + "&goaluser=" + goaluser + "&strTime=" + strTime + "&endTime=" + endTimes + "&goalstate=" + state,
+            
+            url: "@APIConn.MyAPIConn" + "Target/GoalQueryList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&goalname=" + goalname + "&goaltype=" + goaltype + "&goalleave=" + goalleave + "&goalrole=" + goalrole + "&goaluser=" + goaluser + "&strTime=" + strTime + "&endTime=" + endTimes + "&goalstate=" + state,
+            success: function (data) {
+                toalCount = data.totalCount;
+                console.log(data);
                     $("#" + getcontainer).empty();
                     var str = '';
                     var str1 = '<table class="table table-border"><thead><tr><td text-alig="center">序号</td><td style="text-align:center">目标名称</td><td>级别</td><td>类别</td><td>责任部门</td><td>责任人</td><td>完成时间</td><td>当前进度</td></tr></thead><tbody>';
-                    $(data).each(function () {
+                $(data.goalQueryList).each(function () {
 
-                        str += '<tr>'
-                            + '<td>1</td>'
-                            + '<td>' + this.goal_Name + '</td>'
-                            + '<td>' + this.indexLevel_Grade + '</td>'
-                            + '<td>' + this.goalType_Name + '</td>'
-                            + '<td>' + this.role_Name + '</td>'
-                            + '<td>' + this.user_Name + '</td>'
-                            + '<td>' + new Date(this.goal_EndTime).Format("yyyy-MM-dd hh:mm:ss") + '</td>'
-                            + '<td style="text-align:center"><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve + '%</div></div></td></tr>'
+                    str += '<tr>'
+                        + '<td>1</td>'
+                        + '<td>' + this.goal_Name + '</td>'
+                        + '<td>' + this.indexLevel_Grade + '</td>'
+                        + '<td>' + this.goalType_Name + '</td>'
+                        + '<td>' + this.role_Name + '</td>'
+                        + '<td>' + this.user_Name + '</td>'
+                        + '<td>' + new Date(this.goal_EndTime).Format("yyyy-MM-dd hh:mm:ss") + '</td>'
+                        + '<td style="text-align:center"><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve + '%</div></div></td></tr>'
+                        
 
                     })
-                    str1 = str1 + str + '</tbody></table >';
+                str1 = str1 + str + ' </tbody ></table> <div><tr><td> <input id="Button1" type="button" href="javascript:void(0)" onclick="first()" value="首页" class="btn btn-sm" style="margin-right: 10px" />'
+                    + '<input id="Button2" type="button" href="javascript:void(0)" onclick="prve()" value="上一页" class="btn btn-sm" style="margin-right: 10px" />'
+                    + '<input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" style="margin-right: 10px" />'
+                    + '<input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style="" /></div>';
                     $("#" + getcontainer).append(str1);
 
                     //清空时间选择器
@@ -358,6 +366,32 @@
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
+
+    //首页
+    function first() {
+        pageIndex = 1;
+        tablelist(acc);
+    }
+
+    //上页
+    function prve() {
+        pageIndex = pageIndex > 1 ? pageIndex - 1 : 1;
+        tablelist(acc);
+    }
+
+    //下页
+    function next() {
+        var nums = Math.ceil(toalCount / pageSize);
+        pageIndex = pageIndex < nums ? pageIndex + 1 : pageIndex;
+        tablelist(acc);
+    }
+
+    //尾页
+    function last() {
+        pageIndex = Math.ceil(toalCount / pageSize);
+        tablelist(acc);
+    }
+
 </script>
 <script type="module">
     var vm = new Vue({
