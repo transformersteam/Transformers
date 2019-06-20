@@ -89,9 +89,19 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalSources=baseData.GoalSources,
                 GoalStateId=4,                       
             };
+            baseData.AuditValue.Split(',');
             var goaldata = JsonConvert.SerializeObject(goal);
             var goalId = HelperHttpClient.GetAll("post", "GoalManage/GoalAdd", goaldata);  //添加成功返回自增长id
-            
+
+            Apprconfiguration config = new Apprconfiguration();
+            for (int i = 0; i < baseData.AuditValue.Length; i++)
+            {
+                config.ApprConfigurationCreateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd"));
+                config.GoalId = int.Parse(goalId);
+                config.ApprConfigurationIsEnable = 1;
+                //config.
+            }
+
             IFormFileCollection files = formData.Files;
             long size = files.Sum(f => f.Length);
             foreach (var item in files)
@@ -112,7 +122,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                     CreateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd")),
                     GoalId = int.Parse(goalId),
                 };
-                var i = HelperHttpClient.GetAll("post", "GoalFileAdd/GoalManage", file);
+                var i = HelperHttpClient.GetAll("post", "GoalManage/GoalFileAdd", file);
             }
             return Ok(new { count = files.Count, size });
         }
