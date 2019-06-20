@@ -232,14 +232,15 @@
     };
 
     //点击事件
-    function zTreeOnClick(event, treeId,treeNode) {   //treeNode节点信息
+    function zTreeOnClick(event, treeId, treeNode) {   //treeNode节点信息
+        alert(treeNode.id);
          console.log(treeNode)
         getNodeDetailsById(treeNode.id,treeNode.name);    //传递目标id
-
     }
 
     //根据id查询目标详情
-    function getNodeDetailsById(id,name) {   //获取节点id 查询详情
+    function getNodeDetailsById(id, name) {   //获取节点id 查询详情
+        alert(id)
         var vm = new Vue({
             el: "#app",
             data: {
