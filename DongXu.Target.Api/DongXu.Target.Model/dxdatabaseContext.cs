@@ -139,13 +139,16 @@ namespace DongXu.Target.Model
 
         public DbQuery<TargetTrack> TargetTracks { get; set; }
 
+        public DbQuery<TotalCount> TotalCount { get; set; }
+
+
         public DbQuery<ApprOpinion> ApprOpinion { get; set; }
 
 
         /// <summary>
         /// 目标查询
         /// </summary>
-        public DbQuery<GoalQuery> GoalQuery { get; set; }
+        public DbQuery<GoalQuerys> GoalQuery { get; set; }
 
         public DbQuery<CompanyIntegral> CompanyIntegral { get; set; } 
 

@@ -11,6 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="PagedList.Core" Version="1.17.4" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="7.6.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +24,24 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DongXu.Target.Cache\DongXu.Target.Cache.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MvcPager">
+      <HintPath>C:\Users\admin\Desktop\dll\dll\MvcPager.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>C:\Users\admin\Desktop\dll\dll\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>C:\Users\admin\Desktop\dll\dll\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>C:\Users\admin\Desktop\dll\dll\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>C:\Users\admin\Desktop\dll\dll\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

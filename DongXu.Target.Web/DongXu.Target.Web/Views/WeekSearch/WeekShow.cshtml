@@ -1,6 +1,10 @@
-﻿@{
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.StaticPagedList<WeekData>
+
+@{
     Layout = null;
 }
+
 
 <!DOCTYPE html>
 
@@ -16,6 +20,7 @@
     <script src="~/js/zpageNav.js"></script>        @*分页js*@
     <link href="~/js/zpageNav.css" rel="stylesheet" />   @*分页样式*@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -25,73 +30,53 @@
 </head>
 <body>
     <div style="padding:20px">
-        <div class="panel-heading">周报查询</div>
-        <table class="table table-bordered table-striped text-center">
-            <tr>
-                <td>目标名称:</td>
-                <td>
-                    <input id="Text1" type="text" class="layui-input" />
-                </td>
-                <td>目标类型:</td>
-                <td>
-                    <select class="form-control">
-                        <option value="value">请选择</option>
-                    </select>
-                </td>
-                <td>目标类别:</td>
-                <td>
-                    <select class="form-control">
-                        <option value="value">请选择</option>
-                    </select>
-                </td>
-                <td>目标级别:</td>
-                <td>
-                    <select class="form-control">
-                        <option value="value">请选择</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>目标状态:</td>
-                <td>
-                    <select class="form-control">
-                        <option value="value">请选择</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>责任部门:</td>
-                <td>
-                    <input id="Text1" type="text" class="layui-input" />
-                </td>
-                <td>责任人:</td>
-                <td>
-                    <input id="Text1" type="text" class="layui-input" />
-                </td>
-                <td>年份:</td>
-                <td>
-                    <select class="form-control">
-                        <option value="value">请选择</option>
-                    </select>
-                </td>
-                <td>周次:</td>
-                <td>
-                    <select class="form-control">
-                        <option value="value">请选择</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>提报日期:</td>
-                <td>
-                    <input style="width:288px" class="layui-input" type="text" id="config-demo">
-                </td>
-            </tr>
-        </table>
-        <div style="float:right">
-            <input id="Button1" type="button" value="导出" class="btn btn-primary btn-lg" />
-            <input id="Button1" type="button" value="查询" class="btn btn-primary btn-lg" />
-        </div>
+        <form action="/WeekSearch/WeekShow" method="post">
+            <div class="panel-heading">周报查询</div>
+            <table class="table table-bordered table-striped text-center">
+                <tr style="text-align:center">
+                    <td>目标名称:</td>
+                    <td>
+                        <input id="Text1" type="text" class="layui-input" name="goalName" />
+                    </td>
+                    <td>目标类型:</td>
+                    <td>
+                        <select class="form-control" name="typeId">
+                            <option value="value">请选择</option>
+                        </select>
+                    </td>
+                    <td>目标级别:</td>
+                    <td>
+                        <select class="form-control" name="leaveId">
+                            <option value="value">请选择</option>
+                        </select>
+                    </td>
+                    <td>目标状态:</td>
+                    <td>
+                        <select class="form-control" name="stateId">
+                            <option value="value">请选择</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>责任部门:</td>
+                    <td>
+                        <input id="Text1" type="text" class="layui-input" name="dutyCommanyName" />
+                    </td>
+                    <td>责任人:</td>
+                    <td>
+                        <input id="Text1" type="text" class="layui-input" name="dutyUserName" />
+                    </td>
+                    <td>提报日期:</td>
+                    <td>
+                        <input class="layui-input" name="begintime" type="text" id="config-demo">
+                    </td>
+                </tr>
+            </table>
+            <div style="float:right">
+                <input id="Button1" type="button" value="导出" class="btn btn-primary btn-lg" onclick="exportdata()" />
+                <input id="Button1" type="submit" value="查询" class="btn btn-primary btn-lg" />
+            </div>
+        </form>
     </div>
     <div style="padding:20px">
         <div class="panel-heading">周报列表</div>
@@ -109,20 +94,32 @@
                 <td>当周进展</td>
                 <td>状态</td>
             </tr>
-            <tr>
-                <td>序号</td>
-                <td>目标名称</td>
-                <td>级别</td>
-                <td>类别</td>
-                <td>责任部门</td>
-                <td>责任人</td>
-                <td>年份</td>
-                <td>提报状态</td>
-                <td>提报日期</td>
-                <td>当周进展</td>
-                <td>状态</td>
-            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Goal_Id</td>
+                    <td>@item.Goal_Name</td>
+                    <td>@item.IndexLevel_Grade</td>
+                    <td>@item.GoalType_Name</td>
+                    <td>@item.Role_Name</td>
+                    <td>@item.User_Name</td>
+                    <td>@item.GoalYear</td>
+                    <td>已提报</td>
+                    <td>@item.Goal_StartTime</td>
+                    <td>@item.Feedback_DayEvolve</td>
+                    <td>@item.GoalState_Id</td>
+                </tr>
+            }
         </table>
+        @Html.PagedListPager(Model, pageIndex => Url.Action("WeekShow", new { pageIndex, pageSize = 5 }), new X.PagedList.Mvc.Common.PagedListRenderOptionsBase
+        {
+               LinkToPreviousPageFormat = "上一页",
+               LinkToFirstPageFormat = "首页",
+               LinkToNextPageFormat = "下一页",
+               LinkToLastPageFormat = "末页",
+               MaximumPageNumbersToDisplay = 5,
+               DisplayItemSliceAndTotal = false
+        })
     </div>
 </body>
 </html>
@@ -159,5 +156,14 @@
                 this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
             }
         });
+    }
+
+    function exportdata() {
+        $.ajax({
+            url: "/WeekSearch/Export",
+            success: function () {
+                alert("导出成功")
+            }
+        })
     }
 </script>

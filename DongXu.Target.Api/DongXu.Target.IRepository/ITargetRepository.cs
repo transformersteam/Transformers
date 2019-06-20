@@ -12,7 +12,7 @@ namespace DongXu.Target.IRepository
         /// 目标查询列表
         /// </summary>
         /// <returns></returns>
-        List<GoalQuery> GoalQueryList(string goalname, int goaltype, int goalleave, string goalrole, string goaluser, string strTime, string endTime, int goalstate = 0);
+        GoalQuery GoalQueryList(int pageIndex, int pageSize, string goalname, int goaltype, int goalleave, string goalrole, string goaluser, string strTime, string endTime, int goalstate = 0);
 
         /// <summary>
         /// 目标跟踪

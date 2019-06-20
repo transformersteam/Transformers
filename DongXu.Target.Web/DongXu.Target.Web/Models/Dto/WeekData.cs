@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DongXu.Target.Model.Dto
+namespace DongXu.Target.Web
 {
     /// <summary>
     /// 周报查询
@@ -24,12 +24,12 @@ namespace DongXu.Target.Model.Dto
         /// </summary>
         public string IndexLevel_Grade { get; set; }
 
+        public string GoalChildName { get; set; }
+
         /// <summary>
         /// 类型名称
         /// </summary>
         public string GoalType_Name { get; set; }
-
-        public string GoalChildName { get; set; }
 
         /// <summary>
         /// 公司名称

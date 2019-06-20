@@ -6,6 +6,16 @@ namespace DongXu.Target.Model.Dto
 {
     public class GoalQuery
     {
+
+        //总条数
+        public int TotalCount { get; set; }
+
+        public List<GoalQuerys> goalQueryList { get; set; } 
+
+    }
+
+    public class GoalQuerys 
+    {
         /// <summary>
         /// 目标名称
         /// </summary>
@@ -39,6 +49,8 @@ namespace DongXu.Target.Model.Dto
         /// <summary>
         /// 当前进度
         /// </summary>
-        public int Feedback_NowEvolve { get; set; } 
+        public int Feedback_NowEvolve { get; set; }
+
     }
+
 }

@@ -29,10 +29,10 @@ namespace DongXu.Target.Repository.ProgressQuery
         /// <param name="dutyUserName"></param>
         /// <param name="goaltime"></param>
         /// <returns></returns>
-        public PageData<WeekData> GetWeekList(int pageIndex,int pageSize,string goalName,int typeId,int leaveId,int stateId,string dutyCommanyName,string dutyUserName,DateTime goaltime)
+        public PageData<WeekData> GetWeekList(int pageIndex,int pageSize,string goalName,int typeId,int leaveId,int stateId,string dutyCommanyName,string dutyUserName,string begintime,string endtime)
         {
-            string sql = "SELECT a.goal_id,a.goal_name,b.indexlevel_grade,d.goaltype_name,c.goaltype_name,a.frequency_id,a.GoalState_Id,e.role_name,f.user_name,YEAR(a.goal_createtime) as goalyear,a.Goal_StartTime,g.Feedback_DayEvolve,a.Goal_EndTime FROM goal a INNER JOIN indexlevel b on a.IndexLevel_Id = b.IndexLevel_Id INNER JOIN goaltype c on a.GoalType_Id = c.GoalType_PId INNER JOIN goaltype d on c.GoalType_PId = d.GoalType_Id INNER JOIN role e on a.Goal_DutyCommanyId=e.Role_Id INNER JOIN `user` f on a.Goal_DutyUserId = f.User_Id INNER JOIN feedback g on a.Feedback_Id = g.Feedback_Id WHERE a.Frequency_Id=2";
-            string sqlCount= "SELECT count(a.goal_id) FROM goal a INNER JOIN indexlevel b on a.IndexLevel_Id = b.IndexLevel_Id INNER JOIN goaltype c on a.GoalType_Id = c.GoalType_PId INNER JOIN goaltype d on c.GoalType_PId = d.GoalType_Id INNER JOIN role e on a.Goal_DutyCommanyId e.Role_Id INNER JOIN `user` f on a.Goal_DutyUserId = f.User_Id INNER JOIN feedback g on a.Feedback_Id = g.Feedback_Id WHERE a.Frequency_Id=2";
+            string sql = "SELECT a.goal_id,a.goal_name,b.indexlevel_grade,d.goaltype_name,c.goaltype_name as GoalChildName,a.frequency_id,a.GoalState_Id,e.role_name,f.user_name,YEAR(a.goal_createtime) as goalyear,a.Goal_StartTime,g.Feedback_DayEvolve,a.Goal_EndTime FROM goal a INNER JOIN indexlevel b on a.IndexLevel_Id = b.IndexLevel_Id INNER JOIN goaltype c on a.GoalType_Id = c.GoalType_PId INNER JOIN goaltype d on c.GoalType_PId = d.GoalType_Id INNER JOIN role e on a.Goal_DutyCommanyId=e.Role_Id INNER JOIN `user` f on a.Goal_DutyUserId = f.User_Id INNER JOIN feedback g on a.Feedback_Id = g.Feedback_Id WHERE a.Frequency_Id=1";
+            string sqlCount= "SELECT a.goal_id,a.goal_name,b.indexlevel_grade,d.goaltype_name,c.goaltype_name as GoalChildName,a.frequency_id,a.GoalState_Id,e.role_name,f.user_name,YEAR(a.goal_createtime) as goalyear,a.Goal_StartTime,g.Feedback_DayEvolve,a.Goal_EndTime FROM goal a INNER JOIN indexlevel b on a.IndexLevel_Id = b.IndexLevel_Id INNER JOIN goaltype c on a.GoalType_Id = c.GoalType_PId INNER JOIN goaltype d on c.GoalType_PId = d.GoalType_Id INNER JOIN role e on a.Goal_DutyCommanyId=e.Role_Id INNER JOIN `user` f on a.Goal_DutyUserId = f.User_Id INNER JOIN feedback g on a.Feedback_Id = g.Feedback_Id WHERE a.Frequency_Id=1";
             if(!string.IsNullOrWhiteSpace(goalName))
             {
                 sql += $" and a.Goal_name like '%{goalName}%'";
@@ -63,14 +63,15 @@ namespace DongXu.Target.Repository.ProgressQuery
                 sql += $" and f.User_Name like '%{dutyUserName}%'";
                 sqlCount += $" and e.User_Name like '%{dutyUserName}%'";
             }
-            if(!string.IsNullOrWhiteSpace(goaltime.ToString()))
+            if(!string.IsNullOrWhiteSpace(begintime) &&!string.IsNullOrWhiteSpace(endtime))
             {
-                sql += $" and {goaltime} between a.Goal_StartTime and a.Goal_EndTime";
-                sqlCount += $" and {goaltime} between a.Goal_StartTime and a.Goal_EndTime'";
+                sql += $" and a.Goal_EndTime BETWEEN '{begintime} 00:00:00' and '{endtime} 23:59:59'";
+                sqlCount += $" and a.Goal_EndTime BETWEEN '{begintime} 00:00:00' and '{endtime} 23:59:59'";
             }
+            sql += $" and a.Goal_Id>({pageIndex-1}*{pageSize}) order by a.Goal_Id asc limit {pageSize}";
             PageData<WeekData> pageData = new PageData<WeekData>();
-            var list = context.WeekData.FromSql(sql).ToList();
-            var count = list.Count();
+            var list = context.WeekData.FromSql(sql.ToString()).ToList();
+            var count = context.WeekData.FromSql(sqlCount).Count();
             pageData.GetData = list;
             pageData.TotalCount = count;
             return pageData;

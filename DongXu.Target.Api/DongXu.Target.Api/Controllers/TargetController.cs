@@ -34,9 +34,9 @@ namespace DongXu.Target.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GoalQueryList")]
-        public List<GoalQuery> GoalQueryList(string goalname="", int goaltype=0, int goalleave=0, string goalrole="", string goaluser="", string strTime="", string endTime="", int goalstate = 0)
+        public GoalQuery GoalQueryList(int pageIndex=1, int pageSize=10, string goalname="", int goaltype=0, int goalleave=0, string goalrole="", string goaluser="", string strTime="", string endTime="", int goalstate = 0)
         {
-            var query = _target.GoalQueryList( goalname,  goaltype,  goalleave,  goalrole,  goaluser,  strTime,  endTime,goalstate );
+            var query = _target.GoalQueryList( pageIndex ,  pageSize , goalname,  goaltype,  goalleave,  goalrole,  goaluser,  strTime,  endTime,goalstate );
             return query;
         }
 

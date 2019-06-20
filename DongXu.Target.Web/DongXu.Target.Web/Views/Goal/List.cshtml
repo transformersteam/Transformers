@@ -15,6 +15,29 @@
     <script src="~/js/DateTimeConvert.js"></script>
     <link href="~/js/zpageNav.css" rel="stylesheet" />
     <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script>
+        //时间格式化函数，此处仅针对yyyy-MM-dd hh:mm:ss 的格式进行格式化
+        dateFormat: function(time) {
+            var date = new Date(time);
+            var year = date.getFullYear();
+            /* 在日期格式中，月份是从0开始的，因此要加0
+             * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+             * */
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            // 拼接
+            return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+        }
+    </script>
 </head>
 <body>
     <div style="padding:20px;" id="app">
@@ -44,9 +67,6 @@
                 <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style="" />
             </div>
         </div>
-
-
-
 
         <div class="panel panel-primary" style="height:350px">
             <div class="panel-heading">主责事项</div>
@@ -81,16 +101,9 @@
                           v-bind:max-page="maxPage" v-on:pagehandler="pagehandler">
                 </zpagenav>
             </div>
-            @*<div style="float:left" id="echartshow">
-                <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
-            </div>*@
-            @*<div style="float:right;width:700px;height:358px">
-                <div id="redblueechart" style="width:700px;height:400px;margin-right:250px"></div>
-            </div>*@
         </div>
 
-
-        <div  class="panel panel-primary" style="height:350px;margin:0 auto">
+        <div class="panel panel-primary" style="height:350px;margin:0 auto">
             <div class="panel-heading">积分排名</div>
 
             <div id="main" style="width:100%;height:300px">
@@ -101,7 +114,6 @@
                             url: "/Goal/Indexecharts",
                             type: "get",
                             success: function (data) {
-                                console.log(data);
 
                                 var name = data.nameList;
                                 var num = data.numList;
@@ -171,27 +183,10 @@
                     })
                 </script>
             </div>
-
-
-
-
         </div>
-
-
-
-
-
-
-        <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
-        @*<div id='main' style='width: 800px; height: 400px;'></div>*@
-        <!--引入echarts.js-->
-      
     </div>
 </body>
-
 </html>
-
-
 <script>
     var pageIndex = 1;
     var pageSize = 5;
@@ -214,16 +209,16 @@
                 $("#tb").empty();
                 $(data).each(function (index) {
                     var time = dateFormat(this.goalList[index].goalEndTime);
-                    var tr = "<tr>" +
-                        "<td>" + this.goalList[index].goalName + "</td>" +
-                        "<td>" + this.goalList[index].frequencyName + "</td>" +
-                        "<td>" + this.goalList[index].goalTypeName + "</td>" +
-                        "<td>" + this.goalList[index].indexLevelGrade + "</td>" +
-                        "<td>" + this.goalList[index].goalChargePeople + "</td>" +
-                        "<td>" + time + "</td>" +
-                        "<td>" + this.goalList[index].feedbackNowEvolve + "</td>" +
-                        "<td>" + this.goalList[index].goalStateName + "</td>"
-                        + "</tr>";
+                    var tr = '<tr>' +
+                        '<td>' + this.goalList[index].goalName + '</td>' +
+                        '<td>' + this.goalList[index].frequencyName + '</td>' +
+                        '<td>' + this.goalList[index].goalTypeName + '</td>' +
+                        '<td>' + this.goalList[index].indexLevelGrade + '</td>' +
+                        '<td>' + this.goalList[index].goalChargePeople + '</td>' +
+                        '<td>' + time + '</td>' +
+                        '<td><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.goalList[index].feedbackNowEvolve + '%">' + this.goalList[index].feedbackNowEvolve + '%</div></div></td>' +
+                        '<td>' + this.goalList[index].goalStateName + '</td>'
+                        + '</tr>';
                     $("#tb").append(tr);
                 })
                 total = data.Total;
@@ -283,5 +278,9 @@
             }
         }
     })
+
+
+
+
 </script>
 
