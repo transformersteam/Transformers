@@ -156,38 +156,6 @@
     </div>
 </body>
 </html>
-
-@*<script>
-    $(function () {
-        var questionType = 0;
-        for (var i = 0; i < 10; i++) {
-            if ($("#myTab").children('li')[i].className == "active") {
-                tablelist("0");
-                $(this).tab("show");
-                break;
-            }
-        }
-        $("#myTab a").click(function (e) {
-            e.preventDefault();
-            //调用函数追加表格
-            acc = $(this).attr("data");
-            alert(acc);
-
-            $(this).tab("show");
-        });
-    })
-</script>*@
-
-<script>
-
-
-
-
-
-
-</script>
-
-
 <script type="module">
     var acc = 0;
     var state = 0;
@@ -204,7 +172,6 @@
 
     })
     function getdata(stateid) {
-        alert(stateid);
         getcontainerBynum(stateid)
         var str = "";
         $.ajax({
@@ -244,6 +211,7 @@
                                 +"</tbody>"
                             +"</table>"
                     })
+                    alert(str);
                     $("#getcontainer").append(str);
                 }
             }
@@ -342,7 +310,6 @@
             data: {id:@ViewBag.id},
             dataType: "json",
             success: function (data) {
-                //alert(data)
                 alldata.push(data.datacount);
                 alldata.push(data.dataname);
                 var option = {
