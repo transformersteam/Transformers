@@ -23,7 +23,8 @@ namespace DongXu.Target.Repository.WaitReadRepository
         /// <returns></returns>
         public List<WaitRead> GetWaitReadList(int id,int state=0)
         {
-            if(state==0)
+            List<WaitRead> listdata = new List<WaitRead>();
+            if(state==0)    //待阅
             {
                 var list = (from s in context.Goal
                             join Attention in context.Attention on s.GoalId equals Attention.GoalId
@@ -43,10 +44,51 @@ namespace DongXu.Target.Repository.WaitReadRepository
                                 FeedbackNowEvolve = Feedback.FeedbackNowEvolve,
                                 FeedbackId = Feedback.FeedbackId
                             }).ToList();
-                return list;
+                listdata = list;
             }
-
-            return list;
+            if(state==1)   //待办
+            {
+                var list = (from s in context.Goal
+                            join Frequency in context.Frequency on s.FrequencyId equals Frequency.FrequencyId
+                            join Indexlevel in context.Indexlevel on s.IndexLevelId equals Indexlevel.IndexLevelId
+                            join User in context.User on s.Goal_DutyUserId equals User.UserId
+                            join Feedback in context.Feedback on s.FeedbackId equals Feedback.FeedbackId
+                            where User.UserId == id
+                            select new WaitRead
+                            {
+                                GoalId = s.GoalId,
+                                GoalName = s.GoalName,
+                                Frequency_Name=Frequency.FrequencyName,
+                                User_Name=User.UserName,
+                                IndexLevelGrade = Indexlevel.IndexLevelGrade,
+                                GoalEndTime = s.GoalEndTime,
+                                FeedbackNowEvolve = Feedback.FeedbackNowEvolve,
+                                GoalStateId = s.GoalStateId
+                            }).ToList();
+                listdata = list;
+            }
+            if(state==2)   //已办
+            {
+                var list = (from s in context.Goal
+                            join Frequency in context.Frequency on s.FrequencyId equals Frequency.FrequencyId
+                            join Indexlevel in context.Indexlevel on s.IndexLevelId equals Indexlevel.IndexLevelId
+                            join User in context.User on s.Goal_DutyUserId equals User.UserId
+                            join Feedback in context.Feedback on s.FeedbackId equals Feedback.FeedbackId
+                            where User.UserId == id
+                            select new WaitRead
+                            {
+                                GoalId = s.GoalId,
+                                GoalName = s.GoalName,
+                                Frequency_Name = Frequency.FrequencyName,
+                                User_Name = User.UserName,
+                                IndexLevelGrade = Indexlevel.IndexLevelGrade,
+                                GoalEndTime = s.GoalEndTime,
+                                FeedbackNowEvolve = Feedback.FeedbackNowEvolve,
+                                GoalStateId = s.GoalStateId
+                            }).ToList();
+                listdata = list;
+            }
+            return listdata;
         }
 
         /// <summary>

@@ -130,5 +130,9 @@ namespace DongXu.Target.Model.Dto
         /// 用户id
         /// </summary>
         public int UserId { get; set; }
+
+        public string Frequency_Name { get; set; }
+
+        public string User_Name { get; set; }
     }
 }

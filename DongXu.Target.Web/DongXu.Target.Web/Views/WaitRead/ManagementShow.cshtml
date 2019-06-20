@@ -20,21 +20,33 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 
     @*选项卡*@
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  
     <link href="https://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/jquery.scrollbar/0.2.11/jquery.scrollbar.min.css" rel="stylesheet">
-    <link href="~/ntabs/css/nth-tabs.css" rel="stylesheet" />
-    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
     <script src="https://cdn.bootcss.com/jquery.scrollbar/0.2.11/jquery.scrollbar.min.js"></script>
-    <script src="~/ntabs/js/nth-tabs.js"></script>
+
+    @*<link href="~/ntabs/css/nth-tabs.css" rel="stylesheet" />
+    <script src="~/ntabs/js/nth-tabs.js"></script>*@
+
+
+
+
+    <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>*@
 </head>
 <body>
     <div style="padding:20px;" id="app">
         <div class="panel panel-primary">
             @*<div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>*@
             <ul id="myTab" class="nav nav-tabs" role="tablist">
-                <li style="width:200px" class="active" data="0"><a href="#bulletin" class="btn-primary" role="tab" data="0">我的待阅</a></li>
+                <li style="width:200px" class="active" data="0"><a href="#bulletin" class="btn-primary"  role="tab">我的待阅</a></li>
                 <li style="width:150px" data="1"><a href="#rule" role="tab" data="1">我的待办</a></li>
                 <li style="width:200px"><a href="#forum" role="tab" data="2">我的已办</a></li>
             </ul>
@@ -165,16 +177,86 @@
         });
     })
 </script>*@
-<script type="module">
-    
 
+<script>
+
+
+
+
+
+
+</script>
+
+
+<script type="module">
+    var acc = 0;
+    var state = 0;
+    var getcontainer = "";
+        $(function () {
         $("#myTab a").click(function (e) {
-        e.preventDefault();
-        //调用函数追加表格
-       
-       
-        $(this).tab("show");
-        });
+            e.preventDefault();
+            //调用函数追加表格
+            acc = $(this).attr("data");
+            getdata(acc);
+
+    });
+
+
+    })
+    function getdata(stateid) {
+        alert(stateid);
+        getcontainerBynum(stateid)
+        var str = "";
+        $.ajax({
+            url: "/WaitRead/GetWaitDoList",
+            type: "get",
+            data: {
+                id:@ViewBag.id,
+                state:stateid,
+            },
+            success: function (data) {
+                alert(data)
+                console.log(data)
+                if (data.length > 0) {
+                    $(data).each(function () {
+                        str+="<table class='table table-bordered table-striped text-center'>"
+                                +"<thead>"
+                                    +"<tr>"
+                                        +"<td>业务名称</td>"
+                                        +"<td>完成情况</td>"
+                                        +"<td>级别</td>"
+                                        +"<td>责任人</td>"
+                                        +"<td>完成时间</td>"
+                                        +"<td>当期进度</td>"
+                                        +"<td>状态</td>"
+                                    +"</tr>"
+                                +"</thead>"
+                                +"<tbody>"
+                                    +"<tr class='data-row'>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                    +"</tr>"
+                                +"</tbody>"
+                            +"</table>"
+                    })
+                    $("#getcontainer").append(str);
+                }
+            }
+        })
+    }
+
+    //根据传值判断表格所要追加的容器
+    function getcontainerBynum(num) {
+        switch (num) {
+            case "1": getcontainer = "rule"; state = 1; break;
+            case "2": getcontainer = "forum"; state = 2; break;
+        }
+    }
 
 
 
@@ -230,14 +312,11 @@
             getStateTable: function () {      //红绿灯状态表格
                 axios.get('@Url.Action("GetBusinessStateTableList","WaitRead")').then(
                     (response) => {
-                        console.log(response.data)
                         this.statetable = response.data;   //红绿灯状态表格显示
                     }
                 )
             },
             detailsById: function (id,progressid) {    //点击数字显示详情
-                //alert(id)
-                //alert(progressid);
                 layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.open({
@@ -264,7 +343,6 @@
             dataType: "json",
             success: function (data) {
                 //alert(data)
-                console.log(data)
                 alldata.push(data.datacount);
                 alldata.push(data.dataname);
                 var option = {
@@ -420,7 +498,6 @@
         var dataname = [];
         var datacount = [];
         var runCondition = echarts.init(document.getElementById('condition'))
-        console.log(runCondition)
         $.ajax({
             url: "/WaitRead/GetEchartRunCondition",
             type: "get",

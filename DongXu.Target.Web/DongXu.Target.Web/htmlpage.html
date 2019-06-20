@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="wwwroot/lib/jquery/dist/jquery.js"></script>
+    <link href="wwwroot/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="wwwroot/lib/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body>
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li style="width:200px" class="active" data="0"><a href="#bulletin"  role="tab">我的待阅</a></li>
+        <li style="width:150px" data="1"><a href="#rule" role="tab" data="1">我的待办</a></li>
+        <li style="width:200px"><a href="#forum" role="tab" data="2">我的已办</a></li>
+    </ul>
+    <!-- 选项卡面板 -->
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane active" id="bulletin">
+            我的待阅
+        </div>
+        <div class="tab-pane " id="rule">
+            我的代办
+        </div>
+        <div class="tab-pane " id="forum">
+            我的已办
+        </div>
+    </div>
+
+    <!--<!-- 选项卡菜单-->
+    <!--<ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#bulletin" role="tab" data-toggle="tab">公告</a></li>
+        <li><a href="#rule" role="tab" data-toggle="tab">规则</a></li>
+        <li><a href="#forum" role="tab" data-toggle="tab">论坛</a></li>
+        <li><a href="#security" role="tab" data-toggle="tab">安全</a></li>
+        <li><a href="#welfare" role="tab" data-toggle="tab">公益</a></li>
+    </ul>-->
+    <!-- 选项卡面板 -->
+    <!--<div id="myTabContent" class="tab-content">
+        <div class="tab-pane active" id="bulletin">公告内容面板</div>
+        <div class="tab-pane " id="rule">规则内容面板</div>
+        <div class="tab-pane " id="forum">论坛内容面板</div>
+        <div class="tab-pane " id="security">安全内容面板</div>
+        <div class="tab-pane " id="welfare">公益内容面板</div>
+    </div>-->-->
+
+
+</body>
+</html>
+<script>
+
+$(function(){
+    $("#myTab a").click(function(e){
+        e.preventDefault();
+        $(this).tab("show");
+    });
+})
+
+</script>

@@ -32,14 +32,14 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
         }
 
         /// <summary>
-        /// 根据登录人的id查询待办列表
+        /// 根据登录人的id查询待办列表  已办  待阅
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetWaitReadList")]
-        public List<WaitRead> GetWaitReadList(int id)
+        public List<WaitRead> GetWaitReadList(int id, int state = 0)
         {
-            var list = _iWaitReadRepository.GetWaitReadList(id);
+            var list = _iWaitReadRepository.GetWaitReadList(id,state);
             return list;
         }
 

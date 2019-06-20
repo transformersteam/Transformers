@@ -15,7 +15,7 @@ namespace DongXu.Target.IRepository.IWaitRead
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List<WaitRead> GetWaitReadList(int id);
+        List<WaitRead> GetWaitReadList(int id,int state = 0);
 
         /// <summary>
         /// 积分详情柱状图
