@@ -11,11 +11,14 @@
     <title>Show</title>
     <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/echars/echarts.js"></script>
+    <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-
+<div class="panel panel-primary" style="height:480px">
+    <div class="panel-heading">积分排名</div>
+    <br />
     <div id="mainresponsibility" style="float:left">
-        <div style="margin-left: 120px">
+        <div style="margin-left: 240px">
             <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
             <div id='main' style='width: 1000px; height: 400px;'></div>
             <!--引入echarts.js-->
@@ -24,15 +27,15 @@
                 var red = [];
                 var yellow = [];
                 var green = [];
-                $(function() {
+                $(function () {
                     $.ajax({
                         url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
                         type: "get",
                         success: function (data) {
                             $(data).each(function () {
                                 var rednums = parseFloat(this.redlightPercentage) * 100;
-                                var yellows = parseFloat(this.yellowLightPercentage) * 100;  
-                                var greens = parseFloat(this.greenLightPercentage) * 100; 
+                                var yellows = parseFloat(this.yellowLightPercentage) * 100;
+                                var greens = parseFloat(this.greenLightPercentage) * 100;
                                 red.push(rednums);
                                 yellow.push(yellows);
                                 green.push(greens);
@@ -74,7 +77,7 @@
 
 
                                     {
-                                        type : 'category',
+                                        type: 'category',
                                         data: ["东旭光电", "东旭白云", "东旭蓝天", "东旭黑土"]
                                     }
                                 ],
@@ -84,36 +87,44 @@
                                         type: 'bar',
                                         barWidth: '40%',
                                         stack: '总量',
-                                        itemStyle: { normal: {        color: function (params) {
-                                                // build a color map as your need.
-                                                var colorList = [
-                                                    '#FF4500'
-                                                ];
-                                                return colorList[params.dataIndex]
-                                            },
-                                            label: {
-                                                show: true,
-                                                position: 'insideRight',
-                                                formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
-                                            } } },
+                                        itemStyle: {
+                                            normal: {
+                                                color: function (params) {
+                                                    // build a color map as your need.
+                                                    var colorList = [
+                                                        '#FF4500'
+                                                    ];
+                                                    return colorList[params.dataIndex]
+                                                },
+                                                label: {
+                                                    show: true,
+                                                    position: 'insideRight',
+                                                    formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                                }
+                                            }
+                                        },
                                         data: red
                                     },
                                     {
                                         name: '黄灯',
                                         type: 'bar',
                                         stack: '总量',
-                                        itemStyle: { normal: {                                                 color: function (params) {
-                                                // build a color map as your need.
-                                                var colorList = [
-                                                    '#FFC125'
-                                                ];
-                                                return colorList[params.dataIndex]
-                                            },
-                                            label: {
-                                                show: true,
-                                                position: 'insideRight',
-                                                formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
-                                            } } },
+                                        itemStyle: {
+                                            normal: {
+                                                color: function (params) {
+                                                    // build a color map as your need.
+                                                    var colorList = [
+                                                        '#FFC125'
+                                                    ];
+                                                    return colorList[params.dataIndex]
+                                                },
+                                                label: {
+                                                    show: true,
+                                                    position: 'insideRight',
+                                                    formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                                }
+                                            }
+                                        },
                                         data: yellow
                                     },
                                     {
@@ -136,14 +147,14 @@
                                                 }
                                             }
 
-                                        //itemStyle: {
-                                        //    normal:
-                                        //        { label: { show: true, position: 'insideRight' } }
-                                        //},
-                                        
+                                            //itemStyle: {
+                                            //    normal:
+                                            //        { label: { show: true, position: 'insideRight' } }
+                                            //},
+
                                         }, data: green
                                     }
-                                    
+
                                 ]
                             };
                             //使用刚指定的配置项和数据显示图表
@@ -154,6 +165,138 @@
             </script>
         </div>
     </div>
+</div>
+<div class="panel panel-primary" style="height:320px">
+    <div class="panel-heading">积分明细</div>
+    <br />
+
+    <div id="mainresponsibility" style="float:left">
+
+        <div style="margin-left: 220px">
+            <div style="float: left">
+                <table class="table table-bordered" style="width: 350px">
+                    <thead style="text-align: center;">
+                    <tr>
+                        <td rowspan="2" style="padding-top: 10px">部门名称</td>
+                        <td colspan="4">红灯</td>
+                    </tr>
+                    <tr>
+                        <td>绿灯</td>
+                        <td>百分比</td>
+                               
+                    </tr>
+                    </thead>
+                    <tbody id="tb1" style="text-align: center;"></tbody>
+                </table>
+            </div>
+            <div style="float: left">
+                <table class="table table-bordered" style="width: 350px">
+                    <thead style="text-align: center;">
+                    <tr>
+                        <td colspan="4">黄灯</td>
+                    </tr>
+                    <tr>
+                        <td>绿灯</td>
+                        <td>百分比</td>
+                               
+                    </tr>
+                    </thead>
+                    <tbody id="tb2" style="text-align: center;"></tbody>
+                </table>
+            </div>
+            <div style="float: left">
+                <table class="table table-bordered" style="width: 350px">
+                    <thead style="text-align: center;">
+                    <tr>
+                        <td colspan="4">绿灯</td>
+                    </tr>
+                    <tr>
+                        <td>绿灯</td>
+                        <td>百分比</td>
+                               
+                    </tr>
+                    </thead>
+                    <tbody id="tb3" style="text-align: center;"></tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div>
+        
+</div>
 </body>
 </html>
+<script>
+    //文档就绪函数
+    $(function () {
+        getredlightpercentage();
+        getyellowlightpercentage();
+        getgreenlightpercentage();
+    });
+
+    //第一个子公司红绿灯数量与百分比
+    function getredlightpercentage() { 
+        $.ajax({
+            url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $("#tb").empty();
+                $(data).each(function () {
+                    var red = this.redlightPercentage * 100 + "%";
+                    var tr = "<tr>" +
+                        "<td>" + this.role_name + "</td>" +
+                        "<td>" + this.redlight + "</td>" +
+                        "<td>" + red + "</td>"
+                        + "</tr>";
+                    $("#tb1").append(tr);
+                });
+            }
+        })
+    }
+
+    //第二个子公司红绿灯数量与百分比
+    function getyellowlightpercentage() {
+        $.ajax({
+            url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $("#tb").empty();
+                $(data).each(function () {
+                    var red = this.yellowLightPercentage * 100 + "%";
+                    var tr = "<tr>" +
+                        "<td>" + this.yellowlight + "</td>" +
+                        "<td>" + red + "</td>"
+                        + "</tr>";
+                    $("#tb2").append(tr);
+                });
+            }
+        })
+    }
+
+    //第三个子公司红绿灯数量与百分比
+    function getgreenlightpercentage() { 
+        $.ajax({
+            url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $("#tb").empty();
+                $(data).each(function () {
+                    var red = this.greenLightPercentage * 100 + "%";
+                    var tr = "<tr>" +
+                        "<td>" + this.greenlight + "</td>" +
+                        "<td>" + red + "</td>"
+                        + "</tr>";
+                    $("#tb3").append(tr);
+                });
+            }
+        })
+    }
+</script>
 
