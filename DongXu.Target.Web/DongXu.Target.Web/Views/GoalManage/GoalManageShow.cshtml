@@ -271,7 +271,18 @@
         })
     }
 
+    //设置关注人
     function addAttention() {
-
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 2,
+                title: "设置关注人",
+                shadeClose: true,
+                shade: 0.8,
+                area: ['500px', '500px'],
+                content: "/GoalManage/AddAttentionUser",
+            });
+        })
     }
 </script>

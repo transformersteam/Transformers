@@ -59,6 +59,15 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         {
             return View();
         }
+        
+        /// <summary>
+        /// 设置关注人页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddAttentionUser()
+        {
+            return View();
+        }
 
         /// <summary>
         /// 目标下达
@@ -107,8 +116,8 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             foreach (var item in files)
             {
                 var inputName = item.Name;
-                var filePath = @"F:\360Downloads\" + item.FileName.Substring(item.FileName.LastIndexOf("\\") + 1);
-                if(item.Length>0)
+                var filePath = "Common/UpdateFiles/" + item.FileName.Substring(item.FileName.LastIndexOf("\\") + 1);
+                if (item.Length>0)
                 {
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
