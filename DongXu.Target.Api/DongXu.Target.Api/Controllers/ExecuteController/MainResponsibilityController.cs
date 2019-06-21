@@ -25,9 +25,8 @@ namespace DongXu.Target.Api.Controllers.ExecuteController
             ResponsibilityRepository = responsibility;
         }
         
-
         /// <summary>
-        /// 待办事项显示
+        /// 主责事项显示
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetMainResponsibilityList")]
