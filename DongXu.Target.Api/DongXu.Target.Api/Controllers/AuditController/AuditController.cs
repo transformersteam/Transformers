@@ -80,7 +80,8 @@ namespace DongXu.Target.Api.Controllers.AuditController
         public int AddrConfiguration([FromBody]string json)
         {
             ApprconfigurationDto apprconfigurationDto = Newtonsoft.Json.JsonConvert.DeserializeObject<ApprconfigurationDto>(json);
-            string userId = apprconfigurationDto.AuditValue;
+            string s = apprconfigurationDto.AuditValue;
+            string userId = s.Substring(0, s.Length - 1);
             string[] SuserId=userId.Split(',');
             int[] User_Id = new int[SuserId.Length];
             for (int i = 0; i < SuserId.Length; i++)

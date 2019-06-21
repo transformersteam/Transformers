@@ -14,12 +14,13 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public IActionResult Index(int id,int proess)
         {
+            ViewBag.id = id;
             return View();
         }
         /// <summary>
-        /// 审批详情页面
+        /// 显示审批详情页面
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="goalId"></param>
