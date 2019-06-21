@@ -24,26 +24,13 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
             return View();
         }
 
+
         /// <summary>
-        /// 待办信息
+        /// 待办 已办 待阅
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="state"></param>
         /// <returns></returns>
-        public JsonResult GetWaitReadList(int pageIndex = 1, int pageSize = 3, int id = 0,int state=0)
-        {
-            var waitread = HelperHttpClient.GetAll("get", "WaitRead/GetWaitReadList?id=" + id+ "&state"+state, null);
-            var list = JsonConvert.DeserializeObject<List<WaitRead>>(waitread).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-            var total = list.Count();
-            var maxpage = Math.Ceiling(double.Parse(((float)total / pageSize).ToString()));
-            var page = new Paged<WaitRead>()
-            {
-                maxPage = int.Parse(maxpage.ToString()),
-                total = total,
-                GetList = list
-            };
-            return Json(page);
-        }
-
         public JsonResult GetWaitDoList(int id=0,int state = 0)
         {
             var data = HelperHttpClient.GetAll("get", "WaitRead/GetWaitReadList?id=" + id + "&state" + state, null);
