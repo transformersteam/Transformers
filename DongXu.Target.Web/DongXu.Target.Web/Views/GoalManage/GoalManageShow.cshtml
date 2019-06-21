@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -41,51 +40,11 @@
             </div>
         </div>
     </div>
-    <div style="float:right;padding-right: 100px" id="app">
+    <div style="float:right;padding-right: 100px">
         <div class="panel-heading">目标详情</div>
-        <table class="table table-bordered table-striped text-center" style="width: 1300px" v-for="data in goaldetails">
-            <tr>
-                <td>指标名称:<span>{{data.goalName}}</span></td>
-                <td>指标单位:<span>{{data.role_Name}}</span></td>
-                <td>主治标:<span>2019年集团经营目标</span></td>
-            </tr>
-            <tr>
-                <td>指标类型:<span>{{data.goalType_Name}}</span></td>
-                <td>指标类别:<span>{{data.goalType_Name}}</span></td>
-                <td>指标等级:<span>{{data.indexLevel_Grade}}</span></td>
-            </tr>
-            <tr>
-                <td>反馈频次</td>
-                <td colspan="3"><span>{{data.frequency_Name}}</span></td>
-            </tr>
-            <tr>
-                <td>开始时间:<span>{{data.goal_CreateTime}}</span></td>
-                <td>完成时间:<span>{{data.goal_EndTime}}</span></td>
-                <td>周期:<span>{{}}</span></td>
-            </tr>
-            <tr>
-                <td>责任单位:<span>{{data.role_Name}}</span></td>
-                <td>责任人:<span>{{data.goal_ChargePeople}}</span></td>
-                <td>考核权重:<span>{{data.goal_Weight}}</span></td>
-            </tr>
-            <tr>
-                <td>填报人:<span>{{data.goal_Informant}}</span></td>
-                <td>协办人:<span>{{data.goal_Organiser}}</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>计算公式/评价标准</td>
-                <td colspan="3"><span>{{}}</span></td>
-            </tr>
-            <tr>
-                <td>数据来源</td>
-                <td colspan="3"><span>{{}}</span></td>
-            </tr>
-            <tr>
-                <td>支持表格</td>
-                <td colspan="3"><span>{{data.file_Name}}</span></td>
-            </tr>
-        </table>
+        <div id="app">
+
+        </div>
         <div class="panel-heading">指标分解</div>
         <table class="table table-bordered table-striped text-center">
             <tr>
@@ -130,7 +89,7 @@
             <p>王振华(督办领导)</p>
         </div>
         <div style="float: right">
-            <input id="Button1" type="button" value="设置关注人" class="btn btn-primary" />&nbsp;&nbsp;
+            <input id="Button1" type="button" value="设置关注人" class="btn btn-primary" onclick="addAttention" />&nbsp;&nbsp;
             <input id="Button1" type="button" value="指标删除" class="btn btn-primary" />&nbsp;&nbsp;
             <input id="Button1" type="button" value="指标调整" class="btn btn-primary" />
         </div>
@@ -141,6 +100,7 @@
     //文档就绪函数
     $(function () {
         getGoalList();
+        getNodeDetailsById(10);
     })
 
     //ztree配置信息
@@ -233,30 +193,65 @@
 
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {   //treeNode节点信息
-        alert(treeNode.id);
-         console.log(treeNode)
-        getNodeDetailsById(treeNode.id,treeNode.name);    //传递目标id
+        getNodeDetailsById(treeNode.id, treeNode.name);    //传递目标id
     }
 
     //根据id查询目标详情
-    function getNodeDetailsById(id, name) {   //获取节点id 查询详情
-        alert(id)
-        var vm = new Vue({
-            el: "#app",
-            data: {
-                goaldetails: [],
-                goalName:"",
-            },
-            mounted() {
-                this.detailsById();
-            },
-            methods: {
-                detailsById: function () {    //根据id显示目标详情
-                    axios.get('@Url.Action("GetGoalDetailsById","GoalManage")', { params: {id:id}}).then(
-                        (response) => {
-                            this.goaldetails = response.data;
-                        }
-                    )
+    function getNodeDetailsById(id,name) {   //获取节点id 查询详情
+        $.ajax({
+            url: "/GoalManage/GetGoalDetailsById",
+            type: "get",
+            data: { id: id },
+            success: function (data) {
+                console.log(data)
+                if (data.length > 0) {
+                    $("#app").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var str = "<table class='table table-bordered table-striped text-center' style='width: 1300px'>"
+                            + "<tr>"
+                            + "<td>指标名称:<span>" + name + "</span></td>"
+                            + "<td>指标单位:<span>" + data[i].role_Name + "</span></td>"
+                            + "<td>主治标:<span>2019年集团经营目标</span></td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>指标类型:<span>" + data[i].goalType_Name + "</span></td>"
+                            + "<td>指标类别:<span>" + data[i].goalType_Name + "</span></td>"
+                            + "<td>指标等级:<span>" + data[i].indexLevel_Grade + "</span></td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>反馈频次</td>"
+                            + "<td colspan='3'><span>" + data[i].frequency_Name + "</span></td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>开始时间:<span>" + data[i].goal_CreateTime + "</span></td>"
+                            + "<td>完成时间:<span>" + data[i].goal_EndTime + "</span></td>"
+                            + "<td>周期:<span></span></td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>责任单位:<span>" + data[i].role_Name + "</span></td>"
+                            + "<td>责任人:<span>" + data[i].goal_ChargePeople + "</span></td>"
+                            + "<td>考核权重:<span>" + data[i].goal_Weight + "</span></td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>填报人:<span>" + data[i].goal_Informant + "</span></td>"
+                            + "<td>协办人:<span>" + data[i].goal_Organiser + "</span></td>"
+                            + "<td></td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>计算公式/评价标准</td>"
+                            + "<td colspan='3'><span></span></td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>数据来源</td>"
+                            + "<td colspan='3'><span></span></td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>支持表格</td>"
+                            + "<td colspan='3'><span>" + data[i].file_Name + "</span></td>"
+                            + "</tr>"
+                            + "</table>"
+                        $("#app").append(str);
+                    }
                 }
             }
         })
@@ -264,15 +259,19 @@
 
     function goalAdd() {
         layui.use('layer', function () {
-              var layer = layui.layer;
-                    layer.open({
-                        type: 2,
-                        title:"目标详情",
-                        shadeClose: true,
-                        shade: 0.8,
-                        area: ['1700px', '1000px'],
-                        content: "/GoalManage/GoalAdd",
-                    });
-         })
+            var layer = layui.layer;
+            layer.open({
+                type: 2,
+                title: "目标详情",
+                shadeClose: true,
+                shade: 0.8,
+                area: ['1700px', '800px'],
+                content: "/GoalManage/GoalAdd",
+            });
+        })
+    }
+
+    function addAttention() {
+
     }
 </script>
