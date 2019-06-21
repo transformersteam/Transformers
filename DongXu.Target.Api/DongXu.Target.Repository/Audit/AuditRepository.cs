@@ -95,5 +95,44 @@ namespace DongXu.Target.Repository
             }
             return 0;
         }
+        /// <summary>
+        /// 添加到配置表
+        /// </summary>
+        /// <param name="apprconfigurationDto"></param>
+        /// <returns></returns>
+        public int AddrConfiguration(int[] User_Id, int Goal_Id)
+        {
+            int addrConfigurationId = 0;
+
+            for (int i=0;i< User_Id.Length;i++)
+            {
+                if(i==0)
+                {
+                    Apprconfiguration apprconfiguration = new Apprconfiguration();
+                    apprconfiguration.UserId = User_Id[0];
+                    apprconfiguration.GoalId = Goal_Id;
+                    apprconfiguration.ApprConfigurationStateid = 1;
+                    db.Apprconfiguration.Add(apprconfiguration);
+                    db.SaveChanges();
+                    addrConfigurationId = apprconfiguration.ApprConfigurationId;
+                }
+                else
+                {
+                    Apprconfiguration apprconfiguration = new Apprconfiguration();
+                    apprconfiguration.UserId = User_Id[0];
+                    apprconfiguration.GoalId = Goal_Id;
+                    db.Apprconfiguration.Add(apprconfiguration);
+                    db.SaveChanges();
+                    int j = db.Database.ExecuteSqlCommand($"update apprconfiguration set ApprConfiguration_Nextid={apprconfiguration.ApprConfigurationId} WHERE Goal_Id={Goal_Id} and ApprConfiguration_Id={addrConfigurationId}");
+                    if(j==0)
+                    {
+                        return 0;
+                    }
+                    addrConfigurationId = apprconfiguration.ApprConfigurationId;
+                }
+                
+            }
+            return db.SaveChanges();
+        }
     }
 }

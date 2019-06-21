@@ -1,4 +1,5 @@
 ﻿using DongXu.Target.Model;
+using DongXu.Target.Model.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;

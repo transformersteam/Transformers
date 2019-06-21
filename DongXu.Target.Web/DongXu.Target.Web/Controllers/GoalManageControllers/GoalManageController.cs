@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DongXu.Target.Web.Models;
+using DongXu.Target.Web.Models.Dto;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
@@ -89,9 +90,15 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalSources=baseData.GoalSources,
                 GoalStateId=4,                       
             };
-            baseData.AuditValue.Split(',');
+            string auditValue = baseData.AuditValue;
             var goaldata = JsonConvert.SerializeObject(goal);
             var goalId = HelperHttpClient.GetAll("post", "GoalManage/GoalAdd", goaldata);  //添加成功返回自增长id
+
+            //添加到配置表
+            ApprconfigurationDto apprconfigurationDto = new ApprconfigurationDto();
+            apprconfigurationDto.AuditValue = auditValue;
+            apprconfigurationDto.GoalId =int.Parse( goalId);
+            AddrConfiguration(apprconfigurationDto);
 
             Apprconfiguration config = new Apprconfiguration();
             for (int i = 0; i < baseData.AuditValue.Length; i++)
@@ -125,6 +132,19 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 var i = HelperHttpClient.GetAll("post", "GoalManage/GoalFileAdd", file);
             }
             return Ok(new { count = files.Count, size });
+        }
+
+        /// <summary>
+        /// 添加到配置表
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public JsonResult AddrConfiguration(ApprconfigurationDto apprconfigurationDto)
+        {
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(apprconfigurationDto);
+            var target = HelperHttpClient.GetAll("post", "Audit/AddrConfiguration", json);
+            return Json(target);
+
         }
 
         /// <summary>
