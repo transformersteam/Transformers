@@ -34,5 +34,11 @@ namespace DongXu.Target.IRepository
         /// <param name="appractivity"></param>
         /// <returns></returns>
         int Audit(Appractivity appractivity);
+        /// <summary>
+        /// 添加到配置表
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        int AddrConfiguration(int[] User_Id,int Goal_Id);
     }
 }

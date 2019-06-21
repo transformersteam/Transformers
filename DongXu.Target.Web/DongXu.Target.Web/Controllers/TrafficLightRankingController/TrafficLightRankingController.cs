@@ -99,4 +99,8 @@ namespace DongXu.Target.Web.Controllers.TrafficLightRankingController
         //    public List<decimal> NumList { get; set; }
         //}
     }
+
+
+
+
 }

@@ -166,7 +166,7 @@ namespace DongXu.Target.Model
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 // optionsBuilder.UseMySql("Server=169.254.105.125;User Id=root;Password=1234567;Database=dxdatabase");
-                optionsBuilder.UseMySql("Server=47.107.74.205;User Id=root;Password=123456;Database=dxdatabase");
+                optionsBuilder.UseMySql("Server=169.254.105.125;User Id=root;Password=1234567;Database=dxdatabase");
             }
         }
 

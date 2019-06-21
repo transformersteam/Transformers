@@ -51,39 +51,11 @@
                     我的已办
                 </div>
             </div>
-            @*<table class="table table-bordered table-striped text-center">
-                    <thead>
-                        <tr>
-                            <td>业务名称</td>
-                            <td>完成情况</td>
-                            <td>级别</td>
-                            <td>责任人</td>
-                            <td>完成时间</td>
-                            <td>当期进度</td>
-                            <td>状态</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="data in waitread" class="data-row">
-                            <td><a v-on:click="details(data.goalId,data.feedbackNowEvolve)">{{data.goalName}}</a></td>
-                            <td>{{data.goalStateName}}</td>
-                            <td>{{data.indexLevelGrade}}</td>
-                            <td>{{data.goalChargePeople}}</td>
-                            <td>{{data.goalEndTime}}</td>
-                            <td>{{data.feedbackNowEvolve}}</td>
-                            <td>{{data.feedbackId}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
-                          v-bind:max-page="maxPage" v-on:pagehandler="getWaitRead">
-                </zpagenav>*@
         </div>
         <div class="panel panel-primary">
             <div class="panel-heading">积分排名</div>
             <div id="main" style="width:1200px;height:400px;margin-left:250px"></div>
         </div>
-        <a href="#">content</a>
         <div class="panel panel-primary" style="height:500px">
             <div class="panel-heading">红绿灯状态</div>
             <br />
