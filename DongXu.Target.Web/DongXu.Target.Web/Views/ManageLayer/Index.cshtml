@@ -1,8 +1,7 @@
 ﻿
 @{
     Layout = null;
-}
-
+} 
 <!DOCTYPE html>
 
 <html>
@@ -12,15 +11,56 @@
     <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/js/vue.js"></script>             @*vue*@
     <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
     <script src="~/js/zpageNav.js"></script>        @*分页js*@
     <link href="~/js/zpageNav.css" rel="stylesheet" />   @*分页样式*@
     <script src="~/js/echarts.min.js"></script>    @*Echarts图*@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/echars/echarts.js"></script>
+    @*选项卡*@
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/jquery.scrollbar/0.2.11/jquery.scrollbar.min.css" rel="stylesheet">
+
+
+    <script src="https://cdn.bootcss.com/jquery.scrollbar/0.2.11/jquery.scrollbar.min.js"></script>
+
+    @*<link href="~/ntabs/css/nth-tabs.css" rel="stylesheet" />
+        <script src="~/ntabs/js/nth-tabs.js"></script>*@
+
+
+
+
+    <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>*@
 </head>
 <body>
     <div style="padding:20px;" id="app">
+        @*我的待阅*@
         <div class="panel panel-primary">
-            <div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>
+            @*<div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>*@
+            <ul id="myTab" class="nav nav-tabs" role="tablist">
+                <li style="width:200px" class="active" data="0"><a href="#bulletin" class="btn-primary" role="tab">我的待阅</a></li>
+            </ul>
+            <!-- 选项卡面板 -->
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active" id="bulletin">
+                    我的待阅
+                </div>
+                <div class="tab-pane " id="rule">
+                    我的代办
+                </div>
+                <div class="tab-pane " id="forum">
+                    我的已办
+                </div>
+            </div>
             <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
@@ -35,7 +75,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="data in waitread" class="data-row">
-                        <td><a href="/WaitRead/TargetDetails?id={{data.goalId}}">{{data.goalName}}</a></td>
+                        <td><a v-on:click="details(data.goalId,data.feedbackNowEvolve)">{{data.goalName}}</a></td>
                         <td>{{data.goalStateName}}</td>
                         <td>{{data.indexLevelGrade}}</td>
                         <td>{{data.goalChargePeople}}</td>
@@ -49,24 +89,38 @@
                       v-bind:max-page="maxPage" v-on:pagehandler="getWaitRead">
             </zpagenav>
         </div>
+        @*积分排名*@
         <div class="panel panel-primary">
             <div class="panel-heading">积分排名</div>
             <div id="main" style="width:1200px;height:400px;margin-left:250px"></div>
         </div>
-        <div class="panel panel-primary" style="height:450px">
+        @*红绿灯状态*@
+        <div class="panel panel-primary" style="height:500px">
             <div class="panel-heading">红绿灯状态</div>
-            @*<div style="float:left">
-                <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
-            </div>*@
-            @*<div style="float:right;width:700px;height:358px">
-                <div id="dfd" style="width:700px;height:400px;margin-right:250px"></div>
-            </div>*@
+            <div id="mainresponsibility" style="float:left">
+                <div style="margin-left: 150px">
+                    <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
+                    <div id='mainredgreen' style='width: 1000px; height: 400px;'></div>
+                    <!--引入echarts.js-->
+
+
+                </div>
+            </div>
         </div>
-        <div class="panel panel-primary" style="height:400px">
+        @*目标完成率*@
+        <div class="panel panel-primary" style="height:500px;width:100%">
+            <div class="panel-heading">目标完成率</div>
+            <div id="target" style="width:50%;height:450px; float:left"></div>
+            <div id="targets" style="width:50%;height:450px;float:right"></div>
+        </div>
+        @*运行情况*@
+        <div class="panel panel-primary" style="height:500px;width:100%">
             <div class="panel-heading">运行情况</div>
-            <div id="condition" style="float:left;width:900px;height:350px;margin-left:30px;padding-top:15px;padding-left:20px"></div>
-            <div style="float:right;width:700px;padding-right:50px">
-                <table class="table table-bordered table-striped text-center">
+            <div id="condition" style="float:left;width:50%;height:300px;margin-left:30px;">
+            </div>
+            <div>
+
+                <table style="width:500px;margin-top:50px" class="table table-bordered table-striped text-center">
                     <thead>
                         <tr>
                             <td>目标状态</td>
@@ -84,33 +138,255 @@
                         </tr>
                     </tbody>
                 </table>
+
+
             </div>
+
+
         </div>
     </div>
 </body>
 </html>
+<script>
+    var red = [];
+    var yellow = [];
+    var green = [];
+    $(function () {
+        $.ajax({
+            url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
+            type: "get",
+            success: function (data) {
+                $(data).each(function () {
+                    var rednums = parseFloat(this.redlightPercentage) * 100;
+                    var yellows = parseFloat(this.yellowLightPercentage) * 100;
+                    var greens = parseFloat(this.greenLightPercentage) * 100;
+                    red.push(rednums);
+                    yellow.push(yellows);
+                    green.push(greens);
+                })
+                console.log(data);
+
+
+                //基于准备好的DOM，初始化echarts实例
+                var myChartmainredgreen = echarts.init(document.getElementById('mainredgreen'));
+                option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: '{c}%',
+                        axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['直接访问', '邮件营销', '联盟广告']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: { show: true },
+                            dataView: { show: true, readOnly: false },
+                            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                            restore: { show: true },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            //type: 'value'
+                        }
+                    ],
+                    yAxis: [
+
+
+
+                        {
+                            type: 'category',
+                            data: ["东旭光电", "东旭白云", "东旭蓝天", "东旭黑土"]
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '红灯',
+                            type: 'bar',
+                            barWidth: '40%',
+                            stack: '总量',
+                            itemStyle: {
+                                normal: {
+                                    color: function (params) {
+                                        // build a color map as your need.
+                                        var colorList = [
+                                            '#FF4500'
+                                        ];
+                                        return colorList[params.dataIndex]
+                                    },
+                                    label: {
+                                        show: true,
+                                        position: 'insideRight',
+                                        formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                    }
+                                }
+                            },
+                            data: red
+                        },
+                        {
+                            name: '黄灯',
+                            type: 'bar',
+                            stack: '总量',
+                            itemStyle: {
+                                normal: {
+                                    color: function (params) {
+                                        // build a color map as your need.
+                                        var colorList = [
+                                            '#FFC125'
+                                        ];
+                                        return colorList[params.dataIndex]
+                                    },
+                                    label: {
+                                        show: true,
+                                        position: 'insideRight',
+                                        formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                    }
+                                }
+                            },
+                            data: yellow
+                        },
+                        {
+                            name: '绿灯',
+                            type: 'bar',
+                            stack: '总量',
+                            itemStyle: {
+                                normal: {
+                                    color: function (params) {
+                                        // build a color map as your need.
+                                        var colorList = [
+                                            '#4EEE94'
+                                        ];
+                                        return colorList[params.dataIndex]
+                                    },
+                                    label: {
+                                        show: true,
+                                        position: 'insideRight',
+                                        formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                    }
+                                }
+
+                                //itemStyle: {
+                                //    normal:
+                                //        { label: { show: true, position: 'insideRight' } }
+                                //},
+
+                            }, data: green
+                        }
+
+                    ]
+                };
+                //使用刚指定的配置项和数据显示图表
+                myChartmainredgreen.setOption(option);
+            }
+        })
+    })
+</script>
 <script type="module">
+
+    var acc = 0;
+    var state = 0;
+    var getcontainer = "";
+    $(function () {
+
+        banding();
+        getCondition();
+        $("#myTab a").click(function (e) {
+            e.preventDefault();
+            //调用函数追加表格
+            acc = $(this).attr("data");
+            getdata(acc);
+        });
+    })
+
+
+
+
+    function getdata(stateid) {
+        getcontainerBynum(stateid)
+        var str = "";
+        $.ajax({
+            url: "/WaitRead/GetWaitDoList",
+            type: "get",
+            data: {
+                id:@ViewBag.id,
+                state:stateid,
+            },
+            success: function (data) {
+                alert(data)
+                console.log(data)
+                if (data.length > 0) {
+                    $(data).each(function () {
+                        str+="<table class='table table-bordered table-striped text-center'>"
+                                +"<thead>"
+                                    +"<tr>"
+                                        +"<td>业务名称</td>"
+                                        +"<td>完成情况</td>"
+                                        +"<td>级别</td>"
+                                        +"<td>责任人</td>"
+                                        +"<td>完成时间</td>"
+                                        +"<td>当期进度</td>"
+                                        +"<td>状态</td>"
+                                    +"</tr>"
+                                +"</thead>"
+                                +"<tbody>"
+                                    +"<tr class='data-row'>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                        +"<td>"+this.goalName+"</td>"
+                                    +"</tr>"
+                                +"</tbody>"
+                            +"</table>"
+                    })
+                    alert(str);
+                    $("#getcontainer").append(str);
+                }
+            }
+        })
+    }
+
+    //根据传值判断表格所要追加的容器
+    function getcontainerBynum(num) {
+        switch (num) {
+            case "1": getcontainer = "rule"; state = 1; break;
+            case "2": getcontainer = "forum"; state = 2; break;
+        }
+    }
+
+
+
     var vm = new Vue({
         el: "#app",
         data: {
             waitread: [],
-            condition:[],
-            page:1,
+            condition: [],
+            statetable: [],
+            page: 1,
             pageSize: 4,
             total: 100,
             maxPage: 9,
-            sum:0
+            sum: 0
         },
         mounted() {   //钩子函数
             this.getWaitRead();    //显示
             this.getRunCondition();   //运行情况
             getintegral();         //积分排名
-            getredgreen();         //红绿灯情况
-            getCondition();        //运行情况
+            //getCondition();        //运行情况
+            this.getStateTable();       //红绿灯表格
+            $("#statetable").hide();
         },
         methods: {
             getWaitRead: function () {      //显示
-                axios.get('@Url.Action("GetWaitReadList","WaitRead")', { params:{id:@ViewBag.id}}).then(
+                axios.get('@Url.Action("GetWaitReadList","WaitRead")', { params: { id:@ViewBag.id} }).then(
                     (response) => {
                         this.waitread = [];
                         this.total = response.data.total;
@@ -121,7 +397,7 @@
                         }
                     }
                 ).catch(function (response) {   //捕捉异常
-                    alert(response);
+                    //alert(response);
                 })
             },
             getRunCondition: function () {     //运行情况
@@ -130,13 +406,38 @@
                         this.condition = response.data   //运行情况表格显示
                     }
                 )
+            },
+            details: function (id, progressid) {         //点击目标名称跳转到目标详情页面
+                //alert(id);
+                //alert(progressid)
+                location.href = '/WaitRead/TargetDetails?id=' + id + "&progressid=" + progressid;
+            },
+            getStateTable: function () {      //红绿灯状态表格
+                axios.get('@Url.Action("GetBusinessStateTableList","WaitRead")').then(
+                    (response) => {
+                        this.statetable = response.data;   //红绿灯状态表格显示
+                    }
+                )
+            },
+            detailsById: function (id,progressid) {    //点击数字显示详情
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.open({
+                        type: 2,
+                        title:"目标详情",
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['1000px', '700px'],
+                        content: "/WaitRead/TargetDetails?id=" + id,
+                    });
+                })
             }
         }
     })
 
     //积分排名
     function getintegral() {
-        var myCharty = echarts.init(document.getElementById('main'))
+        var myChartymain = echarts.init(document.getElementById('main'))
         var alldata = [];
         $.ajax({
             url: "/WaitRead/GetIntergalUser",
@@ -197,97 +498,186 @@
                             },
                         ]
                 };
-                myCharty.setOption(option);
+                myChartymain.setOption(option);
                 }
             })
         }
 
     //红绿灯情况
-    function getredgreen() {
-        var myCharty=echarts.init(document.getElementById('redblue'))
-        var option = {
-                tooltip : {
-                    trigger: 'axis',
-                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                    }
-                },
-                legend: {
-                    data:['直接访问', '邮件营销','联盟广告','视频广告','搜索引擎']
-                },
-                toolbox: {
-                    show : true,
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                        restore : {show: true},
-                        saveAsImage : {show: true}
-                    }
-                },
-                calculable : true,
-                xAxis : [
-                    {
-                        type : 'value'
-                    }
-                ],
-                yAxis : [
-                    {
-                        type : 'category',
-                        data : ['周一','周二','周三','周四','周五','周六','周日']
-                    }
-                ],
-                series : [
-                    {
-                        name:'直接访问',
-                        type:'bar',
-                        stack: '总量',
-                        itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
-                        data:[320, 302, 301, 334, 390, 330, 320]
+  
+
+    //切换表格
+    $("#tableshow").click(function () {
+        if ($("#tableshow").val()=="切换表格") {
+            //alert(111)
+            $("#statetable").show();
+            $("#echartshow").hide();
+            $("#tableshow").val("切换柱状图");
+        }
+        else if ($("#tableshow").val() == "切换柱状图") {
+            //alert(222)
+            $("#tableshow").val("切换表格");
+            $("#statetable").hide();
+            $("#echartshow").show();
+        }
+    })
+
+
+    function banding() {
+        var myChartytarget = echarts.init(document.getElementById('target'));
+        var myChartystargets = echarts.init(document.getElementById('targets'));
+        var namedata = [];
+        var valuedata = [];
+        $.ajax({
+            url: "http://localhost:8888/api/Target/TargetTrackList",
+            success: function (data) {
+                console.log(data);
+                $(data).each(function () {
+                    namedata.push(this.role_Name);
+                    valuedata.push(this.percentage);
+                })
+                option = {
+                    color: ['#3398DB'],
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: '{c}%',
+                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
                     },
-                    {
-                        name:'邮件营销',
-                        type:'bar',
-                        stack: '总量',
-                        itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
-                        data:[120, 132, 101, 134, 90, 230, 210]
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
                     },
-                    {
-                        name:'联盟广告',
-                        type:'bar',
-                        stack: '总量',
-                        itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
-                        data:[220, 182, 191, 234, 290, 330, 310]
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: namedata,
+                            axisTick: {
+                                alignWithLabel: true
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            min: 0,
+                            max: 100,
+                            interval: 10,
+                            axisLabel: {
+                                formatter: '{value}%'
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            //////
+                            name: 'ECharts例子个数统计',
+                            type: 'bar',
+                            barWidth: '40%',
+                            itemStyle: {
+                                normal: {
+                                    color: function (params) {
+                                        // build a color map as your need.
+                                        var colorList = [
+                                            '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                            '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                            '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                                        ];
+                                        return colorList[params.dataIndex]
+                                    },
+                                    label: {
+                                        show: true,
+                                        position: 'top',
+                                        formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                    }
+                                }
+                            },
+                            data: valuedata
+                        }
+                    ]
+                };
+                var option2 = {
+                    title: {
+                        text: '东旭集团子公司目标完成情况'
                     },
-                    {
-                        name:'视频广告',
-                        type:'bar',
-                        stack: '总量',
-                        itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
-                        data:[150, 212, 201, 154, 190, 330, 410]
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: '{c}%',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
                     },
-                    {
-                        name:'搜索引擎',
-                        type:'bar',
-                        stack: '总量',
-                        itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
-                        data:[820, 832, 901, 934, 1290, 1330, 1320]
-                    }
-                ]
-            };
-         myCharty.setOption(option);
+                    legend: {
+                        data: ['2011年', '2012年']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.01],
+                        min: 0,
+                        max: 100,
+                        interval: 10,
+                        axisLabel: {
+                            formatter: '{value}%'
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: namedata
+
+                    },
+                    series: [
+                        {
+                            //////
+                            name: 'ECharts例子个数统计',
+                            type: 'bar',
+                            barWidth: '40%',
+                            itemStyle: {
+                                normal: {
+                                    color: function (params) {
+                                        // build a color map as your need.
+                                        var colorList = [
+                                            '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                            '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                            '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                                        ];
+                                        return colorList[params.dataIndex]
+                                    },
+                                    label: {
+                                        show: true,
+                                        position: 'top',
+                                        formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                    }
+                                }
+                            },
+                            data: valuedata
+                        }
+
+                    ]
+                };
+                myChartytarget.setOption(option);
+                myChartystargets.setOption(option2);
+            }
+        })
     }
 
-    //运行情况
+
     function getCondition() {
         var dataname = [];
         var datacount = [];
         var runCondition = echarts.init(document.getElementById('condition'))
-        console.log(runCondition)
         $.ajax({
             url: "/WaitRead/GetEchartRunCondition",
             type: "get",
-            dataType:"json",
+            dataType: "json",
             success: function (data) {
                 for (var i = 0; i < data.dataname.length; i++) {
                     dataname.push(data.dataname[i]);
@@ -295,45 +685,47 @@
                 for (var i = 0; i < data.datacount.length; i++) {
                     datacount.push(data.datacount[i]);
                 }
-                    var option = {
-                            title : {
-                                text: '运行情况',
-                                x:'center'
-                            },
-                            tooltip : {
-                                trigger: 'item',
-                                formatter: "{a} <br/>{b} : {c} ({d}%)"
-                            },
-                            legend: {
-                                orient: 'vertical',
-                                left: 'left',
-                                data: dataname
-                            },
-                            series : [
-                                {
-                                    name: '访问来源',
-                                    type: 'pie',
-                                    radius : '55%',
-                                    center: ['50%', '60%'],
-                                    data: [
-                                        { "value": datacount[0], "name": dataname[0] },
-                                        { "value": datacount[1], "name": dataname[1] },
-                                        { "value": datacount[2], "name": dataname[2] },
-                                        { "value": datacount[3], "name": dataname[3] },
-                                        { "value": datacount[4], "name": dataname[4] },
-                                    ],
-                                    itemStyle: {
-                                        emphasis: {
-                                            shadowBlur: 10,
-                                            shadowOffsetX: 0,
-                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                        }
-                                    }
+                var option = {
+                    title: {
+                        text: '运行情况',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br />{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: dataname
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                { "value": datacount[0], "name": dataname[0] },
+                                { "value": datacount[1], "name": dataname[1] },
+                                { "value": datacount[2], "name": dataname[2] },
+                                { "value": datacount[3], "name": dataname[3] },
+                                { "value": datacount[4], "name": dataname[4] },
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
                                 }
-                            ]
-                        };
-                        runCondition.setOption(option);
-                    }
-                })
+                            }
+                        }
+                    ]
+                };
+                runCondition.setOption(option);
             }
+        })
+    }
+
+
 </script>
