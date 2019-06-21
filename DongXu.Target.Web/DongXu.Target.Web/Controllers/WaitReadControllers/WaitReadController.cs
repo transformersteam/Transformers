@@ -31,9 +31,9 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// <param name="id"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public JsonResult GetWaitDoList(int id=0,int state = 0)
+        public JsonResult GetWaitDoList(int id,int state)
         {
-            var data = HelperHttpClient.GetAll("get", "WaitRead/GetWaitReadList?id=" + id + "&state" + state, null);
+            var data = HelperHttpClient.GetAll("get", "WaitRead/GetWaitReadList?id=" + id + "&state=" + state, null);
             var list = JsonConvert.DeserializeObject<List<WaitRead>>(data);
             return Json(list);
         }

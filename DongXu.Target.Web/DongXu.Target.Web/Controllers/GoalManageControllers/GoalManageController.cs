@@ -114,7 +114,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalWeight = baseData.GoalWeight,
                 Goal_DutyUserId = baseData.Goal_DutyUserId,
                 Goal_DutyCommanyId = baseData.Goal_DutyCommanyId,
-                Goal_ParentId = baseData.Goal_ParentId,
+                Goal_ParentId = 1,
                 BusinessState = 0,
                 FeedbackId = 1,
                 FileId = 0,
@@ -267,6 +267,30 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         {
             var frequency= HelperHttpClient.GetAll("get", "GoalManage/GetFrequencieList", null);
             var list = JsonConvert.DeserializeObject<List<Frequency>>(frequency);
+            return Json(list);
+        }
+
+        /// <summary>
+        /// 根据目标id获取指标分解表数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetIndexsByGoalId(int id)
+        {
+            var indexlist = HelperHttpClient.GetAll("get", "GoalManage/GetIndexsByGoalId?id="+id, null);
+            var list = JsonConvert.DeserializeObject<List<Indexs>>(indexlist);
+            return Json(list);
+        }
+
+        /// <summary>
+        /// 根据目标id获取目标审核人
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetUserNameByGoalId(int id)
+        {
+            var userlist = HelperHttpClient.GetAll("get", "GoalManage/GetUserNameByGoalId?id=" + id, null);
+            var list = JsonConvert.DeserializeObject<List<AuditUser>>(userlist);
             return Json(list);
         }
     }

@@ -162,5 +162,28 @@ namespace DongXu.Target.Api.Controllers.GoalManage
             var list = iGoalManageRepository.GetFrequencieList();
             return list;
         }
+
+        /// <summary>
+        /// 根据目标id查询对应指标分解
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetIndexsByGoalId")]
+        public List<Indexs> GetIndexsByGoalId(int id)
+        {
+            var list = iGoalManageRepository.GetIndexsByGoalId(id);
+            return list;
+        }
+
+        /// <summary>
+        /// 根据目标id获取目标审核人
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetUserNameByGoalId")]
+        public List<AuditUser> GetUserNameByGoalId(int id)
+        {
+            var list = iGoalManageRepository.GetUserNameByGoalId(id);
+            return list;
+        }
     }
 }

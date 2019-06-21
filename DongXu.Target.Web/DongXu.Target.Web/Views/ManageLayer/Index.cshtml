@@ -45,8 +45,8 @@
     <div style="padding:20px;" id="app">
         @*我的待阅*@
         <div class="panel panel-primary">
-            @*<div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>*@
-            <ul id="myTab" class="nav nav-tabs" role="tablist">
+            <div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>
+            @*<ul id="myTab" class="nav nav-tabs" role="tablist">
                 <li style="width:200px" class="active" data="0"><a href="#bulletin" class="btn-primary" role="tab">我的待阅</a></li>
             </ul>
             <!-- 选项卡面板 -->
@@ -60,7 +60,7 @@
                 <div class="tab-pane " id="forum">
                     我的已办
                 </div>
-            </div>
+            </div>*@
             <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
@@ -78,73 +78,67 @@
                         <td><a v-on:click="details(data.goalId,data.feedbackNowEvolve)">{{data.goalName}}</a></td>
                         <td>{{data.goalStateName}}</td>
                         <td>{{data.indexLevelGrade}}</td>
-                        <td>{{data.goalChargePeople}}</td>
+                        <td>{{data.user_Name}}</td>
                         <td>{{data.goalEndTime}}</td>
                         <td>{{data.feedbackNowEvolve}}</td>
                         <td>{{data.feedbackId}}</td>
                     </tr>
                 </tbody>
             </table>
-            <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+            @*<zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
                       v-bind:max-page="maxPage" v-on:pagehandler="getWaitRead">
-            </zpagenav>
+            </zpagenav>*@
         </div>
         @*积分排名*@
-        <div class="panel panel-primary">
-            <div class="panel-heading">积分排名</div>
-            <div id="main" style="width:1200px;height:400px;margin-left:250px"></div>
-        </div>
-        @*红绿灯状态*@
-        <div class="panel panel-primary" style="height:500px">
-            <div class="panel-heading">红绿灯状态</div>
-            <div id="mainresponsibility" style="float:left">
-                <div style="margin-left: 150px">
+            <div class="panel panel-primary">
+                <div class="panel-heading">积分排名</div>
+                <div id="main" style="width:1200px;height:400px;margin-left:250px"></div>
+            </div>
+            @*红绿灯状态*@
+            <div class="panel panel-primary" style="height:500px">
+                <div class="panel-heading">红绿灯状态</div>
+                <div style="float:left">
                     <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
                     <div id='mainredgreen' style='width: 1000px; height: 400px;'></div>
                     <!--引入echarts.js-->
-
-
+                </div>
+                <div style="float:right" id="echartshow">
+                    <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
+                </div>
+            </div>
+            @*目标完成率*@
+            <div class="panel panel-primary" style="height:500px;width:100%">
+                <div class="panel-heading">目标完成率</div>
+                <div id="target" style="width:50%;height:450px; float:left"></div>
+                <div id="targets" style="width:50%;height:450px;float:right"></div>
+            </div>
+            @*运行情况*@
+            <div class="panel panel-primary" style="height:500px;width:100%">
+                <div class="panel-heading">运行情况</div>
+                <div id="condition" style="float:left;width:50%;height:300px;margin-left:30px;">
+                </div>
+                <div>
+                    <table style="width:500px;margin-top:50px" class="table table-bordered table-striped text-center">
+                        <thead>
+                            <tr>
+                                <td>目标状态</td>
+                                <td>数量</td>
+                                <td>比例</td>
+                                <td>说明</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="data in condition" class="data-row">
+                                <td>{{data.goalState_Name}}</td>
+                                <td>{{data.count}}</td>
+                                <td>{{data.percent}}%</td>
+                                <td>{{data.goalState_Explain}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        @*目标完成率*@
-        <div class="panel panel-primary" style="height:500px;width:100%">
-            <div class="panel-heading">目标完成率</div>
-            <div id="target" style="width:50%;height:450px; float:left"></div>
-            <div id="targets" style="width:50%;height:450px;float:right"></div>
-        </div>
-        @*运行情况*@
-        <div class="panel panel-primary" style="height:500px;width:100%">
-            <div class="panel-heading">运行情况</div>
-            <div id="condition" style="float:left;width:50%;height:300px;margin-left:30px;">
-            </div>
-            <div>
-
-                <table style="width:500px;margin-top:50px" class="table table-bordered table-striped text-center">
-                    <thead>
-                        <tr>
-                            <td>目标状态</td>
-                            <td>数量</td>
-                            <td>比例</td>
-                            <td>说明</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="data in condition" class="data-row">
-                            <td>{{data.goalState_Name}}</td>
-                            <td>{{data.count}}</td>
-                            <td>{{data.percent}}%</td>
-                            <td>{{data.goalState_Explain}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-            </div>
-
-
-        </div>
-    </div>
 </body>
 </html>
 <script>
@@ -152,6 +146,7 @@
     var yellow = [];
     var green = [];
     $(function () {
+        getredblueechart();  //红绿灯情况饼图
         $.ajax({
             url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
             type: "get",
@@ -197,9 +192,6 @@
                         }
                     ],
                     yAxis: [
-
-
-
                         {
                             type: 'category',
                             data: ["东旭光电", "东旭白云", "东旭蓝天", "东旭黑土"]
@@ -270,15 +262,8 @@
                                         formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
                                     }
                                 }
-
-                                //itemStyle: {
-                                //    normal:
-                                //        { label: { show: true, position: 'insideRight' } }
-                                //},
-
                             }, data: green
                         }
-
                     ]
                 };
                 //使用刚指定的配置项和数据显示图表
@@ -286,6 +271,96 @@
             }
         })
     })
+
+    //绑定红绿灯饼状图
+    function getredblueechart() {
+        var getmychart= echarts.init(document.getElementById('redblue'))
+                    var red = 0;
+                    var yellow = 0;
+                    var green = 0;
+                    var num = 0;
+                    $.ajax({
+                        url: "http://localhost:8888/api/TLPercentage/GetITLPercentageList",
+                        type: "get",
+                        success: function (data) {
+                            $(data).each(function () {
+                                red = this.redLight;
+                                yellow = this.yellowLight;
+                                green = this.greenLight;
+                                num = this.targetNumber;
+                            })
+                            var reds = parseInt(red / num * 100);
+                            var yellows = parseInt(yellow / num * 100);
+                            var greens = parseInt(green / num * 100);
+
+                            //基于准备好的DOM，初始化echarts实例
+
+                           var option = {
+                                title: {
+                                    text: '子公司目标完成占据百分比',
+                                    x: 'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                legend: {
+                                    orient: 'vertical',
+                                    x: 'left',
+                                    data: ['黄灯', '红灯', '绿灯']
+                                },
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        mark: { show: true },
+                                        dataView: { show: true, readOnly: false },
+                                        magicType: {
+                                            show: true,
+                                            type: ['pie', 'funnel'],
+                                            option: {
+                                                funnel: {
+                                                    x: '25%',
+                                                    width: '50%',
+                                                    funnelAlign: 'left',
+                                                    max: 1548
+                                                }
+                                            }
+                                        },
+                                        restore: { show: true },
+                                        saveAsImage: { show: true }
+                                    }
+                                },
+                                calculable: true,
+                                series: [
+                                    {
+                                        name: '访问来源',
+                                        type: 'pie',
+                                        radius: '55%',
+                                        center: ['50%', '60%'],
+                                        itemStyle: {
+                                            normal: {
+                                                color: function (params) {
+                                                    // build a color map as your need.
+                                                    var colorList = [
+                                                        '#FFC125', '#FF4500', '#4EEE94'
+                                                    ];
+                                                    return colorList[params.dataIndex]
+                                                },
+                                            }
+                                        },
+                                        data: [
+                                            { value: red, name: '黄灯' + reds + '%' },
+                                            { value: yellow, name: '红灯' + yellows + '%' },
+                                            { value: green, name: '绿灯' + greens + '%' }
+                                        ]
+                                    }
+                                ]
+                            };
+                            //使用刚指定的配置项和数据显示图表
+                            getmychart.setOption(option);
+                        }
+                    })
+    }
 </script>
 <script type="module">
 
@@ -304,10 +379,7 @@
         });
     })
 
-
-
-
-    function getdata(stateid) {
+    @*function getdata(stateid) {
         getcontainerBynum(stateid)
         var str = "";
         $.ajax({
@@ -352,7 +424,7 @@
                 }
             }
         })
-    }
+    }*@
 
     //根据传值判断表格所要追加的容器
     function getcontainerBynum(num) {
@@ -361,8 +433,6 @@
             case "2": getcontainer = "forum"; state = 2; break;
         }
     }
-
-
 
     var vm = new Vue({
         el: "#app",
@@ -386,15 +456,20 @@
         },
         methods: {
             getWaitRead: function () {      //显示
-                axios.get('@Url.Action("GetWaitReadList","WaitRead")', { params: { id:@ViewBag.id} }).then(
+                axios.get('@Url.Action("GetWaitDoList","WaitRead")', { params: { id:@ViewBag.id,state:0} }).then(
                     (response) => {
-                        this.waitread = [];
-                        this.total = response.data.total;
-                        this.maxPage = response.data.maxPage;
-                        for (var i = 0; i < response.data.getList.length; i++) {
-                            this.waitread.push(response.data.getList[i]);  //待阅数据
-                            this.sum = this.waitread.length;   //计算总数
-                        }
+                        this.waitread = response.data
+                        this.sum = response.data.length;
+                        //alert(response.data);
+                        //console.log(response.data)
+                        //this.waitread = [];
+                        //this.total = response.data.total;
+                        //this.maxPage = response.data.maxPage;
+                        //for (var i = 0; i < response.data.getList.length; i++) {
+                        //    this.waitread.push(response.data.getList[i]);  //待阅数据
+                        //    this.sum = this.waitread.length;   //计算总数
+                        //}
+                        //alert(waitread)
                     }
                 ).catch(function (response) {   //捕捉异常
                     //alert(response);
@@ -536,7 +611,7 @@
                     namedata.push(this.role_Name);
                     valuedata.push(this.percentage);
                 })
-                option = {
+             var option = {
                     color: ['#3398DB'],
                     tooltip: {
                         trigger: 'axis',

@@ -21,7 +21,7 @@ namespace DongXu.Target.Repository.WaitReadRepository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<WaitRead> GetWaitReadList(int id,int state=0)
+        public List<WaitRead> GetWaitReadList(int id,int state)
         {
             List<WaitRead> listdata = new List<WaitRead>();
             if(state==0)    //待阅
@@ -38,6 +38,7 @@ namespace DongXu.Target.Repository.WaitReadRepository
                                 GoalId = s.GoalId,
                                 GoalName = s.GoalName,
                                 GoalStateName = Goalstate.GoalStateName,
+                                User_Name=User.UserName,
                                 IndexLevelGrade = Indexlevel.IndexLevelGrade,
                                 GoalChargePeople = s.GoalChargePeople,
                                 GoalEndTime = s.GoalEndTime,
@@ -58,13 +59,16 @@ namespace DongXu.Target.Repository.WaitReadRepository
                             {
                                 GoalId = s.GoalId,
                                 GoalName = s.GoalName,
-                                Frequency_Name=Frequency.FrequencyName,
-                                User_Name=User.UserName,
+                                Frequency_Name = Frequency.FrequencyName,
+                                User_Name = User.UserName,
                                 IndexLevelGrade = Indexlevel.IndexLevelGrade,
                                 GoalEndTime = s.GoalEndTime,
                                 FeedbackNowEvolve = Feedback.FeedbackNowEvolve,
-                                GoalStateId = s.GoalStateId
-                            }).Where(m=>m.UserId==id && m.State_Id==1).ToList();
+                                GoalStateId = s.GoalStateId,
+                                UserId=Appractivity.UserId,
+                                State_Id=Appractivity.StateId,
+                            }).Where(m => m.UserId == id && m.State_Id == 1).ToList();
+
                 listdata = list;
             }
             if(state==2)   //已办
@@ -74,7 +78,7 @@ namespace DongXu.Target.Repository.WaitReadRepository
                             join Indexlevel in context.Indexlevel on s.IndexLevelId equals Indexlevel.IndexLevelId
                             join User in context.User on s.Goal_DutyUserId equals User.UserId
                             join Feedback in context.Feedback on s.FeedbackId equals Feedback.FeedbackId
-                            where User.UserId == id
+                            join Appractivity in context.Appractivity on s.GoalId equals Appractivity.GoalId
                             select new WaitRead
                             {
                                 GoalId = s.GoalId,
@@ -84,8 +88,11 @@ namespace DongXu.Target.Repository.WaitReadRepository
                                 IndexLevelGrade = Indexlevel.IndexLevelGrade,
                                 GoalEndTime = s.GoalEndTime,
                                 FeedbackNowEvolve = Feedback.FeedbackNowEvolve,
-                                GoalStateId = s.GoalStateId
-                            }).ToList();
+                                GoalStateId = s.GoalStateId,
+                                UserId = Appractivity.UserId,
+                                State_Id = Appractivity.StateId,
+                                ApprActivity_IsExecute=Appractivity.ApprActivityIsExecute
+                            }).Where(m => m.UserId == id && m.ApprActivity_IsExecute != 3).ToList();
                 listdata = list;
             }
             return listdata;
