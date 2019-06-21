@@ -83,7 +83,7 @@
             <div style="float:left" id="echartshow">
                 <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
             </div>
-            <div style="float:right;width:700px;height:358px">
+            <div style="float:right;width:850px;height:358px">
                 <div id="redblueechart" style="width:700px;height:400px;margin-right:250px"></div>
             </div>
         </div>
@@ -120,7 +120,13 @@
     var state = 0;
     var getcontainer = "";
     $(function () {
-        getdata(0)
+        for (var i = 0; i < 10; i++) {
+            if ($("#myTab").children('li')[i].className == "active") {
+                getdata("0");
+                $(this).tab("show");
+                break;
+            }
+        }
         $("#myTab a").click(function (e) {
             e.preventDefault();
             //调用函数追加表格
@@ -128,6 +134,7 @@
             getdata(acc);
             $(this).tab("show");
         });
+        getredblueechart();   //红绿灯情况饼图
     })
 
     //待办 已办 待阅信息
@@ -142,34 +149,35 @@
                 state:stateid,
             },
             success: function (data) {
+                console.log(data)
                 if (data.length > 0) {
                     $("#" + getcontainer).empty();
-                    $(data).each(function () {
-                        str+="<table class='table table-bordered table-striped text-center'>"
-                                +"<thead>"
-                                    +"<tr>"
-                                        +"<td>业务名称</td>"
-                                        +"<td>完成情况</td>"
-                                        +"<td>级别</td>"
-                                        +"<td>责任人</td>"
-                                        +"<td>完成时间</td>"
-                                        +"<td>当期进度</td>"
-                                        +"<td>状态</td>"
-                                    +"</tr>"
-                                +"</thead>"
-                                +"<tbody>"
-                                    + "<tr class='data-row'>"
-                                        + "<td><a href='' onclick='details(" + this.goalId + "+"+this.feedbackNowEvolve+")'>" + this.goalName + "</a></td>"
-                                        +"<td>"+this.goalStateName+"</td>"
-                                        +"<td>"+this.indexLevelGrade+"</td>"
-                                        +"<td>"+this.goalChargePeople+"</td>"
-                                        +"<td>"+this.goalEndTime+"</td>"
-                                        +"<td>"+this.feedbackNowEvolve+"</td>"
-                                        +"<td>"+this.goalStateName+"</td>"
-                                    +"</tr>"
-                                +"</tbody>"
-                            +"</table>"
-                    })
+                    var str = "<table class='table table-bordered table-striped text-center'>"
+                        + "<thead>"
+                        + "<tr>"
+                        + "<td>业务名称</td>"
+                        + "<td>完成情况</td>"
+                        + "<td>级别</td>"
+                        + "<td>责任人</td>"
+                        + "<td>完成时间</td>"
+                        + "<td>当期进度</td>"
+                        + "<td>状态</td>"
+                        + "</tr>"
+                        + "</thead>";
+                    +"<tbody>";
+                    for (var i = 0; i < data.length; i++) {
+                        str += "<tr class='data-row'>"
+                                    + "<td><a href='/Audit/Index?id=" + data[i].goalId + "+&progressid=" + data[i].feedbackNowEvolve + "'>" + data[i].goalName + "</a></td>"
+                                     +"<td>"+data[i].goalStateName+"</td>"
+                                     +"<td>"+data[i].indexLevelGrade+"</td>"
+                                     +"<td>"+data[i].user_Name+"</td>"
+                                     +"<td>"+data[i].goalEndTime+"</td>"
+                                     +"<td>"+data[i].feedbackNowEvolve+"</td>"
+                                     +"<td>"+data[i].goalStateName+"</td>"
+                                     +"</tr>"
+                    }
+                    str+="</tbody>"
+                    str+="</table>"
                     $("#" + getcontainer).append(str);
                 }
             }
@@ -213,11 +221,6 @@
                     }
                 )
             },
-            details: function (id, progressid) {         //点击目标名称跳转到目标详情页面
-                //alert(id);
-                //alert(progressid)
-                location.href = '/WaitRead/TargetDetails?id=' + id + "&progressid=" + progressid;
-            },
             getStateTable: function () {      //红绿灯状态表格
                 axios.get('@Url.Action("GetBusinessStateTableList","WaitRead")').then(
                     (response) => {
@@ -241,6 +244,10 @@
             }
         }
     })
+
+    function getdetails(id, feeid) {
+        alert(111);
+    }
 
     //积分排名
     function getintegral() {
@@ -438,6 +445,96 @@
           })
     }
 
+    //红绿灯情况饼图
+    function getredblueechart() {
+        var getmychart= echarts.init(document.getElementById('redblueechart'))
+                    var red = 0;
+                    var yellow = 0;
+                    var green = 0;
+                    var num = 0;
+                    $.ajax({
+                        url: "http://localhost:8888/api/TLPercentage/GetITLPercentageList",
+                        type: "get",
+                        success: function (data) {
+                            $(data).each(function () {
+                                red = this.redLight;
+                                yellow = this.yellowLight;
+                                green = this.greenLight;
+                                num = this.targetNumber;
+                            })
+                            var reds = parseInt(red / num * 100);
+                            var yellows = parseInt(yellow / num * 100);
+                            var greens = parseInt(green / num * 100);
+
+                            //基于准备好的DOM，初始化echarts实例
+
+                           var option = {
+                                title: {
+                                    text: '子公司目标完成占据百分比',
+                                    x: 'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                legend: {
+                                    orient: 'vertical',
+                                    x: 'left',
+                                    data: ['黄灯', '红灯', '绿灯']
+                                },
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        mark: { show: true },
+                                        dataView: { show: true, readOnly: false },
+                                        magicType: {
+                                            show: true,
+                                            type: ['pie', 'funnel'],
+                                            option: {
+                                                funnel: {
+                                                    x: '25%',
+                                                    width: '50%',
+                                                    funnelAlign: 'left',
+                                                    max: 1548
+                                                }
+                                            }
+                                        },
+                                        restore: { show: true },
+                                        saveAsImage: { show: true }
+                                    }
+                                },
+                                calculable: true,
+                                series: [
+                                    {
+                                        name: '访问来源',
+                                        type: 'pie',
+                                        radius: '55%',
+                                        center: ['50%', '60%'],
+                                        itemStyle: {
+                                            normal: {
+                                                color: function (params) {
+                                                    // build a color map as your need.
+                                                    var colorList = [
+                                                        '#FFC125', '#FF4500', '#4EEE94'
+                                                    ];
+                                                    return colorList[params.dataIndex]
+                                                },
+                                            }
+                                        },
+                                        data: [
+                                            { value: red, name: '黄灯' + reds + '%' },
+                                            { value: yellow, name: '红灯' + yellows + '%' },
+                                            { value: green, name: '绿灯' + greens + '%' }
+                                        ]
+                                    }
+                                ]
+                            };
+                            //使用刚指定的配置项和数据显示图表
+                            getmychart.setOption(option);
+                        }
+                    })
+    }
+
     //切换表格
     $("#tableshow").click(function () {
         if ($("#tableshow").val()=="切换表格") {
@@ -453,6 +550,7 @@
             $("#echartshow").show();
         }
     })
+
 
     //运行情况
     function getCondition() {

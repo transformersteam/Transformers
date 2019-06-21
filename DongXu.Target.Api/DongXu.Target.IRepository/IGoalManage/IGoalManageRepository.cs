@@ -83,5 +83,19 @@ namespace DongXu.Target.IRepository.IGoalManage
         /// </summary>
         /// <returns></returns>
         List<Frequency> GetFrequencieList();
+
+        /// <summary>
+        /// 根据目标id获取指标分解表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<Indexs> GetIndexsByGoalId(int id);
+
+        /// <summary>
+        /// 根据目标id获取目标审核人
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<AuditUser> GetUserNameByGoalId(int id);
     } 
 }

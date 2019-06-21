@@ -37,7 +37,7 @@ namespace DongXu.Target.Api.Controllers.WaitReadController
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetWaitReadList")]
-        public List<WaitRead> GetWaitReadList(int id, int state = 0)
+        public List<WaitRead> GetWaitReadList(int id, int state)
         {
             var list = _iWaitReadRepository.GetWaitReadList(id,state);
             return list;

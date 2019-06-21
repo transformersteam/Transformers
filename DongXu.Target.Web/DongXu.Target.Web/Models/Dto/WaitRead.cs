@@ -130,5 +130,11 @@ namespace DongXu.Target.Web
         /// 用户id
         /// </summary>
         public int UserId { get; set; }
+
+        public string Frequency_Name { get; set; }
+
+        public string User_Name { get; set; }
+
+        public int State_Id { get; set; }
     }
 }

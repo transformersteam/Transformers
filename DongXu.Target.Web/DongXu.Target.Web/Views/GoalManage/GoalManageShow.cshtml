@@ -62,7 +62,7 @@
                 <td>1-11月</td>
                 <td>年度目标</td>
             </tr>
-            <tr>
+            <tr id="indexs">
                 <td>目标值</td>
                 <td>月份</td>
                 <td>月份</td>
@@ -82,7 +82,7 @@
         <div style="padding-left: 100px">
             确认流程
         </div>
-        <div style="padding-left: 250px">
+        <div style="padding-left: 250px" id="audituser">
             <p>郭莱(模块运营总经理)</p>
             <p>明和(单位一把手)</p>
             <p>柯振亮(集团运营负责人)</p>
@@ -195,6 +195,8 @@
     function zTreeOnClick(event, treeId, treeNode) {   //treeNode节点信息
         getNodeDetailsById(treeNode.id, treeNode.name);    //传递目标id
         addAttention(treeNode.id);
+        getUserName(treeNode.id)    //目标审核人
+        getIndexData(treeNode.id)    //指标分解数据
     }
 
     //判断设置关注人按钮是否被选中
@@ -202,6 +204,58 @@
         $("#setuser").bind('click', function () {
             addAttentionUser(id)
         });
+    }
+
+    //获取审核人
+    function getUserName(id) {
+        $.ajax({
+            url: "/GoalManage/GetUserNameByGoalId",
+            type: "get",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                          var str = "<p>" + data.User_RealName + "</p>";
+                          $("#audituser").append(str);
+                    }
+                }
+            }
+        })
+    }
+
+    //获取指标分解数据
+    function getIndexData(id) {
+         $.ajax({
+            url: "/GoalManage/GetUserNameByGoalId",
+            type: "get",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                          var str = "<tr>"
+                                +"<td>"+data[i].IndexsJanuary+"</td>"
+                                +"<td>"+data[i].IndexsFebruary+"</td>"
+                                +"<td>"+data[i].IndexsMarch+"</td>"
+                                +"<td>"+data[i].IndexsApril+"</td>"
+                                +"<td>"+data[i].IndexsMay+"</td>"
+                                +"<td>"+data[i].IndexsJune+"</td>"
+                                +"<td>"+data[i].IndexsJuly+"</td>"
+                                +"<td>"+data[i].IndexsAugust+"</td>"
+                                +"<td>"+data[i].IndexsSeptember+"</td>"
+                                +"<td>"+data[i].IndexsOctober+"</td>"
+                                +"<td>"+data[i].IndexsNovember+"</td>"
+                                +"<td>"+data[i].IndexsYearTarget+"</td>"
+                                +"<td>"+data[i].IndexsJanuary+"</td>"
+                            +"</tr>";
+                          $("#indexs").append(str);
+                    }
+                }
+            }
+        })
     }
 
     //根据id查询目标详情
@@ -263,9 +317,6 @@
                 }
             }
         })
-        if ($("#setuser").checked == true) {
-            alert(11)
-        }
     }
 
     //目标下达
