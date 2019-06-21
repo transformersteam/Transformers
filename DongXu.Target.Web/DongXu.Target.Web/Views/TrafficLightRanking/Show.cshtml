@@ -14,15 +14,13 @@
     <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-<div class="panel panel-primary" style="height:480px">
-    <div class="panel-heading">积分排名</div>
-    <br />
-        <div id="mainresponsibility1">
+    <div class="panel panel-primary" style="height:480px">
+        <div class="panel-heading">积分排名</div>
+        <br />
+        <div id="mainresponsibility2">
             <div style="margin-left: 150px">
                 <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
                 <div id='main' style='width: 1000px; height: 400px;'></div>
-                <!--引入echarts.js-->
-                <script src="~/echars/echarts.js"></script>
                 <script>
                     var red = [];
                     var yellow = [];
@@ -154,74 +152,74 @@
                     })
                 </script>
             </div>
-        </div> 
-    
-  
-</div>
+        </div>
 
-<div class="panel panel-primary" style="height:320px">
-    <div class="panel-heading">积分明细</div>
-    <br />
 
-    <div id="mainresponsibility1" style="float:left">
+    </div>
 
-        <div style="margin-left: 120px">
-            <div style="float: left">
-                <table class="table table-bordered" style="width: 350px">
-                    <thead style="text-align: center;">
-                    <tr>
-                        <td rowspan="2" style="padding-top: 10px">部门名称</td>
-                        <td colspan="4">红灯</td>
-                    </tr>
-                    <tr>
-                        <td>绿灯</td>
-                        <td>百分比</td>
-                               
-                    </tr>
-                    </thead>
-                    <tbody id="tb1" style="text-align: center;"></tbody>
-                </table>
-            </div>
-            <div style="float: left">
-                <table class="table table-bordered" style="width: 350px">
-                    <thead style="text-align: center;">
-                    <tr>
-                        <td colspan="4">黄灯</td>
-                    </tr>
-                    <tr>
-                        <td>绿灯</td>
-                        <td>百分比</td>
-                               
-                    </tr>
-                    </thead>
-                    <tbody id="tb2" style="text-align: center;"></tbody>
-                </table>
-            </div>
-            <div style="float: left">
-                <table class="table table-bordered" style="width: 350px">
-                    <thead style="text-align: center;">
-                    <tr>
-                        <td colspan="4">绿灯</td>
-                    </tr>
-                    <tr>
-                        <td>绿灯</td>
-                        <td>百分比</td>
-                               
-                    </tr>
-                    </thead>
-                    <tbody id="tb3" style="text-align: center;"></tbody>
-                </table>
+    <div class="panel panel-primary" style="height:320px">
+        <div class="panel-heading">积分明细</div>
+        <br />
+
+        <div id="mainresponsibility1" style="float:left">
+
+            <div style="margin-left: 120px">
+                <div style="float: left">
+                    <table class="table table-bordered" style="width: 350px">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <td rowspan="2" style="padding-top: 10px">部门名称</td>
+                                <td colspan="4">红灯</td>
+                            </tr>
+                            <tr>
+                                <td>绿灯</td>
+                                <td>百分比</td>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tb1" style="text-align: center;"></tbody>
+                    </table>
+                </div>
+                <div style="float: left">
+                    <table class="table table-bordered" style="width: 350px">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <td colspan="4">黄灯</td>
+                            </tr>
+                            <tr>
+                                <td>绿灯</td>
+                                <td>百分比</td>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tb2" style="text-align: center;"></tbody>
+                    </table>
+                </div>
+                <div style="float: left">
+                    <table class="table table-bordered" style="width: 350px">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <td colspan="4">绿灯</td>
+                            </tr>
+                            <tr>
+                                <td>绿灯</td>
+                                <td>百分比</td>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tb3" style="text-align: center;"></tbody>
+                    </table>
+                </div>
+
             </div>
 
         </div>
 
     </div>
-</div>
+   
 
-<div>
-        
-</div>
 </body>
+
 </html>
 <script>
     //文档就绪函数
@@ -229,10 +227,11 @@
         getredlightpercentage();
         getyellowlightpercentage();
         getgreenlightpercentage();
+       
     });
 
     //第一个子公司红绿灯数量与百分比
-    function getredlightpercentage() { 
+    function getredlightpercentage() {
         $.ajax({
             url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
             type: "get",
@@ -273,7 +272,7 @@
     }
 
     //第三个子公司红绿灯数量与百分比
-    function getgreenlightpercentage() { 
+    function getgreenlightpercentage() {
         $.ajax({
             url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
             type: "get",
@@ -291,5 +290,7 @@
             }
         })
     }
+
+
 </script>
 
