@@ -47,6 +47,16 @@ namespace DongXu.Target.Repository
             return apprOpinion;
         }
         /// <summary>
+        /// 审批流程
+        /// </summary>
+        /// <param name="goalId"></param>
+        /// <returns></returns>
+        public List<ApprOpinion> GetApprFlowList(int goalId)
+        {
+            List<ApprOpinion> apprOpinion = db.ApprOpinion.FromSql($"select b.User_Name,a.ApprActivity_IsExecute,a.ApprActivity_Opinion,a.ApprActivity_CreateTime from appractivity a inner join `user` b on a.User_Id=b.User_Id where a.Goal_Id={goalId} ORDER BY a.ApprActivity_Id ").ToList();
+            return apprOpinion;
+        }
+        /// <summary>
         /// 审核
         /// </summary>
         /// <param name="appractivity"></param>

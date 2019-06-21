@@ -40,5 +40,11 @@ namespace DongXu.Target.IRepository
         /// <param name=""></param>
         /// <returns></returns>
         int AddrConfiguration(int[] User_Id,int Goal_Id);
+        /// <summary>
+        /// 审批流程
+        /// </summary>
+        /// <param name="goalId"></param>
+        /// <returns></returns>
+         List<ApprOpinion> GetApprFlowList(int goalId)
     }
 }

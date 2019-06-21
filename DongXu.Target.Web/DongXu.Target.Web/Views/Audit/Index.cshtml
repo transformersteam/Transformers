@@ -157,14 +157,15 @@
 
         },
         created() {
-            this.GetAuditDtoList(1,@ViewBag.id);
-            this.GetApprDtoList();
-            this.GetApprOpinionList();
+            this.GetAuditDtoList(@ViewBag.user,@ViewBag.id);
+            this.GetApprDtoList(@ViewBag.id);
+            this.GetApprOpinionList(@ViewBag.id);
         },
         methods: {
             GetAuditDtoList: function(userId,goalId) {
                 axios.get("/Audit/GetAuditDtoList", { params: { userId: userId, goalId: goalId } }).then((response) => {
                     this.auditDtoList = response.data;
+                   
                     for (var i = 0; i < response.data.length; i++) {
                         this.next_Id = response.data[i].next_Id;
                         this.apprConfiguration_Id = response.data[i].apprConfiguration_Id;
@@ -175,19 +176,18 @@
                     }
                 });
             },
-             GetApprDtoList: function (goalId = 1) {
+             GetApprDtoList: function (goalId) {
                    axios.get("/Audit/GetApprDtoList", { params: { goalId: goalId } }).then((response) => {
 
                        this.apparDtoList = response.data;
                        
                 });
             },
-            GetApprOpinionList: function (goalId = 1) {
+            GetApprOpinionList: function (goalId) {
                 axios.get("/Audit/GetApprOpinionList", { params: { goalId: goalId } }).then((response) => {
                     this.apparOpinoin = response.data;
                     for (var i = 0; i < response.data.length; i++) {
                     this.apprActivity_IsExecute = response.data[i].apprActivity_IsExecute;
-                        alert(this.apprActivity_IsExecute);
                     }
                 });
             },

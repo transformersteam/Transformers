@@ -91,5 +91,15 @@ namespace DongXu.Target.Api.Controllers.AuditController
             int Goal_Id = apprconfigurationDto.GoalId;
             return _iauditRepository.AddrConfiguration(User_Id, Goal_Id);
         }
+        /// <summary>
+        /// 审批流程
+        /// </summary>
+        /// <param name="goalId"></param>
+        /// <returns></returns>
+        [HttpPost("GetApprFlowList")]
+        public List<ApprOpinion> GetApprFlowList(int goalId)
+        {
+            return _iauditRepository.GetApprFlowList(goalId);
+        }
     }
 }
