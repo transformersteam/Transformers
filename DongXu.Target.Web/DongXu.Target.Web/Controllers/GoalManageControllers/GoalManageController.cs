@@ -65,9 +65,34 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         /// 设置关注人页面
         /// </summary>
         /// <returns></returns>
-        public ActionResult AddAttentionUser()
+        public ActionResult AddAttentionUser(int id)
         {
+            ViewBag.id = id;    //选择关注人的目标id
             return View();
+        }
+
+        /// <summary>
+        /// 添加关注人
+        /// </summary>
+        /// <param name="goalid"></param>
+        /// <param name="attentionuser"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public int AttentionSubmit(int goalid,string attentionuser)
+        {
+            List<Attention> list = new List<Attention>();
+            var str = attentionuser.Remove(attentionuser.Length-1).Split(',');
+            for (int i = 0; i < str.Length; i++)
+            {
+                Attention attention = new Attention();
+                attention.UserId =Convert.ToInt32(str[i]);
+                attention.GoalId = goalid;
+                attention.AttentionIsUse = 1;
+                attention.AttentionCreateTime =Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd"));
+                list.Add(attention);
+            }
+            var j = HelperHttpClient.GetAll("post", "GoalManage/AddAttentionUser",list);  //添加成功返回自增长id
+            return Convert.ToInt32(j);
         }
 
         /// <summary>

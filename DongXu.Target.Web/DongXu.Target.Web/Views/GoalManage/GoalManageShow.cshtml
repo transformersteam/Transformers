@@ -89,7 +89,7 @@
             <p>王振华(督办领导)</p>
         </div>
         <div style="float: right">
-            <input id="Button1" type="button" value="设置关注人" class="btn btn-primary" onclick="addAttention" />&nbsp;&nbsp;
+            <input id="setuser" type="button" value="设置关注人" class="btn btn-primary" />&nbsp;&nbsp;
             <input id="Button1" type="button" value="指标删除" class="btn btn-primary" />&nbsp;&nbsp;
             <input id="Button1" type="button" value="指标调整" class="btn btn-primary" />
         </div>
@@ -194,10 +194,18 @@
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {   //treeNode节点信息
         getNodeDetailsById(treeNode.id, treeNode.name);    //传递目标id
+        addAttention(treeNode.id);
+    }
+
+    //判断设置关注人按钮是否被选中
+    function addAttention(id) {
+        $("#setuser").bind('click', function () {
+            addAttentionUser(id)
+        });
     }
 
     //根据id查询目标详情
-    function getNodeDetailsById(id,name) {   //获取节点id 查询详情
+    function getNodeDetailsById(id, name) {   //获取节点id 查询详情
         $.ajax({
             url: "/GoalManage/GetGoalDetailsById",
             type: "get",
@@ -255,8 +263,12 @@
                 }
             }
         })
+        if ($("#setuser").checked == true) {
+            alert(11)
+        }
     }
 
+    //目标下达
     function goalAdd() {
         layui.use('layer', function () {
             var layer = layui.layer;
@@ -272,7 +284,7 @@
     }
 
     //设置关注人
-    function addAttention() {
+    function addAttentionUser(id) {
         layui.use('layer', function () {
             var layer = layui.layer;
             layer.open({
@@ -281,7 +293,7 @@
                 shadeClose: true,
                 shade: 0.8,
                 area: ['500px', '500px'],
-                content: "/GoalManage/AddAttentionUser",
+                content: "/GoalManage/AddAttentionUser?id=" + id,
             });
         })
     }

@@ -31,6 +31,13 @@ namespace DongXu.Target.IRepository.IGoalManage
         int GoalFileAdd(Files files);
 
         /// <summary>
+        /// 批量插入 关注人
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        int AddAttentionUser(List<Attention> list);
+
+        /// <summary>
         /// 查询公司列表
         /// </summary>
         /// <returns></returns>

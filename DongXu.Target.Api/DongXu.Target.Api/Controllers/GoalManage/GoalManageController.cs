@@ -63,6 +63,18 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         }
 
         /// <summary>
+        /// 批量插入 关注人
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        [HttpPost("AddAttentionUser")]
+        public int AddAttentionUser([FromBody]List<Attention> list)
+        {
+            int i = iGoalManageRepository.AddAttentionUser(list);
+            return i;
+        }
+
+        /// <summary>
         /// 查询公司列表
         /// </summary>
         /// <returns></returns>
