@@ -103,24 +103,33 @@ namespace DongXu.Target.Repository
         public int AddrConfiguration(int[] User_Id, int Goal_Id)
         {
             int addrConfigurationId = 0;
-
+            var GoalCreateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd"));
             for (int i=0;i< User_Id.Length;i++)
             {
                 if(i==0)
                 {
                     Apprconfiguration apprconfiguration = new Apprconfiguration();
-                    apprconfiguration.UserId = User_Id[0];
+                    apprconfiguration.UserId = User_Id[i];
                     apprconfiguration.GoalId = Goal_Id;
                     apprconfiguration.ApprConfigurationStateid = 1;
+                    apprconfiguration.RoleId = 0;
+                    apprconfiguration.ApprConfigurationIsEnable = 1;
+                    apprconfiguration.ApprConfigurationCreateTime = GoalCreateTime;
                     db.Apprconfiguration.Add(apprconfiguration);
                     db.SaveChanges();
                     addrConfigurationId = apprconfiguration.ApprConfigurationId;
+                    
                 }
                 else
                 {
                     Apprconfiguration apprconfiguration = new Apprconfiguration();
-                    apprconfiguration.UserId = User_Id[0];
+                    apprconfiguration.UserId = User_Id[i];
                     apprconfiguration.GoalId = Goal_Id;
+                    apprconfiguration.ApprConfigurationStateid = 0;
+                    apprconfiguration.ApprConfigurationNextid = 0;
+                    apprconfiguration.RoleId = 0;
+                    apprconfiguration.ApprConfigurationIsEnable = 1;
+                    apprconfiguration.ApprConfigurationCreateTime = GoalCreateTime;
                     db.Apprconfiguration.Add(apprconfiguration);
                     db.SaveChanges();
                     int j = db.Database.ExecuteSqlCommand($"update apprconfiguration set ApprConfiguration_Nextid={apprconfiguration.ApprConfigurationId} WHERE Goal_Id={Goal_Id} and ApprConfiguration_Id={addrConfigurationId}");
@@ -132,7 +141,8 @@ namespace DongXu.Target.Repository
                 }
                 
             }
-            return db.SaveChanges();
+            int f=db.Database.ExecuteSqlCommand($"insert into appractivity(User_Id, Goal_Id, Next_Id, State_Id,ApprConfiguration_Id) select User_Id, Goal_Id, ApprConfiguration_Nextid, ApprConfiguration_Stateid, ApprConfiguration_Id from apprconfiguration where Goal_Id={Goal_Id}");
+            return f;
         }
     }
 }
