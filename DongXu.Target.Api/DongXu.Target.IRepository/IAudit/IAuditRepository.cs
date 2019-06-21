@@ -45,6 +45,6 @@ namespace DongXu.Target.IRepository
         /// </summary>
         /// <param name="goalId"></param>
         /// <returns></returns>
-         List<ApprOpinion> GetApprFlowList(int goalId)
+        List<ApprOpinion> GetApprFlowList(int goalId);
     }
 }

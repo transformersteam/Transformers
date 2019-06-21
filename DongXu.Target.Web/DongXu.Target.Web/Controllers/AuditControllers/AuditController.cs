@@ -14,7 +14,7 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index(int id=58,int proess=1)
+        public IActionResult Index(int id=1,int proess=1)
         {
             ViewBag.id = id;
             ViewBag.user = 1;
