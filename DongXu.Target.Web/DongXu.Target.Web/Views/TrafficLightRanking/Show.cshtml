@@ -14,211 +14,212 @@
     <link href="~/HH/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-<div class="panel panel-primary" style="height:480px">
-    <div class="panel-heading">积分排名</div>
-    <br />
-    <div id="mainresponsibility" style="float:left">
-        <div style="margin-left: 150px">
-            <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
-            <div id='main' style='width: 1000px; height: 400px;'></div>
-            <!--引入echarts.js-->
-            <script src="~/echars/echarts.js"></script>
-            <script>
-                var red = [];
-                var yellow = [];
-                var green = [];
-                $(function () {
-                    $.ajax({
-                        url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
-                        type: "get",
-                        success: function (data) {
-                            $(data).each(function () {
-                                var rednums = parseFloat(this.redlightPercentage) * 100;
-                                var yellows = parseFloat(this.yellowLightPercentage) * 100;
-                                var greens = parseFloat(this.greenLightPercentage) * 100;
-                                red.push(rednums);
-                                yellow.push(yellows);
-                                green.push(greens);
-                            })
-                            console.log(data);
+    <div class="panel panel-primary" style="height:480px">
+        <div class="panel-heading">积分排名</div>
+        <br />
+        <div id="mainresponsibility2">
+            <div style="margin-left: 150px">
+                <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
+                <div id='main' style='width: 1000px; height: 400px;'></div>
+                <script>
+                    var red = [];
+                    var yellow = [];
+                    var green = [];
+                    $(function () {
+                        $.ajax({
+                            url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
+                            type: "get",
+                            success: function (data) {
+                                $(data).each(function () {
+                                    var rednums = parseFloat(this.redlightPercentage) * 100;
+                                    var yellows = parseFloat(this.yellowLightPercentage) * 100;
+                                    var greens = parseFloat(this.greenLightPercentage) * 100;
+                                    red.push(rednums);
+                                    yellow.push(yellows);
+                                    green.push(greens);
+                                })
+                                console.log(data);
 
 
-                            //基于准备好的DOM，初始化echarts实例
-                            var myChart = echarts.init(document.getElementById('main'));
-                            option = {
-                                tooltip: {
-                                    trigger: 'axis',
-                                    formatter: '{c}%',
-                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                    }
-                                },
-                                legend: {
-                                    data: ['直接访问', '邮件营销', '联盟广告']
-                                },
-                                toolbox: {
-                                    show: true,
-                                    feature: {
-                                        mark: { show: true },
-                                        dataView: { show: true, readOnly: false },
-                                        magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
-                                        restore: { show: true },
-                                        saveAsImage: { show: true }
-                                    }
-                                },
-                                calculable: true,
-                                xAxis: [
-                                    {
-                                        //type: 'value'
-                                    }
-                                ],
-                                yAxis: [
-                                    {
-                                        type: 'category',
-                                        data: ["东旭光电", "东旭白云", "东旭蓝天", "东旭黑土"]
-                                    }
-                                ],
-                                series: [
-                                    {
-                                        name: '红灯',
-                                        type: 'bar',
-                                        barWidth: '40%',
-                                        stack: '总量',
-                                        itemStyle: {
-                                            normal: {
-                                                color: function (params) {
-                                                    // build a color map as your need.
-                                                    var colorList = [
-                                                        '#FF4500'
-                                                    ];
-                                                    return colorList[params.dataIndex]
-                                                },
-                                                label: {
-                                                    show: true,
-                                                    position: 'insideRight',
-                                                    formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
-                                                }
-                                            }
-                                        },
-                                        data: red
+                                //基于准备好的DOM，初始化echarts实例
+                                var myChart = echarts.init(document.getElementById('main'));
+                                option = {
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        formatter: '{c}%',
+                                        axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                        }
                                     },
-                                    {
-                                        name: '黄灯',
-                                        type: 'bar',
-                                        stack: '总量',
-                                        itemStyle: {
-                                            normal: {
-                                                color: function (params) {
-                                                    // build a color map as your need.
-                                                    var colorList = [
-                                                        '#FFC125'
-                                                    ];
-                                                    return colorList[params.dataIndex]
-                                                },
-                                                label: {
-                                                    show: true,
-                                                    position: 'insideRight',
-                                                    formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
-                                                }
-                                            }
-                                        },
-                                        data: yellow
+                                    legend: {
+                                        data: ['直接访问', '邮件营销', '联盟广告']
                                     },
-                                    {
-                                        name: '绿灯',
-                                        type: 'bar',
-                                        stack: '总量',
-                                        itemStyle: {
-                                            normal: {
-                                                color: function (params) {
-                                                    // build a color map as your need.
-                                                    var colorList = [
-                                                        '#4EEE94'
-                                                    ];
-                                                    return colorList[params.dataIndex]
-                                                },
-                                                label: {
-                                                    show: true,
-                                                    position: 'insideRight',
-                                                    formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                    toolbox: {
+                                        show: true,
+                                        feature: {
+                                            mark: { show: true },
+                                            dataView: { show: true, readOnly: false },
+                                            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                                            restore: { show: true },
+                                            saveAsImage: { show: true }
+                                        }
+                                    },
+                                    calculable: true,
+                                    xAxis: [
+                                        {
+                                            //type: 'value'
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'category',
+                                            data: ["东旭光电", "东旭白云", "东旭蓝天", "东旭黑土"]
+                                        }
+                                    ],
+                                    series: [
+                                        {
+                                            name: '红灯',
+                                            type: 'bar',
+                                            barWidth: '40%',
+                                            stack: '总量',
+                                            itemStyle: {
+                                                normal: {
+                                                    color: function (params) {
+                                                        // build a color map as your need.
+                                                        var colorList = [
+                                                            '#FF4500'
+                                                        ];
+                                                        return colorList[params.dataIndex]
+                                                    },
+                                                    label: {
+                                                        show: true,
+                                                        position: 'insideRight',
+                                                        formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                                    }
                                                 }
-                                            }
-                                        }, data: green
-                                    }
-                                ]
-                            };
-                            //使用刚指定的配置项和数据显示图表
-                            myChart.setOption(option);
-                        }
+                                            },
+                                            data: red
+                                        },
+                                        {
+                                            name: '黄灯',
+                                            type: 'bar',
+                                            stack: '总量',
+                                            itemStyle: {
+                                                normal: {
+                                                    color: function (params) {
+                                                        // build a color map as your need.
+                                                        var colorList = [
+                                                            '#FFC125'
+                                                        ];
+                                                        return colorList[params.dataIndex]
+                                                    },
+                                                    label: {
+                                                        show: true,
+                                                        position: 'insideRight',
+                                                        formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                                    }
+                                                }
+                                            },
+                                            data: yellow
+                                        },
+                                        {
+                                            name: '绿灯',
+                                            type: 'bar',
+                                            stack: '总量',
+                                            itemStyle: {
+                                                normal: {
+                                                    color: function (params) {
+                                                        // build a color map as your need.
+                                                        var colorList = [
+                                                            '#4EEE94'
+                                                        ];
+                                                        return colorList[params.dataIndex]
+                                                    },
+                                                    label: {
+                                                        show: true,
+                                                        position: 'insideRight',
+                                                        formatter: '{b}\n{c}%'　　　　//这是关键，在需要的地方加上就行了
+                                                    }
+                                                }
+                                            }, data: green
+                                        }
+                                    ]
+                                };
+                                //使用刚指定的配置项和数据显示图表
+                                myChart.setOption(option);
+                            }
+                        })
                     })
-                })
-            </script>
-        </div>
-    </div>
-</div>
-<div class="panel panel-primary" style="height:320px">
-    <div class="panel-heading">积分明细</div>
-    <br />
-
-    <div id="mainresponsibility" style="float:left">
-
-        <div style="margin-left: 120px">
-            <div style="float: left">
-                <table class="table table-bordered" style="width: 350px">
-                    <thead style="text-align: center;">
-                    <tr>
-                        <td rowspan="2" style="padding-top: 10px">部门名称</td>
-                        <td colspan="4">红灯</td>
-                    </tr>
-                    <tr>
-                        <td>绿灯</td>
-                        <td>百分比</td>
-                               
-                    </tr>
-                    </thead>
-                    <tbody id="tb1" style="text-align: center;"></tbody>
-                </table>
+                </script>
             </div>
-            <div style="float: left">
-                <table class="table table-bordered" style="width: 350px">
-                    <thead style="text-align: center;">
-                    <tr>
-                        <td colspan="4">黄灯</td>
-                    </tr>
-                    <tr>
-                        <td>绿灯</td>
-                        <td>百分比</td>
-                               
-                    </tr>
-                    </thead>
-                    <tbody id="tb2" style="text-align: center;"></tbody>
-                </table>
-            </div>
-            <div style="float: left">
-                <table class="table table-bordered" style="width: 350px">
-                    <thead style="text-align: center;">
-                    <tr>
-                        <td colspan="4">绿灯</td>
-                    </tr>
-                    <tr>
-                        <td>绿灯</td>
-                        <td>百分比</td>
-                               
-                    </tr>
-                    </thead>
-                    <tbody id="tb3" style="text-align: center;"></tbody>
-                </table>
-            </div>
-
         </div>
 
-    </div>
-</div>
 
-<div>
-        
-</div>
+    </div>
+
+    <div class="panel panel-primary" style="height:320px">
+        <div class="panel-heading">积分明细</div>
+        <br />
+
+        <div id="mainresponsibility1" style="float:left">
+
+            <div style="margin-left: 120px">
+                <div style="float: left">
+                    <table class="table table-bordered" style="width: 350px">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <td rowspan="2" style="padding-top: 10px">部门名称</td>
+                                <td colspan="4">红灯</td>
+                            </tr>
+                            <tr>
+                                <td>绿灯</td>
+                                <td>百分比</td>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tb1" style="text-align: center;"></tbody>
+                    </table>
+                </div>
+                <div style="float: left">
+                    <table class="table table-bordered" style="width: 350px">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <td colspan="4">黄灯</td>
+                            </tr>
+                            <tr>
+                                <td>绿灯</td>
+                                <td>百分比</td>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tb2" style="text-align: center;"></tbody>
+                    </table>
+                </div>
+                <div style="float: left">
+                    <table class="table table-bordered" style="width: 350px">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <td colspan="4">绿灯</td>
+                            </tr>
+                            <tr>
+                                <td>绿灯</td>
+                                <td>百分比</td>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tb3" style="text-align: center;"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+   
+
 </body>
+
 </html>
 <script>
     //文档就绪函数
@@ -226,10 +227,11 @@
         getredlightpercentage();
         getyellowlightpercentage();
         getgreenlightpercentage();
+       
     });
 
     //第一个子公司红绿灯数量与百分比
-    function getredlightpercentage() { 
+    function getredlightpercentage() {
         $.ajax({
             url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
             type: "get",
@@ -270,7 +272,7 @@
     }
 
     //第三个子公司红绿灯数量与百分比
-    function getgreenlightpercentage() { 
+    function getgreenlightpercentage() {
         $.ajax({
             url: "http://localhost:8888/api/TrafficLightRanking/GetTrafficLightRankingList",
             type: "get",
@@ -288,5 +290,7 @@
             }
         })
     }
+
+
 </script>
 

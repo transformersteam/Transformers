@@ -16,29 +16,87 @@
 <body>
     <table class="layui-table">
         <tr>
-            <td>角色姓名</td>
-            <td><input id="txtName" type="text" v-model="RoleName" /></td>
-        </tr>
-        <tr>
-            <td>所属部门</td>
-            <td>
-                <select id="roleo" lay-verify="" lay-search v-model="RolePid">
-                    <option v-for="item in rolesOList" :value="item.roleId">{{item.roleName}}</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>角色描述</td>
-            <td><input id="txtContext" type="text" v-model="RoleContent" /></td>
-        </tr>
-        <tr>
-            <td>选择权限</td>
-            <td><span v-for="item in power"><input id="Checkbox1" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span></td>
+            <td>关注人列表</td>
+            <td id="user"></td>
         </tr>
         <tr>
             <td></td>
-            <td><input id="Button1" type="button" value="添加" class="layui-btn layui-btn-normal" v-on:click="AddRole(RoleName, RolePid, RoleContent)" /></td>
+            <td>
+                <input id="Button1" type="button" class="layui-btn" value="保存" onclick="add()" />
+            </td>
         </tr>
     </table>
 </body>
 </html>
+<script>
+    $(function () {
+        getUser();
+    })
+
+    function getUser() {
+        var a = 0;
+        $.ajax({
+            url: "/GoalManage/GetDutyUserList",
+            type: "get",
+            success: function (data) {
+                console.log(data)
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        var str = "<input id='Checkbox1' type='checkbox' value="+data[i].userId+" />" + data[i].userRealName + "";
+                        a++;
+                        if (a >= 3) {
+                            str += "<br />"
+                        }
+                        $("#user").append(str);
+                    }
+                }
+            }
+        })
+    }
+
+    //添加关注人
+    function add() {
+        var obj = "";
+        $("input[type='checkbox']").each(function () {
+            if ($(this).is(":checked")) {
+                obj += this.value + ',';
+            }
+        })
+        if (obj == "") {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.msg('您还没有添加关注人呢');
+                return false
+            });
+        }
+        $.ajax({
+            url: "/GoalManage/AttentionSubmit",
+            type: "post",
+            async: true,
+            data: {
+                goalid:@ViewBag.id,
+                attentionuser: obj.toString(),
+                },
+            success: function (i) {
+                if (i > 0) {
+                    setTimeout(function () {
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('设置关注人成功');
+                            setTimeout(function () {
+                                guanbi();
+                            },500)
+                        });
+                    },1500)
+                }
+            }
+        })
+    }
+
+    //关闭当前页
+    function guanbi() {
+         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+         parent.layer.close(index); //再执行关闭
+         //location.href = '/GoalManage/GoalManageShow';
+    }
+</script>

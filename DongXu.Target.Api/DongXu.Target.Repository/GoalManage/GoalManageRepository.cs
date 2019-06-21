@@ -50,6 +50,18 @@ namespace DongXu.Target.Repository.GoalManage
         }
 
         /// <summary>
+        /// 批量插入 关注人
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public int AddAttentionUser(List<Attention> list)
+        {
+            context.Attention.AddRange(list);
+            int i = context.SaveChanges();
+            return i;
+        }
+
+        /// <summary>
         /// 查询公司列表  指标单位
         /// </summary>
         /// <returns></returns>

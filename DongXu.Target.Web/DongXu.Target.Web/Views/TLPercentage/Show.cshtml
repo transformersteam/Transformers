@@ -1,0 +1,117 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Show</title>
+    <script src="~/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <div id="chars" style="float:left">
+        <div style="margin-left: 150px">
+            <!-- 为ECharts准备一个具备大小（宽高）的DOM容器-->
+            <div id='main' style='width: 1000px; height: 400px;'></div>
+            <!--引入echarts.js-->
+            <script src="~/echars/echarts.js"></script>
+            <script>
+                $(function () {
+
+                    var red = 0;
+                    var yellow = 0;
+                    var green = 0;
+                    var num = 0;
+                    $.ajax({
+                        url: "http://localhost:8888/api/TLPercentage/GetITLPercentageList",
+                        type: "get",
+                        success: function (data) {
+                            $(data).each(function () {
+                                red = this.redLight;
+                                yellow = this.yellowLight;
+                                green = this.greenLight;
+                                num = this.targetNumber;
+                            })
+                            var reds = parseInt(red / num * 100);
+                            var yellows = parseInt(yellow / num * 100);
+                            var greens = parseInt(green / num * 100);
+
+                            //基于准备好的DOM，初始化echarts实例
+                            var myChart = echarts.init(document.getElementById('main'));
+                            option = {
+                                title: {
+                                    text: '子公司目标完成占据百分比',
+                                    x: 'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                legend: {
+                                    orient: 'vertical',
+                                    x: 'left',
+                                    data: ['黄灯', '红灯', '绿灯']
+                                },
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        mark: { show: true },
+                                        dataView: { show: true, readOnly: false },
+                                        magicType: {
+                                            show: true,
+                                            type: ['pie', 'funnel'],
+                                            option: {
+                                                funnel: {
+                                                    x: '25%',
+                                                    width: '50%',
+                                                    funnelAlign: 'left',
+                                                    max: 1548
+                                                }
+                                            }
+                                        },
+                                        restore: { show: true },
+                                        saveAsImage: { show: true }
+                                    }
+                                },
+                                calculable: true,
+                                series: [
+                                    {
+                                        name: '访问来源',
+                                        type: 'pie',
+                                        radius: '55%',
+                                        center: ['50%', '60%'],
+                                        itemStyle: {
+                                            normal: {
+                                                color: function (params) {
+                                                    // build a color map as your need.
+                                                    var colorList = [
+                                                        '#FFC125', '#FF4500', '#4EEE94'
+                                                    ];
+                                                    return colorList[params.dataIndex]
+                                                },
+                                            }
+                                        },
+                                        data: [
+                                            { value: red, name: '黄灯' + reds + '%' },
+                                            { value: yellow, name: '红灯' + yellows + '%' },
+                                            { value: green, name: '绿灯' + greens + '%' }
+                                        ]
+                                    }
+                                ]
+                            };
+
+                            //使用刚指定的配置项和数据显示图表
+                            myChart.setOption(option);
+                        }
+                    })
+                })
+
+
+            </script>
+        </div>
+    </div>
+</body>
+</html>
