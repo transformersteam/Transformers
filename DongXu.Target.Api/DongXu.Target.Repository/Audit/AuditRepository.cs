@@ -61,17 +61,17 @@ namespace DongXu.Target.Repository
         /// </summary>
         /// <param name="appractivity"></param>
         /// <returns></returns>
-        public int Audit(Appractivity appractivity)
+        public int Audit(AuditauditDto appractivity)
         {
             if(appractivity.ApprActivityIsExecute==1)
             {
-                var oldappra = db.Appractivity.Where(m => m.ApprActivityId == appractivity.ApprActivityId).FirstOrDefault();
+                var oldappra = db.Appractivity.Where(m => m.ApprActivityId == appractivity.ApprActivity_Id).FirstOrDefault();
                 if (oldappra != null)
                 {
-                    oldappra.ApprActivityOpinion = appractivity.ApprActivityOpinion;
+                    oldappra.ApprActivityOpinion = appractivity.ApprActivity_Opinion;
                     oldappra.ApprActivityIsExecute = appractivity.ApprActivityIsExecute;
                     oldappra.StateId = 0;
-                    var newappra = db.Appractivity.Where(m => m.ApprConfigurationId == appractivity.NextId).FirstOrDefault();
+                    var newappra = db.Appractivity.Where(m => m.ApprConfigurationId == appractivity.Next_Id).FirstOrDefault();
                     if (newappra != null)
                     {
                         newappra.StateId = 1;
@@ -87,10 +87,10 @@ namespace DongXu.Target.Repository
             }
             else
             {
-                var oldappra = db.Appractivity.Where(m => m.ApprActivityId == appractivity.ApprActivityId).FirstOrDefault();
+                var oldappra = db.Appractivity.Where(m => m.ApprActivityId == appractivity.ApprActivity_Id).FirstOrDefault();
                 if (oldappra != null)
                 {
-                    oldappra.ApprActivityOpinion = appractivity.ApprActivityOpinion;
+                    oldappra.ApprActivityOpinion = appractivity.ApprActivity_Opinion;
                     oldappra.ApprActivityIsExecute = appractivity.ApprActivityIsExecute;
                     oldappra.StateId = 0;
                     //if(appractivity.ApprActivityIsExecute==0)
@@ -99,7 +99,7 @@ namespace DongXu.Target.Repository
                     //    int i = db.Database.ExecuteSqlCommand("update Appractivity set  where ApprActivityId");
 
                     //}
-                    int i = db.Database.ExecuteSqlCommand($"update Appractivity set  ApprActivityIsExecute=0 where ApprActivityId>{appractivity.ApprActivityId} and GoalId={appractivity.GoalId}");
+                    int i = db.Database.ExecuteSqlCommand($"update Appractivity set  ApprActivityIsExecute=0 where ApprActivityId>{appractivity.ApprActivity_Id} and GoalId={appractivity.Goal_Id}");
                     return db.SaveChanges();
                 }
             }
@@ -153,6 +153,16 @@ namespace DongXu.Target.Repository
             }
             int f=db.Database.ExecuteSqlCommand($"insert into appractivity(User_Id, Goal_Id, Next_Id, State_Id,ApprConfiguration_Id) select User_Id, Goal_Id, ApprConfiguration_Nextid, ApprConfiguration_Stateid, ApprConfiguration_Id from apprconfiguration where Goal_Id={Goal_Id}");
             return f;
+        }
+        /// <summary>
+        /// 添加进展
+        /// </summary>
+        /// <param name="feedback"></param>
+        /// <returns></returns>
+        public int AddFeedBack(Feedback feedback)
+        {
+            db.Feedback.Add(feedback);
+            return db.SaveChanges();
         }
     }
 }

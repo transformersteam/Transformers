@@ -33,7 +33,7 @@ namespace DongXu.Target.IRepository
         /// </summary>
         /// <param name="appractivity"></param>
         /// <returns></returns>
-        int Audit(Appractivity appractivity);
+        int Audit(AuditauditDto appractivity);
         /// <summary>
         /// 添加到配置表
         /// </summary>
@@ -46,5 +46,10 @@ namespace DongXu.Target.IRepository
         /// <param name="goalId"></param>
         /// <returns></returns>
         List<ApprOpinion> GetApprFlowList(int goalId);
+        /// <summary>
+        /// 添加进展表
+        /// </summary>
+        /// <returns></returns>
+        int AddFeedBack(Feedback feedback);
     }
 }
