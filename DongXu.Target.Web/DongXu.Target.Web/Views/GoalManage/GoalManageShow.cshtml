@@ -228,12 +228,13 @@
     //获取指标分解数据
     function getIndexData(id) {
          $.ajax({
-            url: "/GoalManage/GetUserNameByGoalId",
+            url: "/GoalManage/GetIndexsByGoalId",
             type: "get",
             data: {
                 id: id
             },
-            success: function (data) {
+             success: function (data) {
+                 alert(JSON.stringify(data));
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
                           var str = "<tr>"
