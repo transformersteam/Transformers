@@ -63,6 +63,18 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         }
 
         /// <summary>
+        /// 批量插入 关注人
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        [HttpPost("AddAttentionUser")]
+        public int AddAttentionUser([FromBody]List<Attention> list)
+        {
+            int i = iGoalManageRepository.AddAttentionUser(list);
+            return i;
+        }
+
+        /// <summary>
         /// 查询公司列表
         /// </summary>
         /// <returns></returns>
@@ -148,6 +160,29 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         public List<Frequency> GetFrequencieList()
         {
             var list = iGoalManageRepository.GetFrequencieList();
+            return list;
+        }
+
+        /// <summary>
+        /// 根据目标id查询对应指标分解
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetIndexsByGoalId")]
+        public List<Indexs> GetIndexsByGoalId(int id)
+        {
+            var list = iGoalManageRepository.GetIndexsByGoalId(id);
+            return list;
+        }
+
+        /// <summary>
+        /// 根据目标id获取目标审核人
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetUserNameByGoalId")]
+        public List<AuditUser> GetUserNameByGoalId(int id)
+        {
+            var list = iGoalManageRepository.GetUserNameByGoalId(id);
             return list;
         }
     }

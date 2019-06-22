@@ -47,6 +47,16 @@ namespace DongXu.Target.Repository
             return apprOpinion;
         }
         /// <summary>
+        /// 审批流程
+        /// </summary>
+        /// <param name="goalId"></param>
+        /// <returns></returns>
+        public List<ApprOpinion> GetApprFlowList(int goalId)
+        {
+            List<ApprOpinion> apprOpinion = db.ApprOpinion.FromSql($"select b.User_Name,a.ApprActivity_IsExecute,a.ApprActivity_Opinion,a.ApprActivity_CreateTime from appractivity a inner join `user` b on a.User_Id=b.User_Id where a.Goal_Id={goalId} ORDER BY a.ApprActivity_Id ").ToList();
+            return apprOpinion;
+        }
+        /// <summary>
         /// 审核
         /// </summary>
         /// <param name="appractivity"></param>
@@ -94,6 +104,55 @@ namespace DongXu.Target.Repository
                 }
             }
             return 0;
+        }
+        /// <summary>
+        /// 添加到配置表
+        /// </summary>
+        /// <param name="apprconfigurationDto"></param>
+        /// <returns></returns>
+        public int AddrConfiguration(int[] User_Id, int Goal_Id)
+        {
+            int addrConfigurationId = 0;
+            var GoalCreateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd"));
+            for (int i=0;i< User_Id.Length;i++)
+            {
+                if(i==0)
+                {
+                    Apprconfiguration apprconfiguration = new Apprconfiguration();
+                    apprconfiguration.UserId = User_Id[i];
+                    apprconfiguration.GoalId = Goal_Id;
+                    apprconfiguration.ApprConfigurationStateid = 1;
+                    apprconfiguration.RoleId = 0;
+                    apprconfiguration.ApprConfigurationIsEnable = 1;
+                    apprconfiguration.ApprConfigurationCreateTime = GoalCreateTime;
+                    db.Apprconfiguration.Add(apprconfiguration);
+                    db.SaveChanges();
+                    addrConfigurationId = apprconfiguration.ApprConfigurationId;
+                    
+                }
+                else
+                {
+                    Apprconfiguration apprconfiguration = new Apprconfiguration();
+                    apprconfiguration.UserId = User_Id[i];
+                    apprconfiguration.GoalId = Goal_Id;
+                    apprconfiguration.ApprConfigurationStateid = 0;
+                    apprconfiguration.ApprConfigurationNextid = 0;
+                    apprconfiguration.RoleId = 0;
+                    apprconfiguration.ApprConfigurationIsEnable = 1;
+                    apprconfiguration.ApprConfigurationCreateTime = GoalCreateTime;
+                    db.Apprconfiguration.Add(apprconfiguration);
+                    db.SaveChanges();
+                    int j = db.Database.ExecuteSqlCommand($"update apprconfiguration set ApprConfiguration_Nextid={apprconfiguration.ApprConfigurationId} WHERE Goal_Id={Goal_Id} and ApprConfiguration_Id={addrConfigurationId}");
+                    if(j==0)
+                    {
+                        return 0;
+                    }
+                    addrConfigurationId = apprconfiguration.ApprConfigurationId;
+                }
+                
+            }
+            int f=db.Database.ExecuteSqlCommand($"insert into appractivity(User_Id, Goal_Id, Next_Id, State_Id,ApprConfiguration_Id) select User_Id, Goal_Id, ApprConfiguration_Nextid, ApprConfiguration_Stateid, ApprConfiguration_Id from apprconfiguration where Goal_Id={Goal_Id}");
+            return f;
         }
     }
 }

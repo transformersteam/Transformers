@@ -134,5 +134,9 @@ namespace DongXu.Target.Model.Dto
         public string Frequency_Name { get; set; }
 
         public string User_Name { get; set; }
+
+        public int State_Id { get; set; }
+
+        public int ApprActivity_IsExecute { get; set; }
     }
 }

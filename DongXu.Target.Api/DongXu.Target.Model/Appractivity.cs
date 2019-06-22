@@ -13,12 +13,12 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 用户id
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// 目标id
         /// </summary>
-        public int? GoalId { get; set; }
+        public int GoalId { get; set; }
 
         /// <summary>
         /// 下一个节点id
@@ -28,7 +28,7 @@ namespace DongXu.Target.Model
         /// <summary>
         /// 状态id
         /// </summary>
-        public int? StateId { get; set; }
+        public int StateId { get; set; }
 
         /// <summary>
         /// 部门id

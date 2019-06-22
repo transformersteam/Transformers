@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DongXu.Target.Web.Models;
+using DongXu.Target.Web.Models.Dto;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
@@ -59,6 +60,40 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         {
             return View();
         }
+        
+        /// <summary>
+        /// 设置关注人页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddAttentionUser(int id)
+        {
+            ViewBag.id = id;    //选择关注人的目标id
+            return View();
+        }
+
+        /// <summary>
+        /// 添加关注人
+        /// </summary>
+        /// <param name="goalid"></param>
+        /// <param name="attentionuser"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public int AttentionSubmit(int goalid,string attentionuser)
+        {
+            List<Attention> list = new List<Attention>();
+            var str = attentionuser.Remove(attentionuser.Length-1).Split(',');
+            for (int i = 0; i < str.Length; i++)
+            {
+                Attention attention = new Attention();
+                attention.UserId =Convert.ToInt32(str[i]);
+                attention.GoalId = goalid;
+                attention.AttentionIsUse = 1;
+                attention.AttentionCreateTime =Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd"));
+                list.Add(attention);
+            }
+            var j = HelperHttpClient.GetAll("post", "GoalManage/AddAttentionUser",list);  //添加成功返回自增长id
+            return Convert.ToInt32(j);
+        }
 
         /// <summary>
         /// 目标下达
@@ -79,7 +114,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalWeight = baseData.GoalWeight,
                 Goal_DutyUserId = baseData.Goal_DutyUserId,
                 Goal_DutyCommanyId = baseData.Goal_DutyCommanyId,
-                Goal_ParentId = baseData.Goal_ParentId,
+                Goal_ParentId = 1,
                 BusinessState = 0,
                 FeedbackId = 1,
                 FileId = 0,
@@ -89,9 +124,15 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalSources=baseData.GoalSources,
                 GoalStateId=4,                       
             };
-            baseData.AuditValue.Split(',');
+            string auditValue = baseData.AuditValue;
             var goaldata = JsonConvert.SerializeObject(goal);
             var goalId = HelperHttpClient.GetAll("post", "GoalManage/GoalAdd", goaldata);  //添加成功返回自增长id
+
+            //添加到配置表
+            ApprconfigurationDto apprconfigurationDto = new ApprconfigurationDto();
+            apprconfigurationDto.AuditValue = auditValue;
+            apprconfigurationDto.GoalId =int.Parse( goalId);
+            AddrConfiguration(apprconfigurationDto);
 
             Apprconfiguration config = new Apprconfiguration();
             for (int i = 0; i < baseData.AuditValue.Length; i++)
@@ -107,8 +148,8 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             foreach (var item in files)
             {
                 var inputName = item.Name;
-                var filePath = @"F:\360Downloads\" + item.FileName.Substring(item.FileName.LastIndexOf("\\") + 1);
-                if(item.Length>0)
+                var filePath = "Common/UpdateFiles/" + item.FileName.Substring(item.FileName.LastIndexOf("\\") + 1);
+                if (item.Length>0)
                 {
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -125,6 +166,19 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 var i = HelperHttpClient.GetAll("post", "GoalManage/GoalFileAdd", file);
             }
             return Ok(new { count = files.Count, size });
+        }
+
+        /// <summary>
+        /// 添加到配置表
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public JsonResult AddrConfiguration(ApprconfigurationDto apprconfigurationDto)
+        {
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(apprconfigurationDto);
+            var target = HelperHttpClient.GetAll("post", "Audit/AddrConfiguration", json);
+            return Json(target);
+
         }
 
         /// <summary>
@@ -213,6 +267,30 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         {
             var frequency= HelperHttpClient.GetAll("get", "GoalManage/GetFrequencieList", null);
             var list = JsonConvert.DeserializeObject<List<Frequency>>(frequency);
+            return Json(list);
+        }
+
+        /// <summary>
+        /// 根据目标id获取指标分解表数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetIndexsByGoalId(int id)
+        {
+            var indexlist = HelperHttpClient.GetAll("get", "GoalManage/GetIndexsByGoalId?id="+id, null);
+            var list = JsonConvert.DeserializeObject<List<Indexs>>(indexlist);
+            return Json(list);
+        }
+
+        /// <summary>
+        /// 根据目标id获取目标审核人
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetUserNameByGoalId(int id)
+        {
+            var userlist = HelperHttpClient.GetAll("get", "GoalManage/GetUserNameByGoalId?id=" + id, null);
+            var list = JsonConvert.DeserializeObject<List<AuditUser>>(userlist);
             return Json(list);
         }
     }

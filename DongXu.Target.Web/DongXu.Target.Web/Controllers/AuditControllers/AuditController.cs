@@ -14,12 +14,14 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public IActionResult Index(int id=1,int proess=1)
         {
+            ViewBag.id = id;
+            ViewBag.user = 1;
             return View();
         }
         /// <summary>
-        /// 审批详情页面
+        /// 显示审批详情页面
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="goalId"></param>
@@ -54,6 +56,22 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
             var apprOpinionList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApprOpinion>>(result);
             return Json(apprOpinionList);
         }
+        /// <summary>
+        /// 审批流程
+        /// </summary>
+        /// <param name="goalId"></param>
+        /// <returns></returns>
+        public JsonResult GetApprFlowList(int goalId)
+        {
+            var result = HelperHttpClient.GetAll("get", "Audit/GetApprFlowList?goalId=" + goalId, null);
+            var apprOpinionList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApprOpinion>>(result);
+            return Json(apprOpinionList);
+        }
+        /// <summary>
+        /// 审批
+        /// </summary>
+        /// <param name="appractivity"></param>
+        /// <returns></returns>
         public JsonResult Audit(Appractivity appractivity)
         {
             appractivity.ApprActivityIsUse = true;

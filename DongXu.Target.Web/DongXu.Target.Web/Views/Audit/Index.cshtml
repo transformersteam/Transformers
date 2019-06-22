@@ -14,10 +14,15 @@
     <script src="~/js/axios.js"></script>
     <script src="~/layui-v2.4.5/layui/layui.js"></script>
     <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
+    @*:class="{'selected':index===clickIndex}"*@
     <div id="max">
-        <div><p>当前办理进度:</p></div>
+        当前办理进度:
+        <div style="height:15px;text-align:center;" class="progress"><div v-for="item in auditDtoList" class="progress-bar progress-bar-striped progress-bar-animated" v-bind:style="{ width: width + '%' }">{{item.feedback_NowEvolve}}%</div></div>
         <div id="1-1">
             <div id="1-1-1" style="background-color:darkgray;height:40px;"><h4 style="padding-top:10px"><strong>目标信息</strong></h4></div>
             <table class="layui-table" v-for="item in auditDtoList">
@@ -67,9 +72,9 @@
                 </tr>
                 <tr>
                     <td><strong>返回周次: </strong> 2018年第22周</td>
-                    <td><strong>当前进度: </strong> {{item.feedback_NowEvolve}}</td>
+                    <td><strong>当前进度: </strong> {{item.feedback_NowEvolve}}%</td>
                     <td><strong>当前状态: </strong> {{item.goalState_Name}}</td>
-                    <td><strong>附件: </strong> <a>{{item.file_Name}}</a></td>
+                    <td><strong>附件: </strong> <a :href="file_Url">{{item.file_Name}}</a></td>
                 </tr>
                 <tr>
                     <td colspan="4"><strong>操作时间:</strong> {{item.apprActivity_CreateTime}}</td>
@@ -81,7 +86,7 @@
             <table class="layui-table">
                 <tr>
                     <td><strong>确认人:</strong></td>
-                    <td v-for="item in apparDtoList">{{item.user_Name}}@*<span id="state" value='{{item.apprActivity_IsExecute}}'></span>*@</td>
+                    <td v-for="item in apparOpinoin">{{item.user_Name}} <span id="state" v-if="apprActivity_IsExecute===1">√</span></td>
                 </tr>
             </table>
         </div>
@@ -118,6 +123,9 @@
                     <td><input id="Text1" type="text" v-model="next_Id" /></td>
                     <td><input id="Text1" type="text" v-model="apprConfiguration_Id" /></td>
                     <td><input id="Text1" type="text" v-model="apprActivity_Id" /></td>
+                    <td><input id="Text1" type="text" v-model="width" /></td>
+                    <td><input id="Text1" type="text" v-model="file_Url" /></td>
+                    <td><input id="Text1" type="text" v-model="apprActivity_IsExecute" /></td>
                 </tr>
             </table>
         </div>
@@ -142,36 +150,45 @@
             apprConfiguration_Id: "",
             apprActivity_Id: "",
             ApprActivity_Opinion: "",
-            GoalId:""
+            GoalId: "",
+            width: "",
+            file_Url: "",
+            apprActivity_IsExecute:""
 
         },
         created() {
-            this.GetAuditDtoList();
-            this.GetApprDtoList();
-            this.GetApprOpinionList();
+            this.GetAuditDtoList(@ViewBag.user,@ViewBag.id);
+            this.GetApprDtoList(@ViewBag.id);
+            this.GetApprOpinionList(@ViewBag.id);
         },
         methods: {
-            GetAuditDtoList: function (userId = 1, goalId=1) {
+            GetAuditDtoList: function(userId,goalId) {
                 axios.get("/Audit/GetAuditDtoList", { params: { userId: userId, goalId: goalId } }).then((response) => {
                     this.auditDtoList = response.data;
+                   
                     for (var i = 0; i < response.data.length; i++) {
                         this.next_Id = response.data[i].next_Id;
                         this.apprConfiguration_Id = response.data[i].apprConfiguration_Id;
                         this.apprActivity_Id = response.data[i].apprActivity_Id;
                         this.GoalId = response.data[i].goal_Id;
+                        this.width = response.data[i].feedback_NowEvolve;
+                        this.file_Url = response.data[i].file_Url;
                     }
                 });
             },
-             GetApprDtoList: function (goalId = 1) {
+             GetApprDtoList: function (goalId) {
                    axios.get("/Audit/GetApprDtoList", { params: { goalId: goalId } }).then((response) => {
 
                        this.apparDtoList = response.data;
                        
                 });
             },
-            GetApprOpinionList: function (goalId = 1) {
+            GetApprOpinionList: function (goalId) {
                 axios.get("/Audit/GetApprOpinionList", { params: { goalId: goalId } }).then((response) => {
                     this.apparOpinoin = response.data;
+                    for (var i = 0; i < response.data.length; i++) {
+                    this.apprActivity_IsExecute = response.data[i].apprActivity_IsExecute;
+                    }
                 });
             },
             Confirm: function (next_Id, apprConfiguration_Id, apprActivity_Id, ApprActivity_Opinion, GoalId) {

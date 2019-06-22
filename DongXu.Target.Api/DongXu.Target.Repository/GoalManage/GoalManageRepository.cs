@@ -1,5 +1,6 @@
 ﻿using DongXu.Target.IRepository.IGoalManage;
 using DongXu.Target.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,18 @@ namespace DongXu.Target.Repository.GoalManage
         public int GoalFileAdd(Files files)
         {
             context.Files.Add(files);
+            int i = context.SaveChanges();
+            return i;
+        }
+
+        /// <summary>
+        /// 批量插入 关注人
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public int AddAttentionUser(List<Attention> list)
+        {
+            context.Attention.AddRange(list);
             int i = context.SaveChanges();
             return i;
         }
@@ -126,6 +139,27 @@ namespace DongXu.Target.Repository.GoalManage
         public List<Frequency> GetFrequencieList()
         {
             var list = context.Frequency.ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 根据目标id查询对应指标分解
+        /// </summary>
+        /// <returns></returns>
+        public List<Indexs> GetIndexsByGoalId(int id)
+        {
+            var list = context.Indexs.Where(m => m.GoalId == id).ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 根据目标id获取目标审核人
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<AuditUser> GetUserNameByGoalId(int id)
+        {
+            var list = context.AuditUser.FromSql($"SELECT a.ApprActivity_Id,a.Goal_Id,b.User_Id,b.User_RealName FROM appractivity a INNER JOIN `user` b on a.user_id=b.User_Id WHERE a.goal_id ={id}").ToList();
             return list;
         }
     }

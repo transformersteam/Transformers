@@ -70,5 +70,36 @@ namespace DongXu.Target.Api.Controllers.AuditController
             Appractivity appractivity = Newtonsoft.Json.JsonConvert.DeserializeObject<Appractivity>(json);
             return _iauditRepository.Audit(appractivity);
         }
+        /// <summary>
+        /// 添加到配置表
+        /// </summary>
+        /// <param name="User_Id"></param>
+        /// <param name="Goal_Id"></param>
+        /// <returns></returns>
+        [HttpPost("AddrConfiguration")]
+        public int AddrConfiguration([FromBody]string json)
+        {
+            ApprconfigurationDto apprconfigurationDto = Newtonsoft.Json.JsonConvert.DeserializeObject<ApprconfigurationDto>(json);
+            string s = apprconfigurationDto.AuditValue;
+            string userId = s.Substring(0, s.Length - 1);
+            string[] SuserId=userId.Split(',');
+            int[] User_Id = new int[SuserId.Length];
+            for (int i = 0; i < SuserId.Length; i++)
+            {
+                User_Id[i] = int.Parse(SuserId[i]);
+            }
+            int Goal_Id = apprconfigurationDto.GoalId;
+            return _iauditRepository.AddrConfiguration(User_Id, Goal_Id);
+        }
+        /// <summary>
+        /// 审批流程
+        /// </summary>
+        /// <param name="goalId"></param>
+        /// <returns></returns>
+        [HttpPost("GetApprFlowList")]
+        public List<ApprOpinion> GetApprFlowList(int goalId)
+        {
+            return _iauditRepository.GetApprFlowList(goalId);
+        }
     }
 }
