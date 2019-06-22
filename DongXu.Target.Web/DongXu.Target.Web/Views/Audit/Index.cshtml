@@ -86,7 +86,7 @@
             <table class="layui-table">
                 <tr>
                     <td><strong>确认人:</strong></td>
-                    <td v-for="item in apparDtoList">{{item.user_Name}} <span id="state" v-if="apprActivity_IsExecute===1">√</span></td>
+                    <td v-for="item in apparDtoList">{{item.user_Name}} <span id="state" v-if="item.apprActivity_IsExecute===1">▬➤ ✔</span><span id="state" v-else>▬➤</span></td>
                 </tr>
             </table>
         </div>
@@ -178,8 +178,8 @@
             },
              GetApprDtoList: function (goalId) {
                    axios.get("/Audit/GetApprDtoList", { params: { goalId: goalId } }).then((response) => {
-
                        this.apparDtoList = response.data;
+                       console.log(this.apparDtoList);
                        
                 });
             },
@@ -192,18 +192,17 @@
                 });
             },
             Confirm: function (next_Id, apprConfiguration_Id, apprActivity_Id, ApprActivity_Opinion, GoalId) {
-                axios.get("/Audit/Audit", { params: { NextId: next_Id, ApprConfigurationId: apprConfiguration_Id, ApprActivityId: apprActivity_Id, ApprActivityOpinion: ApprActivity_Opinion, ApprActivityIsExecute: 1, GoalId: GoalId } }).then((response) => {
-                    if (response.data > 0) {
-                        alert('审批完成');
-                        location.href = "";
-                    }
+                axios.get("/Audit/Audit", { params: { Next_Id: next_Id, ApprActivity_Id: apprActivity_Id, ApprActivity_Opinion: ApprActivity_Opinion, Goal_Id: GoalId, ApprActivity_IsExecute:1 } }).then((response) => {
+
                 });
             },
+            
+            
             Back: function (next_Id, apprConfiguration_Id, apprActivity_Id, ApprActivity_Opinion, GoalId) {
-                axios.get("/Audit/Audit", { params: { NextId: next_Id, ApprConfigurationId: apprConfiguration_Id, ApprActivityId: apprActivity_Id, ApprActivityOpinion: ApprActivity_Opinion, ApprActivityIsExecute: 0, GoalId: GoalId } }).then((response) => {
+                axios.get("/Audit/Audit", { params: { Next_Id: next_Id, ApprActivity_Id: apprActivity_Id, ApprActivity_Opinion: ApprActivity_Opinion, Goal_Id: GoalId, ApprActivity_IsExecute:0 } }).then((response) => {
                     
                 });
             }
-            }
+        } 
     })
 </script>

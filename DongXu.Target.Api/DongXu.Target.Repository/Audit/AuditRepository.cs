@@ -63,13 +63,13 @@ namespace DongXu.Target.Repository
         /// <returns></returns>
         public int Audit(AuditauditDto appractivity)
         {
-            if(appractivity.ApprActivityIsExecute==1)
+            if(appractivity.ApprActivity_IsExecute == 1)
             {
                 var oldappra = db.Appractivity.Where(m => m.ApprActivityId == appractivity.ApprActivity_Id).FirstOrDefault();
                 if (oldappra != null)
                 {
                     oldappra.ApprActivityOpinion = appractivity.ApprActivity_Opinion;
-                    oldappra.ApprActivityIsExecute = appractivity.ApprActivityIsExecute;
+                    oldappra.ApprActivityIsExecute = appractivity.ApprActivity_IsExecute;
                     oldappra.StateId = 0;
                     var newappra = db.Appractivity.Where(m => m.ApprConfigurationId == appractivity.Next_Id).FirstOrDefault();
                     if (newappra != null)
@@ -91,7 +91,7 @@ namespace DongXu.Target.Repository
                 if (oldappra != null)
                 {
                     oldappra.ApprActivityOpinion = appractivity.ApprActivity_Opinion;
-                    oldappra.ApprActivityIsExecute = appractivity.ApprActivityIsExecute;
+                    oldappra.ApprActivityIsExecute = appractivity.ApprActivity_IsExecute;
                     oldappra.StateId = 0;
                     //if(appractivity.ApprActivityIsExecute==0)
                     //{
