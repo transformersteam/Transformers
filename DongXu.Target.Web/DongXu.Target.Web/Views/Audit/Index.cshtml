@@ -86,7 +86,7 @@
             <table class="layui-table">
                 <tr>
                     <td><strong>确认人:</strong></td>
-                    <td v-for="item in apparOpinoin">{{item.user_Name}} <span id="state" v-if="apprActivity_IsExecute===1">√</span></td>
+                    <td v-for="item in apparDtoList">{{item.user_Name}} <span id="state" v-if="apprActivity_IsExecute===1">√</span></td>
                 </tr>
             </table>
         </div>
