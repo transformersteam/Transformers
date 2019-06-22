@@ -102,6 +102,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         [HttpPost]
         public async Task<IActionResult> GoalSubmit([FromForm]IFormCollection formData,GoalBaseData baseData)
         {
+            //添加目标表
             var goal = new Goal()
             {
                 GoalName = baseData.GoalName,
@@ -124,7 +125,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalSources=baseData.GoalSources,
                 GoalStateId=4,                       
             };
-            string auditValue = baseData.AuditValue;
+            string auditValue = baseData.AuditValue;   //获取到审核人id
             var goaldata = JsonConvert.SerializeObject(goal);
             var goalId = HelperHttpClient.GetAll("post", "GoalManage/GoalAdd", goaldata);  //添加成功返回自增长id
 
