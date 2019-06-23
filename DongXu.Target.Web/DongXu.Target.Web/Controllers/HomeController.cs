@@ -11,15 +11,21 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using DongXu.Target.Cache;
+using log4net;
 
 namespace DongXu.Target.Web.Controllers
 {
     public class HomeController : BaseController
     {
+        private ILog log = LogManager.GetLogger(Startup.repository.Name, typeof(HttpGlobalExceptionFilter));
+
         [MyActionFilter]
         //[AllowAnonymous]
         public IActionResult Index()
         {
+            log.Error("老田测试log4错误日志");
+            log.Error("老蔡测试log4错误日志");
+            log.Error("老牛测试log4错误日志");
             return View();
         }
 

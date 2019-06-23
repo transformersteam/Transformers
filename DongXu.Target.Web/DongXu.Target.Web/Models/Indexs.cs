@@ -16,7 +16,7 @@ namespace DongXu.Target.Web
         /// <summary>
         /// 目标id
         /// </summary>
-        public int? GoalId { get; set; }
+        public int GoalId { get; set; }
 
         /// <summary>
         /// 一月
@@ -81,6 +81,6 @@ namespace DongXu.Target.Web
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime? IndexsCreateTime { get; set; }
+        public DateTime IndexsCreateTime { get; set; }
     }
 }

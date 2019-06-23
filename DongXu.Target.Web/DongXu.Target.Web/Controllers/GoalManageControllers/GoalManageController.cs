@@ -147,8 +147,25 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             feedback.FeedbackNowEvolve = 0;
             AddFeedBack(feedback);
 
+            //添加指标分解表
+            Indexs indexs = new Indexs();
+            indexs.IndexsJanuary = baseData.IndexsJanuary;
+            indexs.IndexsFebruary = baseData.IndexsFebruary;
+            indexs.IndexsMarch = baseData.IndexsMarch;
+            indexs.IndexsApril = baseData.IndexsApril;
+            indexs.IndexsMay = baseData.IndexsMay;
+            indexs.IndexsJune = baseData.IndexsJune;
+            indexs.IndexsJuly = baseData.IndexsJuly;
+            indexs.IndexsAugust = baseData.IndexsAugust;
+            indexs.IndexsSeptember = baseData.IndexsSeptember;
+            indexs.IndexsOctober = baseData.IndexsOctober;
+            indexs.IndexsNovember = baseData.IndexsNovember;
+            indexs.IndexsYearTarget = baseData.IndexsYearTarget;
+            indexs.GoalId = int.Parse(goalId);
+            indexs.IndexsCreateTime =Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd"));
+            var index= HelperHttpClient.GetAll("post", "GoalManage/GoalIndexsAdd", indexs);  
 
-
+            //上传文件
             IFormFileCollection files = formData.Files;
             long size = files.Sum(f => f.Length);
             foreach (var item in files)
@@ -197,6 +214,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             var target = HelperHttpClient.GetAll("post", "Audit/AddFeedBack", json);
             return Json(target);
         }
+
         /// <summary>
         /// 获取公司列表  指标单位  公司
         /// </summary>
