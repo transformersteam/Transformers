@@ -83,10 +83,10 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
         /// </summary>
         /// <param name="Power_PId"></param>
         /// <returns></returns>
-        public List<Power> GetPowersByPid(int Power_PId)
+        public List<PowerDto> GetPowersByPid(int UserId,int Power_PId)
         {
-            var result = HelperHttpClient.GetAll("get", "Audit/GetPowersByPid?Power_PId="+ Power_PId, null);
-            List<Power> list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Power>>(result);
+            var result = HelperHttpClient.GetAll("get", "Audit/GetPowersByPid?Power_PId="+ Power_PId+ "&UserId="+ UserId, null);
+            List<PowerDto> list =Newtonsoft.Json.JsonConvert.DeserializeObject<List<PowerDto>>(result);
             return list;
         }
     }

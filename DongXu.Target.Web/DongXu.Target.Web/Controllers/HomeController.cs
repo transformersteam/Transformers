@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using DongXu.Target.Cache;
+using DongXu.Target.Web.Models.Dto;
 
 namespace DongXu.Target.Web.Controllers
 {
@@ -20,7 +21,20 @@ namespace DongXu.Target.Web.Controllers
         //[AllowAnonymous]
         public IActionResult Index()
         {
+            int userId = 1;
+            ViewBag.userId = userId;
             return View();
+        }
+        /// <summary>
+        /// 绑定左侧下拉
+        /// </summary>
+        /// <param name="Power_PId"></param>
+        /// <returns></returns>
+        public List<PowerDto> GetPowersByPid(int UserId, int Power_PId)
+        {
+            var result = HelperHttpClient.GetAll("get", "Audit/GetPowersByPid?Power_PId=" + Power_PId + "&UserId=" + UserId, null);
+            List<PowerDto> list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PowerDto>>(result);
+            return list;
         }
 
         public async Task<IActionResult> LoginOut()

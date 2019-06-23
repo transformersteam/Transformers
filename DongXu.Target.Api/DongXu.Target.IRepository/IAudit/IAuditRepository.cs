@@ -55,6 +55,6 @@ namespace DongXu.Target.IRepository
         /// 绑定左侧
         /// </summary>
         /// <returns></returns>
-        List<Power> GetPowersByPid(int Power_PId);
+        List<PowerDto> GetPowersByPid(int UserId,int Power_PId);
     }
 }
