@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using log4net;
+using log4net.Config;
+using log4net.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,13 +41,15 @@ namespace DongXu.Target.Web
  *                     佛祖保佑        永无BUG
 */
 
-
-
     public class Startup
     {
+        public static ILoggerRepository repository { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            repository=LogManager.CreateRepository("NETCoreRepository");   //创建名为NETCoreRepository的错误日志存储库                                                                          
+            XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));// 指定配置文件
         }
 
         public IConfiguration Configuration { get; }
@@ -58,6 +64,11 @@ namespace DongXu.Target.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //log4net 配置
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<HttpGlobalExceptionFilter>();//加入全局异常类
+            });
 
             services.AddMvc();
 

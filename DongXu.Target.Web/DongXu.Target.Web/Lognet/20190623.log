@@ -1,0 +1,8 @@
+2019-06-23 21:51:20,405 [9] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-23 21:52:18,729 [9] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-23 21:53:14,481 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-23 21:53:14,952 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-23 21:53:15,428 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-23 22:13:53,665 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-23 22:13:53,691 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-23 22:13:53,691 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志

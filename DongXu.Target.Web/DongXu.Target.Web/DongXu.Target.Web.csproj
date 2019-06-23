@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
@@ -21,6 +22,7 @@
     <Folder Include="wwwroot\HH\error\" />
     <Folder Include="wwwroot\HH\js\plugins\echarts\" />
     <Folder Include="wwwroot\HH\js\plugins\jquery-ui\" />
+    <Folder Include="Lognet\" />
   </ItemGroup>
 
   <ItemGroup>

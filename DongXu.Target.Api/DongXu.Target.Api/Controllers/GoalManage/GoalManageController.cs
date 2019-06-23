@@ -63,6 +63,18 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         }
 
         /// <summary>
+        /// 目标分解表 添加
+        /// </summary>
+        /// <param name="indexs"></param>
+        /// <returns></returns>
+        [HttpPost("GoalIndexsAdd")]
+        public int GoalIndexsAdd([FromBody]Indexs indexs)
+        {
+            int i = iGoalManageRepository.GoalIndexsAdd(indexs);
+            return i;
+        }
+
+        /// <summary>
         /// 批量插入 关注人
         /// </summary>
         /// <param name="list"></param>
