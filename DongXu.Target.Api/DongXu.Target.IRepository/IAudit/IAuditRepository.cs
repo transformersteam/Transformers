@@ -51,5 +51,10 @@ namespace DongXu.Target.IRepository
         /// </summary>
         /// <returns></returns>
         int AddFeedBack(Feedback feedback);
+        /// <summary>
+        /// 绑定左侧
+        /// </summary>
+        /// <returns></returns>
+        List<Power> GetPowersByPid(int Power_PId);
     }
 }

@@ -164,5 +164,15 @@ namespace DongXu.Target.Repository
             db.Feedback.Add(feedback);
             return db.SaveChanges();
         }
+        /// <summary>
+        /// 绑定左侧
+        /// </summary>
+        /// <param name="Power_PId"></param>
+        /// <returns></returns>
+        public List<Power> GetPowersByPid(int Power_PId)
+        {
+           List<Power> list= db.Power.Where(m => m.PowerPid == Power_PId&&m.PowerIsEnable==true).ToList();
+            return list;
+        }
     }
 }

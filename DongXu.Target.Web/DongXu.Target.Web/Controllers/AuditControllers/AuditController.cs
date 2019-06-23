@@ -78,5 +78,16 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
             var result = HelperHttpClient.GetAll("post", "Audit/Audit", json);
             return Json(result);
         }
+        /// <summary>
+        /// 绑定左侧下拉
+        /// </summary>
+        /// <param name="Power_PId"></param>
+        /// <returns></returns>
+        public List<Power> GetPowersByPid(int Power_PId)
+        {
+            var result = HelperHttpClient.GetAll("get", "Audit/GetPowersByPid?Power_PId="+ Power_PId, null);
+            List<Power> list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Power>>(result);
+            return list;
+        }
     }
 }
