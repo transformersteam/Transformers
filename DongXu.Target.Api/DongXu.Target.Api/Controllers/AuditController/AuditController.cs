@@ -112,5 +112,16 @@ namespace DongXu.Target.Api.Controllers.AuditController
             Feedback feedback = Newtonsoft.Json.JsonConvert.DeserializeObject<Feedback>(json);
             return _iauditRepository.AddFeedBack(feedback);
         }
+        /// <summary>
+        /// 绑定左侧
+        /// </summary>
+        /// <param name="Power_PId"></param>
+        /// <returns></returns>
+        [HttpGet("GetPowersByPid")]
+        public List<Power> GetPowersByPid(int Power_PId)
+        {
+            List<Power> list = _iauditRepository.GetPowersByPid(Power_PId);
+            return list;
+        }
     }
 }
