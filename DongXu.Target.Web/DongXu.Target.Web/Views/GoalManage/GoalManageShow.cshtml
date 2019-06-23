@@ -47,46 +47,33 @@
         </div>
         <div class="panel-heading">指标分解</div>
         <table class="table table-bordered table-striped text-center">
-            <tr>
-                <td>月份</td>
-                <td>1月</td>
-                <td>1-2月</td>
-                <td>1-3月</td>
-                <td>1-4月</td>
-                <td>1-5月</td>
-                <td>1-6月</td>
-                <td>1-7月</td>
-                <td>1-8月</td>
-                <td>1-9月</td>
-                <td>1-10月</td>
-                <td>1-11月</td>
-                <td>年度目标</td>
-            </tr>
-            <tr id="indexs">
-                <td>目标值</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-                <td>月份</td>
-            </tr>
+            <thead>
+                <tr>
+                    <td>月份</td>
+                    <td>1月</td>
+                    <td>1-2月</td>
+                    <td>1-3月</td>
+                    <td>1-4月</td>
+                    <td>1-5月</td>
+                    <td>1-6月</td>
+                    <td>1-7月</td>
+                    <td>1-8月</td>
+                    <td>1-9月</td>
+                    <td>1-10月</td>
+                    <td>1-11月</td>
+                    <td>年度目标</td>
+                </tr>
+            </thead>
+            <tbody id="indexs">
+
+            </tbody>
         </table>
         <div class="panel-heading">反馈确认</div>
         <div style="padding-left: 100px">
             确认流程
         </div>
         <div style="padding-left: 250px" id="audituser">
-            <p>郭莱(模块运营总经理)</p>
-            <p>明和(单位一把手)</p>
-            <p>柯振亮(集团运营负责人)</p>
-            <p>王振华(督办领导)</p>
+
         </div>
         <div style="float: right">
             <input id="setuser" type="button" value="设置关注人" class="btn btn-primary" />&nbsp;&nbsp;
@@ -215,9 +202,10 @@
                 id: id
             },
             success: function (data) {
+                $("#audituser").empty();
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
-                          var str = "<p>" + data.User_RealName + "</p>";
+                          var str = "<p>" + data[i].user_RealName + "</p>";
                           $("#audituser").append(str);
                     }
                 }
@@ -234,23 +222,24 @@
                 id: id
             },
              success: function (data) {
-                 alert(JSON.stringify(data));
+                 $("#indexs").empty();
+                 console.log(data)
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
-                          var str = "<tr>"
-                                +"<td>"+data[i].IndexsJanuary+"</td>"
-                                +"<td>"+data[i].IndexsFebruary+"</td>"
-                                +"<td>"+data[i].IndexsMarch+"</td>"
-                                +"<td>"+data[i].IndexsApril+"</td>"
-                                +"<td>"+data[i].IndexsMay+"</td>"
-                                +"<td>"+data[i].IndexsJune+"</td>"
-                                +"<td>"+data[i].IndexsJuly+"</td>"
-                                +"<td>"+data[i].IndexsAugust+"</td>"
-                                +"<td>"+data[i].IndexsSeptember+"</td>"
-                                +"<td>"+data[i].IndexsOctober+"</td>"
-                                +"<td>"+data[i].IndexsNovember+"</td>"
-                                +"<td>"+data[i].IndexsYearTarget+"</td>"
-                                +"<td>"+data[i].IndexsJanuary+"</td>"
+                        var str = "<tr>"
+                                +"<td>'2019'</td>"
+                                +"<td>"+data[i].indexsJanuary+"</td>"
+                                +"<td>"+data[i].indexsFebruary+"</td>"
+                                +"<td>"+data[i].indexsMarch+"</td>"
+                                +"<td>"+data[i].indexsApril+"</td>"
+                                +"<td>"+data[i].indexsMay+"</td>"
+                                +"<td>"+data[i].indexsJune+"</td>"
+                                +"<td>"+data[i].indexsJuly+"</td>"
+                                +"<td>"+data[i].indexsAugust+"</td>"
+                                +"<td>"+data[i].indexsSeptember+"</td>"
+                                +"<td>"+data[i].indexsOctober+"</td>"
+                                +"<td>"+data[i].indexsNovember+"</td>"
+                                +"<td>"+data[i].indexsYearTarget+"</td>"
                             +"</tr>";
                           $("#indexs").append(str);
                     }
@@ -310,7 +299,7 @@
                             + "</tr>"
                             + "<tr>"
                             + "<td>支持表格</td>"
-                            + "<td colspan='3'><span>" + data[i].file_Name + "</span></td>"
+                            +"<td colspan='3'><span><a href='#'>"+data[i].file_Name+"</a></span></td>"
                             + "</tr>"
                             + "</table>"
                         $("#app").append(str);

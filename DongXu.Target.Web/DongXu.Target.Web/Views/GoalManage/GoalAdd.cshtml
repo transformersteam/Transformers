@@ -47,7 +47,7 @@
                     <td>
                         指标类别:
                         <select id="goalChildType" class="layui-input layui-select" name="GoalTypeId">
-                            <option v-for="(data,index) in goalchildtype" :value="index">{{data.goalTypeName}}</option>
+                            <option v-for="(data,index) in goalchildtype" :value="data.goalTypeId">{{data.goalTypeName}}</option>
                         </select>
                     </td>
                     <td>
@@ -68,11 +68,11 @@
                 <tr>
                     <td>
                         开始时间:
-                        <input id="begintime" type="text" name="GoalStartTime" placeholder="yyyy-MM-dd" class="layui-input" style="text-align:center" />
+                        <input id="begintime" type="text" name="GoalStartTime" placeholder="yyyy-MM-dd" lay-verify="goalBeginTime" class="layui-input" style="text-align:center" />
                     </td>
                     <td>
                         完成时间:
-                        <input id="endtime" type="text" name="GoalEndTime" placeholder="yyyy-MM-dd" class="layui-input" style="text-align:center" />
+                        <input id="endtime" type="text" name="GoalEndTime" placeholder="yyyy-MM-dd" lay-verify="goalEndTime" class="layui-input" style="text-align:center" />
                     </td>
                     <td>
                         周期:
@@ -94,7 +94,7 @@
                     </td>
                     <td>
                         考核权重:
-                        <input id="weight" type="text" name="GoalWeight" class="layui-input layui-input"  />
+                        <input id="weight" type="text" name="GoalWeight" lay-verify="goalWeight" class="layui-input layui-input" />
                     </td>
                 </tr>
                 <tr>
@@ -112,13 +112,13 @@
                 <tr>
                     <td style="padding:10px,10px">计算公式/评价标准</td>
                     <td colspan="3">
-                        <input id="formula" type="text" name="GoalFormula" class="layui-input layui-textarea" />
+                        <input id="formula" type="text" name="GoalFormula" lay-verify="goalFormula" class="layui-input layui-textarea" />
                     </td>
                 </tr>
                 <tr>
                     <td>数据来源</td>
                     <td colspan="3">
-                        <input id="source" type="text" name="GoalSources" class="layui-input layui-textarea" />
+                        <input id="source" type="text" name="GoalSources" lay-verify="goalSource" class="layui-input layui-textarea" />
                     </td>
                 </tr>
                 <tr>
@@ -152,40 +152,40 @@
                 <tr>
                     <td>目标值</td>
                     <td>
-                        <input id="january" name="IndexsJanuary" type="text" style="width:50px" />
+                        <input id="january" name="IndexsJanuary" lay-verify="goalJanuary" type="text" style="width:50px" />
                     </td>
                     <td>
-                        <input id="february " name="IndexsFebruary" type="text" style="width:50px" />
+                        <input id="february " name="IndexsFebruary" type="text" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="match" type="text" name="IndexsMarch" style="width:50px" />
+                        <input id="match" type="text" name="IndexsMarch" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="april" type="text" name="IndexsApril" style="width:50px" />
+                        <input id="april" type="text" name="IndexsApril" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="may" type="text" name="IndexsMay" style="width:50px" />
+                        <input id="may" type="text" name="IndexsMay" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="june" type="text" name="IndexsJune" style="width:50px" />
+                        <input id="june" type="text" name="IndexsJune" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="july" type="text" name="IndexsJuly" style="width:50px" />
+                        <input id="july" type="text" name="IndexsJuly" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="august" type="text" name="IndexsAugust" style="width:50px" />
+                        <input id="august" type="text" name="IndexsAugust" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="september" type="text" name="IndexsSeptember" style="width:50px" />
+                        <input id="september" type="text" name="IndexsSeptember" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="october" type="text" name="IndexsOctober" style="width:50px" />
+                        <input id="october" type="text" name="IndexsOctober" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="november" type="text" name="IndexsNovember" style="width:50px" />
+                        <input id="november" type="text" name="IndexsNovember" lay-verify="goalIndex" style="width:50px" />
                     </td>
                     <td>
-                        <input id="december " type="text" name="IndexsYearTarget" style="width:50px" />
+                        <input id="december " type="text" name="IndexsYearTarget" lay-verify="goalIndex" style="width:50px" />
                     </td>
                 </tr>
             </table>
@@ -202,11 +202,11 @@
                         <li class="shuttle_box_li shuttle_box_near" style="border:2px">
                             <ul id="shuttle_box_left">
                                 <li v-for="(data,index) in dutyuser">
-                                    <input id="Checkbox1" type="checkbox" :value="data.userId" />{{data.userRealName}}
+                                    <input id="Checkbox1" type="checkbox" :value="data.userId" lay-verify="goalAuditUser" />{{data.userRealName}}
                                 </li>
                                 <li>
                                     <input id="value" type="hidden" name="AuditValue" />
-                                    <input id="btnSure" type="button" class="layui-btn" value="确定" onclick="auditSure()"/>
+                                    <input id="btnSure" type="button" class="layui-btn" value="确定" onclick="auditSure()" />
                                 </li>
                             </ul>
                         </li>
@@ -245,7 +245,41 @@
                         return '指标名称不可为空';
                     }
                 },
-
+                goalBeginTime: function (value) {
+                    if (value == "") {
+                        return '开始时间不可为空';
+                    }
+                },
+                goalEndTime: function (value) {
+                    if (value == "") {
+                        return '结束时间不可为空';
+                    }
+                },
+                goalWeight: function (value) {
+                    if (value == "") {
+                        return '周期不可为空';
+                    }
+                },
+                goalFormula: function (value) {
+                    if (value == "") {
+                        return '计算公式不可为空';
+                    }
+                },
+                goalSource: function (value) {
+                    if (value == "") {
+                        return '数据来源不可为空';
+                    }
+                },
+                goalIndex: function (value) {
+                    if (value == "") {
+                        return '指标值不可为空';
+                    }
+                },
+                goalAuditUser: function (value) {
+                    if (value == "") {
+                        return '目标审核人不可为空';
+                    }
+                }
             });
             form.render();
         })
@@ -278,8 +312,6 @@
                     axios.get("@Url.Action("GetCommanyList","GoalManage")").then(
                         (response) => {
                             this.commanydata = response.data;
-                            console.log(response.data)
-
                         }
                     )
                 },
@@ -287,7 +319,6 @@
                     axios.get("@Url.Action("GetDutyUserList","GoalManage")").then(
                         (response) => {
                             this.dutyuser = response.data;
-                            console.log(this.dutyuser)
                         }
                     )
                 },
@@ -301,6 +332,7 @@
                 bindLeave:async  function () {               //查询指标等级
                     axios.get("@Url.Action("GetIndexlevelList","GoalManage")").then(
                         (response) => {
+                            console.log(response.data)
                             this.indexleave = response.data;
                         }
                     )
@@ -319,7 +351,7 @@
                         }
                     )
                 },
-                bindGoalChildType: function () {           //查询目标类型  
+                bindGoalChildType: function () {           //查询目标类型
                     axios.get("@Url.Action("GetGoalChildTypeList","GoalManage")").then(
                         (response) => {
                             this.goalchildtype = response.data;
@@ -357,7 +389,7 @@
 
     var obj = "";
     //点击确定
-    function auditSure() {        
+    function auditSure() {
         $("input[type='checkbox']").each(function () {
             if ($(this).is(":checked")) {
                 obj += this.value + ',';
@@ -374,6 +406,6 @@
         }
         else {
             $("#endaudit").hide();
-        }      
+        }
     }
 </script>

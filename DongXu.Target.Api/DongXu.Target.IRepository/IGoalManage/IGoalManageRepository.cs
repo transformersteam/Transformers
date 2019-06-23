@@ -31,6 +31,13 @@ namespace DongXu.Target.IRepository.IGoalManage
         int GoalFileAdd(Files files);
 
         /// <summary>
+        /// 添加指标分解表
+        /// </summary>
+        /// <param name="indexs"></param>
+        /// <returns></returns>
+        int GoalIndexsAdd(Indexs indexs);
+
+        /// <summary>
         /// 批量插入 关注人
         /// </summary>
         /// <param name="list"></param>
