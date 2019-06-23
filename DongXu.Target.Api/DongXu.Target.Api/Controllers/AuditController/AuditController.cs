@@ -67,7 +67,7 @@ namespace DongXu.Target.Api.Controllers.AuditController
         [HttpPost("Audit")]
         public int Audit([FromBody]string json)
         {
-            Appractivity appractivity = Newtonsoft.Json.JsonConvert.DeserializeObject<Appractivity>(json);
+            AuditauditDto appractivity = Newtonsoft.Json.JsonConvert.DeserializeObject<AuditauditDto> (json);
             return _iauditRepository.Audit(appractivity);
         }
         /// <summary>
@@ -100,6 +100,17 @@ namespace DongXu.Target.Api.Controllers.AuditController
         public List<ApprOpinion> GetApprFlowList(int goalId)
         {
             return _iauditRepository.GetApprFlowList(goalId);
+        }
+        /// <summary>
+        /// 添加进展表
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        [HttpPost("AddFeedBack")]
+        public int AddFeedBack([FromBody]string json)
+        {
+            Feedback feedback = Newtonsoft.Json.JsonConvert.DeserializeObject<Feedback>(json);
+            return _iauditRepository.AddFeedBack(feedback);
         }
     }
 }

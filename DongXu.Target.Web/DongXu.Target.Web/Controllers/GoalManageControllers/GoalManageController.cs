@@ -102,6 +102,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         [HttpPost]
         public async Task<IActionResult> GoalSubmit([FromForm]IFormCollection formData,GoalBaseData baseData)
         {
+            //添加目标表
             var goal = new Goal()
             {
                 GoalName = baseData.GoalName,
@@ -124,7 +125,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalSources=baseData.GoalSources,
                 GoalStateId=4,                       
             };
-            string auditValue = baseData.AuditValue;
+            string auditValue = baseData.AuditValue;   //获取到审核人id
             var goaldata = JsonConvert.SerializeObject(goal);
             var goalId = HelperHttpClient.GetAll("post", "GoalManage/GoalAdd", goaldata);  //添加成功返回自增长id
 
@@ -134,14 +135,19 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             apprconfigurationDto.GoalId =int.Parse( goalId);
             AddrConfiguration(apprconfigurationDto);
 
-            Apprconfiguration config = new Apprconfiguration();
-            for (int i = 0; i < baseData.AuditValue.Length; i++)
-            {
-                config.ApprConfigurationCreateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd"));
-                config.GoalId = int.Parse(goalId);
-                config.ApprConfigurationIsEnable = 1;
-                //config.
-            }
+            //添加进展表
+            Feedback feedback = new Feedback();
+            feedback.GoalId = int.Parse(goalId);
+            feedback.StateId = 1;
+            feedback.FeedbackWorkEvolve = "未启动";
+            feedback.FeedbackDayEvolve = "完成0%";
+            feedback.FeedbackQuestion = "无问题";
+            feedback.FeedbackMeasure = "无";
+            feedback.FeedbackCoordinateMatters = "无";
+            feedback.FeedbackNowEvolve = 0;
+            AddFeedBack(feedback);
+
+
 
             IFormFileCollection files = formData.Files;
             long size = files.Sum(f => f.Length);
@@ -180,7 +186,17 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             return Json(target);
 
         }
-
+        /// <summary>
+        /// 添加进展表
+        /// </summary>
+        /// <param name="feedback"></param>
+        /// <returns></returns>
+        public JsonResult AddFeedBack(Feedback feedback)
+        {
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(feedback);
+            var target = HelperHttpClient.GetAll("post", "Audit/AddFeedBack", json);
+            return Json(target);
+        }
         /// <summary>
         /// 获取公司列表  指标单位  公司
         /// </summary>

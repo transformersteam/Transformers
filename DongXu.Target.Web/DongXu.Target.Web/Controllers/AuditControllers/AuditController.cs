@@ -14,10 +14,10 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index(int id=1,int proess=1)
+        public IActionResult Index(int id=59,int proess=1)
         {
             ViewBag.id = id;
-            ViewBag.user = 1;
+            ViewBag.user = 4;
             return View();
         }
         /// <summary>
@@ -72,9 +72,8 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
         /// </summary>
         /// <param name="appractivity"></param>
         /// <returns></returns>
-        public JsonResult Audit(Appractivity appractivity)
+        public JsonResult Audit(AuditauditDto appractivity)
         {
-            appractivity.ApprActivityIsUse = true;
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(appractivity);
             var result = HelperHttpClient.GetAll("post", "Audit/Audit", json);
             return Json(result);
