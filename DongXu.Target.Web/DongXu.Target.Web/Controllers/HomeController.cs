@@ -30,9 +30,9 @@ namespace DongXu.Target.Web.Controllers
             RedisHelper.Set("username", LoginInfo.userRealName);
             ViewBag.userId = userId;
             RedisHelper.Set("userid", userId);
-            log.Error("老田测试log4错误日志");
-            log.Error("老蔡测试log4错误日志");
-            log.Error("老牛测试log4错误日志");
+            //log.Error("老田测试log4错误日志");
+            //log.Error("老蔡测试log4错误日志");
+            //log.Error("老牛测试log4错误日志");
             return View();
         }
 

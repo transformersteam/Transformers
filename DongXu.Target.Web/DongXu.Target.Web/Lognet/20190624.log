@@ -277,3 +277,64 @@
 2019-06-24 14:28:19,047 [137] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
 2019-06-24 14:28:19,048 [137] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
 2019-06-24 14:28:19,048 [137] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:32:42,226 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:32:42,245 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:32:42,245 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:35:23,943 [39] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:35:23,943 [39] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:35:23,943 [39] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:36:41,563 [17] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:36:41,564 [17] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:36:41,564 [17] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:46:53,794 [81] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:46:53,794 [81] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:46:53,794 [81] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:48:09,920 [79] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:48:09,921 [79] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:48:09,921 [79] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:50:15,525 [102] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:50:15,525 [102] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:50:15,525 [102] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:50:27,705 [96] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:50:27,705 [96] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:50:27,705 [96] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:52:42,305 [13] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DongXu.Target.Web.MyActionFilter.<>c__DisplayClass0_0.<OnActionExecuting>b__0(PowerList m) in G:\专业高级课程\大实训二\Github项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at System.Collections.Generic.List`1.FindIndex(Int32 startIndex, Int32 count, Predicate`1 match)
+   at System.Collections.Generic.List`1.Exists(Predicate`1 match)
+   at DongXu.Target.Web.MyActionFilter.OnActionExecuting(ActionExecutingContext filterContext) in G:\专业高级课程\大实训二\Github项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+2019-06-24 14:53:27,313 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:53:27,333 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:53:27,333 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 15:14:57,202 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 15:14:57,235 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 15:14:57,235 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 15:18:42,098 [9] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DongXu.Target.Web.MyActionFilter.<>c__DisplayClass0_0.<OnActionExecuting>b__0(PowerList m) in G:\专业高级课程\大实训二\Github项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at System.Collections.Generic.List`1.FindIndex(Int32 startIndex, Int32 count, Predicate`1 match)
+   at System.Collections.Generic.List`1.Exists(Predicate`1 match)
+   at DongXu.Target.Web.MyActionFilter.OnActionExecuting(ActionExecutingContext filterContext) in G:\专业高级课程\大实训二\Github项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+2019-06-24 15:18:48,878 [14] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 15:18:48,878 [14] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 15:18:48,878 [14] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 15:31:10,166 [13] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 15:31:10,185 [13] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 15:31:10,185 [13] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 15:33:00,790 [15] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 15:33:00,815 [15] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 15:33:00,816 [15] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 15:36:00,052 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 15:36:00,072 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 15:36:00,072 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
