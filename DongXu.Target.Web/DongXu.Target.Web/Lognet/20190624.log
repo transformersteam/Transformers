@@ -277,3 +277,83 @@
 2019-06-24 14:28:19,047 [137] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
 2019-06-24 14:28:19,048 [137] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
 2019-06-24 14:28:19,048 [137] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:42:43,018 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DongXu.Target.Web.MyActionFilter.<>c__DisplayClass0_0.<OnActionExecuting>b__0(PowerList m) in D:\专业\大二\项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at System.Collections.Generic.List`1.FindIndex(Int32 startIndex, Int32 count, Predicate`1 match)
+   at System.Collections.Generic.List`1.Exists(Predicate`1 match)
+   at DongXu.Target.Web.MyActionFilter.OnActionExecuting(ActionExecutingContext filterContext) in D:\专业\大二\项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+2019-06-24 14:42:50,104 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:42:50,105 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:42:50,105 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:43:17,032 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:43:17,033 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:43:17,033 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:45:28,428 [12] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - System.AggregateException: One or more errors occurred. (A task was canceled.) ---> System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   at System.Threading.Tasks.Task.Wait()
+   at DongXu.Target.Web.HelperHttpClient.GetAll(String request, String actionName, Object obj) in D:\专业\大二\项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\Common\HelperHttpClient.cs:line 39
+   at DongXu.Target.Web.Controllers.AuditControllers.AuditController.Audit(AuditauditDto appractivity) in D:\专业\大二\项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\Controllers\AuditControllers\AuditController.cs:line 78
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+---> (Inner Exception #0) System.Threading.Tasks.TaskCanceledException: A task was canceled.<---
+
+2019-06-24 14:46:59,559 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DongXu.Target.Web.MyActionFilter.<>c__DisplayClass0_0.<OnActionExecuting>b__0(PowerList m) in D:\专业\大二\项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at System.Collections.Generic.List`1.FindIndex(Int32 startIndex, Int32 count, Predicate`1 match)
+   at System.Collections.Generic.List`1.Exists(Predicate`1 match)
+   at DongXu.Target.Web.MyActionFilter.OnActionExecuting(ActionExecutingContext filterContext) in D:\专业\大二\项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+2019-06-24 14:47:10,271 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:47:10,271 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:47:10,271 [10] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:48:06,028 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:48:06,028 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:48:06,028 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:52:38,480 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:52:38,480 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:52:38,480 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:53:00,839 [35] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:53:00,839 [35] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:53:00,839 [35] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 14:53:36,467 [35] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 14:53:36,467 [35] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 14:53:36,467 [35] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 15:01:15,072 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DongXu.Target.Web.MyActionFilter.<>c__DisplayClass0_0.<OnActionExecuting>b__0(PowerList m) in D:\专业\大二\项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at System.Collections.Generic.List`1.FindIndex(Int32 startIndex, Int32 count, Predicate`1 match)
+   at System.Collections.Generic.List`1.Exists(Predicate`1 match)
+   at DongXu.Target.Web.MyActionFilter.OnActionExecuting(ActionExecutingContext filterContext) in D:\专业\大二\项目\Transformers\DongXu.Target.Web\DongXu.Target.Web\MyActionFilter.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+2019-06-24 15:01:30,924 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 15:01:30,925 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 15:01:30,925 [8] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 15:03:09,570 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 15:03:09,570 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 15:03:09,570 [7] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
+2019-06-24 15:04:08,961 [29] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老田测试log4错误日志
+2019-06-24 15:04:08,961 [29] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老蔡测试log4错误日志
+2019-06-24 15:04:08,961 [29] ERROR DongXu.Target.Web.HttpGlobalExceptionFilter [(null)] - 老牛测试log4错误日志
