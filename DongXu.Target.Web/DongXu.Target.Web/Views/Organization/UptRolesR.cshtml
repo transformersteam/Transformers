@@ -82,7 +82,7 @@
                 });
             },
             GetPowerList: function () {
-                axios.get("/Organization/GetPowerList").then((response) => {
+                axios.get("/Organization/GetAllPowerList").then((response) => {
                     this.power = response.data;
                 });
             },

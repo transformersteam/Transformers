@@ -16,29 +16,35 @@
     <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="addrole">
+    <div id="addrole" ref="table">
         <table class="layui-table">
             <tr>
                 <td>角色姓名</td>
-                <td><input id="txtName" type="text" v-model="RoleName"/></td>
+                <td colspan="2"><input id="txtName" type="text" v-model="RoleName" /></td>
             </tr>
             <tr>
                 <td>所属部门</td>
-                <td><select id="roleo" lay-verify="" lay-search v-model="RolePid">
-                        <option  v-for="item in rolesOList" :value="item.roleId">{{item.roleName}}</option></select></td>
+                <td colspan="2">
+                    <select id="roleo" lay-verify="" lay-search v-model="RolePid">
+                        <option v-for="item in rolesOList" :value="item.roleId">{{item.roleName}}</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>角色描述</td>
-                <td><input id="txtContext" type="text" v-model="RoleContent"/></td>
+                <td colspan="2"><input id="txtContext" type="text" v-model="RoleContent" /></td>
             </tr>
             <tr>
                 <td>选择权限</td>
-                <td><span v-for="item in power"><input id="Checkbox1" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" :name="'Jurisd'+item.powerId"/><label>{{item.powerName}}</label></span></td>
-                <td><span v-for="item in powerchild"><input id="Checkbox1" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" :name="'Jurisdchildren'+item.powerId" /><label>{{item.powerName}}</label></span></td>
+                <td colspan="2"><span v-for="item in power"><input id="Checkbox1" type="checkbox" :value="item.powerId" v-on:click="GetPowerId($event,item.powerId)" :name="'Jurisd'+item.powerId" />{{item.powerName}}</span></td>
+                @*<td><span v-for="item in powerchild"><input id="Checkbox1" type="checkbox" :value="item.powerId" :name="'Jurisdchildren'+item.powerPid" />{{item.powerName}}</span></td>*@
+            </tr>
+            <tr>
+                <td colspan="3"><span v-for="item in powerchild"><input id="Checkbox1" type="checkbox" :value="item.powerId" :name="'Jurisdchildren'+item.powerPid" />{{item.powerName}}</span></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input id="Button1" type="button" value="添加" class="layui-btn layui-btn-normal" v-on:click="AddRole(RoleName, RolePid, RoleContent)"/></td>
+                <td colspan="2"><input id="Button1" type="button" value="添加" class="layui-btn layui-btn-normal" v-on:click="AddRole(RoleName, RolePid, RoleContent)" /></td>
             </tr>
         </table>
     </div>
@@ -66,11 +72,12 @@
             RoleName: "",
             RolePid: "",
             RoleContent: "",
-            powerId:[]
+            powerId: [],
+            powerchild:[]
         },
         created() {
             this.GetRolesOList(),
-                this.GetPowerList()
+             this.GetPowerList()
 
         },
         methods: {
@@ -83,7 +90,6 @@
             GetPowerList: function () {
                 axios.get("/Organization/GetPowerList").then((response) => {
                     this.power = response.data;
-
                 });
             },
             AddRole: function (RoleName, RolePid, RoleContent) {
@@ -101,14 +107,40 @@
                     }
                 }); 
             },
-            GetPowerId: function (powerId) {
+            GetPowerId: function (event, powerId) {
+                var el = event.currentTarget;
+                axios.get("/Organization/GetPowerList", { params: { Pid: powerId } }).then((response) => {
 
-                this.powerId.push(powerId);
+                    var num = $("input[name=Jurisdchildren" + powerId + "]").length;
+                    if (num <= 0) {
+                        this.powerchild = this.powerchild.concat(response.data);
+                    }
+                    if (el.checked) {
+                        var child = document.getElementsByName("Jurisdchildren" + powerId + "");
+                        setTimeout(() => {
+                            for (var i = 0; i < child.length; i++) {
+                                child[i].checked = true;
+                            }
+                        }, 1); 
+
+                    }
+                    else {
+                        var child = document.getElementsByName("Jurisdchildren" + powerId + "");
+                        for (var i = 0; i < child.length; i++) {
+                            child[i].checked = false;
+                        }
+                    }
+                });
             },
             AddRolePower: function (rid) {
+                var JId = new Array();
+                $("input[type=Checkbox]:checked").each(function () {
+                    JId.push($(this).val());
+                })
+                alert(JId);
                 var params = new URLSearchParams();
                 params.append('rid', rid);
-                params.append('power', JSON.stringify(this.powerId));
+                params.append('power', JSON.stringify(JId));
                 axios.post("/Organization/AddRolePower",params).then((response) => {
                     if (response.data > 0) {
                         alert('添加成功');
