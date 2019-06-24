@@ -19,7 +19,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
-    @*:class="{'selected':index===clickIndex}"*@
     <div id="max">
         当前办理进度:
         <div style="height:15px;text-align:center;" class="progress"><div v-for="item in auditDtoList" class="progress-bar progress-bar-striped progress-bar-animated" v-bind:style="{ width: width + '%' }">{{item.feedback_NowEvolve}}%</div></div>
@@ -108,7 +107,7 @@
                 <tbody>
                     <tr v-for="item in apparOpinoin">
                         <td>{{item.user_Name}}</td>
-                        <td v-if="'{{item.apprActivity_IsExecute}}'">通过</td>
+                        <td v-if="item.apprActivity_IsExecute===1">通过</td><td v-else>不通过</td>
                         <td>{{item.apprActivity_Opinion}}</td>
                         <td>{{item.apprActivity_CreateTime}}</td>
                     </tr>
@@ -192,15 +191,29 @@
                 });
             },
             Confirm: function (next_Id, apprConfiguration_Id, apprActivity_Id, ApprActivity_Opinion, GoalId) {
-                axios.get("/Audit/Audit", { params: { Next_Id: next_Id, ApprActivity_Id: apprActivity_Id, ApprActivity_Opinion: ApprActivity_Opinion, Goal_Id: GoalId, ApprActivity_IsExecute:1 } }).then((response) => {
-
+                axios.get("/Audit/Audit", { params: { Next_Id: next_Id, ApprActivity_Id: apprActivity_Id, ApprActivity_Opinion: ApprActivity_Opinion, Goal_Id: GoalId, ApprActivity_IsExecute: 1 } }).then((response) => {
+                    if (response.data > 0) {
+                        setTimeout(function () {
+                            layui.use('layer', function () {
+                                var layer = layui.layer;
+                                layer.msg('审批通过');
+                            });
+                        }, 1500)
+                    }
                 });
             },
             
             
             Back: function (next_Id, apprConfiguration_Id, apprActivity_Id, ApprActivity_Opinion, GoalId) {
-                axios.get("/Audit/Audit", { params: { Next_Id: next_Id, ApprActivity_Id: apprActivity_Id, ApprActivity_Opinion: ApprActivity_Opinion, Goal_Id: GoalId, ApprActivity_IsExecute:0 } }).then((response) => {
-                    
+                axios.get("/Audit/Audit", { params: { Next_Id: next_Id, ApprActivity_Id: apprActivity_Id, ApprActivity_Opinion: ApprActivity_Opinion, Goal_Id: GoalId, ApprActivity_IsExecute: 0 } }).then((response) => {
+                    if (response.data > 0) {
+                        setTimeout(function () {
+                            layui.use('layer', function () {
+                                var layer = layui.layer;
+                                layer.msg('审批驳回');
+                            });
+                        }, 1500)
+                    }
                 });
             }
         } 

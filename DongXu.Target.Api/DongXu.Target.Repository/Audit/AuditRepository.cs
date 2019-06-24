@@ -43,7 +43,7 @@ namespace DongXu.Target.Repository
         /// <returns></returns>
         public List<ApprOpinion> GetApprOpinionList(int goalId)
         {
-            List<ApprOpinion> apprOpinion = db.ApprOpinion.FromSql($"select b.User_Name,a.ApprActivity_IsExecute,a.ApprActivity_Opinion,a.ApprActivity_CreateTime from appractivity a inner join `user` b on a.User_Id=b.User_Id where a.Goal_Id={goalId} and a.ApprActivity_IsExecute=1 ORDER BY a.ApprActivity_Id ").ToList();
+            List<ApprOpinion> apprOpinion = db.ApprOpinion.FromSql($"select b.User_Name,a.ApprActivity_IsExecute,a.ApprActivity_Opinion,a.ApprActivity_CreateTime from appractivity a inner join `user` b on a.User_Id=b.User_Id where a.Goal_Id={goalId} and a.ApprActivity_IsExecute!=3 ORDER BY a.ApprActivity_Id ").ToList();
             return apprOpinion;
         }
         /// <summary>
@@ -99,7 +99,7 @@ namespace DongXu.Target.Repository
                     //    int i = db.Database.ExecuteSqlCommand("update Appractivity set  where ApprActivityId");
 
                     //}
-                    int i = db.Database.ExecuteSqlCommand($"update Appractivity set  ApprActivityIsExecute=0 where ApprActivityId>{appractivity.ApprActivity_Id} and GoalId={appractivity.Goal_Id}");
+                    int i = db.Database.ExecuteSqlCommand($"update Appractivity set  ApprActivity_IsExecute=0 where ApprActivity_Id>{appractivity.ApprActivity_Id} and Goal_Id={appractivity.Goal_Id}");
                     return db.SaveChanges();
                 }
             }
