@@ -18,11 +18,12 @@ using log4net;
 
 namespace DongXu.Target.Web.Controllers
 {
+    [MyActionFilter]
     public class HomeController : BaseController
     {
         private ILog log = LogManager.GetLogger(Startup.repository.Name, typeof(HttpGlobalExceptionFilter));
 
-        [MyActionFilter]
+        
         //[AllowAnonymous]
         public IActionResult Index()
         {
