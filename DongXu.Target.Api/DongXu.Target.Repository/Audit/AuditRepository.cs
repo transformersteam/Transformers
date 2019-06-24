@@ -171,7 +171,7 @@ namespace DongXu.Target.Repository
         /// <returns></returns>
         public List<PowerDto> GetPowersByPid(int UserId,int Power_PId)
         {
-            List<PowerDto> list = db.PowerDto.FromSql($"select a.Power_Id,a.Power_Name,a.Power_Url,a.Power_PId from power a inner join rolepower b on a.Power_Id=b.Power_Id inner join role c on b.Role_Id=c.Role_Id INNER JOIN userrole d on c.Role_Id=d.Role_Id INNER JOIN `user` e on d.User_Id=e.User_Id where e.User_Id={UserId} and a.Power_PId={Power_PId}").ToList();
+            List<PowerDto> list = db.PowerDto.FromSql($"select a.Power_Id,a.Power_Name,a.Power_Url,a.Power_PId from power a inner join rolepower b on a.Power_Id=b.Power_Id inner join role c on b.Role_Id=c.Role_Id INNER JOIN userrole d on c.Role_Id=d.Role_Id INNER JOIN `user` e on d.User_Id=e.User_Id where e.User_Id={UserId} and a.Power_PId={Power_PId}  ORDER BY Power_SortId ASC").ToList();
             return list;
         }
     }
