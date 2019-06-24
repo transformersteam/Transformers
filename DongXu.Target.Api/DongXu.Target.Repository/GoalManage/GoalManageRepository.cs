@@ -75,6 +75,24 @@ namespace DongXu.Target.Repository.GoalManage
         }
 
         /// <summary>
+        /// 修改目标状态 是否启用
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int UpdateGoalState(int id)
+        {
+            var list = context.Goal.Where(m => m.GoalId == id).FirstOrDefault();
+            if (list != null)
+            {
+                list.Business_State = 0;
+                list.GoalId = id;
+            }
+            context.Goal.Update(list);
+            int i = context.SaveChanges();
+            return i;
+        }
+
+        /// <summary>
         /// 查询公司列表  指标单位
         /// </summary>
         /// <returns></returns>

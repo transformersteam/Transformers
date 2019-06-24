@@ -87,6 +87,18 @@ namespace DongXu.Target.Api.Controllers.GoalManage
         }
 
         /// <summary>
+        /// 修改目标状态 是否启用
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost("UpdateGoalState")]
+        public int UpdateGoalState(int id)
+        {
+            int i = iGoalManageRepository.UpdateGoalState(id);
+            return i;
+        }
+
+        /// <summary>
         /// 查询公司列表
         /// </summary>
         /// <returns></returns>

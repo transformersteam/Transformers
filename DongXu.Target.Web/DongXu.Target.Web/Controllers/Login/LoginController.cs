@@ -51,7 +51,8 @@ namespace DongXu.Target.Web.Controllers
                 {
                     userId = user.userId,
                     userName = user.userName,
-                    PowerList = ls
+                    PowerList = ls,
+                    userRealName=user.userRealName
                 };
                 WriteCookie(loginModel);
                 //HttpContext.Session.SetString("User_Id", user.userId.ToString());

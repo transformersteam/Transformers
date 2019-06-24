@@ -15,6 +15,7 @@
     <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
     <script src="~/js/vue.js"></script>             @*vue*@
     <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/formSelects-v3.js"></script>
 </head>
 <body>
     <form action="/GoalManage/GoalSubmit" method="post" class="layui-form" enctype="multipart/form-data">
@@ -29,7 +30,7 @@
                     <td>
                         指标单位:
                         <select id="commany" class="layui-input layui-select" name="RoleId">
-                            <option v-for="(data,index) in commanydata" :value="index">{{data.roleName}}</option>
+                            <option v-for="(data,index) in commanydata" :value="data.roleId">{{data.roleName}}</option>
                         </select>
                     </td>
                     <td>
@@ -53,7 +54,7 @@
                     <td>
                         指标等级:
                         <select id="indexleavel" class="layui-input layui-select" name="IndexLevelId">
-                            <option v-for="(data,index) in indexleave" :value="index">{{data.indexLevelGrade}}</option>
+                            <option v-for="(data,index) in indexleave" :value="data.indexLevelId">{{data.indexLevelGrade}}</option>
                         </select>
                     </td>
                 </tr>
@@ -61,7 +62,7 @@
                     <td colspan="3">
                         反馈频次
                         <select id="frequency" class="layui-input layui-select" name="FrequencyId">
-                            <option v-for="(data,index) in frequency" :value="index">{{data.frequencyName}}</option>
+                            <option v-for="(data,index) in frequency" :value="data.frequencyId">{{data.frequencyName}}</option>
                         </select>
                     </td>
                 </tr>
@@ -83,13 +84,13 @@
                     <td>
                         责任单位:
                         <select id="dutycommany" class="layui-input layui-select" name="Goal_DutyCommanyId">
-                            <option v-for="(data,index) in dutycommany" :value="index">{{data.roleName}}</option>
+                            <option v-for="(data,index) in dutycommany" :value="data.roleId">{{data.roleName}}</option>
                         </select>
                     </td>
                     <td>
                         责任人:
                         <select id="dutyuser" class="layui-input layui-select" name="Goal_DutyUserId">
-                            <option v-for="(data,index) in dutyuser" :value="index">{{data.userRealName}}</option>
+                            <option v-for="(data,index) in dutyuser" :value="data.userId">{{data.userRealName}}</option>
                         </select>
                     </td>
                     <td>
@@ -100,11 +101,11 @@
                 <tr>
                     <td>
                         填报人:
-                        <input id="informant" type="text" name="GoalInformant" class="layui-input layui-input" />
+                        <input id="informant" type="text" name="GoalInformant" value="@ViewBag.username" class="layui-input layui-input" />
                     </td>
                     <td colspan="2">
                         协办人:
-                        <select id="dothinguser" class="layui-input layui-select" name="GoalOrganiser">
+                        <select multiple="" id="dothinguser" class="layui-input layui-select" name="GoalOrganiser"  >
                             <option v-for="(data,index) in dothinguser" :value="index">{{data.userRealName}}</option>
                         </select>
                     </td>
@@ -224,6 +225,35 @@
 </body>
 </html>
 <script>
+    layui.config({
+        base:'./'
+    }).extend({
+        formSelects: 'formSelects'
+    })
+    layui.use(['form', 'formSelects'], function () {
+        var form = layui.form;
+	    var formSelects = layui.formSelects;
+	
+	    formSelects.debug(true);//开启debug模式
+
+	    formSelects.selects({
+		    name		: 'select',
+		    el			: 'select[name=GoalOrganiser]',
+		    show		: '#select-result',
+		    model		: 'select',
+		    filter			: 'GoalOrganiser',
+		    left			: '[',		
+		    right		: ']',	
+		    separator 	: ',',
+		    reset    		: true,
+		    init 			: [1, 2, 3],
+		    change: 		function(data, arr){
+			    console.log(data);//layui中form.on的完整数据
+			    console.log(arr);  //已选中的数据
+		    },
+	    });
+    })
+
     layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
                 , layer = layui.layer
@@ -312,6 +342,7 @@
                     axios.get("@Url.Action("GetCommanyList","GoalManage")").then(
                         (response) => {
                             this.commanydata = response.data;
+                            console.log(response.data)
                         }
                     )
                 },
@@ -319,6 +350,7 @@
                     axios.get("@Url.Action("GetDutyUserList","GoalManage")").then(
                         (response) => {
                             this.dutyuser = response.data;
+                            console.log(response.data)
                         }
                     )
                 },
@@ -326,6 +358,7 @@
                     axios.get("@Url.Action("GetDothingUserList","GoalManage")").then(
                         (response) => {
                             this.dothinguser = response.data;
+                            console.log(response.data)
                         }
                     )
                 },
@@ -334,6 +367,7 @@
                         (response) => {
                             console.log(response.data)
                             this.indexleave = response.data;
+                            console.log(response.data)
                         }
                     )
                 },
@@ -341,6 +375,7 @@
                     axios.get("@Url.Action("GetFrequencieList","GoalManage")").then(
                         (response) => {
                             this.frequency = response.data;
+                            console.log(response.data)
                         }
                     )
                 },
@@ -348,6 +383,7 @@
                     axios.get("@Url.Action("GetGoalParentTypeList","GoalManage")").then(
                         (response) => {
                             this.goaltype = response.data;
+                            console.log(response.data)
                         }
                     )
                 },
@@ -355,6 +391,7 @@
                     axios.get("@Url.Action("GetGoalChildTypeList","GoalManage")").then(
                         (response) => {
                             this.goalchildtype = response.data;
+                            console.log(response.data)
                         }
                     )
                 },
@@ -362,6 +399,7 @@
                     axios.get("@Url.Action("GetDutyCommanyList","GoalManage")").then(
                         (response) => {
                             this.dutycommany = response.data;
+                            console.log(response.data)
                         }
                     )
                 },

@@ -17,7 +17,7 @@ namespace DongXu.Target.Web.Controllers.AuditControllers
         public IActionResult Index(int id=59,int proess=1)
         {
             ViewBag.id = id;
-            ViewBag.user = 4;
+            ViewBag.user = RedisHelper.Get("userid");
             return View();
         }
         /// <summary>

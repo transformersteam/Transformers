@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DongXu.Target.Cache;
 using DongXu.Target.Web.Models;
 using DongXu.Target.Web.Models.Dto;
 using Microsoft.AspNetCore.Hosting;
@@ -58,6 +59,8 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         /// <returns></returns>
         public ActionResult GoalAdd()
         {
+            var username = RedisHelper.Get("username");
+            ViewBag.username = username;
             return View();
         }
         
@@ -213,6 +216,22 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(feedback);
             var target = HelperHttpClient.GetAll("post", "Audit/AddFeedBack", json);
             return Json(target);
+        }
+
+        /// <summary>
+        /// 修改目标状态 是否启用
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public int UpdateState(int id)
+        {
+            var state= HelperHttpClient.GetAll("post", "GoalManage/UpdateGoalState?id="+id, null);
+            if (int.Parse(state) > 0)
+            {
+                return 1;
+            }
+            return 0;
         }
 
         /// <summary>

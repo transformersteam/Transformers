@@ -45,6 +45,13 @@ namespace DongXu.Target.IRepository.IGoalManage
         int AddAttentionUser(List<Attention> list);
 
         /// <summary>
+        /// 修改目标状态 是否启用
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int UpdateGoalState(int id);
+
+        /// <summary>
         /// 查询公司列表
         /// </summary>
         /// <returns></returns>

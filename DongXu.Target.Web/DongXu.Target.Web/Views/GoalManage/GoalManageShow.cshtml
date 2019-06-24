@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div style="float:right;padding-right: 100px">
+    <div style="float:right;padding-right:300px">
         <div class="panel-heading">目标详情</div>
         <div id="app">
 
@@ -75,7 +75,7 @@
         </div>
         <div style="float: right">
             <input id="setuser" type="button" value="设置关注人" class="btn btn-primary" />&nbsp;&nbsp;
-            <input id="Button1" type="button" value="指标删除" class="btn btn-primary" onclick="deleteGoal()" />&nbsp;&nbsp;
+            <input id="delgoal" type="button" value="指标删除" class="btn btn-primary" />&nbsp;&nbsp;
             <input id="Button1" type="button" value="指标调整" class="btn btn-primary" />
         </div>
     </div>
@@ -182,21 +182,34 @@
         addAttention(treeNode.id);   //添加关注人
         getUserName(treeNode.id)    //目标审核人
         getIndexData(treeNode.id)    //指标分解数据
-        deleteGoal(treeNode.id);    //删除指标
     }
 
     //判断设置关注人按钮是否被选中
     function addAttention(id) {
+        if (id == "") {
+            return false;
+        }
         $("#setuser").bind('click', function () {
-            addAttentionUser(id)
+            addAttentionUser(id)  //添加关注人
+            return false;
         });
+        $("#delgoal").bind('click', function () {
+            deleteGoal(id)
+            return false;
+        })
+
     }
 
     function deleteGoal(id) {
-        layer.confirm('您确定要禁用该指标吗？', {
-            btn: ['确定', '取消']
-        }, function () {
-
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.confirm('确认要禁用该指标吗?', {
+                btn: ['确定', '取消']
+            }, function () {
+                    $.ajax({
+                        url:"/GoalManage/UpdateState",
+                    })
+            })
         })
     }
 
@@ -230,7 +243,6 @@
             },
             success: function (data) {
                 $("#indexs").empty();
-                console.log(data)
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
                         var str = "<tr>"
@@ -262,7 +274,6 @@
             type: "get",
             data: { id: id },
             success: function (data) {
-                console.log(data)
                 if (data.length > 0) {
                     $("#app").empty();
                     for (var i = 0; i < data.length; i++) {
@@ -333,6 +344,13 @@
 
     //设置关注人
     function addAttentionUser(id) {
+        if (id == "") {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.msg('请先选择一个目标');
+            })
+            return false;
+        }
         layui.use('layer', function () {
             var layer = layui.layer;
             layer.open({

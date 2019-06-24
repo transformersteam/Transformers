@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DongXu.Target.Cache;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,9 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult ManagementShow(int id = 1)
+        public ActionResult ManagementShow()
         {
+            var id=RedisHelper.Get("userid");
             ViewBag.id = id;   //登录人id
             return View();
         }
