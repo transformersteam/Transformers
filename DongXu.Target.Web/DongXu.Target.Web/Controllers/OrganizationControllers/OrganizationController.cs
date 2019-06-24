@@ -117,10 +117,20 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
             var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Role>>(result);
             return list;
         }
-
         /// <summary>
         /// 显示所有权限
         /// </summary>
+        /// <returns></returns>
+        public List<Power> GetAllPowerList()
+        {
+            var result = HelperHttpClient.GetAll("get", "Organization/GetPowerList", null);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Power>>(result);
+            return list;
+        }
+        /// <summary>
+        /// 权限
+        /// </summary>
+        /// <param name="Pid"></param>
         /// <returns></returns>
         public List<Power> GetPowerList(int Pid=0)
         {

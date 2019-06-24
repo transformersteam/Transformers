@@ -173,9 +173,7 @@ namespace DongXu.Target.Api.Controllers.OrganizationController
         {
             RolePower rp = Newtonsoft.Json.JsonConvert.DeserializeObject<RolePower>(json);
             int rid = rp.Rid;
-            string str = rp.Power.Substring(1, rp.Power.Length - 2);
-            string[] strArray = str.Split(',');
-            int[] intLst = Array.ConvertAll<string, int>(strArray, s => int.Parse(s));
+            int[] intLst = Newtonsoft.Json.JsonConvert.DeserializeObject<int[]>(rp.Power);
             return _organization.AddRolepower(rid, intLst);
         }
         //删除角色
