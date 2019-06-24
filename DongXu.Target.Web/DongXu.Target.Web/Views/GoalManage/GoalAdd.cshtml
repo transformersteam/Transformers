@@ -15,7 +15,7 @@
     <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
     <script src="~/js/vue.js"></script>             @*vue*@
     <script src="~/js/axios.js"></script>
-    <script src="~/layui-v2.4.5/layui/formSelects-v3.js"></script>
+
 </head>
 <body>
     <form action="/GoalManage/GoalSubmit" method="post" class="layui-form" enctype="multipart/form-data">
@@ -105,9 +105,10 @@
                     </td>
                     <td colspan="2">
                         协办人:
-                        <select multiple="" id="dothinguser" class="layui-input layui-select" name="GoalOrganiser"  >
-                            <option v-for="(data,index) in dothinguser" :value="index">{{data.userRealName}}</option>
+                        <select multiple="" xm-select="select" id="dothinguser" class="layui-input layui-select" name="GoalOrganiser">
+                            <option v-for="(data,index) in dothinguser" :value="data.userRealName">{{data.userRealName}}</option>
                         </select>
+                        <input id="Hidden1" type="hidden" name="GoalOrganiser" />
                     </td>
                 </tr>
                 <tr>
@@ -224,35 +225,39 @@
     </form>
 </body>
 </html>
+<script src="~/layui-v2.4.5/layui/formSelects-v3.js"></script>
 <script>
-    layui.config({
-        base:'./'
+    layui.config({    //layui 模块扩展功能
+        base:'./layui-v2.4.5/layui/formSelects-v3.js'
     }).extend({
         formSelects: 'formSelects'
-    })
-    layui.use(['form', 'formSelects'], function () {
-        var form = layui.form;
-	    var formSelects = layui.formSelects;
-	
-	    formSelects.debug(true);//开启debug模式
+    }).use(['form', 'formSelects'], function () {
+        var form = layui.form,
+            formSelects = layui.formSelects;    //多选下拉框
 
-	    formSelects.selects({
-		    name		: 'select',
-		    el			: 'select[name=GoalOrganiser]',
-		    show		: '#select-result',
-		    model		: 'select',
-		    filter			: 'GoalOrganiser',
-		    left			: '[',		
-		    right		: ']',	
-		    separator 	: ',',
-		    reset    		: true,
-		    init 			: [1, 2, 3],
-		    change: 		function(data, arr){
-			    console.log(data);//layui中form.on的完整数据
-			    console.log(arr);  //已选中的数据
-		    },
-	    });
+        formSelects.value('select');			//获取选中的值
+	    formSelects.value('select', 'val');		//获取选中的val数组
+	    formSelects.value('select', 'name');		//获取选中的name数组
+        formSelects.value('select', [1, 3]);	//动态赋值
+        alert(name)
+
+        formSelects.render({
+            name: 'select',
+            on: function (data, arr) {
+                handlerVals(arr)
+            }
+        })
     })
+
+    function handlerVals(arr) {
+        var str = arr.map(function (val) {
+            return val.val;
+        }).join(',');
+
+        $("input[name='GoalOrganiser']").val(str)
+    }
+
+
 
     layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
