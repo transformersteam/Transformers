@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using DongXu.Target.Cache;
+
+using DongXu.Target.Web.Models.Dto;
+
 using log4net;
 
 namespace DongXu.Target.Web.Controllers
@@ -23,6 +26,8 @@ namespace DongXu.Target.Web.Controllers
         //[AllowAnonymous]
         public IActionResult Index()
         {
+            int userId = 1;
+            ViewBag.userId = userId;
             log.Error("老田测试log4错误日志");
             log.Error("老蔡测试log4错误日志");
             log.Error("老牛测试log4错误日志");

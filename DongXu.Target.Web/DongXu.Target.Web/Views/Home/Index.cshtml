@@ -523,22 +523,22 @@
         $.ajax({
             url: "/Audit/GetPowersByPid",
             type: "post",
-            data: { Power_PId: 0 },
+            data: { Power_PId: 0, UserId:@ViewBag.userId },
             async: false,
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
                     str += '<li>'
-                    str += '<a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">' + data[i].powerName + '</span> <span class="fa arrow"></span></a>';
+                    str += '<a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">' + data[i].power_Name + '</span> <span class="fa arrow"></span></a>';
                     $.ajax({
                         url: "/Audit/GetPowersByPid",
                         type: "post",
                         async: false,
-                        data: { Power_PId: data[i].powerId },
+                        data: { Power_PId: data[i].power_Id , UserId:@ViewBag.userId},
                         success: function (obj) {
                             console.log(obj);
                             str += '<ul  class="nav nav-second-level">'
                             for (var j = 0; j < obj.length; j++) {
-                                str += '<li><a class="J_menuItem" href="' + obj[j].powerUrl + '">' + obj[j].powerName + '</a></li>'
+                                str += '<li><a class="J_menuItem" href="' + obj[j].power_Url + '">' + obj[j].power_Name + '</a></li>'
                             }
                             str += '</ul>'
                         }
@@ -562,6 +562,9 @@
 <script src="~/HH/js/hplus.min.js-v=4.0.0.js"></script>
 <script type="text/javascript" src="~/HH/js/contabs.min.js"></script>
 <script src="~/HH/js/plugins/pace/pace.min.js"></script>
+
+
+
 <link href="~/HH/css/bootstrap.min.css-v=3.3.5.css" rel="stylesheet">
 <link href="~/HH/css/font-awesome.min.css-v=4.4.0.css" rel="stylesheet">
 <link href="~/HH/css/animate.min.css" rel="stylesheet">

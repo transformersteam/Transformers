@@ -118,9 +118,9 @@ namespace DongXu.Target.Api.Controllers.AuditController
         /// <param name="Power_PId"></param>
         /// <returns></returns>
         [HttpGet("GetPowersByPid")]
-        public List<Power> GetPowersByPid(int Power_PId)
+        public List<PowerDto> GetPowersByPid(int UserId,int Power_PId)
         {
-            List<Power> list = _iauditRepository.GetPowersByPid(Power_PId);
+            List<PowerDto> list = _iauditRepository.GetPowersByPid(UserId,Power_PId);
             return list;
         }
     }

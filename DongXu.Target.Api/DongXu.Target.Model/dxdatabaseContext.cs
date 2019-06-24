@@ -144,7 +144,9 @@ namespace DongXu.Target.Model
 
         public DbQuery<ApprOpinion> ApprOpinion { get; set; }
 
-        public DbQuery<TLPercentage> TLPercentage { get; set; } 
+        public DbQuery<TLPercentage> TLPercentage { get; set; }
+
+        public DbQuery<PowerDto> PowerDto { get; set; }
 
 
         /// <summary>
