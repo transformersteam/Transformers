@@ -71,14 +71,14 @@
                 <ul id="regionZTree" class="ztree" style="width:270px"></ul>
             </div>
         </div>
-        <div id="message">
+        <div id="message" class="layui-input-inline ">
             <table class="layui-table">
                 <tr>
                     <td>组织名称:</td>
                     <td><input id="txtName" type="text" v-model="RoleName" /></td>
                     <td>组织层级</td>
                     <td>
-                        <select id="selIdentify" v-model="RoleIdentify">
+                        <select id="selIdentify" v-model="RoleIdentify" lay-filter="type_mid">
                             <option :value="hierarchy.id" v-for="hierarchy in hierarchyList">{{hierarchy.name}}</option>
                         </select>
                     </td>
