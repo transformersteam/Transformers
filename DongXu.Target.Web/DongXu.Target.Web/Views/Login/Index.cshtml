@@ -108,7 +108,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-                        用户名：  <input id="txtName" type="text" value="niuwentao" />
+                        用户名：  <input id="txtName" type="text" value="" />
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -116,7 +116,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        密码：   <input id="txtpass" type="text" value="1" />
+                        密码：   <input id="txtpass" type="text" value="" />
 
                         <input id="Button1" type="button" onclick="login()" value="登录" />
 
@@ -131,7 +131,6 @@
 
 <script>
     login = function () {
-        alert(123);
         var Name = $("#txtName").val();
         var Pwd = $("#txtpass").val();
         $.ajax({

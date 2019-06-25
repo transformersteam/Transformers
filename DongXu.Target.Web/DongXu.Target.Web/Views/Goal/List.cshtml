@@ -60,12 +60,7 @@
                     <tr></tr>
                 </tbody>
             </table>
-            <div style="padding-left:40%">
-                <input id="Button1" type="button" href="javascript:void(0)" onclick="first()" value="首页" class="btn btn-sm" style="" />
-                <input id="Button2" type="button" href="javascript:void(0)" onclick="prve()" value="上一页" class="btn btn-sm" style="" />
-                <input id="Button3" type="button" href="javascript:void(0)" onclick="next()" value="下一页" class="btn btn-sm" style="" />
-                <input id="Button4" type="button" href="javascript:void(0)" onclick="last()" value="尾页" class="btn btn-sm" style="" />
-            </div>
+            
         </div>
 
         <div class="panel panel-primary" style="height:350px">
@@ -188,68 +183,42 @@
 </body>
 </html>
 <script>
-    var pageIndex = 1;
-    var pageSize = 5;
-    var total = 0;
+    
 
     //文档就绪函数
     $(function () {
-        getgoallist(pageIndex);
+        getgoallist();
     });
 
     //待办事项显示
-    function getgoallist(index) {
+    function getgoallist() {
         $.ajax({
             url: "http://localhost:8888/Api/Goal/GetGoalList",
             type: "get",
-            data: { pageIndex: index, pageSize: pageSize },
+            data: { userid:@ViewBag.id },
             dataType: "json",
             success: function (data) {
                 console.log(data);
                 $("#tb").empty();
-                $(data).each(function (index) {
-                    var time = dateFormat(this.goalList[index].goalEndTime);
+                $(data).each(function () {
+                    var time = dateFormat(this.goal_EndTime);
                     var tr = '<tr>' +
-                        '<td>' + this.goalList[index].goalName + '</td>' +
-                        '<td>' + this.goalList[index].frequencyName + '</td>' +
-                        '<td>' + this.goalList[index].goalTypeName + '</td>' +
-                        '<td>' + this.goalList[index].indexLevelGrade + '</td>' +
-                        '<td>' + this.goalList[index].goalChargePeople + '</td>' +
+                        '<td>' + this.goal_Name + '</td>' +
+                        '<td>' + this.frequency_Name + '</td>' +
+                        '<td>' + this.goalType_Name + '</td>' +
+                        '<td>' + this.indexLevel_Grade + '</td>' +
+                        '<td>' + this.goal_ChargePeople + '</td>' +
                         '<td>' + time + '</td>' +
-                        '<td><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.goalList[index].feedbackNowEvolve + '%">' + this.goalList[index].feedbackNowEvolve + '%</div></div></td>' +
-                        '<td>' + this.goalList[index].goalStateName + '</td>'
+                        '<td><div style="height:15px;text-align:center;" class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + this.feedback_NowEvolve + '%">' + this.feedback_NowEvolve + '%</div></div></td>' +
+                        '<td>' + this.goalState_Name + '</td>'
                         + '</tr>';
                     $("#tb").append(tr);
                 })
-                total = data.Total;
             }
         });
     }
 
-    //首页
-    function first() {
-        pageIndex = 1;
-        getgoallist(pageIndex);
-    }
-
-    //上页
-    function prve() {
-        pageIndex = pageIndex > 1 ? pageIndex - 1 : 1;
-        getgoallist(pageIndex);
-    }
-
-    //下页
-    function next() {
-        var nums = Math.ceil(total / pageSize);
-        pageIndex = pageIndex < nums ? pageIndex + 1 : pageIndex;
-        getgoallist(pageIndex);
-    }
-
-    //尾页
-    function last() {
-        pageIndex = Math.ceil(total / pageSize);
-        getgoallist(pageIndex);
-    }
+    
 
     //主责事项显示
     var vue = new Vue({

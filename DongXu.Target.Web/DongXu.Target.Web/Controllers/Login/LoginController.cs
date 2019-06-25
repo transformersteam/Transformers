@@ -38,7 +38,7 @@ namespace DongXu.Target.Web.Controllers
             {
                 LoginModel user= (LoginModel)JsonConvert.DeserializeObject(result, typeof(LoginModel));
 
-                var power= string.Format("Login/GetPower?Users_Id={0}", user.userId);
+                var power= string.Format("Login/GetPower?UserId={0}", user.userId);
                 var jurdata = HelperHttpClient.GetAll("get", power, null);
                 // 实例化DataContractJsonSerializer对象，需要待序列化的对象类型
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<PowerList>));

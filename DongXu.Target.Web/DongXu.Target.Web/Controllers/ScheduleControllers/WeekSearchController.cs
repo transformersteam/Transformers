@@ -59,7 +59,7 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             foreach (var item in list)
             {
                 var row = sheet.CreateRow(index++);
-                row.CreateCell(0).SetCellValue(item.Goal_Id);
+                //row.CreateCell(0).SetCellValue(item.Goal_Id);
                 row.CreateCell(1).SetCellValue(item.Goal_Name);
                 row.CreateCell(2).SetCellValue(item.IndexLevel_Grade);
                 row.CreateCell(3).SetCellValue(item.GoalType_Name);

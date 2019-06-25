@@ -1,4 +1,5 @@
-﻿using DongXu.Target.Web.Models.Dto;
+﻿using DongXu.Target.Cache;
+using DongXu.Target.Web.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -96,6 +97,8 @@ namespace DongXu.Target.Web.Controllers.ExecuteControllers
         /// <returns></returns>
         public IActionResult List()
         {
+            var id = RedisHelper.Get("userid");
+            ViewBag.id = id;   //登录人id
             return View();
         }
     }
