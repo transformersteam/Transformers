@@ -148,6 +148,7 @@ namespace DongXu.Target.Model
 
         public DbQuery<PowerDto> PowerDto { get; set; }
 
+        public DbQuery<BackLog> BackLog { get; set; }
 
         /// <summary>
         /// 目标查询
