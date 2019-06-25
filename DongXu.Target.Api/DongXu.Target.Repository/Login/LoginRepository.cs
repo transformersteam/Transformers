@@ -20,7 +20,7 @@ namespace DongXu.Target.Repository
                 "join rolepower on power.Power_Id = rolepower.Power_Id " +
                 "join role on rolepower.Role_Id = role.Role_Id " +
                 "join userrole on role.Role_Id = userrole.Role_Id " +
-                "join user on userrole.User_Id = user.User_Id").ToList();
+                "join user on userrole.User_Id = user.User_Id where  user.User_Id={0}",UserId).ToList();
             return query;
         }
 
