@@ -40,19 +40,19 @@
                     </td>
                     <td>目标类型:</td>
                     <td>
-                        <select class="form-control" name="typeId">
+                        <select class="form-control" name="typeId" id="goaltype">
                             <option value="value">请选择</option>
                         </select>
                     </td>
                     <td>目标级别:</td>
                     <td>
-                        <select class="form-control" name="leaveId">
+                        <select class="form-control" name="leaveId" id="goalleave">
                             <option value="value">请选择</option>
                         </select>
                     </td>
                     <td>目标状态:</td>
                     <td>
-                        <select class="form-control" name="stateId">
+                        <select class="form-control" name="stateId" id="goalstate">
                             <option value="value">请选择</option>
                         </select>
                     </td>
@@ -126,6 +126,9 @@
 <script>
     $(function () {
         loadtime();
+        getType();
+        getgoalIndex();
+        getState();
     })
 
     function loadtime() {
@@ -158,6 +161,55 @@
         });
     }
 
+    //绑定目标类型
+    function getType() {
+        $.ajax({
+            url: "/GoalManage/GetGoalParentTypeList",
+            type: "get",
+            success: function (data) {
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        var str = "<option value='" + data[i].goalTypeId + "'>" + data[i].goalTypeName + "</option>";
+                        $("#goaltype").append(str);
+                    }
+                }
+            }
+        })
+    }
+
+    //绑定目标等级
+    function getgoalIndex() {
+        $.ajax({
+            url: "/GoalManage/GetIndexlevelList",
+            type: "get",
+            success: function (data) {
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        var str = "<option value='" + data[i].indexLevelId + "'>" + data[i].indexLevelGrade + "</option>";
+                        $("#goalleave").append(str);
+                    }
+                }
+            }
+        })
+    }
+
+    //绑定目标状态
+    function getState() {
+        $.ajax({
+            url: "/GoalManage/GetGoalParentTypeList",
+            type: "get",
+            success: function (data) {
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        var str = "<option value='" + data[i].goalStateId + "'>" + data[i].goalState_Name + "</option>";
+                        $("#goalstate").append(str);
+                    }
+                }
+            }
+        })
+    }
+
+    //Excel导出
     function exportdata() {
         $.ajax({
             url: "/WeekSearch/Export",
