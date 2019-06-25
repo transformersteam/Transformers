@@ -20,11 +20,11 @@
         <table class="layui-table">
             <tr>
                 <td>角色姓名</td>
-                <td><input id="txtName" type="text" v-model="RoleName" /></td>
+                <td colspan="2"><input id="txtName" type="text" v-model="RoleName" /></td>
             </tr>
             <tr>
                 <td>所属部门</td>
-                <td>
+                <td colspan="2">
                     <select id="roleo" v-model="RolePid">
                         <option v-for="item in rolesOList" :value="item.roleId">{{item.roleName}}</option>
                     </select>
@@ -32,15 +32,17 @@
             </tr>
             <tr>
                 <td>角色描述</td>
-                <td><input id="txtContext" type="text" v-model="RoleContent" /></td>
+                <td colspan="2"><input id="txtContext" type="text" v-model="RoleContent" /></td>
             </tr>
             <tr>
-                <td>选择权限</td>
-                <td><span v-for="item in power"><input id="Checkbox1" name="qx" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span></td>
+                <td colspan="3">选择权限</td>
+            </tr>
+            <tr>
+                <td colspan="3"><span v-for="item in power"><input id="Checkbox1" name="qx" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input id="Button1" type="button" value="修改" class="layui-btn layui-btn-normal" onclick="UptRole()" /></td>
+                <td colspan="2"><input id="Button1" type="button" value="修改" class="layui-btn layui-btn-normal" onclick="UptRole()" /></td>
             </tr>
         </table>
     </div>
@@ -73,7 +75,8 @@
         created() {
                 this.GetRolesOList(),
                 this.GetPowerList(),
-                this.GetRoleById(@ViewBag.id)
+                this.GetRoleById(@ViewBag.id),
+                this.GetRolepowerById(@ViewBag.id)
         },
         methods: {
             GetRolesOList: function () {
@@ -81,7 +84,7 @@
                     this.rolesOList = response.data;
                 });
             },
-            GetPowerList: function () {
+            GetPowerList: async function () {
                 axios.get("/Organization/GetAllPowerList").then((response) => {
                     this.power = response.data;
                 });
@@ -123,29 +126,44 @@
                         location.href = '/Organization/RoleIndex';
                     }
                 });
+            },
+            GetRolepowerById: async function (id) {
+                await axios.get("/Organization/GetRolepowerById", { params: { roleId: id } }).then((response) => {
+                    setTimeout(() => {
+                        var qx = document.getElementsByName("qx");
+                        for (var i = 0; i < response.data.length; i++) {
+                            for (var j = 0; j < qx.length; j++) {
+                                if (response.data[i].powerId == qx[j].value) {
+                                    qx[j].checked = true;
+                                }
+                            }
+                        }
+                    }, 100); 
+                })
             }
         }
     })
-    $(function(){
+</script>
+<script>
+    @*$(function(){
          GetRolepowerById(@ViewBag.id);
-    })
-    function GetRolepowerById(id) {
-        $.ajax({
-            url: '/Organization/GetRolepowerById?roleId=' + id,
-            type: 'get',
-            success: function (data) {
-                console.log(data);
-                for (var i = 0; i < data.length; i++) {
-                    var qx = document.getElementsByName("qx");
-                    for (var j = 0; j < qx.length; j++) {
-                        if (data[i].powerId == qx[j].value) {
-                            qx[j].checked = true;
-                        }
-                    }
-                }
-            }
-        })
-    }
+    })*@
+    //function GetRolepowerById(id) {
+    //    $.ajax({
+    //        url: '/Organization/GetRolepowerById?roleId=' + id,
+    //        type: 'get',
+    //        success: function (data) {
+    //            for (var i = 0; i < data.length; i++) {
+    //                var qx = document.getElementsByName("qx");
+    //                for (var j = 0; j < qx.length; j++) {
+    //                    if (data[i].powerId == qx[j].value) {
+    //                        qx[j].checked = true;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    })
+    //}
     function UptRole() {
         var date = new Date();
         var year = date.getFullYear();
@@ -177,7 +195,7 @@
                     if (data > 0) {
                         alert('修改成功');
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭  
+                        parent.layer.close(index); //再执行关闭
                         location.href = '/Organization/RoleIndex';
                     }
                 }

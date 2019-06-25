@@ -33,8 +33,23 @@ namespace DongXu.Target.Web.Controllers
             //log.Error("老田测试log4错误日志");
             //log.Error("老蔡测试log4错误日志");
             //log.Error("老牛测试log4错误日志");
+            //List<PowerDto> FirstList= GetPowersByPid(userId, 0);
+            //ViewBag.FirstList = FirstList;
+            //List<PowerDto> SecondList = GetPowersByPid(userId, 0);
+            //ViewBag.SecondList = SecondList;
             return View();
         }
+        /// <summary>
+        /// 绑定左侧下拉
+        /// </summary>
+        /// <param name="Power_PId"></param>
+        /// <returns></returns>
+        //public List<PowerDto> GetPowersByPid(int UserId, int Power_PId)
+        //{
+        //    var result = HelperHttpClient.GetAll("get", "Audit/GetPowersByPid?Power_PId=" + Power_PId + "&UserId=" + UserId, null);
+        //    List<PowerDto> list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PowerDto>>(result);
+        //    return list;
+        //}
 
         public async Task<IActionResult> LoginOut()
         {
@@ -73,5 +88,6 @@ namespace DongXu.Target.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

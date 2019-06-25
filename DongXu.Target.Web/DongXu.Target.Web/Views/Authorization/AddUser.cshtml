@@ -20,32 +20,34 @@
         <table class="layui-table">
             <tr>
                 <td>人员姓名</td>
-                <td><input id="" type="text" v-model="UserRealName" /></td>
+                <td colspan="2"><input id="" type="text" v-model="UserRealName" /></td>
             </tr>
             <tr>
                 <td>用户账号</td>
-                <td><input id="" type="text" v-model="UserName" /></td>
+                <td colspan="2"><input id="" type="text" v-model="UserName" /></td>
             </tr>
             <tr>
                 <td>用户密码</td>
-                <td><input id="" type="password" v-model="UserPass" /></td>
+                <td colspan="2"><input id="" type="password" v-model="UserPass" /></td>
             </tr>
             <tr>
                 <td>用户标识</td>
-                <td>
+                <td colspan="2">
                     <select id="" v-model="User_IdentityId">
                         <option value="5" selected="selected">--请选择--</option>
-                        <option :value="item.Id" v-for="item in identity" >{{item.Name}}</option>
+                        <option :value="item.Id" v-for="item in identity">{{item.Name}}</option>
                     </select>
                 </td>
             </tr>
             <tr>
-                <td>选择角色</td>
-                <td><span v-for="item in user"><input id="Checkbox1" type="checkbox" :value="item.roleId" v-on:click="GetRoleId(item.roleId,item.roleName)" /><label>{{item.roleName}}</label></span></td>
+                <td colspan="2">选择角色</td>
+            </tr>
+            <tr>
+                <td colspan="2"><span v-for="item in user"><input id="Checkbox1" type="checkbox" :value="item.roleId" v-on:click="GetRoleId(item.roleId,item.roleName)" /><label>{{item.roleName}}</label></span></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input id="Button1" type="button" value="添加" class="layui-btn layui-btn-normal" v-on:click="AddUser(UserRealName, UserName, UserPass,User_IdentityId)" /></td>
+                <td colspan="2"><input id="Button1" type="button" value="添加" class="layui-btn layui-btn-normal" v-on:click="AddUser(UserRealName, UserName, UserPass,User_IdentityId)" /></td>
             </tr>
         </table>
     </div>

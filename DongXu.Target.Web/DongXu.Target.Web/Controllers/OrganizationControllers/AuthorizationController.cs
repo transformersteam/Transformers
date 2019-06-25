@@ -50,7 +50,7 @@ namespace DongXu.Target.Web.Controllers.OrganizationControllers
         /// 修改人员页面
         /// </summary>
         /// <returns></returns>
-        public IActionResult UpdateUser(int id)
+        public IActionResult UpdateUser(int id=11)
         {
             ViewBag.id = id;
             return View();

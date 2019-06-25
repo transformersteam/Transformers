@@ -10,12 +10,15 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <link href="~/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/js/jquery-3.3.1.js"></script>
     <script src="~/zTree_v3/js/jquery.ztree.all.min.js"></script>
     <script src="~/js/vue.js"></script>
     <script src="~/js/axios.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>
+
     <style>
         #max {
             width: 1500px;
@@ -37,14 +40,12 @@
             width: 30%;
             height: 100%;
             float: left;
-            border: 1px solid #000
         }
 
         #message {
-            height: 70%;
+            width: 70%;
             height: 100%;
             float: left;
-            border: 1px solid #000
         }
 
             #message table {
@@ -64,7 +65,7 @@
             <ul id="regionZTree" class="ztree"></ul>
         </div>
         <div id="message">
-            <table>
+            <table class="layui-table">
                 <tr>
                     <th>用户姓名</th>
                     <th>用户账号</th>
@@ -92,7 +93,7 @@
                 
                 
                     <div class="modal-body">
-                        <table class="table">
+                        <table class="layui-table">
                             <tr>
                                 <td>用户名：</td>
                                 <td><input id="btnname" type="text" value="" /></td>
@@ -161,7 +162,6 @@
     };
     var setting = {
         view: {
-            addHoverDom: addHoverDom,
             removeHoverDom: removeHoverDom,
             dblClickExpand: false,//双击节点时，是否自动展开父节点的标识
             showLine: true,//是否显示节点之间的连线
@@ -277,7 +277,6 @@
         //    }
         //})
         window.treeNodeid = treeNode.id;
-        alert(treeNode.id);
         $.ajax({
             url: "@APIConn.MyAPIConn"+"Organization/ChlidrenUserByRole?id=" + treeNode.id,
             success: function (data) {
