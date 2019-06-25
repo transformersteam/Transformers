@@ -12,13 +12,13 @@ namespace DongXu.Target.IRepository.IExecute
         /// 待办事项集合
         /// </summary>
         /// <returns></returns>
-        List<BackLog> GetGoalInfo();
+        List<BackLog> GetGoalList(int userid); 
 
-        /// <summary>
-        /// 待办事项显示
-        /// </summary>
-        /// <returns></returns>
-        GoalPageination GetGoalList(int pageindex = 1, int pagesize = 3);
+        ///// <summary>
+        ///// 待办事项显示
+        ///// </summary>
+        ///// <returns></returns>
+        //GoalPageination GetGoalList(int userid, int pageindex = 1, int pagesize = 3);
 
     }
 }
