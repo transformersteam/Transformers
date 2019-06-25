@@ -44,23 +44,23 @@
 <body>
     <div style="padding:20px;" id="app">
         @*我的待阅*@
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" style="margin-left:10px;margin-right:10px">
             <div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>
             @*<ul id="myTab" class="nav nav-tabs" role="tablist">
-                <li style="width:200px" class="active" data="0"><a href="#bulletin" class="btn-primary" role="tab">我的待阅</a></li>
-            </ul>
-            <!-- 选项卡面板 -->
-            <div id="myTabContent" class="tab-content">
-                <div class="tab-pane active" id="bulletin">
-                    我的待阅
-                </div>
-                <div class="tab-pane " id="rule">
-                    我的代办
-                </div>
-                <div class="tab-pane " id="forum">
-                    我的已办
-                </div>
-            </div>*@
+                    <li style="width:200px" class="active" data="0"><a href="#bulletin" class="btn-primary" role="tab">我的待阅</a></li>
+                </ul>
+                <!-- 选项卡面板 -->
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active" id="bulletin">
+                        我的待阅
+                    </div>
+                    <div class="tab-pane " id="rule">
+                        我的代办
+                    </div>
+                    <div class="tab-pane " id="forum">
+                        我的已办
+                    </div>
+                </div>*@
             <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
@@ -86,10 +86,11 @@
                 </tbody>
             </table>
             @*<zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
-                      v-bind:max-page="maxPage" v-on:pagehandler="getWaitRead">
-            </zpagenav>*@
+                          v-bind:max-page="maxPage" v-on:pagehandler="getWaitRead">
+                </zpagenav>*@
         </div>
-        @*积分排名*@
+        <div style="margin-left:10px;margin-right:10px">
+            @*积分排名*@
             <div class="panel panel-primary">
                 <div class="panel-heading">积分排名</div>
                 <div id="main" style="width:1200px;height:400px;margin-left:250px"></div>
@@ -113,12 +114,12 @@
                 <div id="targets" style="width:50%;height:450px;float:right"></div>
             </div>
             @*运行情况*@
-            <div class="panel panel-primary" style="height:500px;width:100%">
+            <div class="panel panel-primary" style="height:400px;width:100%">
                 <div class="panel-heading">运行情况</div>
                 <div id="condition" style="float:left;width:50%;height:300px;margin-left:30px;">
                 </div>
                 <div>
-                    <table style="width:500px;margin-top:50px" class="table table-bordered table-striped text-center">
+                    <table style="width:800px;margin-top:50px" class="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
                                 <td>目标状态</td>
@@ -139,6 +140,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </body>
 </html>
 <script>

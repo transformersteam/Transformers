@@ -32,13 +32,14 @@
 </head>
 <body>
     <div style="padding:20px;" id="app">
-        <div class="panel panel-primary">
-            @*<div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>*@
+        <div class="panel panel-primary" style="margin-left:10px;margin-right:10px">
+            <div class="panel-heading">具体详情</div>
             <ul id="myTab" class="nav nav-tabs" role="tablist">
                 <li style="width:200px" class="active" data="0"><a href="#bulletin" role="tab" data="0">我的待阅</a></li>
                 <li style="width:150px" data="1"><a href="#rule" role="tab" data="1">我的待办</a></li>
                 <li style="width:200px"><a href="#forum" role="tab" data="2">我的已办</a></li>
             </ul>
+            @*<div class="panel-heading">我的待阅<span>{{sum}}</span><a href="" title="More" style="color:deepskyblue;float:right">More</a></div>*@
             <!-- 选项卡面板 -->
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="bulletin">
@@ -52,11 +53,11 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" style="margin-left:10px;margin-right:10px">
             <div class="panel-heading">积分排名</div>
             <div id="main" style="width:1200px;height:400px;margin-left:250px"></div>
         </div>
-        <div class="panel panel-primary" style="height:500px">
+        <div class="panel panel-primary" style="height:500px;margin-left:10px;margin-right:10px">
             <div class="panel-heading">红绿灯状态</div>
             <br />
             <input id="tableshow" type="button" value="切换表格" class="btn btn-primary" />
@@ -87,12 +88,12 @@
                 <div id="redblueechart" style="width:700px;height:400px;margin-right:250px"></div>
             </div>
         </div>
-        <div id="app" class="panel panel-primary" style="height:370px">
+        <div id="app" class="panel panel-primary" style="height:400px;margin-left:10px;margin-right:10px">
             <div class="panel-heading">运行情况</div>
             <div id="condition" style="float:left;width:50%;height:300px;margin-left:30px;">
             </div>
             <div>
-                <table style="width:500px;margin-top:50px" class="table table-bordered table-striped text-center">
+                <table style="width:800px;margin-top:50px;height:100px" class="table table-bordered table-striped text-center">
                     <thead>
                         <tr>
                             <td>目标状态</td>

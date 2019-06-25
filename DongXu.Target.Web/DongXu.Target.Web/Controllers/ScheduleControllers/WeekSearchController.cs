@@ -39,7 +39,7 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             data.endtime = endtime;
             var weekdata = HelperHttpClient.GetAll("post","WeekQuery/GetWeekList",data);
             var list = JsonConvert.DeserializeObject<PageData<WeekData>>(weekdata);
-            RedisHelper.Set("weekdata", list);
+            RedisHelper.Set<PageData<WeekData>>("weekdata", list);
             X.PagedList.StaticPagedList<WeekData> pagelist = new X.PagedList.StaticPagedList<WeekData>(list.GetData, pageIndex, pageSize,list.TotalCount);
             return View(pagelist);
         }
@@ -53,13 +53,12 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             HSSFWorkbook workbook = new HSSFWorkbook();
             ISheet sheet = workbook.CreateSheet("周报数据列表");
             CreateHeadRow(sheet);
-            var data = RedisHelper.Get("weekdata");
-            var list = JsonConvert.DeserializeObject<List<WeekData>>(data);
+            var data = RedisHelper.Get<PageData<WeekData>>("weekdata");    
             int index = 1;
-            foreach (var item in list)
+            foreach (var item in data.GetData)
             {
                 var row = sheet.CreateRow(index++);
-                //row.CreateCell(0).SetCellValue(item.Goal_Id);
+                row.CreateCell(0).SetCellValue(item.Goal_Id);
                 row.CreateCell(1).SetCellValue(item.Goal_Name);
                 row.CreateCell(2).SetCellValue(item.IndexLevel_Grade);
                 row.CreateCell(3).SetCellValue(item.GoalType_Name);
@@ -74,7 +73,7 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             MemoryStream stream = new MemoryStream();
             workbook.Write(stream);
             stream.Seek(0, SeekOrigin.Begin);
-            return File(stream, "application/ms-excel", $"周报进度{DateTime.Now.ToString("yyyyMMdd")}.xls");
+            return File(stream, "application/ms-excel", $"周报进度_{DateTime.Now.ToString("yyyyMMdd")}.xls");
         }
 
         /// <summary>

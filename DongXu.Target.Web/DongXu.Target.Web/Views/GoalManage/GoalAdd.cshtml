@@ -20,207 +20,191 @@
 <body>
     <form action="/GoalManage/GoalSubmit" method="post" class="layui-form" enctype="multipart/form-data">
         <div id="app">
-            <div class="panel-heading">目标详情</div>
-            <table class="table table-bordered table-striped text-center">
-                <tr>
-                    <td>
-                        指标名称:
-                        <input id="goalName" type="text" autocomplete="off" name="GoalName" class="layui-input layui-input" lay-verify="goalName" value="" placeholder="请输入指标名称" />
-                    </td>
-                    <td>
-                        指标单位:
-                        <select id="commany" class="layui-input layui-select" name="RoleId">
-                            <option v-for="(data,index) in commanydata" :value="data.roleId">{{data.roleName}}</option>
-                        </select>
-                    </td>
-                    <td>
-                        主指标:
-                        <input id="Text1" type="text" class="layui-input layui-input" value="2019集团经营目标" disabled="disabled" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        指标类型:
-                        <select id="goaltype" class="layui-input layui-select">
-                            <option v-for="(data,index) in goaltype" :value="data.goalTypeId">{{data.goalTypeName}}</option>
-                        </select>
-                    </td>
-                    <td>
-                        指标类别:
-                        <select id="goalChildType" class="layui-input layui-select" name="GoalTypeId">
-                            <option v-for="(data,index) in goalchildtype" :value="data.goalTypeId">{{data.goalTypeName}}</option>
-                        </select>
-                    </td>
-                    <td>
-                        指标等级:
-                        <select id="indexleavel" class="layui-input layui-select" name="IndexLevelId">
-                            <option v-for="(data,index) in indexleave" :value="data.indexLevelId">{{data.indexLevelGrade}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        反馈频次
-                        <select id="frequency" class="layui-input layui-select" name="FrequencyId">
-                            <option v-for="(data,index) in frequency" :value="data.frequencyId">{{data.frequencyName}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        开始时间:
-                        <input id="begintime" type="text" name="GoalStartTime" placeholder="yyyy-MM-dd" lay-verify="goalBeginTime" class="layui-input" style="text-align:center" />
-                    </td>
-                    <td>
-                        完成时间:
-                        <input id="endtime" type="text" name="GoalEndTime" placeholder="yyyy-MM-dd" lay-verify="goalEndTime" class="layui-input" style="text-align:center" />
-                    </td>
-                    <td>
-                        周期:
-                        <input id="period" type="text" name="GoalPeriod" class="layui-input layui-input" onmouseup="getTime()" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        责任单位:
-                        <select id="dutycommany" class="layui-input layui-select" name="Goal_DutyCommanyId">
-                            <option v-for="(data,index) in dutycommany" :value="data.roleId">{{data.roleName}}</option>
-                        </select>
-                    </td>
-                    <td>
-                        责任人:
-                        <select id="dutyuser" class="layui-input layui-select" name="Goal_DutyUserId">
-                            <option v-for="(data,index) in dutyuser" :value="data.userId">{{data.userRealName}}</option>
-                        </select>
-                    </td>
-                    <td>
-                        考核权重:
-                        <input id="weight" type="text" name="GoalWeight" lay-verify="goalWeight" class="layui-input layui-input" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        填报人:
-                        <input id="informant" type="text" name="GoalInformant" value="@ViewBag.username" class="layui-input layui-input" />
-                    </td>
-                    <td colspan="2">
-                        协办人:
-                        <select multiple="" xm-select="select" id="dothinguser" class="layui-input layui-select" name="GoalOrganiser">
-                            <option v-for="(data,index) in dothinguser" :value="data.userRealName">{{data.userRealName}}</option>
-                        </select>
-                        <input id="Hidden1" type="hidden" name="GoalOrganiser" />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding:10px,10px">计算公式/评价标准</td>
-                    <td colspan="3">
-                        <input id="formula" type="text" name="GoalFormula" lay-verify="goalFormula" class="layui-input layui-textarea" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>数据来源</td>
-                    <td colspan="3">
-                        <input id="source" type="text" name="GoalSources" lay-verify="goalSource" class="layui-input layui-textarea" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>支持表格</td>
-                    <td colspan="2">
-                        <input type="file" name="files" value="" />
-                        <button type="button" class="layui-btn">
-                            <i class="layui-icon">&#xe67c;</i>
-                            上传文件
-                        </button>
-                    </td>
-                </tr>
-            </table>
-            <div class="panel-heading">指标分解</div>
-            <table class="table table-bordered table-striped text-center">
-                <tr>
-                    <td>月份</td>
-                    <td>1月</td>
-                    <td>1-2月</td>
-                    <td>1-3月</td>
-                    <td>1-4月</td>
-                    <td>1-5月</td>
-                    <td>1-6月</td>
-                    <td>1-7月</td>
-                    <td>1-8月</td>
-                    <td>1-9月</td>
-                    <td>1-10月</td>
-                    <td>1-11月</td>
-                    <td>年度目标</td>
-                </tr>
-                <tr>
-                    <td>目标值</td>
-                    <td>
-                        <input id="january" name="IndexsJanuary" lay-verify="goalJanuary" type="text" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="february " name="IndexsFebruary" type="text" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="match" type="text" name="IndexsMarch" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="april" type="text" name="IndexsApril" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="may" type="text" name="IndexsMay" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="june" type="text" name="IndexsJune" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="july" type="text" name="IndexsJuly" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="august" type="text" name="IndexsAugust" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="september" type="text" name="IndexsSeptember" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="october" type="text" name="IndexsOctober" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="november" type="text" name="IndexsNovember" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                    <td>
-                        <input id="december " type="text" name="IndexsYearTarget" lay-verify="goalIndex" style="width:50px" />
-                    </td>
-                </tr>
-            </table>
-            <div class="panel-heading">反馈确认</div>
-            <div style="padding-left: 100px">
-                确认流程
-            </div>
-            <div style="padding-left: 250px" id="endaudit">
-                <div style="float:left">
-                    <input id="Button1" type="button" value="添加审核人" class="layui-btn" onclick="addAudit()" />
+                <div class="panel-heading">目标详情</div>
+                <table class="table table-bordered table-striped text-center">
+                    <tr>
+                        <td>
+                            指标名称:
+                            <input id="goalName" type="text" autocomplete="off" name="GoalName" class="layui-input layui-input" lay-verify="goalName" value="" placeholder="请输入指标名称" />
+                        </td>
+                        <td>
+                            指标单位:
+                            <select id="commany" class="layui-input layui-select" name="RoleId">
+                                <option v-for="(data,index) in commanydata" :value="data.roleId">{{data.roleName}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            主指标:
+                            <input id="Text1" type="text" class="layui-input layui-input" value="2019集团经营目标" disabled="disabled" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            指标类型:
+                            <select id="goaltype" class="layui-input layui-select">
+                                <option v-for="(data,index) in goaltype" :value="data.goalTypeId">{{data.goalTypeName}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            指标类别:
+                            <select id="goalChildType" class="layui-input layui-select" name="GoalTypeId">
+                                <option v-for="(data,index) in goalchildtype" :value="data.goalTypeId">{{data.goalTypeName}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            指标等级:
+                            <select id="indexleavel" class="layui-input layui-select" name="IndexLevelId">
+                                <option v-for="(data,index) in indexleave" :value="data.indexLevelId">{{data.indexLevelGrade}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            反馈频次
+                            <select id="frequency" class="layui-input layui-select" name="FrequencyId">
+                                <option v-for="(data,index) in frequency" :value="data.frequencyId">{{data.frequencyName}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            开始时间:
+                            <input id="begintime" type="text" name="GoalStartTime" placeholder="yyyy-MM-dd" lay-verify="goalBeginTime" class="layui-input" style="text-align:center" />
+                        </td>
+                        <td>
+                            完成时间:
+                            <input id="endtime" type="text" name="GoalEndTime" placeholder="yyyy-MM-dd" lay-verify="goalEndTime" class="layui-input" style="text-align:center" />
+                        </td>
+                        <td>
+                            周期:
+                            <input id="period" type="text" name="GoalPeriod" class="layui-input layui-input" onmouseup="getTime()" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            责任单位:
+                            <select id="dutycommany" class="layui-input layui-select" name="Goal_DutyCommanyId">
+                                <option v-for="(data,index) in dutycommany" :value="data.roleId">{{data.roleName}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            责任人:
+                            <select id="dutyuser" class="layui-input layui-select" name="Goal_DutyUserId">
+                                <option v-for="(data,index) in dutyuser" :value="data.userId">{{data.userRealName}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            考核权重:
+                            <input id="weight" type="text" name="GoalWeight" lay-verify="goalWeight" class="layui-input layui-input" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            填报人:
+                            <input id="informant" type="text" name="GoalInformant" value="@ViewBag.username" class="layui-input layui-input" />
+                        </td>
+                        <td colspan="2">
+                            协办人:
+                            <select multiple="" xm-select="select" id="dothinguser" class="layui-input layui-select" name="GoalOrganiser">
+                                <option v-for="(data,index) in dothinguser" :value="data.userRealName">{{data.userRealName}}</option>
+                            </select>
+                            <input id="Hidden1" type="hidden" name="GoalOrganiser" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px,10px">计算公式/评价标准</td>
+                        <td colspan="3">
+                            <input id="formula" type="text" name="GoalFormula" lay-verify="goalFormula" class="layui-input layui-textarea" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>数据来源</td>
+                        <td colspan="3">
+                            <input id="source" type="text" name="GoalSources" lay-verify="goalSource" class="layui-input layui-textarea" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>支持表格</td>
+                        <td colspan="2">
+                            <input type="file" name="files" value="" />
+                            <button type="button" class="layui-btn">
+                                <i class="layui-icon">&#xe67c;</i>
+                                上传文件
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="panel-heading">指标分解</div>
+                <table class="table table-bordered table-striped text-center">
+                    <tr>
+                        <td>月份</td>
+                        <td>1月</td>
+                        <td>1-2月</td>
+                        <td>1-3月</td>
+                        <td>1-4月</td>
+                        <td>1-5月</td>
+                        <td>1-6月</td>
+                        <td>1-7月</td>
+                        <td>1-8月</td>
+                        <td>1-9月</td>
+                        <td>1-10月</td>
+                        <td>1-11月</td>
+                        <td>年度目标</td>
+                    </tr>
+                    <tr>
+                        <td>目标值</td>
+                        <td>
+                            <input id="january" name="IndexsJanuary" lay-verify="goalJanuary" type="text" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="february " name="IndexsFebruary" type="text" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="match" type="text" name="IndexsMarch" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="april" type="text" name="IndexsApril" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="may" type="text" name="IndexsMay" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="june" type="text" name="IndexsJune" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="july" type="text" name="IndexsJuly" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="august" type="text" name="IndexsAugust" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="september" type="text" name="IndexsSeptember" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="october" type="text" name="IndexsOctober" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="november" type="text" name="IndexsNovember" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                        <td>
+                            <input id="december " type="text" name="IndexsYearTarget" lay-verify="goalIndex" style="width:50px" />
+                        </td>
+                    </tr>
+                </table>
+                <div class="panel-heading">反馈确认</div>
+                <table class="table table-bordered table-striped text-center">
+                    <tr>
+                        <td>审核人列表</td>
+                        <td v-for="(data,index) in dutyuser">
+                            <span><input id="Checkbox1" type="checkbox" lay-skin="primary" lay-filter="oneChoose" :value="data.userId" name="data.userRealName" />{{data.userRealName}}</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="layui-form-item" style="padding-right:50px">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                    </div>
                 </div>
-                <div style="margin-left:200px" id="audit">
-                    <ul id="shuttle_box">
-                        <li class="shuttle_box_li shuttle_box_near" style="border:2px">
-                            <ul id="shuttle_box_left">
-                                <li v-for="(data,index) in dutyuser">
-                                    <input id="Checkbox1" type="checkbox" :value="data.userId" lay-verify="goalAuditUser" />{{data.userRealName}}
-                                </li>
-                                <li>
-                                    <input id="value" type="hidden" name="AuditValue" />
-                                    <input id="btnSure" type="button" class="layui-btn" value="确定" onclick="auditSure()" />
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <span id="auditname">您选择的审核人为:</span>
-            </div>
-            <div class="layui-form-item" style="float: right">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
-                </div>
-            </div>
         </div>
     </form>
 </body>
@@ -257,8 +241,6 @@
         $("input[name='GoalOrganiser']").val(str)
     }
 
-
-
     layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
                 , layer = layui.layer
@@ -272,6 +254,17 @@
             laydate.render({
                 elem: '#endtime'
             });
+
+        //layui 复选框选中
+        form.on('checkbox(oneChoose)', function (data) {           
+            var obj = [];  //定义空数组用来存放选中的复选框的内容
+            $("input[type='checkbox']").each(function () {  //根据复选框类型来获取到所有的复选框
+                if ($(this).is(":checked")) {   //判断是否为选中状态
+                    obj.push(this.value);   //数组内放入选中的文本值
+                }
+            })
+            $("#txtId").val(obj)
+        })
 
             //自定义验证规则
             form.verify({
@@ -330,6 +323,7 @@
                 goaltype: [],       //目标类型
                 goalchildtype: [],  //子集目标类型
                 dutycommany: [],    //责任单位
+                dutyusername:"",
             },
             mounted() {
                 this.bindCommany();
@@ -340,14 +334,13 @@
                 this.bindGoalType();
                 this.bindDutyCommany();
                 this.bindGoalChildType();
-                $("#audit").hide();
+                //$("#audit").hide();
             },
             methods: {
                 bindCommany: async function () {             //绑定单位下拉框
                     axios.get("@Url.Action("GetCommanyList","GoalManage")").then(
                         (response) => {
                             this.commanydata = response.data;
-                            console.log(response.data)
                         }
                     )
                 },
@@ -355,7 +348,6 @@
                     axios.get("@Url.Action("GetDutyUserList","GoalManage")").then(
                         (response) => {
                             this.dutyuser = response.data;
-                            console.log(response.data)
                         }
                     )
                 },
@@ -363,16 +355,13 @@
                     axios.get("@Url.Action("GetDothingUserList","GoalManage")").then(
                         (response) => {
                             this.dothinguser = response.data;
-                            console.log(response.data)
                         }
                     )
                 },
                 bindLeave:async  function () {               //查询指标等级
                     axios.get("@Url.Action("GetIndexlevelList","GoalManage")").then(
                         (response) => {
-                            console.log(response.data)
                             this.indexleave = response.data;
-                            console.log(response.data)
                         }
                     )
                 },
@@ -380,7 +369,6 @@
                     axios.get("@Url.Action("GetFrequencieList","GoalManage")").then(
                         (response) => {
                             this.frequency = response.data;
-                            console.log(response.data)
                         }
                     )
                 },
@@ -388,7 +376,6 @@
                     axios.get("@Url.Action("GetGoalParentTypeList","GoalManage")").then(
                         (response) => {
                             this.goaltype = response.data;
-                            console.log(response.data)
                         }
                     )
                 },
@@ -396,7 +383,6 @@
                     axios.get("@Url.Action("GetGoalChildTypeList","GoalManage")").then(
                         (response) => {
                             this.goalchildtype = response.data;
-                            console.log(response.data)
                         }
                     )
                 },
@@ -404,10 +390,19 @@
                     axios.get("@Url.Action("GetDutyCommanyList","GoalManage")").then(
                         (response) => {
                             this.dutycommany = response.data;
-                            console.log(response.data)
                         }
                     )
                 },
+                getDutyUserName: function () {
+                    alert(111);
+                    var obj = [];
+                    $("input[type='checkbox']").each(function () {
+                        if ($(this).is(":checked")) {
+                            obj.push(this.nextSibling.nodeValue);
+                        }
+                    })
+                    alert(obj);
+                }
             },
             updated: function () {
                     this.$nextTick(function () {
@@ -418,6 +413,17 @@
             }
     })
 
+    function getDutyUserName() {
+                            alert(111);
+                    var obj = [];
+                    $("input[type='checkbox']").each(function () {
+                        if ($(this).is(":checked")) {
+                            obj.push(this.nextSibling.nodeValue);
+                        }
+                    })
+                    alert(obj);
+    }
+
     //计算周期
     function getTime() {
         var begintime = $("#begintime").val();
@@ -425,10 +431,10 @@
         alert(endtime)
     }
 
-    //点击添加审核人
-    function addAudit() {
-        $("#audit").show();
-    }
+    ////点击添加审核人
+    //function addAudit() {
+    //    $("#audit").show();
+    //}
 
     var obj = "";
     //点击确定

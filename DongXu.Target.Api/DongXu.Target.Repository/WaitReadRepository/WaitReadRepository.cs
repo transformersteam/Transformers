@@ -9,6 +9,7 @@ using DongXu.Target.Model;
 using DongXu.Target.Model.Dto;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 
 namespace DongXu.Target.Repository.WaitReadRepository
 {
@@ -117,7 +118,9 @@ namespace DongXu.Target.Repository.WaitReadRepository
         /// <returns></returns>
         public List<GoalStateGoal> GetRunConditionList()
         {
-            var list = context.GoalStateGoal.FromSql("SELECT ROUND(COUNT(a.GoalState_Id)/6*100,2) as percent,COUNT(a.GoalState_Id) as count ,b.GoalState_Name,b.GoalState_Explain FROM goal a INNER JOIN goalstate b on a.GoalState_Id = b.GoalState_Id GROUP BY b.GoalState_Name").ToList();
+            var model = DbProcedureHelper.ExecuteDt("p_getState",null);
+            var goalstate = JsonConvert.SerializeObject(model);
+            var list = JsonConvert.DeserializeObject<List<GoalStateGoal>>(goalstate);
             return list;
         }
 
