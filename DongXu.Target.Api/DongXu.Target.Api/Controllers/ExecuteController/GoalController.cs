@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DongXu.Target.IRepository.IExecute;
 using DongXu.Target.Model;
+using DongXu.Target.Model.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,10 +31,10 @@ namespace DongXu.Target.Api.Controllers.ExecuteController
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetGoalList")]
-        public GoalPageination GetGoalList(int pageindex = 1, int pagesize = 3)
+        public List<BackLog> GetGoalList(int userid)
         {
-            var list = GoalRepository.GetGoalList(pageindex, pagesize);
-            return list;
+            var list = GoalRepository.GetGoalList(userid);
+            return list;  
         }
     }
 }

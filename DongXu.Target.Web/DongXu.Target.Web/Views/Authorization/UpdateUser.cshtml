@@ -32,8 +32,10 @@
                 </td>
             </tr>
             <tr>
-                <td>选择角色</td>
-                <td><span v-for="item in user"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId"/>{{item.roleName}}</span></td>
+                <td colspan="2">选择角色</td>
+            </tr>
+            <tr>
+                <td colspan="2"><span v-for="item in user"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId" />{{item.roleName}}</span></td>
             </tr>
             <tr>
                 <td></td>
@@ -75,7 +77,12 @@
         },
         created() {
             this.GetRoleList(),
-            this.GetUserById(@ViewBag.id)
+                this.GetUserById(@ViewBag.id),
+                this.GetUserroleById(@ViewBag.id)
+               
+        },
+        destroyed() {
+            
         },
         methods: {
             GetRoleList: function () {
@@ -104,29 +111,22 @@
                     }
                 });
             },
+            GetUserroleById: async function (id) {
+                await axios.get("/Authorization/GetUserroleById", { params: { userId: id } }).then((response) => {
+                    setTimeout(() => {
+                        var qx = document.getElementsByName("qx");
+                        for (var i = 0; i < response.data.length; i++) {
+                            for (var j = 0; j < qx.length; j++) {
+                                if (response.data[i].roleId == qx[j].value) {
+                                    qx[j].checked = true;
+                                }
+                            }
+                        }
+                    }, 100); 
+                });
+            },
         }
     })
-
-
-    $(function () {
-        GetUserroleById(@ViewBag.id);
-    });
-    function GetUserroleById(id) {
-        $.ajax({
-            url: '/Authorization/GetUserroleById?userId=' + id,
-            type: 'get',
-            success: function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    var qx = document.getElementsByName("qx");
-                    for (var j = 0; j < qx.length; j++) {
-                        if (data[i].roleId == qx[j].value) {
-                            qx[j].checked = true;
-                        }
-                    }
-                }
-            }
-        })
-    };
     function UptRole() {
         var date = new Date();
         var year = date.getFullYear();

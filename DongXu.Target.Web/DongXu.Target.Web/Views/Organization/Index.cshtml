@@ -9,15 +9,27 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    <link href="~/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
-    <script src="~/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/zTree_v3/js/jquery-1.4.4.min.js"></script>
+    <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link href="~/zTree_v3/css/demo.css" rel="stylesheet" type="text/css" />
+    <link href="~/zTree_v3/css/awesomeStyle/awesome.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/zTree_v3/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="~/zTree_v3/js/jquery.ztree.excheck.js"></script>
+    <script type="text/javascript" src="~/zTree_v3/js/jquery.ztree.exedit.js"></script>
     <script src="~/zTree_v3/js/jquery.ztree.all.min.js"></script>
     <script src="~/js/vue.js"></script>
     <script src="~/js/axios.js"></script>
+    <script src="~/layui-v2.4.5/layui/layui.js"></script>
+
+
     <style>
         #max {
-            width: 1500px;
-            height: 600px;
+            width: 100%;
+            height: 800px;
             margin-left: 30px;
         }
 
@@ -35,19 +47,15 @@
             width: 30%;
             height: 100%;
             float: left;
-            border: 1px solid #000
         }
 
         #message {
-            height: 70%;
+            width: 70%;
             height: 100%;
             float: left;
-            border: 1px solid #000
         }
 
             #message table {
-                width: 600px;
-                margin-left: 100px;
                 margin-top: 50px;
                 border-collapse: separate;
                 border-spacing: 0px 10px;
@@ -56,13 +64,15 @@
 </head>
 
 <body>
-    <div id="max">
+    <div id="max" style="background-color:white">
         <div id="title"><p>组织管理</p></div>
-        <div id="tree">
-            <ul id="regionZTree" class="ztree"></ul>
+        <div class="content_wrap" id="tree">
+            <div class="bg left">
+                <ul id="regionZTree" class="ztree" style="width:270px"></ul>
+            </div>
         </div>
         <div id="message">
-            <table>
+            <table class="layui-table">
                 <tr>
                     <td>组织名称:</td>
                     <td><input id="txtName" type="text" v-model="RoleName" /></td>
@@ -97,17 +107,14 @@
                     <td><input id="updateTime" type="text" v-model="RoleModifyTime" readonly /></td>
                 </tr>
                 <tr>
-                    <td>{{RoleId}}</td>
-                    <td><input id="Button1" type="button" v-on:click="updateRole(RoleId,RoleName,RoleIsEnable,RoleIdentify,'超级管理员')" value="修改" /></td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="4"><input id="Button1" type="button" v-on:click="updateRole(RoleId,RoleName,RoleIsEnable,RoleIdentify,'超级管理员')" value="修改" class="layui-btn layui-btn-normal"/></td>
                 </tr>
             </table>
         </div>
     </div>
 </body>
 </html>
-<script>
+<script type="text/javascript">
     var zNodes = "";
     var RoleName = "";
     var name = "NewNode";
@@ -132,36 +139,32 @@
         view: {
             addHoverDom: addHoverDom,
             removeHoverDom: removeHoverDom,
-            dblClickExpand: false,//双击节点时，是否自动展开父节点的标识
-            showLine: true,//是否显示节点之间的连线
-            fontCss: { 'color': 'black', 'font-weight': 'bold' },//字体样式函数
             selectedMulti: true, //设置是否允许同时选中多个节点
         },
         check: {
-            //chkboxType: { "Y": "ps", "N": "ps" },
-            chkboxType: { "Y": "", "N": "" },
-            chkStyle: "checkbox",//复选框类型
+            chkStyle: 'radio', 
+            radioType: "level",
             enable: true //每个节点上是否显示 CheckBox
         },
         //增删改，移动复制
         edit: {
             enable: true, //如果enable为flase，那么树就不能移动了
-            showRemoveBtn: true, //是否显示树的删除按钮
-            showRenameBtn: true, //是否显示数的重命名按钮
-            isSimpleData: true, //数据是否采用简单 Array 格式，默认false
-            treeNodeKey: "id",  //在isSimpleData格式下，当前节点id属性
-            treeNodeParentKey: "parentId",//在isSimpleData格式下，当前节点的父节点id属性
-            showLine: true, //是否显示节点间的连线
-            removeTitle: "删除节点",//删除Logo的提示
-            renameTitle: "编辑节点",//修改Logo的提示
-            //拖拽
-            drag: {
-                isCopy: true,//能够复制
-                isMove: true,//能够移动
-                prev: false,//不能拖拽到节点前
-                next: false,//不能拖拽到节点后
-                inner: true//只能拖拽到节点中
-            }
+            //showRemoveBtn: true, //是否显示树的删除按钮
+            //showRenameBtn: true, //是否显示数的重命名按钮
+            //isSimpleData: true, //数据是否采用简单 Array 格式，默认false
+            //treeNodeKey: "id",  //在isSimpleData格式下，当前节点id属性
+            //treeNodeParentKey: "parentId",//在isSimpleData格式下，当前节点的父节点id属性
+            //showLine: true, //是否显示节点间的连线
+            //removeTitle: "删除节点",//删除Logo的提示
+            //renameTitle: "编辑节点",//修改Logo的提示
+            ////拖拽
+            //drag: {
+            //    isCopy: true,//能够复制
+            //    isMove: true,//能够移动
+            //    prev: false,//不能拖拽到节点前
+            //    next: false,//不能拖拽到节点后
+            //    inner: true//只能拖拽到节点中
+            //}
         },
         data: {
             simpleData: {//简单数据模式
@@ -205,12 +208,24 @@
                 });
                 zNodes += "]";
                 zNodes = eval(zNodes);
-                zTreeObj = $.fn.zTree.init($("#regionZTree"), setting, zNodes);
+                //zTreeObj = $.fn.zTree.init($("#regionZTree"), setting, zNodes);
             },
             error: function (e) {
             }
         });
     };
+    function setCheck() {
+        setting.check.chkStyle = $("#r1").attr("checked") ? "checkbox" : "radio";
+        setting.check.enable = (!$("#disablechk").attr("checked"));
+        $.fn.zTree.init($("#regionZTree"), setting, zNodes);
+    }
+    $(document).ready(function () {
+        $.fn.zTree.init($("#regionZTree"), setting, zNodes);
+        setCheck();
+        $("#r1").bind("change", setCheck);
+        $("#r2").bind("change", setCheck);
+        $("#disablechk").bind("change", setCheck);
+    });
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         $.ajax({
