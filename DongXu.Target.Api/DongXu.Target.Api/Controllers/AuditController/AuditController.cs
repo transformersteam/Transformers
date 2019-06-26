@@ -81,8 +81,8 @@ namespace DongXu.Target.Api.Controllers.AuditController
         {
             ApprconfigurationDto apprconfigurationDto = Newtonsoft.Json.JsonConvert.DeserializeObject<ApprconfigurationDto>(json);
             string s = apprconfigurationDto.AuditValue;
-            string userId = s.Substring(0, s.Length - 1);
-            string[] SuserId=userId.Split(',');
+            //string userId = s.Substring(0, s.Length - 1);
+            string[] SuserId=s.Split(',');
             int[] User_Id = new int[SuserId.Length];
             for (int i = 0; i < SuserId.Length; i++)
             {

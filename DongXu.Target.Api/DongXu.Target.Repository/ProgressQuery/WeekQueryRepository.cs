@@ -61,7 +61,7 @@ namespace DongXu.Target.Repository.ProgressQuery
             if(!string.IsNullOrWhiteSpace(dutyUserName))
             {
                 sql += $" and f.User_Name like '%{dutyUserName}%'";
-                sqlCount += $" and e.User_Name like '%{dutyUserName}%'";
+                sqlCount += $" and f.User_Name like '%{dutyUserName}%'";
             }
             if(!string.IsNullOrWhiteSpace(begintime) &&!string.IsNullOrWhiteSpace(endtime))
             {
