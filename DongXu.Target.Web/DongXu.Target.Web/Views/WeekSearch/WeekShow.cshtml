@@ -211,6 +211,14 @@
 
     //Excel导出
     function exportdata() {
+        var $frm = $('<form action="/WeekSearch/Export" method="post" id="frmSearch"></form>');
+        var array = $('#frmSearch').serializeArray();
+        for (i = 0, length = array.length; i < length; i++) {
+    　　　　　　key = array[i].name;
+    　　　　　　value = array[i].value;
+    　　　　　　$frm.append($('<input name = "' + key + '" value = "' + value + '" />')); 
+　　　　}
+        $frm.submit();
         $.ajax({
             url: "/WeekSearch/Export",
             success: function () {
