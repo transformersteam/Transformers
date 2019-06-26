@@ -8,6 +8,9 @@ namespace DongXu.Target.Test
         [TestMethod]
         public void TestMethod1()
         {
+            Repository.LoginRepository login = new Repository.LoginRepository();
+            Assert.IsTrue(login.GetPower(1)!=null);
+
         }
     }
 }
