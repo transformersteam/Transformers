@@ -13,8 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <ProjectReference Include="..\DongXu.Target.IRepository\DongXu.Target.IRepository.csproj" />
     <ProjectReference Include="..\DongXu.Target.Repository\DongXu.Target.Repository.csproj" />
+
+    <ProjectReference Include="..\DongXu.Target.Model\DongXu.Target.Model.csproj" />
+    <ProjectReference Include="..\DongXu.Target.Repository\DongXu.Target.Repository.csproj" />
+    <ProjectReference Include="..\DongXu.Target.Api\DongXu.Target.Api.csproj" />
   </ItemGroup>
 
 </Project>

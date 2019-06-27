@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <HTML>
 <HEAD>
 	<TITLE> ZTREE DEMO - checkbox & radio</TITLE>
@@ -20,7 +20,11 @@
 				simpleData: {
 					enable: true
 				}
-			}
+            },
+            callback : {
+                onRightClick : OnRightClick,
+                //onClick : zTreeOnClick
+            }
 		};
 
 		var zNodes =[
@@ -36,7 +40,32 @@
 			{ id:31, pId:3, name:"叶子节点 3-1"},
 			{ id:32, pId:3, name:"叶子节点 3-2"},
 			{ id:33, pId:3, name:"叶子节点 3-3"}
-		];
+        ];
+
+        function OnRightClick(event, treeId, treeNode) {
+            alert(111)
+            if(treeNode == null) {
+                var a = 1; // 什么都不做
+            }else if(treeNode && treeNode.name) {
+                curName = treeNode.name;
+            }else {
+                curName = undefined;
+            }   
+            if (!treeNode && event.target.tagName.toLowerCase() != "button"
+                    && $(event.target).parents("a").length == 0) {
+                zTree.cancelSelectedNode();
+                $("#idCipherText").val("");
+                showRMenu("root", event.clientX, event.clientY);
+            } else if (treeNode && !treeNode.noR) {
+                //zTree.selectNode(treeNode);
+         
+                if(treeNode.id) {
+                    $("#idCipherText").val(treeNode.id);
+                }
+                showRMenu("node", event.clientX, event.clientY);
+            }
+            $("#typeIdCipherText").val($("#docType").attr("value"));
+        }
 
 		function addDiyDom(treeId, treeNode) {
 			var aObj = $("#" + treeNode.tId + IDMark_A);

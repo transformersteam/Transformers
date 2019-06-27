@@ -192,31 +192,16 @@
                 </tr>
             </table>
             <div class="panel-heading">反馈确认</div>
-            <div style="padding-left: 100px">
-                确认流程
-            </div>
-            <div style="padding-left: 250px" id="endaudit">
-                <div style="float:left">
-                    <input id="Button1" type="button" value="添加审核人" class="layui-btn" onclick="addAudit()" />
-                </div>
-                <div style="margin-left:200px" id="audit">
-                    <ul id="shuttle_box">
-                        <li class="shuttle_box_li shuttle_box_near" style="border:2px">
-                            <ul id="shuttle_box_left">
-                                <li v-for="(data,index) in dutyuser">
-                                    <input id="Checkbox1" type="checkbox" :value="data.userId" lay-verify="goalAuditUser" />{{data.userRealName}}
-                                </li>
-                                <li>
-                                    <input id="value" type="hidden" name="AuditValue" />
-                                    <input id="btnSure" type="button" class="layui-btn" value="确定" onclick="auditSure()" />
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <span id="auditname">您选择的审核人为:</span>
-            </div>
-            <div class="layui-form-item" style="float: right">
+            <table class="table table-bordered table-striped text-center">
+                <tr>
+                    <td>审核人列表</td>
+                    <td v-for="(data,index) in dutyuser">
+                        <span><input id="Checkbox1" type="checkbox" lay-skin="primary" lay-filter="oneChoose" :value="data.userId" name="data.userRealName" />{{data.userRealName}}</span>
+                    </td>
+                </tr>
+            </table>
+            <input id="txtId" type="text" name="AuditValue" />
+            <div class="layui-form-item" style="padding-right:50px">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
                 </div>
@@ -257,8 +242,6 @@
         $("input[name='GoalOrganiser']").val(str)
     }
 
-
-
     layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
                 , layer = layui.layer
@@ -272,6 +255,17 @@
             laydate.render({
                 elem: '#endtime'
             });
+
+        //layui 复选框选中
+        form.on('checkbox(oneChoose)', function (data) {           
+            var obj = [];  //定义空数组用来存放选中的复选框的内容
+            $("input[type='checkbox']").each(function () {  //根据复选框类型来获取到所有的复选框
+                if ($(this).is(":checked")) {   //判断是否为选中状态
+                    obj.push(this.value);   //数组内放入选中的文本值
+                }
+            })
+            $("#txtId").val(obj)
+        })
 
             //自定义验证规则
             form.verify({
@@ -320,102 +314,104 @@
         })
 
     var vm = new Vue({
-            el: "#app",
-            data: {
-                commanydata: [],   //单位
-                dutyuser: [],      //责任人
-                dothinguser: [],   //协办人
-                indexleave: [],    //指标等级
-                frequency: [],     //反馈频次
-                goaltype: [],       //目标类型
-                goalchildtype: [],  //子集目标类型
-                dutycommany: [],    //责任单位
+        el: "#app",
+        data: {
+            commanydata: [],   //单位
+            dutyuser: [],      //责任人
+            dothinguser: [],   //协办人
+            indexleave: [],    //指标等级
+            frequency: [],     //反馈频次
+            goaltype: [],       //目标类型
+            goalchildtype: [],  //子集目标类型
+            dutycommany: [],    //责任单位
+            dutyusername: "",
+        },
+        mounted() {
+            this.bindCommany();
+            this.bindDutyUser();
+            this.bindDothingUser();
+            this.bindLeave();
+            this.bindFrequency();
+            this.bindGoalType();
+            this.bindDutyCommany();
+            this.bindGoalChildType();
+            //$("#audit").hide();
+        },
+        methods: {
+            bindCommany: async function () {             //绑定单位下拉框
+                axios.get("@Url.Action("GetCommanyList","GoalManage")").then(
+                    (response) => {
+                        this.commanydata = response.data;
+                    }
+                )
             },
-            mounted() {
-                this.bindCommany();
-                this.bindDutyUser();
-                this.bindDothingUser();
-                this.bindLeave();
-                this.bindFrequency();
-                this.bindGoalType();
-                this.bindDutyCommany();
-                this.bindGoalChildType();
-                $("#audit").hide();
+            bindDutyUser: async function () {            //绑定责任人下拉框
+                axios.get("@Url.Action("GetDutyUserList","GoalManage")").then(
+                    (response) => {
+                        this.dutyuser = response.data;
+                    }
+                )
             },
-            methods: {
-                bindCommany: async function () {             //绑定单位下拉框
-                    axios.get("@Url.Action("GetCommanyList","GoalManage")").then(
-                        (response) => {
-                            this.commanydata = response.data;
-                            console.log(response.data)
-                        }
-                    )
-                },
-                bindDutyUser:async  function () {            //绑定责任人下拉框
-                    axios.get("@Url.Action("GetDutyUserList","GoalManage")").then(
-                        (response) => {
-                            this.dutyuser = response.data;
-                            console.log(response.data)
-                        }
-                    )
-                },
-                bindDothingUser:async  function () {         //绑定协办人下拉框
-                    axios.get("@Url.Action("GetDothingUserList","GoalManage")").then(
-                        (response) => {
-                            this.dothinguser = response.data;
-                            console.log(response.data)
-                        }
-                    )
-                },
-                bindLeave:async  function () {               //查询指标等级
-                    axios.get("@Url.Action("GetIndexlevelList","GoalManage")").then(
-                        (response) => {
-                            console.log(response.data)
-                            this.indexleave = response.data;
-                            console.log(response.data)
-                        }
-                    )
-                },
-                bindFrequency:async  function () {           //查询反馈频次
-                    axios.get("@Url.Action("GetFrequencieList","GoalManage")").then(
-                        (response) => {
-                            this.frequency = response.data;
-                            console.log(response.data)
-                        }
-                    )
-                },
-                bindGoalType:async  function () {            //查询目标类型
-                    axios.get("@Url.Action("GetGoalParentTypeList","GoalManage")").then(
-                        (response) => {
-                            this.goaltype = response.data;
-                            console.log(response.data)
-                        }
-                    )
-                },
-                bindGoalChildType: function () {           //查询目标类型
-                    axios.get("@Url.Action("GetGoalChildTypeList","GoalManage")").then(
-                        (response) => {
-                            this.goalchildtype = response.data;
-                            console.log(response.data)
-                        }
-                    )
-                },
-                bindDutyCommany:function () {         //查询公司列表 责任单位
-                    axios.get("@Url.Action("GetDutyCommanyList","GoalManage")").then(
-                        (response) => {
-                            this.dutycommany = response.data;
-                            console.log(response.data)
-                        }
-                    )
-                },
+            bindDothingUser: async function () {         //绑定协办人下拉框
+                axios.get("@Url.Action("GetDothingUserList","GoalManage")").then(
+                    (response) => {
+                        this.dothinguser = response.data;
+                    }
+                )
             },
-            updated: function () {
-                    this.$nextTick(function () {
-                    layui.use(['form'], function(){
-                        layui.form.render('select')
-                    });
-                });
+            bindLeave: async function () {               //查询指标等级
+                axios.get("@Url.Action("GetIndexlevelList","GoalManage")").then(
+                    (response) => {
+                        this.indexleave = response.data;
+                    }
+                )
+            },
+            bindFrequency: async function () {           //查询反馈频次
+                axios.get("@Url.Action("GetFrequencieList","GoalManage")").then(
+                    (response) => {
+                        this.frequency = response.data;
+                    }
+                )
+            },
+            bindGoalType: async function () {            //查询目标类型
+                axios.get("@Url.Action("GetGoalParentTypeList","GoalManage")").then(
+                    (response) => {
+                        this.goaltype = response.data;
+                    }
+                )
+            },
+            bindGoalChildType: function () {           //查询目标类型
+                axios.get("@Url.Action("GetGoalChildTypeList","GoalManage")").then(
+                    (response) => {
+                        this.goalchildtype = response.data;
+                    }
+                )
+            },
+            bindDutyCommany: function () {         //查询公司列表 责任单位
+                axios.get("@Url.Action("GetDutyCommanyList","GoalManage")").then(
+                    (response) => {
+                        this.dutycommany = response.data;
+                    }
+                )
+            },
+            getDutyUserName: function () {
+                alert(111);
+                var obj = [];
+                $("input[type='checkbox']").each(function () {
+                    if ($(this).is(":checked")) {
+                        obj.push(this.nextSibling.nodeValue);
+                    }
+                })
+                alert(obj);
             }
+        },
+        updated: function () {
+            this.$nextTick(function () {
+                layui.use(['form'], function () {
+                    layui.form.render('select')
+                });
+            });
+        }
     })
 
     //计算周期
@@ -425,10 +421,10 @@
         alert(endtime)
     }
 
-    //点击添加审核人
-    function addAudit() {
-        $("#audit").show();
-    }
+    ////点击添加审核人
+    //function addAudit() {
+    //    $("#audit").show();
+    //}
 
     var obj = "";
     //点击确定

@@ -61,7 +61,7 @@ namespace DongXu.Target.Repository.ProgressQuery
             if(!string.IsNullOrWhiteSpace(dutyUserName))
             {
                 sql += $" and f.User_Name like '%{dutyUserName}%'";
-                sqlCount += $" and e.User_Name like '%{dutyUserName}%'";
+                sqlCount += $" and f.User_Name like '%{dutyUserName}%'";
             }
             if(!string.IsNullOrWhiteSpace(begintime) &&!string.IsNullOrWhiteSpace(endtime))
             {
@@ -75,6 +75,16 @@ namespace DongXu.Target.Repository.ProgressQuery
             pageData.GetData = list;
             pageData.TotalCount = count;
             return pageData;
+        }
+
+        /// <summary>
+        /// 绑定目标类型
+        /// </summary>
+        /// <returns></returns>
+        public List<Goalstate> GetStateList()
+        {
+            var list = context.Goalstate.ToList();
+            return list;
         }
     }
 }

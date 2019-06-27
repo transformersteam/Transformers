@@ -164,6 +164,7 @@
             GetAuditDtoList: function(userId,goalId) {
                 axios.get("/Audit/GetAuditDtoList", { params: { userId: userId, goalId: goalId } }).then((response) => {
                     this.auditDtoList = response.data;
+                    console.log(this.auditDtoList)
                    
                     for (var i = 0; i < response.data.length; i++) {
                         this.next_Id = response.data[i].next_Id;

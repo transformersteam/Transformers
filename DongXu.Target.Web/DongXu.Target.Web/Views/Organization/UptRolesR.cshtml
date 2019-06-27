@@ -38,7 +38,7 @@
                 <td colspan="3">选择权限</td>
             </tr>
             <tr>
-                <td colspan="3"><span v-for="item in power"><input id="Checkbox1" name="qx" type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span></td>
+                <td colspan="3"><span v-for="item in power" style="padding-left:20px"><span style="width:150px;display:inline-block"><input id="Checkbox1" name="qx"  type="checkbox" :value="item.powerId" v-on:click="GetPowerId(item.powerId)" /><label>{{item.powerName}}</label></span><label v-if="item.powerId%5===0"><br /></label></span></td>
             </tr>
             <tr>
                 <td></td>

@@ -30,13 +30,12 @@
 </head>
 <body>
     <div style="padding:20px">
-        <form action="/WeekSearch/WeekShow" method="post">
             <div class="panel-heading">周报查询</div>
             <table class="table table-bordered table-striped text-center">
                 <tr style="text-align:center">
                     <td>目标名称:</td>
                     <td>
-                        <input id="Text1" type="text" class="layui-input" name="goalName" />
+                        <input id="txtGoalName" type="text" class="layui-input" name="goalName" />
                     </td>
                     <td>目标类型:</td>
                     <td>
@@ -60,105 +59,86 @@
                 <tr>
                     <td>责任部门:</td>
                     <td>
-                        <input id="Text1" type="text" class="layui-input" name="dutyCommanyName" />
+                        <input id="txtDutyDepartment" type="text" class="layui-input" name="dutyCommanyName" />
                     </td>
                     <td>责任人:</td>
                     <td>
-                        <input id="Text1" type="text" class="layui-input" name="dutyUserName" />
+                        <input id="txtDutyUser" type="text" class="layui-input" name="dutyUserName" />
                     </td>
-                    <td>提报日期:</td>
+                    <td>开始日期:</td>
                     <td>
-                        <input class="layui-input" name="begintime" type="text" id="config-demo">
+                        <input class="layui-input" name="begintime" type="text" id="txtBegintime">
+                    </td>
+                    <td>结束日期:</td>
+                    <td>
+                        <input class="layui-input" name="endtime" type="text" id="txtEndtime">
                     </td>
                 </tr>
             </table>
             <div style="float:right">
-                <input id="Button1" type="button" value="导出" class="btn btn-primary btn-lg" onclick="exportdata()" />
-                <input id="Button1" type="submit" value="查询" class="btn btn-primary btn-lg" />
+                <form action="/WeekSearch/Export" method="post">
+                    <input id="Button1" type="submit" value="导出" class="btn btn-primary btn-lg" />
+                    <input id="Button1" type="button" value="查询" class="btn btn-primary btn-lg" onclick="search()" />
+                </form>
             </div>
-        </form>
     </div>
     <div style="padding:20px">
         <div class="panel-heading">周报列表</div>
         <table class="table table-bordered table-striped text-center">
-            <tr>
-                <td>序号</td>
-                <td>目标名称</td>
-                <td>级别</td>
-                <td>类别</td>
-                <td>责任部门</td>
-                <td>责任人</td>
-                <td>年份</td>
-                <td>提报状态</td>
-                <td>提报日期</td>
-                <td>当周进展</td>
-                <td>状态</td>
-            </tr>
-            @foreach (var item in Model)
-            {
+            <thead>
                 <tr>
-                    <td>@item.Goal_Id</td>
-                    <td>@item.Goal_Name</td>
-                    <td>@item.IndexLevel_Grade</td>
-                    <td>@item.GoalType_Name</td>
-                    <td>@item.Role_Name</td>
-                    <td>@item.User_Name</td>
-                    <td>@item.GoalYear</td>
-                    <td>已提报</td>
-                    <td>@item.Goal_StartTime</td>
-                    <td>@item.Feedback_DayEvolve</td>
-                    <td>@item.GoalState_Id</td>
+                    <td>序号</td>
+                    <td>目标名称</td>
+                    <td>级别</td>
+                    <td>类别</td>
+                    <td>责任部门</td>
+                    <td>责任人</td>
+                    <td>年份</td>
+                    <td>提报状态</td>
+                    <td>提报日期</td>
+                    <td>当周进展</td>
+                    <td>状态</td>
                 </tr>
-            }
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
         </table>
-        @Html.PagedListPager(Model, pageIndex => Url.Action("WeekShow", new { pageIndex, pageSize = 5 }), new X.PagedList.Mvc.Common.PagedListRenderOptionsBase
-        {
-               LinkToPreviousPageFormat = "上一页",
-               LinkToFirstPageFormat = "首页",
-               LinkToNextPageFormat = "下一页",
-               LinkToLastPageFormat = "末页",
-               MaximumPageNumbersToDisplay = 5,
-               DisplayItemSliceAndTotal = false
-        })
+        <div id="pageList">
+
+        </div>
     </div>
 </body>
 </html>
 <script>
+    var pageindex = 1;
+    var pagesize = 5;
+    var goalName = "";
+    var typeId = 0;
+    var leaveId = 0;
+    var stateId = 0;
+    var dutyCommanyName = "";
+    var dutyUserName = "";
+    var begintime = "";
+    var endtime = "";
     $(function () {
-        loadtime();
-        getType();
-        getgoalIndex();
-        getState();
+        getType();    //绑定类型
+        getgoalIndex();  //目标等级
+        getState();   //状态
+        getdata();    //显示
     })
 
-    function loadtime() {
-        var beginTimeStore = '';
-        var endTimeStore = '';
-        $('#config-demo').daterangepicker({
-            "timePicker": true,
-            "timePicker24Hour": true,
-            "linkedCalendars": false,
-            "autoUpdateInput": false,
-            "locale": {
-                format: 'YYYY-MM-DD',
-                separator: ' ~ ',
-                applyLabel: "应用",
-                cancelLabel: "取消",
-                resetLabel: "重置",
-            }
-        }, function (start, end, label) {
-            beginTimeStore = start;
-            endTimeStore = end;
-            startTime = this.startDate.format(this.locale.format);
-            endTime = this.endDate.format(this.locale.format);
-            console.log(this.startDate.format(this.locale.format));
-            console.log(this.endDate.format(this.locale.format));
-            if (!this.startDate) {
-                this.element.val('');
-            } else {
-                this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
-            }
-        });
+    //查询
+    function search() {
+        goalName = $("#txtGoalName").val();
+        typeId = $("#goaltype").val();
+        leaveId = $("#goalleave").val();
+        stateId = $("#goalstate").val();
+        dutyCommanyName = $("#txtDutyDepartment").val();
+        dutyUserName = $("#txtDutyUser").val();
+        begintime = $("#txtBegintime").val();
+        endtime = $("#txtEndtime").val();
+        getdata(pageindex, pagesize, goalName, typeId, leaveId, stateId, dutyCommanyName, dutyUserName, begintime, endtime);
     }
 
     //绑定目标类型
@@ -196,12 +176,13 @@
     //绑定目标状态
     function getState() {
         $.ajax({
-            url: "/GoalManage/GetGoalParentTypeList",
+            url: "/WeekSearch/GetStateList",
             type: "get",
             success: function (data) {
+                console.log(JSON.stringify(data))
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
-                        var str = "<option value='" + data[i].goalStateId + "'>" + data[i].goalState_Name + "</option>";
+                        var str = "<option value='" + data[i].goalStateId + "'>" + data[i].goalStateName + "</option>";
                         $("#goalstate").append(str);
                     }
                 }
@@ -209,12 +190,55 @@
         })
     }
 
-    //Excel导出
-    function exportdata() {
+    //显示
+    function getdata(pageindex, pagesize, goalName, typeId, leaveId, stateId, dutyCommanyName, dutyUserName, begintime, endtime) {
         $.ajax({
-            url: "/WeekSearch/Export",
-            success: function () {
-                alert("导出成功")
+            url: "/WeekSearch/GetWeekData",
+            type: "get",
+            data: {
+                pageindex: pageindex,
+                pagesize: pagesize,
+                goalName:goalName,
+                typeId: typeId,
+                leaveId: leaveId,
+                stateId: stateId,
+                dutyCommanyName: dutyCommanyName,
+                dutyUserName: dutyUserName,
+                begintime: begintime,
+                endtime:endtime,
+            },
+            dataType:"json",
+            success: function (data) {
+                $("#tbody").empty();
+                if (data.getData.length > 0) {
+                    for (var i = 0; i < data.getData.length; i++) {
+                        var str = "<tr>"
+                            + "<td>" + data.getData[i].goal_Id + "</td>"
+                            + "<td>" + data.getData[i].goal_Name + "</td>"
+                            + "<td>" + data.getData[i].indexLevel_Grade + "</td>"
+                            + "<td>" + data.getData[i].goalType_Name + "</td>"
+                            + "<td>" + data.getData[i].role_Name + "</td>"
+                            + "<td>" + data.getData[i].user_Name + "</td>"
+                            + "<td>" + data.getData[i].goalYear + "</td>"
+                            + "<td>已提报</td>"
+                            + "<td>" + data.getData[i].goal_StartTime + "</td>"
+                            + "<td>" + data.getData[i].feedback_DayEvolve + "</td>"
+                            +"<td>"+data.getData[i].goalState_Id+"</td>"
+                            + "</tr>"
+                        $("#tbody").append(str);
+                    }
+                    $("#pageList").empty();
+                    var totalPage = data.totalCount;
+                    var par = pageindex <= 1 ? pageindex : pageindex - 1;  //上一页
+                    var next = pageindex >= totalPage ? pageindex : pageindex + 1;  //下一页
+
+                    var htmlpage = "";
+                    htmlpage += "<a href='#' onclick='getdata(1," + pagesize + ")'>首页</a>";
+                    htmlpage += "<a href='#' onclick='getdata(" + par + "," + pagesize + ")'>上一页</a>";
+                    htmlpage += "<a href='#' onclick='getdata(" + next + "," + pagesize + ")'>下一页</a>";
+                    htmlpage += "<a href='#' onclick='getdata(" + totalPage + "," + pagesize + ")'>末页</a>";
+                    $("#pageList").append(htmlpage);
+                }
             }
         })
     }
