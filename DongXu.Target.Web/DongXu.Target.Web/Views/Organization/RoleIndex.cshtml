@@ -102,11 +102,14 @@
                     this.rolelist = response.data.getList;
                 });
             },
-            AddRoleR: function () {
+            AddRoleR: function ()
+            {
                 this.Open('/Organization/AddRoleR', '添加角色');
             },
-            Open:function (url, title) {
-            layui.use('layer', function () {
+            Open: function (url, title)
+            {
+                layui.use('layer', function ()
+                {
                 var layer = layui.layer;
                 layer.open({
                     type: 2,
@@ -118,15 +121,20 @@
                 });
             })
             },
-            DeleteRolesR: function (id) {
-                if (confirm('确定要删除吗') == true) {
-                    axios.get("/Organization/DeleteRolesR", { params: { id: id } }).then((response) => {
+
+            DeleteRolesR: function (id)
+            {
+                if (confirm('确定要删除吗') == true)
+                {
+                    axios.get("/Organization/DeleteRolesR", { params: { id: id } }).then((response) =>
+                    {
                         alert('删除成功');
                         location.href = "/Organization/RoleIndex";
                     });
                 }
             },
-            UptRolesR: function (id) {
+            UptRolesR: function (id)
+            {
                 this.Open('/Organization/UptRolesR?id=' + id, '修改角色');
             }
         }

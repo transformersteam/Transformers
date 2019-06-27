@@ -27,23 +27,22 @@
     <script src="~/layui-v2.4.5/layui/layui.js"></script>
 
 
-    <style>
+    @*<style>
     #max {
-        width: 90%;
-        height: 200px;
+        width: 100%;
+        height: 100%;
         margin-left: 30px;
+        background-color:white;
     }
 
     #tree {
         width: 30%;
         height: 300px;
-        float: left;
     }
 
     #message {
         width: 60%;
         height: 100%;
-        float: left;
     }
 
         #message table {
@@ -53,7 +52,7 @@
         }
 
 
-    </style>
+    </style>*@
     <style type="text/css">
 
         div#rMenu {
@@ -75,72 +74,67 @@
     </style>
 </head>
 <body>
-    <div style="margin-left: 40px;padding-top: 50px">您当前的位置:系统管理>>组织管理</div>
-    <div id="max">
-        <br />
-        <div class="panel-heading" style="height:50px;width:2250px;font-size:25px">组织管理</div>
-        <div class="content_wrap" id="tree">
-            <div class="bg left">
-                <ul id="regionZTree" class="ztree" style="width:270px"></ul>
+        <div style="margin-left: 40px;padding-top: 50px">您当前的位置:系统管理>>组织管理</div>
+        <div id="max" style="width:100%;height:1000px;margin-left: 10%;">
+            <br />
+            <div class="panel-heading" style="height:50px;width:100%;font-size:25px">组织管理</div>
+            <div class="content_wrap" id="tree" style="width:1500px">
+                <div class="bg left" style="float:left">
+                    <ul id="regionZTree" class="ztree" style="width:300px;"></ul>
+
+
+                </div>
+                <div id="message" style="width:1000px;height:700px;margin-left:100px;float:left">
+                    <table class="layui-table" style="text-align: center;background-color:#F3F3F4;">
+                        <tr>
+                            <td>组织名称:</td>
+                            <td><input id="txtName" type="text" v-model="RoleName" /></td>
+                            <td>组织层级</td>
+                            <td>
+                                <select id="selIdentify" v-model="RoleIdentify" class="form-control">
+                                    <option :value="hierarchy.id" v-for="hierarchy in hierarchyList">{{hierarchy.name}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>组织状态:</td>
+                            <td>
+                                <input id="Radio1" type="radio" value="1" v-model="RoleIsEnable" /> 启用
+                                <input id="Radio1" type="radio" value="0" v-model="RoleIsEnable" /> 禁用
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>创建人:</td>
+                            <td>{{RoleCreatePeople}}</td>
+                            <td>创建时间:</td>
+                            <td>{{RoleCreateTime}}</td>
+                        </tr>
+                        <tr>
+                            <td>修改人:</td>
+                            <td>
+                                {{RoleModifyPeople}}
+                            </td>
+                            <td>修改时间:</td>
+                            <td>{{RoleModifyTime}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><input id="Button1" type="button" v-on:click="updateRole(RoleId,RoleName,RoleIsEnable,RoleIdentify,'超级管理员')" value="修改" class="layui-btn layui-btn-normal" /></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
+
         </div>
-            <div id="rMenu">
-                <ul>
-                    <li id="m_add" onclick="addTreeNode();">增加节点</li>
-                    <li id="m_del" onclick="removeTreeNode();">删除节点</li>
-                    <li id="m_check" onclick="checkTreeNode(true);">Check节点</li>
-                    <li id="m_unCheck" onclick="checkTreeNode(false);">unCheck节点</li>
-                    <li id="m_reset" onclick="resetTree();">恢复zTree</li>
-                </ul>
-            </div>
-            <div id="message">
-                <table class="layui-table" style="text-align: center;background-color:#F3F3F4">
-                    <tr>
-                        <td>组织名称:</td>
-                        <td><input id="txtName" type="text" v-model="RoleName" /></td>
-                        <td>组织层级</td>
-                        <td>
-                            <select id="selIdentify" v-model="RoleIdentify" class="form-control">
-                                <option :value="hierarchy.id" v-for="hierarchy in hierarchyList">{{hierarchy.name}}</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr>
-                        <td>组织状态:</td>
-                        <td>
-                            <input id="Radio1" type="radio" value="1" v-model="RoleIsEnable" /> 启用
-                            <input id="Radio1" type="radio" value="0" v-model="RoleIsEnable" /> 禁用
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr>
-                        <td>创建人:</td>
-                        <td><input id="createPeople" type="text" v-model="RoleCreatePeople" readonly /></td>
-                        <td>创建时间:</td>
-                        <td><input id="createTime" type="text" v-model="RoleCreateTime" readonly /></td>
-                    </tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr>
-                        <td>修改人:</td>
-                        <td>
-                            <input id="updatePeople" type="text" v-model="RoleModifyPeople" readonly />
-                        </td>
-                        <td>修改时间:</td>
-                        <td><input id="updateTime" type="text" v-model="RoleModifyTime" readonly /></td>
-                    </tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr>
-                        <td colspan="4"><input id="Button1" type="button" v-on:click="updateRole(RoleId,RoleName,RoleIsEnable,RoleIdentify,'超级管理员')" value="修改" class="layui-btn layui-btn-normal" /></td>
-                    </tr>
-                </table>
-            </div>
+        <div id="rMenu">
+            <ul>
+                <li id="m_add" onclick="addTreeNode();">增加节点</li>
+                <li id="m_del" onclick="removeTreeNode();">删除节点</li>
+                <li id="m_check" onclick="checkTreeNode(true);">Check节点</li>
+                <li id="m_unCheck" onclick="checkTreeNode(false);">unCheck节点</li>
+                <li id="m_reset" onclick="resetTree();">恢复zTree</li>
+            </ul>
         </div>
 </body>
 </html>
@@ -311,7 +305,8 @@
         }
     }
     //点击事件
-    function zTreeOnClick(event, treeId, treeNode) {
+    function zTreeOnClick(event, treeId, treeNode)
+    {
         $.ajax({
             url: "@APIConn.MyAPIConn"+"/Organization/GetRolesOListById?RoleId=" + treeNode.id,
             async: false,
