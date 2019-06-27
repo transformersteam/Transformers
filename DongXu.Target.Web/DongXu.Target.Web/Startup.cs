@@ -103,7 +103,7 @@ namespace DongXu.Target.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
-
+            app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

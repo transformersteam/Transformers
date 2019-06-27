@@ -55,9 +55,6 @@ namespace DongXu.Target.Web.Controllers
                     userRealName=user.userRealName
                 };
                 WriteCookie(loginModel);
-                //HttpContext.Session.SetString("User_Id", user.userId.ToString());
-                 
-                // WriteDataToCookie(loginModel);
                 return 1;
             }
             
