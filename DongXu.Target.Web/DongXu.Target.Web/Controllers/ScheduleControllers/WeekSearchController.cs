@@ -102,5 +102,16 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             row.CreateCell(9).SetCellValue("当周进展");
             row.CreateCell(10).SetCellValue("状态");
         }
+
+        /// <summary>
+        /// 绑定目标类型
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetStateList()
+        {
+            var state = HelperHttpClient.GetAll("get", "WeekQuery/GetStateList",null);
+            var list = JsonConvert.DeserializeObject<List<Goalstate>>(state);
+            return Json(list);
+        }
     }
 }

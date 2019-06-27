@@ -76,5 +76,15 @@ namespace DongXu.Target.Repository.ProgressQuery
             pageData.TotalCount = count;
             return pageData;
         }
+
+        /// <summary>
+        /// 绑定目标类型
+        /// </summary>
+        /// <returns></returns>
+        public List<Goalstate> GetStateList()
+        {
+            var list = context.Goalstate.ToList();
+            return list;
+        }
     }
 }
