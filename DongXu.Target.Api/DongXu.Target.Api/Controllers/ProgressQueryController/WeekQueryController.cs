@@ -25,6 +25,11 @@ namespace DongXu.Target.Api.Controllers.ProgressQueryController
             iWeekQueryRepository = _iWeekQueryRepository;
         }
 
+        /// <summary>
+        /// 周报查询
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPost("GetWeekList")]
         public PageData<WeekData> GetWeekList([FromBody]WeekQueryData data)
         {
