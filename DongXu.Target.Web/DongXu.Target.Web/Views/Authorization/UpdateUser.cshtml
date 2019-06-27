@@ -35,7 +35,10 @@
                 <td colspan="2">选择角色</td>
             </tr>
             <tr>
-                <td colspan="2"><span v-for="item in user"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId"/>{{item.roleName}}</span></td>
+                <td colspan="2">
+                <span v-for="item in user" style="width:150px;display:inline-block"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId" v-model="count"/>{{item.roleName}}</span>
+                    <span v-if="count%5===0"><br /></span>
+                </td>
             </tr>
             <tr>
                 <td></td>
@@ -73,7 +76,8 @@
             UserPass: "",
             User_IdentityId: "",
             roleId: [],
-            roleName: []
+            roleName: [],
+            count:0
         },
         created() {
             this.GetRoleList(),

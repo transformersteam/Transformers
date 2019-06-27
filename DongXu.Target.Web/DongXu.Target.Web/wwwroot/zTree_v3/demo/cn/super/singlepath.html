@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <HTML>
 <HEAD>
 	<TITLE> ZTREE DEMO - single path</TITLE>
@@ -24,7 +24,8 @@
 			callback: {
 				beforeExpand: beforeExpand,
 				onExpand: onExpand,
-				onClick: onClick
+                onClick: onClick,
+                OnRightClick: OnRightClick
 			}
 		};
 		
@@ -133,34 +134,116 @@
 
 		$(document).ready(function(){
 			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-		});
-		//-->
+        });
+        // 在ztree上的右击事件
+        function OnRightClick(event, treeId, treeNode) {
+            if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
+                showRMenu("root", event.clientX, event.clientY);
+            } else if (treeNode && !treeNode.noR) {
+                showRMenu("node", event.clientX, event.clientY);
+            }
+        }
+        //显示右键菜单
+        function showRMenu(type, x, y) {
+            $("#rMenu ul").show();
+            rMenu.css({ "top": y + "px", "left": x + "px", "visibility": "visible" }); //设置右键菜单的位置、可见
+            $("body").bind("mousedown", onBodyMouseDown);
+        }
+        //隐藏右键菜单
+        function hideRMenu() {
+            if (rMenu) rMenu.css({ "visibility": "hidden" }); //设置右键菜单不可见
+            $("body").unbind("mousedown", onBodyMouseDown);
+        }
+        //鼠标按下事件
+        function onBodyMouseDown(event) {
+            if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0)) {
+                rMenu.css({ "visibility": "hidden" });
+            }
+        }
+        //展开下一级子节点
+        function expand() {
+            hideRMenu();
+            var selectNodes = zTree.getSelectedNodes();
+            zTree.expandNode(selectNodes[0], true, null, null);
+        }
+        //展开所有子节点
+        function expandSon() {
+            hideRMenu();
+            var selectNodes = zTree.getSelectedNodes();
+            zTree.expandNode(selectNodes[0], true, true, null);
+        }
+        //折叠子节点
+        function collapse() {
+            hideRMenu();
+            var selectNodes = zTree.getSelectedNodes();
+
+            zTree.expandNode(selectNodes[0], false, null, null);
+        }
+        //全部展开
+        function expandAll() {
+            hideRMenu();
+            zTree.expandAll(true);
+        }
+        //全部折叠
+        function collapseAll() {
+            hideRMenu();
+            zTree.expandAll(false);
+
+        }
 	</SCRIPT>
 	<style type="text/css">
 .ztree li button.switch {visibility:hidden; width:1px;}
 .ztree li button.switch.roots_docu {visibility:visible; width:16px;}
 .ztree li button.switch.center_docu {visibility:visible; width:16px;}
 .ztree li button.switch.bottom_docu {visibility:visible; width:16px;}
+        div#rMenu {
+            position: absolute;
+            visibility: hidden;
+            top: 0;
+            background-color: #555;
+            text-align: left;
+            padding: 2px;
+        }
+
+            div#rMenu a {
+                cursor: pointer;
+                list-style: none outside none;
+            }
 	</style>
+
  </HEAD>
 
 <BODY>
 <h1>保持展开单一路径</h1>
 <h6>[ 文件路径: super/singlepath.html ]</h6>
 <div class="content_wrap">
-	<div class="zTreeDemoBackground left">
-		<ul id="treeDemo" class="ztree"></ul>
-	</div>
-	<div class="right">
-		<ul class="info">
-			<li class="title"><h2>实现方法说明</h2>
-				<ul class="list">
-				<li>此 Demo 是在 "单击展开/折叠节点" 基础上改造而来，树节点保持始终只展开一条路径。</li>
-				<li class="highlight_red">利用 setting.callback.beforeExpand / onExpand 事件回调函数实现展开规则</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-</div>
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+    <div class="right">
+        <ul class="info">
+            <li class="title">
+                <h2>实现方法说明</h2>
+                <ul class="list">
+                    <li>此 Demo 是在 "单击展开/折叠节点" 基础上改造而来，树节点保持始终只展开一条路径。</li>
+                    <li class="highlight_red">利用 setting.callback.beforeExpand / onExpand 事件回调函数实现展开规则</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="rMenu">
+        <a href="#" class="list-group-item" onclick="expand();">展开下一级</a>
+        <a href="#" class="list-group-item" onclick="expandSon();">展开所有子节点</a>
+        <a href="#" class="list-group-item" onclick="collapse();">折叠子节点</a>
+        <a href="#" class="list-group-item" onclick="expandAll();">全部展开</a>
+        <a href="#" class="list-group-item" onclick="collapseAll();">全部折叠</a>
+
+        ---------------------
+        作者：xjCherie
+        来源：CSDN
+        原文：https://blog.csdn.net/wangjingna/article/details/50488270
+        版权声明：本文为博主原创文章，转载请附上博文链接！
+    </div>
+   </div>
 </BODY>
 </HTML>
