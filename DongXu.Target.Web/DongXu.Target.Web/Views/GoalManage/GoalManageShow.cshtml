@@ -17,67 +17,101 @@
     <script src="~/layui-v2.4.5/layui/layui.js"></script>   @*layui模态框*@
     <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
     <style>
-        #tree {
-            width: 30%;
-            height: 200%;
-            float: left;
-            border: 1px solid #000
-        }
-    </style>
+    #ztree {
+        width: 130%;
+        height: 100%;
+        float: left;
+        border: 1px solid #000
+    }
+
+  </style>
 </head>
 <body>
-    <div id="goaltree" style="float: left;padding-left: 100px">
-        <div style="height: 1500px">
-            <div class="panel-heading" style="font-size:20px">
-                目标库
-                <div style="float:right">
-                    <input id="Button1" type="button" value="目标下达" onclick="goalAdd()" class="btn btn-primary" />
+    <div id="goaltree" style="        float: left;
+        padding-left: 100px">
+        <div style="        height: 1500px;
+        width: 200px">
+            <div style="        font-size: 20px">
+                <div class="panel-heading">
+                    目标库
+                    <div style="        float: right">
+                        <input id="Button1" type="button" value="目标下达" onclick="goalAdd()" class="btn btn-primary" />
+                    </div>
                 </div>
             </div>
             <div>
-                <div class="panel-heading">目标名称</div>
-                <ul id="ztree" class="ztree" style="height: 500px"></ul>
+                <div class="panel-heading">
+                    目标名称
+                    <div style="        float: right">
+                        状态
+                    </div>
+                </div>
+                <ul id="ztree" class="ztree"></ul>
             </div>
         </div>
     </div>
-    <div style="float:right;padding-right:300px">
-        <div class="panel-heading">目标详情</div>
-        <div id="app">
+    <div style="        float: right;
+        padding-right: 150px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">目标详情</div>
+            <div id="app">
 
+            </div>
         </div>
-        <div class="panel-heading">指标分解</div>
-        <table class="table table-bordered table-striped text-center">
-            <thead>
-                <tr>
-                    <td>月份</td>
-                    <td>1月</td>
-                    <td>1-2月</td>
-                    <td>1-3月</td>
-                    <td>1-4月</td>
-                    <td>1-5月</td>
-                    <td>1-6月</td>
-                    <td>1-7月</td>
-                    <td>1-8月</td>
-                    <td>1-9月</td>
-                    <td>1-10月</td>
-                    <td>1-11月</td>
-                    <td>年度目标</td>
-                </tr>
-            </thead>
-            <tbody id="indexs"></tbody>
-        </table>
-        <div class="panel-heading">反馈确认</div>
-        <div style="padding-left: 100px">
-            确认流程
+        <div class="panel panel-primary">
+            <div class="panel-heading">指标分解</div>
+            <table class="table table-bordered table-striped text-center">
+                <thead>
+                    <tr>
+                        <td>月份</td>
+                        <td>1月</td>
+                        <td>1-2月</td>
+                        <td>1-3月</td>
+                        <td>1-4月</td>
+                        <td>1-5月</td>
+                        <td>1-6月</td>
+                        <td>1-7月</td>
+                        <td>1-8月</td>
+                        <td>1-9月</td>
+                        <td>1-10月</td>
+                        <td>1-11月</td>
+                        <td>年度目标</td>
+                    </tr>
+                </thead>
+                <tbody id="indexs">
+                    <tr>
+                        <td>月份</td>
+                        <td>1月</td>
+                        <td>1-2月</td>
+                        <td>1-3月</td>
+                        <td>1-4月</td>
+                        <td>1-5月</td>
+                        <td>1-6月</td>
+                        <td>1-7月</td>
+                        <td>1-8月</td>
+                        <td>1-9月</td>
+                        <td>1-10月</td>
+                        <td>1-11月</td>
+                        <td>年度目标</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div style="padding-left: 250px" id="audituser">
-
+        <div class="panel panel-primary">
+            <div class="panel-heading">反馈确认</div>
+            <div style="        padding-left: 100px;
+        font-size: 20px">
+                确认流程
+            </div>
+            <div style="        padding-left: 250px" id="audituser">
+                <p></p>
+            </div>
         </div>
-        <div style="float: right">
+        <div style="        float: right">
             <input id="setuser" type="button" value="设置关注人" class="btn btn-primary" />&nbsp;&nbsp;
             <input id="delgoal" type="button" value="指标删除" class="btn btn-primary" />&nbsp;&nbsp;
             <input id="Button1" type="button" value="指标调整" class="btn btn-primary" />
-        </div>
+        </div>             
     </div>
 </body>
 </html>
@@ -236,7 +270,7 @@
                 btn: ['确定', '取消']
             }, function () {
                     $.ajax({
-                        url:"/GoalManage/UpdateState",
+                        url: "/GoalManage/UpdateState",
                     })
             })
         })
@@ -252,9 +286,9 @@
             },
             success: function (data) {
                 $("#audituser").empty();
-                if (data.length > 0) {
+                if (data.length > 0) { 
                     for (var i = 0; i < data.length; i++) {
-                        var str = "<p>" + data[i].user_RealName + "</p>";
+                        var str = "<p style='font-size:20px'>√  " + data[i].user_RealName + "</p>";
                         $("#audituser").append(str);
                     }
                 }

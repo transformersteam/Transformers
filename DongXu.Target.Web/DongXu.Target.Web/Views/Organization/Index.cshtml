@@ -11,6 +11,7 @@
     <title>Index</title>
     <script type="text/javascript" src="~/zTree_v3/js/jquery-1.4.4.min.js"></script>
     <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -27,29 +28,31 @@
 
 
     <style>
-        #max {
-            width: 100%;
-            height: 800px;
-            margin-left: 30px;
+    #max {
+        width: 90%;
+        height: 200px;
+        margin-left: 30px;
+    }
+
+    #tree {
+        width: 30%;
+        height: 300px;
+        float: left;
+    }
+
+    #message {
+        width: 60%;
+        height: 100%;
+        float: left;
+    }
+
+        #message table {
+            margin-top: 50px;
+            border-collapse: separate;
+            border-spacing: 0px 10px;
         }
 
-        #tree {
-            width: 30%;
-            height: 100%;
-            float: left;
-        }
 
-        #message {
-            width: 70%;
-            height: 100%;
-            float: left;
-        }
-
-            #message table {
-                margin-top: 50px;
-                border-collapse: separate;
-                border-spacing: 0px 10px;
-            }
     </style>
     <style type="text/css">
 
@@ -90,6 +93,23 @@
         </div>
         <div id="message" class="layui-input-inline ">
             <table class="layui-table">
+
+  </style>
+</head>
+
+<body>
+    <div style="        margin-left: 40px;
+        padding-top: 50px">您当前的位置:系统管理>>组织管理</div>
+    <div id="max">
+        <br />
+        <div id="title"><p>组织管理</p></div>
+        <div id="tree" class="ztree">
+            <div>
+                <ul id="regionZTree" class="ztree" style="width: 300px"></ul>
+            </div>
+        </div>
+        <div id="message" >
+            <table class="table table-bordered" style="text-align: center">
                 <tr>
                     <td>组织名称:</td>
                     <td><input id="txtName" type="text" v-model="RoleName" /></td>
@@ -100,6 +120,8 @@
                         </select>
                     </td>
                 </tr>
+                <tr></tr>
+                <tr></tr>
                 <tr>
                     <td>组织状态:</td>
                     <td>
@@ -109,12 +131,16 @@
                     <td></td>
                     <td></td>
                 </tr>
+                <tr></tr>
+                <tr></tr>
                 <tr>
                     <td>创建人:</td>
                     <td><input id="createPeople" type="text" v-model="RoleCreatePeople" readonly /></td>
                     <td>创建时间:</td>
                     <td><input id="createTime" type="text" v-model="RoleCreateTime" readonly /></td>
                 </tr>
+                <tr></tr>
+                <tr></tr>
                 <tr>
                     <td>修改人:</td>
                     <td>
@@ -123,6 +149,8 @@
                     <td>修改时间:</td>
                     <td><input id="updateTime" type="text" v-model="RoleModifyTime" readonly /></td>
                 </tr>
+                <tr></tr>
+                <tr></tr>
                 <tr>
                     <td colspan="4"><input id="Button1" type="button" v-on:click="updateRole(RoleId,RoleName,RoleIsEnable,RoleIdentify,'超级管理员')" value="修改" class="layui-btn layui-btn-normal" /></td>
                 </tr>

@@ -21,10 +21,19 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
         }
 
         /// <summary>
-        /// 周报查询
+        /// 周报查询页面
         /// </summary>
         /// <returns></returns>
         public ActionResult WeekShow(int pageIndex=1, int pageSize=5, string goalName="", int typeId=0, int leaveId = 0, int stateId = 0, string dutyCommanyName="", string dutyUserName="",string begintime="",string endtime="")
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 显示
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetWeekData(int pageIndex = 1, int pageSize = 5, string goalName = "", int typeId = 0, int leaveId = 0, int stateId = 0, string dutyCommanyName = "", string dutyUserName = "", string begintime = "", string endtime = "")
         {
             WeekQueryData data = new WeekQueryData();
             data.pageIndex = pageIndex;
@@ -37,11 +46,9 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             data.dutyUserName = dutyUserName;
             data.begintime = begintime;
             data.endtime = endtime;
-            var weekdata = HelperHttpClient.GetAll("post","WeekQuery/GetWeekList",data);
+            var weekdata = HelperHttpClient.GetAll("post", "WeekQuery/GetWeekList", data);
             var list = JsonConvert.DeserializeObject<PageData<WeekData>>(weekdata);
-            RedisHelper.Set<PageData<WeekData>>("weekdata", list);
-            X.PagedList.StaticPagedList<WeekData> pagelist = new X.PagedList.StaticPagedList<WeekData>(list.GetData, pageIndex, pageSize,list.TotalCount);
-            return View(pagelist);
+            return Json(list);
         }
 
         /// <summary>
@@ -94,6 +101,17 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             row.CreateCell(8).SetCellValue("提报日期");
             row.CreateCell(9).SetCellValue("当周进展");
             row.CreateCell(10).SetCellValue("状态");
+        }
+
+        /// <summary>
+        /// 绑定目标类型
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetStateList()
+        {
+            var state = HelperHttpClient.GetAll("get", "WeekQuery/GetStateList",null);
+            var list = JsonConvert.DeserializeObject<List<Goalstate>>(state);
+            return Json(list);
         }
     }
 }
