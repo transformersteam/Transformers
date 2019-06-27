@@ -195,6 +195,17 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         }
 
         /// <summary>
+        /// 下载
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        public ActionResult DownLoad(string filename,string filepath)
+        {
+            return View();
+        }
+
+        /// <summary>
         /// 添加到配置表
         /// </summary>
         /// <param name="json"></param>
