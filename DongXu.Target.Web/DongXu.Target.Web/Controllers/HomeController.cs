@@ -18,40 +18,26 @@ using log4net;
 
 namespace DongXu.Target.Web.Controllers
 {
-    [MyActionFilter]
+    
     public class HomeController : BaseController
     {
         private ILog log = LogManager.GetLogger(Startup.repository.Name, typeof(HttpGlobalExceptionFilter));
 
-        
-        //[AllowAnonymous]
+
+        [MyActionFilter]
         public IActionResult Index()
         {
+            ViewBag.name = LoginInfo.userRealName;
             int userId = LoginInfo.userId;
             RedisHelper.Set("username", LoginInfo.userRealName);
             ViewBag.userId = userId;
             RedisHelper.Set("userid", userId);
-            //log.Error("老田测试log4错误日志");
-            //log.Error("老蔡测试log4错误日志");
-            //log.Error("老牛测试log4错误日志");
-            //List<PowerDto> FirstList= GetPowersByPid(userId, 0);
-            //ViewBag.FirstList = FirstList;
-            //List<PowerDto> SecondList = GetPowersByPid(userId, 0);
-            //ViewBag.SecondList = SecondList;
+
+            ViewBag.press = RedisHelper.Get<LoginModel>(LoginInfo.userName).PowerList;
+
             return View();
         }
-        /// <summary>
-        /// 绑定左侧下拉
-        /// </summary>
-        /// <param name="Power_PId"></param>
-        /// <returns></returns>
-        //public List<PowerDto> GetPowersByPid(int UserId, int Power_PId)
-        //{
-        //    var result = HelperHttpClient.GetAll("get", "Audit/GetPowersByPid?Power_PId=" + Power_PId + "&UserId=" + UserId, null);
-        //    List<PowerDto> list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PowerDto>>(result);
-        //    return list;
-        //}
-
+        [MyActionFilter]
         public async Task<IActionResult> LoginOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -84,10 +70,11 @@ namespace DongXu.Target.Web.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [AllowAnonymous]
+        [Route("Home/Error/{statusCode}")]
+        public IActionResult Error(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
 
     }

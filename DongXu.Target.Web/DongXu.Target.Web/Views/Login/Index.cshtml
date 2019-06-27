@@ -3,136 +3,41 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>纯CSS3绘制的小猫笑脸动画DEMO演示</title>
-    <link href="~/css/maolaoshifu.css" rel="stylesheet" />
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    @*<link type="text/css" href="maolaoshifu.css" rel="stylesheet" />*@
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>后台管理</title>
+    <link href="~/Login/login.css" rel="stylesheet" />
 </head>
+
 <body>
-    <div class="mao_box">
-        <div class="mao">
-            <div class="mao_head">
-                <div class="huawen">
-                    <div>@*头部花纹——左边橙色*@</div>
-                </div>
+    <div class="login_box">
+        <div class="login_l_img"><img src="~/Login/images/login-img.png" /></div>
+        <div class="login">
+            <div class="login_logo"><a href="#"><img src="~/Login/images/login_logo.png" /></a></div>
+            <div class="login_name">
+                <p>后台管理系统</p>
             </div>
-            <div class="erduo">
-                <div></div>
-                <div></div>
-            </div>
-            <div class="yanjing">
-                <div>
-                    <div class="yanquan">
-                        <div></div>
-                    </div>
-                    <div class="yanquan_hedding">
+                <input id="txtName" name="username" type="text" value="用户名" onfocus="this.value=''" onblur="if(this.value==''){this.value='用户名'}">
+                <span id="password_text" onclick="this.style.display='none';document.getElementById('password').style.display='block';document.getElementById('password').focus().select();">密码</span>
+                <input  name="password" type="password" id="password" style="display:none;" onblur="if(this.value==''){document.getElementById('password_text').style.display='block';this.style.display='none'};" />
+                <input value="登录" style="width:100%;" type="button"  onclick="login()">
 
-                    </div>
-                    <div class="hong"></div>
-                </div>
-                <div class="yan_right">
-                    <div class="yanquan">
-                        <div></div>
-                    </div>
-                    <div class="yanquan_hedding">
 
-                    </div>
-                    <div class="hong"></div>
-                </div>
-                <div style="clear:both"></div>
-            </div>
-            <div class="face_huawen">
-                <div class="face_huawen_huawen huawen_left">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-
-                </div>
-                <div class="face_huawen_huawen huawen_right">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-
-                </div>
-                <div style="clear:both"></div>
-            </div>
-            <div class="bizi">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div class="zuiba_box">
-                <div class="zuiba">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
         </div>
-    </div>
-
-    <br><br><br><br><br>
-                    <div>
-                        @*<table>
-                            <tr>
-                                <td>用户名：</td>
-                                <td><input id="txtName" type="text" value="1" /></td>
-                            </tr>
-                            <tr>
-                                <td>密码：</td>
-                                <td><input id="txtpass" type="text" value="1" /></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><input id="Button1" type="button" onclick="login()" value="button" /></td>
-                            </tr>
-                        </table>*@
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-                        用户名：  <input id="txtName" type="text" value="" />
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        密码：   <input id="txtpass" type="text" value="" />
-
-                        <input id="Button1" type="button" onclick="login()" value="登录" />
-
-                    </div>
-    <div style="text-align:center;clear:both">
-        <script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
-        <script src="/follow.js" type="text/javascript"></script>
     </div>
 </body>
 </html>
 
-
+@*<input id="Button1" type="button" onclick="login()" value="登录" />*@
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     login = function () {
         var Name = $("#txtName").val();
-        var Pwd = $("#txtpass").val();
+        var Pwd = $("#password").val();
         $.ajax({
             type: "post",
             url: "/Login/LoginIn",
@@ -144,7 +49,7 @@
                 }
                 else {
                     location.href = "/Home";
-                    
+
                 }
             }
         })

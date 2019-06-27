@@ -176,7 +176,7 @@ namespace DongXu.Target.Model
 
                 // optionsBuilder.UseMySql("Server=47.107.74.205;User Id=root;Password=1234567;Database=dxdatabase");
 
-               //  optionsBuilder.UseMySql("Server=47.107.74.205;User Id=root;Password=1234567;Database=dxdatabase");
+               //  optionsBuilder.UseMySql("Server=47.107.74.205;User Id=acc;Password=123456;Database=dxdatabase");
 
                 optionsBuilder.UseMySql("Server=169.254.105.125;User Id=root;Password=1234567;Database=dxdatabase");
             }

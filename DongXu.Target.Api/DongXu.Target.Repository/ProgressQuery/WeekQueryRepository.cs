@@ -78,7 +78,7 @@ namespace DongXu.Target.Repository.ProgressQuery
         }
 
         /// <summary>
-        /// 绑定目标类型
+        /// 获取状态
         /// </summary>
         /// <returns></returns>
         public List<Goalstate> GetStateList()
