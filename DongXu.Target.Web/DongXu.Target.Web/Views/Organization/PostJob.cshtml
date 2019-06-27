@@ -28,28 +28,29 @@
 
         #title {
             width: 100%;
-            height: 60px;
+            height: 100%;
+            margin-left: 30px;
         }
-
             #title p {
                 margin-left: 15px;
                 margin-top: 15px;
             }
 
         #tree {
-            width: 30%;
+            width: 20%;
             height: 100%;
             margin-left: 100px;
         }
 
         #message {
-            width: 70%;
+            width: 80%;
             height: 100%;
             /*float: left;*/
             margin-right:100px
         }
 
             #message table {
+                margin-left: 100px;
                 /*width: 600px;*/
                 margin-right: 100px;
                 margin-top: 50px;
@@ -58,6 +59,26 @@
             }
     </style>*@
 </head>
+
+<body>
+    <div id="max">
+        <div id="tree">
+            <ul id="regionZTree" class="ztree"></ul>
+        </div>
+        <div id="message">
+            <table class="layui-table">
+                <tr>
+                    <th>用户姓名</th>
+                    <th>用户账号</th>
+                    <th>操作</th>
+                </tr>
+                <tbody id="righttab">
+
+                </tbody>
+                <tfoot id="righttabfoot">
+
+                </tfoot>
+            </table>
 <body>
     <div class="panel-heading" style="margin-left:20px;padding-top:20px" id="max">您当前的位置：系统管理>>岗位管理</div>
     <div style="margin-left:20px;width:1500px;margin-right:20px">
@@ -94,6 +115,39 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">在当前节点添加用户</h4>
                 </div>
+                    <div class="modal-body">
+                        <table class="layui-table">
+                            <tr>
+                                <td>用户名：</td>
+                                <td><input id="btnname" type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>密码：</td>
+                                <td><input id="btnpass" type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>真实姓名：</td>
+                                <td><input id="btnrealname" type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>是否启用：</td>
+                                <td><input id="Radio1" name="radenable" type="radio" value="true" />启用
+                                    <input id="Radio1" name="radenable" type="radio" value="false" />未启用</td>
+                            </tr>
+                            <tr>
+                                <td>创建时间：</td>
+                                <td><input id="btntime" type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>职业：</td>
+                                <td>
+                                    <select id="Select1">
+                                        <option></option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 <div class="modal-body">
                     <table class="table table-bordered table-striped text-center">
                         <tr>
@@ -286,6 +340,9 @@
                 $("#righttab").empty();
                 $("#righttabfoot").empty();
                 $(data).each(function () {
+                    $("#righttab").append('<tr><th> ' + this.user_RealName + '</th ><th>' + this.user_Name + '</th><th><input id="Button1" onclick="deleteUser(' + this.user_Id + ')" type="button" value="禁用" class="btn-link" /></th></tr>')
+                }) 
+                $("#righttabfoot").append('<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">添加一个用户</button>');
                     $("#righttab").append('<tr><th> ' + this.user_RealName + '</th ><th>' + this.user_Name + '</th><th><input id="Button1" onclick="deleteUser(' + this.user_Id + ')" type="button" value="删除" class="btn-link" /></th></tr>')
                 })
                 //$("#righttabfoot").append('<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">添加一个用户</button>');
