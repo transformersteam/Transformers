@@ -19,11 +19,11 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/layui-v2.4.5/layui/layui.js"></script>
 
-    <style>
+    @*<style>
         #max {
-            width: 1500px;
+            /*width: 1500px;*/
             height: 600px;
-            margin-left: 30px;
+            /*margin-left: 30px;*/
         }
 
         #title {
@@ -39,47 +39,52 @@
         #tree {
             width: 30%;
             height: 100%;
-            float: left;
+            margin-left: 100px;
         }
 
         #message {
             width: 70%;
             height: 100%;
-            float: left;
+            /*float: left;*/
+            margin-right:100px
         }
 
             #message table {
-                width: 600px;
-                margin-left: 100px;
+                /*width: 600px;*/
+                margin-right: 100px;
                 margin-top: 50px;
                 border-collapse: separate;
                 border-spacing: 0px 10px;
             }
-    </style>
+    </style>*@
 </head>
+<body>
+    <div class="panel-heading" style="margin-left:20px;padding-top:50px">您当前的位置：系统管理>>岗位管理</div>
+    <div style="margin-left:20px;width:2000px;padding-top:20px">
+        <div class="panel-heading" style="height:50px;width:2250px;font-size:25px">岗位管理</div>
+        <hr />
+        <div>
+            <div style="float:left;width:350px;height:700px;">
+                <ul id="regionZTree" class="ztree"></ul>
+            </div>
+            <div style="margin-left:350px;width:1900px">
+                <div class="panel-heading">机构名称：<span id="departmentname"></span></div>
+                <button class="btn btn-primary btn-lg" data-toggle="modal" style="float:right" data-target="#myModal">添加用户</button>
+                <table class="table table-bordered table-striped text-center">
+                    <tr>
+                        <th>用户姓名</th>
+                        <th>用户账号</th>
+                        <th>操作</th>
+                    </tr>
+                    <tbody id="righttab"></tbody>
+                    <tfoot id="righttabfoot">
 
-<body><input id="Button1" onclick="acc()" type="button" value="button" />
-    <div id="max">
-        <div id="title"><p>组织管理</p></div>
-        <div id="tree">
-            <ul id="regionZTree" class="ztree"></ul>
-        </div>
-        <div id="message">
-            <table class="layui-table">
-                <tr>
-                    <th>用户姓名</th>
-                    <th>用户账号</th>
-                    <th>操作</th>
-                </tr>
-                <tbody id="righttab">
-
-                </tbody>
-                <tfoot id="righttabfoot">
-
-                </tfoot>
-            </table>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
+
 
     @*模态框*@
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -89,44 +94,41 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">在当前节点添加用户</h4>
                 </div>
-
-                
-                
-                    <div class="modal-body">
-                        <table class="layui-table">
-                            <tr>
-                                <td>用户名：</td>
-                                <td><input id="btnname" type="text" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td>密码：</td>
-                                <td><input id="btnpass" type="text" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td>真实姓名：</td>
-                                <td><input id="btnrealname" type="text" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td>是否启用：</td>
-                                <td><input id="Radio1" name="radenable" type="radio" value="true" />启用
-                                    <input id="Radio1" name="radenable" type="radio" value="false" />未启用</td>
-                            </tr>
-                            <tr>
-                                <td>创建时间：</td>
-                                <td><input id="btntime" type="text" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td>职业：</td>
-                                <td>
-                                    <select id="Select1">
-                                        <option></option>
-                                    </select>
-                                </td>
-                            </tr>
-
-                        </table>
-                        
-                    </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped text-center">
+                        <tr>
+                            <td>用户名：</td>
+                            <td><input id="btnname" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td>密码：</td>
+                            <td><input id="btnpass" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td>真实姓名：</td>
+                            <td><input id="btnrealname" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td>是否启用：</td>
+                            <td>
+                                <input id="Radio1" name="radenable" type="radio" value="true" />启用
+                                <input id="Radio1" name="radenable" type="radio" value="false" />未启用
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>创建时间：</td>
+                            <td><input id="btntime" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td>职业：</td>
+                            <td>
+                                <select id="Select1">
+                                    <option></option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" onclick="addUser()" class="btn btn-primary">提交更改</button>
@@ -136,7 +138,7 @@
     </div>
 
 
-</body> 
+</body>
 </html>
 <script>
     var zNodes = "";
@@ -245,6 +247,7 @@
     };
     //点击事件
     function zTreeOnClick(event, treeId, treeNode) {
+        $("#departmentname").text(treeNode.name)
         //$.ajax({
         //    url: "@APIConn.MyAPIConn"+"Organization/GetRolesOListById?RoleId=" + treeNode.id,
         //    async: false,
@@ -283,16 +286,16 @@
                 $("#righttab").empty();
                 $("#righttabfoot").empty();
                 $(data).each(function () {
-                    $("#righttab").append('<tr><th> ' + this.user_RealName + '</th ><th>' + this.user_Name + '</th><th><input id="Button1" onclick="deleteUser(' + this.user_Id + ')" type="button" value="button" class="btn-link" /></th></tr>')
-                }) 
-                $("#righttabfoot").append('<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">添加一个用户</button>');
+                    $("#righttab").append('<tr><th> ' + this.user_RealName + '</th ><th>' + this.user_Name + '</th><th><input id="Button1" onclick="deleteUser(' + this.user_Id + ')" type="button" value="删除" class="btn-link" /></th></tr>')
+                })
+                //$("#righttabfoot").append('<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">添加一个用户</button>');
             }
         })
     }
 
 
 
-    
+
     $('#myModal').on('shown.bs.modal', function (e) {
         $.ajax({
             url: "@APIConn.MyAPIConn"+"Organization/ChildrenJobByRole?Role_Id=" + treeNodeid,
@@ -304,14 +307,14 @@
             }
         })
     })
-    
+
 
     function deleteUser(userid) {
         $.ajax({
             url: "@APIConn.MyAPIConn"+"Organization/DeleteUser?userid=" + userid,
             success: function (data) {
                 if (data> 0 )
-                {
+               {
                     alert("已停用");
                     return;
                 }
@@ -326,7 +329,7 @@
         var UserName = $("#btnname").val();
         var UserPass = $("#btnpass").val();
         var UserRealName = $("#btnrealname").val();
-        var UserRoleName = $("#Select1").text();  
+        var UserRoleName = $("#Select1").text();
         var UserIsEnable = $("input[name='radenable']:checked").val();
         var UserCreateTime = $("#btntime").val();
         var roleid = $("#Select1").val();

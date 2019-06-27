@@ -16,7 +16,7 @@
     <link href="~/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
     <link href="~/js/zpageNav.css" rel="stylesheet" />
 
-    <style>
+    @*<style>
         #max {
             width: 1500px;
             height: 600px;
@@ -41,12 +41,13 @@
                 #management table button {
                     float: right;
                 }
-    </style>
+    </style>*@
 </head>
 <body>
-    <div id="max">
+    <div style="margin-left:40px;padding-top:50px">您当前的位置:系统管理>>授权管理</div>
+    <div id="max" style="margin-left:30px;margin-right:30px">
         <div id="query">
-            <table class="layui-table">
+            <table class="layui-table" style="text-align:center">
                 <tr style="background-color:aquamarine">
                     <td colspan="3">查询条件</td>
                 </tr>
@@ -58,8 +59,8 @@
             </table>
         </div>
         <div id="management">
-            <div style="width:100%;height:20px;">人员管理</div>
-            <table class="layui-table">
+            <div style="width:100%;height:20px;margin-left:10px">人员管理</div>
+            <table class="layui-table" style="text-align:center">
                 <tr style="background-color:aquamarine">
                     <td>人员名称</td>
                     <td>描述信息</td>
