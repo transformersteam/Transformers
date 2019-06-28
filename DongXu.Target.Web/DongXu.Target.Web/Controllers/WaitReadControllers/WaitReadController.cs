@@ -71,21 +71,29 @@ namespace DongXu.Target.Web.Controllers.WaitReadControllers
         /// <returns></returns>
         public JsonResult GetIntergalUser(int id)
         {
-            List<int> datacount = new List<int>();
-            List<string> dataname = new List<string>();
-            var model = HelperHttpClient.GetAll("get", "WaitRead/GetUserIntergal?id=" + id, null);
-            var list = JsonConvert.DeserializeObject<List<UserIntegral>>(model).OrderByDescending(m => m.Integral_Num);
-            EchartModel echartModel = new EchartModel();
-            foreach (var item in list)
+            try
             {
-                echartModel.name = item.User_Name;
-                echartModel.value = item.Integral_Num;
-                datacount.Add(echartModel.value);
-                dataname.Add(echartModel.name);
+                List<int> datacount = new List<int>();
+                List<string> dataname = new List<string>();
+                var model = HelperHttpClient.GetAll("get", "WaitRead/GetUserIntergal?id=" + id, null);
+                var list = JsonConvert.DeserializeObject<List<UserIntegral>>(model).OrderByDescending(m => m.Integral_Num);
+                EchartModel echartModel = new EchartModel();
+                foreach (var item in list)
+                {
+                    echartModel.name = item.User_Name;
+                    echartModel.value = item.Integral_Num;
+                    datacount.Add(echartModel.value);
+                    dataname.Add(echartModel.name);
+                }
+                echartModel.dataname = dataname;
+                echartModel.datacount = datacount;
+                return Json(echartModel);
             }
-            echartModel.dataname = dataname;
-            echartModel.datacount = datacount;
-            return Json(echartModel);
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
 
         /// <summary>

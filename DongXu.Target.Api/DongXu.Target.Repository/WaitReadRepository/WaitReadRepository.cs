@@ -38,6 +38,7 @@ namespace DongXu.Target.Repository.WaitReadRepository
                             {
                                 GoalId = s.GoalId,
                                 GoalName = s.GoalName,
+                                GoalStateId = s.GoalStateId,
                                 GoalStateName = Goalstate.GoalStateName,
                                 User_Name=User.UserName,
                                 IndexLevelGrade = Indexlevel.IndexLevelGrade,

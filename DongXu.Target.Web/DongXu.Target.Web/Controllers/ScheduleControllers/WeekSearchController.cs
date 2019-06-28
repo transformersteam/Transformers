@@ -48,6 +48,7 @@ namespace DongXu.Target.Web.Controllers.ScheduleControllers
             data.endtime = endtime;
             var weekdata = HelperHttpClient.GetAll("post", "WeekQuery/GetWeekList", data);
             var list = JsonConvert.DeserializeObject<PageData<WeekData>>(weekdata);
+            RedisHelper.Set("weekdata", list);
             return Json(list);
         }
 

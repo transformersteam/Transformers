@@ -60,7 +60,7 @@
         <div class="panel panel-primary" style="height:500px;margin-left:10px;margin-right:10px">
             <div class="panel-heading">红绿灯状态</div>
             <br />
-            <input id="tableshow" type="button" value="切换表格" class="btn btn-primary" />
+            @*<input id="tableshow" type="button" value="切换表格" class="btn btn-primary" />
             <div id="statetable" style="float:left">
                 <table class="table table-bordered table-striped text-center" style="width:1000px;margin-left:50px">
                     <thead>
@@ -80,7 +80,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div>*@
             <div style="float:left" id="echartshow">
                 <div id="redblue" style="width:700px;height:400px;margin-left:250px"></div>
             </div>
@@ -150,7 +150,6 @@
                 state:stateid,
             },
             success: function (data) {
-                console.log(data)
                 if (data.length > 0) {
                     $("#" + getcontainer).empty();
                     var str = "<table class='table table-bordered table-striped text-center'>"
@@ -167,14 +166,23 @@
                         + "</thead>";
                     +"<tbody>";
                     for (var i = 0; i < data.length; i++) {
+                        var statename = "";
+                        switch (data[i].goalStateId) {
+                            case 1: statename = "未完成(到期)"; break;
+                            case 2: statename = "预计延期"; break;
+                            case 3: statename = "已完成(延期)"; break;
+                            case 4: statename = "未启动"; break;
+                            case 5: statename = "已完成(按期)"; break;
+                            case 6: statename = "正常推进"; break;
+                        }
                         str += "<tr class='data-row'>"
                                     + "<td><a href='/Audit/Index?id=" + data[i].goalId + "+&progressid=" + data[i].feedbackNowEvolve + "'>" + data[i].goalName + "</a></td>"
-                                     +"<td>"+data[i].goalStateName+"</td>"
+                                     +"<td>"+statename+"</td>"
                                      +"<td>"+data[i].indexLevelGrade+"</td>"
                                      + "<td>" + data[i].user_Name + "</td>"
                                      + "<td>" + new Date(data[i].goalEndTime).Format("yyyy-MM-dd") + "</td>"
                                      +"<td>"+data[i].feedbackNowEvolve+"</td>"
-                                     +"<td>"+data[i].goalStateName+"</td>"
+                                     +"<td>"+data[i].goalStateId+"</td>"
                                      +"</tr>"
                     }
                     str+="</tbody>"

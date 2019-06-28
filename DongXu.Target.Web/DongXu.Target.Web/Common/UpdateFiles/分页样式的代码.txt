@@ -1,0 +1,27 @@
+<div class="text-center">
+     <span style="display:inline-block;  position:relative;top:-30px;">共 @Model.TotalPageCount 页 @Model.TotalItemCount 条记录，当前为第 @Model.CurrentPageIndex 页</span>
+@Ajax.Pager(Model, new PagerOptions
+{
+	ActionName="Index",
+
+    /*
+     * 设置分页显示的样式
+     */
+    FirstPageText = "首页",
+    LastPageText = "最后一页",
+    NextPageText = "下一页",
+    PrevPageText = "上一页",
+    PageIndexParameterName = "index",
+    ContainerTagName = "ul",
+    CssClass = "pagination",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+},
+    new MvcAjaxOptions
+    {
+        HttpMethod = "post",
+        UpdateTargetId = "divNews",//更新数据的标签ID
+        DataFormId = "form0"       //分页对应的条件搜索表单ID
+    })
+</div>
