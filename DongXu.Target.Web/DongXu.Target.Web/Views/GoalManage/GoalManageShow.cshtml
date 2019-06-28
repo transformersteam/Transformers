@@ -124,7 +124,7 @@
         font-size: 20px">
                 确认流程
             </div>
-            <div style="padding-left: 250px;height:150px" id="audituser">
+            <div style="padding-left: 250px;height:180px" id="audituser">
                 <p>牛文涛（模块运营总经理）</p>
                 <br />
                 <p>田欣（集团CEO）</p>
@@ -402,7 +402,7 @@
                             + "<tr>"
                             + "<td>开始时间:<span>" + data[i].goal_CreateTime + "</span></td>"
                             + "<td>完成时间:<span>" + data[i].goal_EndTime + "</span></td>"
-                            + "<td>周期:<span></span></td>"
+                            + "<td>周期:<span>5</span></td>"
                             + "</tr>"
                             + "<tr>"
                             + "<td>责任单位:<span>" + data[i].role_Name + "</span></td>"
@@ -453,11 +453,6 @@
     function addAttentionUser() {
         hideRMenu();
         var nodes = zTree.getSelectedNodes();
-        var nodedata = JSON.stringify(nodes)
-        var id = nodedata.id
-        alert
-            
-        alert(id);
         layui.use('layer', function () {
             var layer = layui.layer;
             layer.open({
@@ -466,7 +461,7 @@
                 shadeClose: true,
                 shade: 0.8,
                 area: ['500px', '500px'],
-                content: "/GoalManage/AddAttentionUser?id=" + nodes.id,
+                content: "/GoalManage/AddAttentionUser?id=" + nodes[0].id,
             });
         })
     }
