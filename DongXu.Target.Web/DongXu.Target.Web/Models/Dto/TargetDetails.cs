@@ -61,6 +61,8 @@ namespace DongXu.Target.Web
         /// <summary>
         /// 文件名称
         /// </summary>
-        public string File_Name { get; set; }     
+        public string File_Name { get; set; }
+
+        public string File_Url { get; set; }
     }
 }

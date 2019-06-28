@@ -36,8 +36,8 @@
             </tr>
             <tr>
                 <td colspan="2">
-                <span v-for="item in user" style="width:150px;display:inline-block"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId" v-model="count"/>{{item.roleName}}</span>
-                    <span v-if="count%5===0"><br /></span>
+                <span v-for="item in user" style="width:150px;display:inline-block"><input id="Checkbox1" name="qx" type="checkbox" :value="item.roleId"/>{{item.roleName}}</span>
+                    <span v-model="count" v-if="count%5===0"><br /></span>
                 </td>
             </tr>
             <tr>
