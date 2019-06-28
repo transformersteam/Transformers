@@ -453,6 +453,11 @@
     function addAttentionUser() {
         hideRMenu();
         var nodes = zTree.getSelectedNodes();
+        var nodedata = JSON.stringify(nodes)
+        var id = nodedata.id
+        alert
+            
+        alert(id);
         layui.use('layer', function () {
             var layer = layui.layer;
             layer.open({

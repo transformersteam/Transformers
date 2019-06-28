@@ -1,0 +1,171 @@
+ArrayList 与List区别（面试常问）
+
+ArrayList 只能添加object类型，速度慢，存在装箱与拆箱操作，存在安全隐患，转换过程中容易出错
+
+List只能添加指定的类型，更加安全，速度快
+
+绑定数据List与DataTable  List更快，面向对象
+
+sealed 密封类  不能被继承
+
+字段没有get set访问器 一般是私有的，字段不能用来作于数据绑定
+属性是暴露给别人的，属性可以用来绑定数据
+属性是对字段的封装
+
+实例化的过程其实就是调用构造函数的过程
+
+私有构造函数是不能被调用 
+
+反射在C#中被称为黑科技
+
+
+
+-- 加载程序集
+加载当前的程序集   Assembly assembly=Assembly.Load（"反射"）
+		
+获取需要被实例化的类型 var t=assembly.GetType("反射.Singleton")
+
+获取需要被调用的方法名称 var method=t.GetMethod("Run",BindingFlags.NonPublic | BindingFlags.Instraces)
+
+创建对象
+var obj=Activator.CreateInstance(t,"东方不败")
+调用方法
+method.Invoke(obj,null)
+
+
+
+p.SetValue()  设置值  对象 新值
+
+p.GetValue()  获取值
+
+StringBuilder只占一块内存空间，更节约内存
+string是不断占用新的内存空间
+
+
+abstract 
+抽象方法没有方法体  只能声明  没有具体的实现方法
+抽象类不能直接实例化  能被子类继承实例化
+抽象类可以继承接口
+
+接口一定没有方法体，接口不能继承类   接口只能继承接口
+接口不能实例化  但能被子类实例化
+例如：IDBConnection conn=new SqlConnection
+
+String是一个密封类  密封类不能被继承
+
+字符串是不可改变的字符序列
+
+Dapper会自动打开连接，但是在有事务的情况下，必须手动打开
+
+添加时为什么加@  因为参数化查询，防止sql注入
+
+
+委托可以用=赋值  事件只能用+=赋值
+事件是一个类型   
+
+通过表头去对应每一列
+
+GetDirectories() 获取目录  CreateDirectory() 创建目录
+
+泛型约束是引用类型：public class DbContext<T> where T：class   +new() 无参构造函数
+
+
+两个线程 为什么没有2000次？为什么有很多相同
+这行代码没有执行到的时候  Cpu就已经切换了权限（换了线程）
+
+lock可以保证有一个线程执行 
+lock（）里面不允许用值类型，只允许用引用类型，例object
+最好是私有的，只读的，静态的object 否则会造成死锁
+
+
+解决跨线程问题用委托
+
+延迟加载  小二
+做电商：一张大图可以分成若干个不同尺寸的缩略图  这叫图片处理技术
+京东上大图片与小图片不是一张图片
+
+验证码保存在Session里  Session保存在服务端 可以防止暴力破解  Cookie保存在本地  
+
+ToLower ToUpper尽量少用，因为在内存中又分配了一块内存空间
+ 因为性能 
+
+五大对象面试必问
+
+Webform aspx是类 是一个页面类
+
+窗体的父类是控件类
+窗体也是类
+
+int是struct类型
+接口里不能加访问修饰符
+
+类之所以可以被实例化  因为他有构造函数
+
+单例模式，整个运行库，只能有一个实例，阻止在外部实例化，并提供一个访问路口
+
+ActionResult返回结果有哪些：FileResult  ContentResult  ViewResult  JsonResult
+
+网页中不允许显示图片的全路径  因为不安全
+
+多线程可能会违反单例原则
+
+工厂模式用来生产不同的接口对象
+
+正常：类型名.方法名  反射：  Typeof（T）.InvokeMember（“方法名”）
+
+Redis：开源 、基于内存可持久化、单线程、分布式部署、支持主从同步、key-value、C语言
+string、list、set、zset   端口号6379
+应用场景：用户登录信息  常用的列表信息   和session
+
+Oracle 数据库，默认的端口号为1521
+数据库server，默认的端口号为1433
+
+cookie和session：
+客户端（浏览器）存放
+session容易丢失，存放IIS里，IIS里有自动回收机制，当前没有访问的就被踢出去，所以容易丢失    想存多大就存多大
+cookie  不安全 点F12就能看见，存储内容少
+
+MVC过滤器：授权过滤器、异常过滤器、动作过滤器、结果过滤器
+
+Forms身份验证：对用户信息封装成对象，生成票据加密起来，存在上下文环境中，cookie和redis各存一个
+
+查询  前面有百分号不走索引  没有百分号走索引
+
+mvc调用api时  api的方法里不能有ref类型的参数
+
+Camel（驼峰命名法）  Pascal  匈牙利命名法(int x=3    i_x)
+首字母大写  Pascal命名法  ：1、项目名称
+		          2、类、方法、接口、控制器、枚举、属性
+首字母小写  驼峰命名法：变量、参数、局部变量
+
+public List<Student> GetStudentList()
+
+public string GetStudentById()
+
+public int Delete(int id)
+
+注释：类  方法  多行注释 
+          功能段  单行注释
+方法与方法之间空行
+
+JS里  驼峰命名法
+
+
+面试：半小时左右解决，面试官追问你问题 证明自己有露馅的痕迹了
+简历要明确 不要露馅的话  写的话要有证明的材料
+自信 我就要15k  我曾经的公司没有低于15k
+
+
+不要拒绝领导
+适不适合？  没有适不适合，只有你愿不愿意改变
+
+
+
+
+
+
+
+
+
+
+
