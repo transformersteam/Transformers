@@ -83,16 +83,33 @@
             <div class="panel-heading">执行情况</div>
             <table class="table table-bordered table-striped text-center">
                 <tr>
-                    <td>年度目标</td>
-                    <td>累计达成</td>
-                    <td>累计达成率</td>
-                    <td>反馈周期</td>
-                    <td>当日&周进展</td>
-                    @*<td>附件<span>{{data.file_Name}}</span></td>*@
+                    <td width="200px" style="text-align:center;line-height:80px;">累计工作进展:</td>
+                    <td><textarea class="form-control" rows="3" cols="12" style="vertical-align: middle !important;"></textarea></td>
+                </tr>
+                <tr>
+                    <td width="200px" style="text-align:center;line-height:80px;">当日&周进展:</td>
+                    <td><textarea class="form-control" rows="3" cols="12" style="vertical-align: middle !important;"></textarea></td>
+                </tr>
+                <tr>
+                    <td width="200px" style="text-align:center;line-height:80px;">存在问题 :</td>
+                    <td><textarea class="form-control" rows="3" cols="12" style="vertical-align: middle !important;"></textarea></td>
+                </tr>
+                <tr>
+                    <td width="200px" style="text-align:center;line-height:80px;">解决措施:</td>
+                    <td><textarea class="form-control" rows="3" cols="12" style="vertical-align: middle !important;"></textarea></td>
+                </tr>
+                <tr>
+                    <td width="200px" style="text-align:center;line-height:80px;">需集团协调事项:</td>
+                    <td><textarea class="form-control" rows="3" cols="12" ></textarea></td>
                 </tr>
             </table>
             <div class="panel-heading">确认流程</div>
-            <table class="table table-bordered table-striped text-center"></table>
+            <table class="table table-bordered table-striped text-center">
+                <tr>
+                    <td><strong>确认人:</strong></td>
+                    <td v-for="item in apparDtoList">{{item.user_Name}} <span id="state" v-if="item.apprActivity_IsExecute===1">▬➤ ✔</span><span id="state" v-else>▬➤</span></td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>
@@ -101,21 +118,28 @@
     var vm = new Vue({
         el: "#app",
         data: {
-            target: []
+            target: [],
+            apparDtoList:[]
         },
         mounted() {
             this.getdata();   //目标详情
-            this.gettiao();   //进度条
+            this.GetApprDtoList();
         },
         methods: {
             getdata: function () {
                 axios.get("@Url.Action("DetailsShow","WaitRead")", { params: { id:@ViewBag.id} }).then(
                     (response) => {
                         this.target = response.data;
-                        console.log(response.data)
                     }
                 )
-            }
+            },
+            GetApprDtoList: function () {
+                axios.get("/Audit/GetApprDtoList", { params: { goalId: @ViewBag.id } }).then((response) => {
+                    this.apparDtoList = response.data;
+                    console.log(this.apparDtoList);
+
+                });
+            },
         }
     })
 </script>
