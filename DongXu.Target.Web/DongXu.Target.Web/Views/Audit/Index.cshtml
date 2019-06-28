@@ -199,12 +199,11 @@
                                 var layer = layui.layer;
                                 layer.msg('审批通过');
                             });
-                        }, 1500)
+                        }, 1000)
                     }
                 });
             },
-            
-            
+           
             Back: function (next_Id, apprConfiguration_Id, apprActivity_Id, ApprActivity_Opinion, GoalId) {
                 axios.get("/Audit/Audit", { params: { Next_Id: next_Id, ApprActivity_Id: apprActivity_Id, ApprActivity_Opinion: ApprActivity_Opinion, Goal_Id: GoalId, ApprActivity_IsExecute: 0 } }).then((response) => {
                     if (response.data > 0) {
@@ -213,7 +212,7 @@
                                 var layer = layui.layer;
                                 layer.msg('审批驳回');
                             });
-                        }, 1500)
+                        }, 1000)
                     }
                 });
             }
