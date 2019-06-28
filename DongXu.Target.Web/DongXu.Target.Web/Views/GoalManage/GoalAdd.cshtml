@@ -395,14 +395,12 @@
                 )
             },
             getDutyUserName: function () {
-                alert(111);
                 var obj = [];
                 $("input[type='checkbox']").each(function () {
                     if ($(this).is(":checked")) {
                         obj.push(this.nextSibling.nodeValue);
                     }
                 })
-                alert(obj);
             }
         },
         updated: function () {

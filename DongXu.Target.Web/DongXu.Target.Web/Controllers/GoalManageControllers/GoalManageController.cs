@@ -200,9 +200,18 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         /// <param name="filename"></param>
         /// <param name="filepath"></param>
         /// <returns></returns>
-        public ActionResult DownLoad(string filename,string filepath)
+        public FileResult DownLoad(string filename,string filepath)
         {
-            return View();
+            try
+            {
+                var addurl = Path.Combine(Directory.GetCurrentDirectory(), filepath);
+                FileStream stream = new FileStream(addurl, FileMode.Open);
+                return File(stream, "application/vnd.android.package-archive", filename);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         /// <summary>
