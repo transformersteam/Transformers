@@ -18,9 +18,10 @@
 
 </head>
 <body>
-    <form action="/GoalManage/GoalSubmit" method="post" class="layui-form" enctype="multipart/form-data">
+    <form action="/GoalManage/GoalSubmit" method="post" class="layui-form" enctype="multipart/form-data" id="form1">
         <div id="app">
             <div class="panel-heading">目标详情</div>
+            <input id="Text1" type="hidden" name="Goal_ParentId" value="@ViewBag.pid" />
             <table class="table table-bordered table-striped text-center">
                 <tr>
                     <td>

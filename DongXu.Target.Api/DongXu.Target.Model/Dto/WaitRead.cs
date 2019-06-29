@@ -138,5 +138,7 @@ namespace DongXu.Target.Model.Dto
         public int State_Id { get; set; }
 
         public int ApprActivity_IsExecute { get; set; }
+
+        public int TotalCount { get; set; }
     }
 }

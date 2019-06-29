@@ -1,0 +1,101 @@
+1.首先写sql分页存储过程
+alter proc P_Page_Lianxi(@Name varchar(20),@Age int,@Sex varchar(20),@PageIndex int,@PageSize int,@totalCount int output)
+as
+begin
+	--select * from (select ROW_NUMBER() over (order by Id)as 页数,* from Student)a where a.页数>=1 and a.页数<=5
+	--select * from Student order by Id offset 0  rows fetch next 5 rows only
+
+    --拼串开头
+    declare @sql nvarchar(1000) =' select * from Student where 1=1 ';
+	--总数
+	declare @Sum int =0;
+	--计算公式
+	set @Sum=(@PageIndex-1)*@PageSize
+	--总条数
+	declare @countSql nvarchar(1000)=' select @totalCount=count(Id) from Student where 1=1 ';
+
+	--进行判断Name
+	if @Name<>'' and @Name is not null
+	begin
+	    --进行拼串
+		set @sql = @sql+' and Name like ''%'+@Name+'%''';
+		set @countSql = @countSql+' and Name like ''%'+@Name+'%''';
+	end
+	--进行判断Age
+	if @Age>=0
+	begin
+	   set @sql = @sql+' and Age>='+CAST(@Age as varchar(10));
+	   set @countSql = @countSql + ' and Age>='+CAST(@Age as varchar(10));
+	end
+	--进行判断Sex
+	if @Sex<>'' and @Sex is not null
+	begin
+	   set @sql =@sql+' and Sex like ''%'+@Sex+'%''';
+	   set @countSql =@countSql+' and Sex like ''%'+@Sex+'%''';
+	end
+
+	--进行分页拼串
+	set @sql = @sql +' order by Id offset '+cast(@Sum as varchar(10))+' rows fetch Next '+CAST(@PageSize as varchar(10))+' rows only '
+	--使用
+	exec(@sql)
+	--输出总数
+	exec sp_executesql @countSql,N'@totalCount int output',@totalCount output;
+end
+-- 总条数
+declare @totalCount int;
+exec P_Page_Lianxi '李','18','男',1,5,@totalCount output;
+select @totalCount as 页码
+
+2.在DAL进行调用
+   public List<StudentModel> StudentShouPage(string Name, int Age, string Sex, int PageIndex, int PageSize, ref int totalCount)
+        {
+            using (SqlConnection conn = new SqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "P_Page_Lianxi";
+                using (SqlCommand cmd = new SqlCommand(sql,conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataAdapter sdap = new SqlDataAdapter(cmd))
+                    {
+                        SqlParameter[] sqlParameters = {
+                            new SqlParameter("@Name",Name),
+                            new SqlParameter("@Age",Age),
+                            new SqlParameter("@Sex",Sex),
+                            new SqlParameter("@PageIndex",PageIndex),
+                            new SqlParameter("@PageSize",PageSize),
+                            //注意
+                            //ParameterName设置名称 Value 定义值 Direction=ParameterDirection.Output 定义为输出类型 DbType=DbType.Int32 定义为int类型
+                            new SqlParameter{ ParameterName="@totalCount",Value=0,Direction=ParameterDirection.Output,DbType=DbType.Int32}
+                        };
+                        cmd.Parameters.AddRange(sqlParameters);
+                        DataTable dt = new DataTable();
+                        sdap.Fill(dt);
+                        string str = JsonConvert.SerializeObject(dt);
+                        List<StudentModel> list = JsonConvert.DeserializeObject<List<StudentModel>>(str);
+                        //注意
+                        totalCount = int.Parse(sqlParameters[5].Value.ToString());
+                        return list;
+                    }
+                }
+            }
+        }
+
+3.后台进行调用
+  引用PagedList.MVC
+  PagedLIst
+  public ActionResult StudentShowPage(string Name = "", int Age = 0, string Sex = "", int PageIndex = 1, int PageSize = 3)
+        {
+            StudentBLL bll = new StudentBLL();
+            int totalCount = 0;
+            var list = bll.StudentShouPage(Name, Age, Sex, PageIndex, PageSize, ref totalCount);
+            //分页参数需要引用 PageList
+            StaticPagedList<StudentModel> studentModels = new StaticPagedList<StudentModel>(list, PageIndex,PageSize,totalCount);
+            return View(studentModels);
+        }
+4.前台 
+  引用
+@using PagedList.Mvc;
+@model PagedList.StaticPagedList<Models.StudentModel>
+ @Html.PagedListPager(Model, pageIndex => Url.Action("StudentPage", new { pageIndex, pageSize = 3, Name
+   = Request["Name"], Age = Request["Age"], Sex = Request["Sex"]}), new PagedListRenderOptions() { LinkToFirstPageFormat = "首页", LinkToLastPageFormat = "尾页", LinkToNextPageFormat = "下一页", LinkToPreviousPageFormat = "上一页" })
