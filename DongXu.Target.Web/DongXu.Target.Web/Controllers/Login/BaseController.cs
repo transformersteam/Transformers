@@ -33,6 +33,7 @@ namespace DongXu.Target.Web.Controllers
         public void WriteCookie(LoginModel tmpUser)
         {
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+
             identity.AddClaim(new Claim(ClaimTypes.Name, tmpUser.userName));
 
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
