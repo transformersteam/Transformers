@@ -1,0 +1,16 @@
+在ASP.NET中，整个身份认证的过程其实可分为二个阶段：认证与授权。
+1. 认证阶段：识别当前请求的用户是不是一个可识别（的已登录）用户。
+2. 授权阶段：是否允许当前请求访问指定的资源。
+
+重点:Webconfig加入Forms认证
+用户登陆过程：1、根据用户提交的登录名和密码是否正确
+	      2、根据登录名创建一个FormsAuthenticationTicket对象。
+	      3、调用FormsAuthentication.Encrypt()加密。
+	      4、根据加密结果创建登录Cookie，并写入Response。
+Cookie和FormsAuthenticationTicket任何一个过期时，都将导致登录状态无效
+
+Forms身份验证：对用户信息封装成对象，缓存起来，其他时间用直接取出来就可以，生成票据加密起来，存在上下文环境中，cookie和redis各存一个
+
+
+Redis：开源 、基于内存可持久化、单线程、分布式部署、支持主从同步、key-value、C语言   高性能读取速度快
+string、list、set、zset   端口号6379

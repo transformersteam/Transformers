@@ -11,8 +11,6 @@ namespace DongXu.Target.Model.Dto
     {
         public string GoalType_Name { get; set; }
 
-        public int Integral_Num { get; set; }
-
         /// <summary>
         /// 指标等级
         /// </summary>

@@ -57,9 +57,10 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
         /// 目标下达页
         /// </summary>
         /// <returns></returns>
-        public ActionResult GoalAdd()
+        public ActionResult GoalAdd(int pid)
         {
             var username = RedisHelper.Get("username");
+            ViewBag.pid = pid;
             ViewBag.username = username;
             return View();
         }
@@ -118,15 +119,19 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                 GoalWeight = baseData.GoalWeight,
                 Goal_DutyUserId = baseData.Goal_DutyUserId,
                 Goal_DutyCommanyId = baseData.Goal_DutyCommanyId,
-                Goal_ParentId = 1,
+                Goal_ParentId = baseData.Goal_ParentId,
                 BusinessState = 0,
                 FeedbackId = 1,
                 FileId = 0,
-                GoalCreateTime =Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd")),
-                GoalFormula=baseData.GoalFormula,
-                GoalPeriod =baseData.GoalPeriod,
-                GoalSources=baseData.GoalSources,
-                GoalStateId=4,                       
+                GoalCreateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd")),
+                GoalFormula = baseData.GoalFormula,
+                GoalPeriod = baseData.GoalPeriod,
+                GoalSources = baseData.GoalSources,
+                GoalInformant = RedisHelper.Get("username"),
+                GoalChargePeople = "admin",
+                GoalOrganiser = baseData.GoalOrganiser,
+                GoalUnit = DateTime.Now.ToString("yyyy MM dd"),
+                GoalStateId=4, 
             };
             string auditValue = baseData.AuditValue;   //获取到审核人id
             var goaldata = JsonConvert.SerializeObject(goal);
@@ -171,6 +176,7 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
             //上传文件
             IFormFileCollection files = formData.Files;
             long size = files.Sum(f => f.Length);
+            var i ="";
             foreach (var item in files)
             {
                 var inputName = item.Name;
@@ -189,9 +195,9 @@ namespace DongXu.Target.Web.Controllers.GoalManageControllers
                     CreateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy MM dd")),
                     GoalId = int.Parse(goalId),
                 };
-                var i = HelperHttpClient.GetAll("post", "GoalManage/GoalFileAdd", file);
+                i = HelperHttpClient.GetAll("post", "GoalManage/GoalFileAdd", file);
             }
-            return Ok(new { count = files.Count, size });
+            return Json("目标下达成功，望督促按时完成任务!");
         }
 
         /// <summary>
