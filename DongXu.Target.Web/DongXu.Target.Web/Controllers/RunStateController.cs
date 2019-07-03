@@ -6,7 +6,6 @@ namespace DongXu.Target.Web.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.id = 1;
             return View();
         }
 
